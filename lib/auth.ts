@@ -15,6 +15,8 @@ const DEMO_USERS: Record<string, { password: string; role: UserRole; name: strin
   'marketing@omniatravel.com': { password: 'marketing@123', role: 'marketing', name: 'Social Media Manager' },
 }
 
+import { createClient } from '@/lib/supabase/client'
+
 export async function authenticateUser(
   email: string,
   password: string
@@ -26,9 +28,17 @@ export async function authenticateUser(
     return null
   }
 
+  // Fetch real UUID from database if available to prevent UUID type errors
+  const supabase = createClient()
+  const { data: dbProfile } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('email', email)
+    .single()
+
   // Create a mock profile
   const profile: Profile = {
-    id: `user_${email.split('@')[0]}`,
+    id: dbProfile?.id || `user_${email.split('@')[0]}`,
     full_name: user.name,
     first_name: user.name.split(' ')[0],
     last_name: user.name.split(' ').slice(1).join(' ') || '',

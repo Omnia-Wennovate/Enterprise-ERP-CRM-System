@@ -4,7 +4,6 @@ import { createClient } from '@/lib/supabase/server'
 import type { SupplierPayment, MarkSupplierPaymentFormData, SupplierPaymentStatus } from '@/types/finance'
 
 export async function getSupplierPayments(): Promise<SupplierPayment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('supplier_payments')
@@ -16,7 +15,6 @@ export async function getSupplierPayments(): Promise<SupplierPayment[]> {
 }
 
 export async function getSupplierPaymentsByBooking(bookingId: string): Promise<SupplierPayment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('supplier_payments')
@@ -29,7 +27,6 @@ export async function getSupplierPaymentsByBooking(bookingId: string): Promise<S
 }
 
 export async function getTotalSupplierPaymentsByBooking(bookingId: string): Promise<number> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('supplier_payments')
@@ -42,7 +39,6 @@ export async function getTotalSupplierPaymentsByBooking(bookingId: string): Prom
 }
 
 export async function markSupplierPaymentAsPaid(formData: MarkSupplierPaymentFormData): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -78,7 +74,6 @@ export async function markSupplierPaymentAsPaid(formData: MarkSupplierPaymentFor
 }
 
 export async function getSupplierPaymentsByStatus(status: SupplierPaymentStatus): Promise<SupplierPayment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('supplier_payments')
@@ -91,7 +86,6 @@ export async function getSupplierPaymentsByStatus(status: SupplierPaymentStatus)
 }
 
 export async function getOverdueSupplierPayments(): Promise<SupplierPayment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const today = new Date().toISOString().split('T')[0]
 

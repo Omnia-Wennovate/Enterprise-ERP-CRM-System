@@ -11,7 +11,6 @@ import type {
 
 // Generate unique invoice number
 export async function generateInvoiceNumber(): Promise<string> {
-  const supabase = createClient()
   const supabase = await createClient()
   const today = new Date()
   const year = today.getFullYear()
@@ -31,7 +30,6 @@ export async function generateInvoiceNumber(): Promise<string> {
 
 // Get all invoices
 export async function getInvoices(): Promise<Invoice[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('invoices')
@@ -72,7 +70,6 @@ export async function getInvoicesFiltered(
 
 // Get single invoice with full details
 export async function getInvoiceById(id: string): Promise<InvoiceDetail | null> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   // Fetch invoice
@@ -133,7 +130,6 @@ export async function getInvoiceById(id: string): Promise<InvoiceDetail | null> 
 
 // Create invoice with line items
 export async function createInvoice(formData: CreateInvoiceFormData): Promise<Invoice> {
-  const supabase = createClient()
   const supabase = await createClient()
   const invoiceNumber = await generateInvoiceNumber()
 
@@ -197,7 +193,6 @@ export async function createInvoice(formData: CreateInvoiceFormData): Promise<In
 
 // Update invoice status
 export async function updateInvoiceStatus(invoiceId: string, status: InvoiceStatus): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -210,7 +205,6 @@ export async function updateInvoiceStatus(invoiceId: string, status: InvoiceStat
 
 // Calculate invoice status based on payments
 export async function recalculateInvoiceStatus(invoiceId: string): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   // Fetch invoice and payments
@@ -244,7 +238,6 @@ export async function recalculateInvoiceStatus(invoiceId: string): Promise<void>
 
 // Send invoice (update status to sent)
 export async function sendInvoice(invoiceId: string): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -260,7 +253,6 @@ export async function sendInvoice(invoiceId: string): Promise<void> {
 
 // Cancel invoice
 export async function cancelInvoice(invoiceId: string): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase

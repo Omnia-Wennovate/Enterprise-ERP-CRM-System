@@ -16,7 +16,6 @@ import { calculateTotalPaid } from './payments'
 export async function createCancellationRequest(
   formData: CreateCancellationFormData
 ): Promise<CancellationRequest> {
-  const supabase = createClient()
   const supabase = await createClient()
   const user = (await supabase.auth.getUser()).data.user
 
@@ -50,7 +49,6 @@ export async function createCancellationRequest(
 
 // Get cancellation requests
 export async function getCancellationRequests(): Promise<CancellationRequest[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('cancellation_requests')
@@ -63,7 +61,6 @@ export async function getCancellationRequests(): Promise<CancellationRequest[]> 
 
 // Get cancellation request by ID
 export async function getCancellationRequestById(id: string): Promise<CancellationRequest | null> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('cancellation_requests')
@@ -80,7 +77,6 @@ export async function getCancellationRequestById(id: string): Promise<Cancellati
 
 // Approve cancellation request
 export async function approveCancellationRequest(cancellationId: string): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
   const user = (await supabase.auth.getUser()).data.user
 
@@ -117,7 +113,6 @@ export async function approveCancellationRequest(cancellationId: string): Promis
 
 // Reject cancellation request
 export async function rejectCancellationRequest(cancellationId: string): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
   const user = (await supabase.auth.getUser()).data.user
 
@@ -135,7 +130,6 @@ export async function rejectCancellationRequest(cancellationId: string): Promise
 
 // Create refund from cancellation
 export async function createRefund(formData: ProcessRefundFormData): Promise<Refund> {
-  const supabase = createClient()
   const supabase = await createClient()
   const user = (await supabase.auth.getUser()).data.user
 
@@ -182,7 +176,6 @@ export async function createRefund(formData: ProcessRefundFormData): Promise<Ref
 
 // Get refunds
 export async function getRefunds(): Promise<Refund[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('refunds')
@@ -195,7 +188,6 @@ export async function getRefunds(): Promise<Refund[]> {
 
 // Get refund by ID with details
 export async function getRefundDetail(refundId: string): Promise<RefundDetail | null> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { data: refund, error: refundError } = await supabase
@@ -253,7 +245,6 @@ export async function getRefundDetail(refundId: string): Promise<RefundDetail | 
 
 // Update refund status
 export async function updateRefundStatus(refundId: string, status: RefundStatus): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
   const user = (await supabase.auth.getUser()).data.user
 
@@ -301,7 +292,6 @@ export async function updateRefundStatus(refundId: string, status: RefundStatus)
 
 // Mark multiple refunds as paid
 export async function markRefundsAsPaid(refundIds: string[]): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
   const today = new Date().toISOString().split('T')[0]
 

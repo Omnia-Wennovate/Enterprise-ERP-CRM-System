@@ -6,7 +6,6 @@ import { calculateTrueProfit } from './profit-calculation'
 
 // Get active commission rule
 export async function getActiveCommissionRule(role: string): Promise<CommissionRule | null> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('commission_rules')
@@ -24,7 +23,6 @@ export async function getActiveCommissionRule(role: string): Promise<CommissionR
 
 // Calculate and create commission for completed booking
 export async function createCommissionForBooking(bookingId: string, agentId: string): Promise<Commission> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   // Get booking details
@@ -90,7 +88,6 @@ export async function createCommissionForBooking(bookingId: string, agentId: str
 
 // Get commissions
 export async function getCommissions(): Promise<Commission[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('commissions')
@@ -104,7 +101,6 @@ export async function getCommissions(): Promise<Commission[]> {
 
 // Get commissions by agent
 export async function getCommissionsByAgent(agentId: string): Promise<Commission[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('commissions')
@@ -119,7 +115,6 @@ export async function getCommissionsByAgent(agentId: string): Promise<Commission
 
 // Get commission statement for agent (monthly)
 export async function getCommissionStatement(agentId: string, month: number, year: number): Promise<CommissionStatement> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   // Get profile info
@@ -161,7 +156,6 @@ export async function getCommissionStatement(agentId: string, month: number, yea
 
 // Update commission status
 export async function updateCommissionStatus(commissionId: string, status: CommissionStatus): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -174,7 +168,6 @@ export async function updateCommissionStatus(commissionId: string, status: Commi
 
 // Approve commissions (bulk)
 export async function approveCommissions(commissionIds: string[]): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -187,7 +180,6 @@ export async function approveCommissions(commissionIds: string[]): Promise<void>
 
 // Mark commissions as paid (bulk)
 export async function markCommissionsAsPaid(commissionIds: string[]): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -200,7 +192,6 @@ export async function markCommissionsAsPaid(commissionIds: string[]): Promise<vo
 
 // Get commission rules
 export async function getCommissionRules(): Promise<CommissionRule[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('commission_rules')
@@ -216,7 +207,6 @@ export async function updateCommissionRule(
   ruleId: string,
   updates: Partial<CommissionRule>
 ): Promise<void> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { error } = await supabase

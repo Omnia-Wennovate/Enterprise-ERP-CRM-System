@@ -9,6 +9,7 @@ import {
 import { motion } from 'framer-motion'
 import { ItineraryTimeline } from './ItineraryTimeline'
 import { TravelIntelligence } from './TravelIntelligence'
+import { AITravelAssistant } from './AITravelAssistant'
 import { ItineraryForm } from './ItineraryForm'
 import type { ItineraryWithBooking, ItineraryDay, ItineraryItem, ItineraryComment, ItineraryStatus } from '@/types/itinerary'
 import { ITINERARY_STATUSES } from '@/types/itinerary'
@@ -115,8 +116,8 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
       const { addItem } = await import('@/lib/services/itineraries')
       await addItem(data)
       loadItinerary()
-    } catch (err) {
-      console.error('Failed to add item:', err)
+    } catch (err: any) {
+      console.error('Failed to add item:', err.message || err)
     }
   }
 
@@ -493,6 +494,25 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
           onClose={() => setShowEditForm(false)}
         />
       )}
+
+      {/* AI Travel Assistant — Floating Chat (Phase X) */}
+      <AITravelAssistant
+        itinerary={itinerary}
+        onAddItem={handleAddItem}
+        onUpdateItem={handleUpdateItem}
+        onDeleteItem={async (id: string) => {
+          // AI assistant has its own approval flow, skip confirm()
+          try {
+            const { deleteItem } = await import('@/lib/services/itineraries')
+            await deleteItem(id)
+            loadItinerary()
+          } catch (err) {
+            console.error('Failed to delete item:', err)
+          }
+        }}
+        onAddDay={handleAddDay}
+        onReload={loadItinerary}
+      />
     </motion.div>
   )
 }

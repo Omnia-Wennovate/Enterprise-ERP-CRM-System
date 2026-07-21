@@ -1,19 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Loader2 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { X, Loader2, Sparkles, ChevronDown, ChevronUp, Wand2 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import type { Itinerary } from '@/types/itinerary'
 import { TRAVEL_TYPES } from '@/types/itinerary'
+import { AIItineraryPanel } from './AIItineraryPanel'
+import type { AIGeneratedItinerary } from '@/types/ai-itinerary'
 
 interface ItineraryFormProps {
   itinerary?: Itinerary | null
   onSave: (data: Partial<Itinerary>) => Promise<void>
   onClose: () => void
+  onCreatedWithAI?: (itineraryId: string) => void
 }
 
-export function ItineraryForm({ itinerary, onSave, onClose }: ItineraryFormProps) {
+export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: ItineraryFormProps) {
   const [saving, setSaving] = useState(false)
+  const [showAIPanel, setShowAIPanel] = useState(false)
   const [bookings, setBookings] = useState<{ id: string; booking_reference: string; customer_name: string; destination: string; trip_start_date: string; trip_end_date: string; currency: string }[]>([])
   const [form, setForm] = useState({
     title: itinerary?.title || '',
@@ -74,6 +78,50 @@ export function ItineraryForm({ itinerary, onSave, onClose }: ItineraryFormProps
     }
   }
 
+  // ── Accept AI Plan Handler ─────────────────────────────────────────────────
+
+  const handleAcceptAIPlan = async (
+    generatedItinerary: AIGeneratedItinerary,
+    generationId: string | null
+  ) => {
+    try {
+      // Get user profile
+      let userId = 'system'
+      try {
+        const stored = localStorage.getItem('auth_user')
+        if (stored) {
+          const profile = JSON.parse(stored)
+          userId = profile.id || 'system'
+        }
+      } catch { /* ignore */ }
+
+      const { acceptAIPlan } = await import('@/lib/services/ai-import')
+      const newItineraryId = await acceptAIPlan(
+        generatedItinerary,
+        {
+          title: form.title || undefined,
+          bookingId: form.booking_id || undefined,
+          baseCurrency: form.base_currency || undefined,
+          localCurrency: form.local_currency || undefined,
+          timezone: form.timezone || undefined,
+          notes: form.notes || undefined,
+        },
+        userId,
+        generationId || undefined
+      )
+
+      // Navigate to the new itinerary
+      if (onCreatedWithAI) {
+        onCreatedWithAI(newItineraryId)
+      } else {
+        onClose()
+      }
+    } catch (err) {
+      console.error('Failed to accept AI plan:', err)
+      throw err
+    }
+  }
+
   const TIMEZONES = [
     'UTC', 'Asia/Dubai', 'Asia/Riyadh', 'Europe/Istanbul', 'Europe/London',
     'Europe/Paris', 'Europe/Rome', 'America/New_York', 'America/Los_Angeles',
@@ -82,15 +130,19 @@ export function ItineraryForm({ itinerary, onSave, onClose }: ItineraryFormProps
 
   const CURRENCIES = ['USD', 'EUR', 'GBP', 'AED', 'SAR', 'TRY', 'JPY', 'INR', 'EGP', 'THB', 'SGD', 'AUD', 'CHF']
 
+  const isCreating = !itinerary
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+        className={`bg-white rounded-2xl shadow-2xl w-full ${
+          showAIPanel ? 'max-w-5xl' : 'max-w-lg'
+        } max-h-[90vh] overflow-y-auto transition-all duration-300`}
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-slate-200">
+        <div className="flex items-center justify-between p-6 border-b border-slate-200 sticky top-0 bg-white z-10 rounded-t-2xl">
           <h2 className="text-lg font-bold text-slate-900">
             {itinerary ? 'Edit Itinerary' : 'Create New Itinerary'}
           </h2>
@@ -169,7 +221,7 @@ export function ItineraryForm({ itinerary, onSave, onClose }: ItineraryFormProps
             </label>
             <select
               value={form.travel_type}
-              onChange={e => setForm(f => ({ ...f, travel_type: e.target.value }))}
+              onChange={e => setForm(f => ({ ...f, travel_type: e.target.value as typeof f.travel_type }))}
               className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
             >
               {TRAVEL_TYPES.map(tt => (
@@ -232,6 +284,60 @@ export function ItineraryForm({ itinerary, onSave, onClose }: ItineraryFormProps
               className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none"
             />
           </div>
+
+          {/* ════════════════════════════════════════════════════════════════════
+              AI ITINERARY BUILDER SECTION (NEW — Phase X)
+              ════════════════════════════════════════════════════════════════════ */}
+          {isCreating && (
+            <div className="border-t border-slate-200 pt-4">
+              {/* AI Toggle Button */}
+              <button
+                type="button"
+                onClick={() => setShowAIPanel(!showAIPanel)}
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                  showAIPanel
+                    ? 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-700 border border-teal-200'
+                    : 'bg-gradient-to-r from-slate-50 to-slate-100 text-slate-600 border border-slate-200 hover:from-teal-50 hover:to-emerald-50 hover:text-teal-700 hover:border-teal-200'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  AI Itinerary Builder
+                  <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 rounded text-[10px] font-bold uppercase">
+                    AI
+                  </span>
+                </span>
+                {showAIPanel ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <span className="flex items-center gap-1 text-xs font-medium opacity-70">
+                    <Wand2 className="w-3 h-3" /> Generate with AI
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+                )}
+              </button>
+
+              {/* AI Panel Content */}
+              <AnimatePresence>
+                {showAIPanel && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-4">
+                      <AIItineraryPanel
+                        formData={form}
+                        onAcceptPlan={handleAcceptAIPlan}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">

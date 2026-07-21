@@ -6,7 +6,6 @@ import { recalculateInvoiceStatus } from './invoices'
 
 // Get all payments
 export async function getPayments(): Promise<Payment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('payments')
@@ -19,7 +18,6 @@ export async function getPayments(): Promise<Payment[]> {
 
 // Get payments for specific invoice
 export async function getPaymentsByInvoice(invoiceId: string): Promise<Payment[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('payments')
@@ -66,7 +64,6 @@ export async function getPaymentsFiltered(
 
 // Record payment for invoice
 export async function recordPayment(formData: RecordPaymentFormData): Promise<Payment> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   // Verify invoice exists
@@ -130,7 +127,6 @@ export async function recordPayment(formData: RecordPaymentFormData): Promise<Pa
 
 // Get payment by ID
 export async function getPaymentById(paymentId: string): Promise<Payment | null> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('payments')
@@ -147,7 +143,6 @@ export async function getPaymentById(paymentId: string): Promise<Payment | null>
 
 // Calculate total paid for invoice
 export async function calculateTotalPaid(invoiceId: string): Promise<number> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('payments')

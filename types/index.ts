@@ -2,6 +2,7 @@
 export * from './finance'
 export * from './marketing'
 export * from './tech'
+export * from './leads'
 
 export type UserRole = 'super_admin' | 'admin' | 'sales_agent' | 'operations' | 'accountant' | 'hr_manager' | 'customer' | 'marketing'
 

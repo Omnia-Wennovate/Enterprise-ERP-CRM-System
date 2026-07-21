@@ -161,6 +161,11 @@ export default function ItinerariesPage() {
           <ItineraryForm
             onSave={handleCreate}
             onClose={() => setShowCreateForm(false)}
+            onCreatedWithAI={(id: string) => {
+              setShowCreateForm(false)
+              setSelectedId(id)
+              setView('detail')
+            }}
           />
         )}
       </div>

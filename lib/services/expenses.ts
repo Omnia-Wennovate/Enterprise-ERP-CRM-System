@@ -4,7 +4,6 @@ import { createClient } from '@/lib/supabase/server'
 import type { Expense, AddExpenseFormData } from '@/types/finance'
 
 export async function getExpenses(): Promise<Expense[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('expenses')
@@ -16,7 +15,6 @@ export async function getExpenses(): Promise<Expense[]> {
 }
 
 export async function getExpensesByBooking(bookingId: string): Promise<Expense[]> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('expenses')
@@ -29,7 +27,6 @@ export async function getExpensesByBooking(bookingId: string): Promise<Expense[]
 }
 
 export async function addExpense(formData: AddExpenseFormData): Promise<Expense> {
-  const supabase = createClient()
   const supabase = await createClient()
 
   const { data, error } = await supabase
@@ -53,7 +50,6 @@ export async function addExpense(formData: AddExpenseFormData): Promise<Expense>
 }
 
 export async function getTotalExpensesByBooking(bookingId: string): Promise<number> {
-  const supabase = createClient()
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('expenses')
