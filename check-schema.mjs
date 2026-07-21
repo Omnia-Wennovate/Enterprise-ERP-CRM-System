@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
+import { loadEnvConfig } from '@next/env'
 
-const supabaseUrl = 'https://wxtiyecrufkwtizsdnpx.supabase.co'
-const supabaseKey = 'sb_publishable_9kLQEGEAHNlljmE1FWla6A_KvbS0UTu'
+// Load environment variables from .env.local
+loadEnvConfig(process.cwd())
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function checkSchema() {
