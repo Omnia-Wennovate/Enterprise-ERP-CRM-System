@@ -30,9 +30,16 @@ export async function createBooking(booking: Omit<Booking, 'id' | 'created_at' |
   const supabase = await createClient()
   
   // Start transaction by creating booking
+  const bookingPayload = {
+    ...booking,
+    booking_number: (booking as any).booking_number || booking.booking_reference || `BK-${Date.now()}`,
+    departure_date: (booking as any).departure_date || booking.trip_start_date,
+    return_date: (booking as any).return_date || booking.trip_end_date,
+  }
+
   const { data: newBooking, error: bookingError } = await supabase
     .from('bookings')
-    .insert([booking])
+    .insert([bookingPayload])
     .select()
     .single()
 

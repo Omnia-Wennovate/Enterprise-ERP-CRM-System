@@ -107,8 +107,8 @@ function mapAIItemToItineraryItem(
   // Build supplier name with "Suggested:" prefix for unconfirmed
   const supplierName = genItem.supplierName
     ? (genItem.isSupplierConfirmed
-        ? genItem.supplierName
-        : `Suggested: ${genItem.supplierName}`)
+      ? genItem.supplierName
+      : `Suggested: ${genItem.supplierName}`)
     : null
 
   // Build metadata based on type
@@ -171,9 +171,9 @@ function buildItineraryNotes(
   const parts: string[] = []
 
   if (existingNotes) parts.push(existingNotes)
-  
+
   parts.push('--- AI GENERATED ITINERARY NOTES ---')
-  
+
   if (itinerary.tripSummary) {
     parts.push(`\nTrip Summary:\n${itinerary.tripSummary}`)
   }

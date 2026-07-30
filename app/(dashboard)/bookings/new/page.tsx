@@ -66,7 +66,7 @@ export default function NewBookingPage() {
       // Create booking
       const booking = await createBooking({
         booking_reference: `OMN-${Date.now()}`,
-        customer_id: 'demo-customer',
+        customer_id: '00000000-0000-0000-0000-000000000000',
         customer_name: formData.customer_name,
         destination: formData.destination,
         package_name: formData.package_name,
@@ -75,7 +75,7 @@ export default function NewBookingPage() {
         status: 'draft',
         total_cost: parseFloat(formData.total_cost) || 0,
         total_revenue: parseFloat(formData.total_revenue) || 0,
-        created_by: 'demo-user',
+        created_by: '00000000-0000-0000-0000-000000000000',
       })
 
       // Add travelers

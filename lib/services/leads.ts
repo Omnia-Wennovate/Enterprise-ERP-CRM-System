@@ -171,6 +171,7 @@ export async function updateLeadStage(
     negotiation: 70,
     won: 100,
     lost: 0,
+    archived: 0,
   }
 
   const { data, error } = await supabase
@@ -275,8 +276,68 @@ export async function getLeadStats(): Promise<LeadStats> {
       negotiation: 0,
       won: 0,
       lost: 0,
+      archived: 0,
     } as Record<LeadPipelineStage, number>
   )
 
   return { totalLeads, pipelineValue, wonValue, conversionRate, leadsByStage }
+}
+
+// ============================================================================
+// DELETE LEAD
+// ============================================================================
+
+export async function deleteLead(id: string): Promise<void> {
+  const supabase = createClient()
+  const { error } = await supabase.from('leads').delete().eq('id', id)
+  if (error) throw error
+}
+
+// ============================================================================
+// DUPLICATE LEAD
+// ============================================================================
+
+export async function duplicateLead(id: string): Promise<LeadRow> {
+  const supabase = createClient()
+
+  const { data: original, error: fetchError } = await supabase
+    .from('leads')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (fetchError) throw fetchError
+  if (!original) throw new Error('Lead not found')
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id: _id, created_at: _ca, updated_at: _ua, ...rest } = original
+  const { data: dup, error: dupError } = await supabase
+    .from('leads')
+    .insert({ ...rest, lead_name: `${original.lead_name} (Copy)`, pipeline_stage: 'new' })
+    .select()
+    .single()
+
+  if (dupError) throw dupError
+  return dup as LeadRow
+}
+
+// ============================================================================
+// UPDATE LEAD ASSIGNMENT
+// ============================================================================
+
+export async function updateLeadAssignment(
+  id: string,
+  assignedTo: string | null
+): Promise<LeadRow> {
+  const supabase = createClient()
+
+  const { data, error } = await supabase
+    .from('leads')
+    .update({ assigned_to: assignedTo, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data as LeadRow
 }

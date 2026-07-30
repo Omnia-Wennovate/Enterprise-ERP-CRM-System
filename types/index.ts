@@ -8,6 +8,7 @@ export type UserRole = 'super_admin' | 'admin' | 'sales_agent' | 'operations' | 
 
 export interface Profile {
   id: string
+
   full_name: string
   first_name?: string
   last_name?: string
@@ -137,7 +138,18 @@ export interface Task {
 }
 
 // Bookings Models
-export type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
+// NOTE: merged with the Phase 3 extended status list below (was previously
+// declared twice, which is an invalid duplicate identifier in TypeScript).
+export type BookingStatus =
+  | 'pending'
+  | 'draft'
+  | 'confirmed'
+  | 'processing'
+  | 'documents_ready'
+  | 'in_progress'
+  | 'travelled'
+  | 'completed'
+  | 'cancelled'
 
 export interface Booking {
   id: string
@@ -214,7 +226,6 @@ export interface BookingNote {
 }
 
 // Phase 3: Extended Bookings Models
-export type BookingStatus = 'draft' | 'confirmed' | 'processing' | 'documents_ready' | 'travelled' | 'completed' | 'cancelled'
 export type ChecklistCategory = 'documentation' | 'visa' | 'flights' | 'hotel' | 'customer'
 export type TimelineEventType = 'created' | 'quote_accepted' | 'invoice_generated' | 'visa_applied' | 'documents_sent' | 'travelled' | 'status_changed'
 

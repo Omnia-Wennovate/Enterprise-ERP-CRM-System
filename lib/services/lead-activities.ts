@@ -123,3 +123,190 @@ export async function logDocumentUploaded(
     metadata: { file_name: fileName },
   })
 }
+
+// ============================================================================
+// LOG LEAD EDITED
+// ============================================================================
+
+export async function logLeadEdited(
+  leadId: string,
+  leadName: string,
+  changedFields: string[],
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'lead_updated',
+    title: `Lead "${leadName}" was updated`,
+    description: changedFields.length > 0 ? `Fields updated: ${changedFields.join(', ')}` : undefined,
+    performed_by: performedBy,
+    metadata: { changed_fields: changedFields },
+  })
+}
+
+// ============================================================================
+// LOG ASSIGNED
+// ============================================================================
+
+export async function logAssigned(
+  leadId: string,
+  leadName: string,
+  agentName: string,
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'assigned',
+    title: `Lead "${leadName}" assigned to ${agentName}`,
+    performed_by: performedBy,
+    metadata: { agent_name: agentName },
+  })
+}
+
+// ============================================================================
+// LOG NOTE ADDED
+// ============================================================================
+
+export async function logNoteAdded(
+  leadId: string,
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'note_added',
+    title: 'Internal note added',
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+
+// ============================================================================
+// LOG CONVERTED
+// ============================================================================
+
+export async function logConverted(
+  leadId: string,
+  leadName: string,
+  convertedTo: 'customer' | 'booking' | 'quotation',
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'converted',
+    title: `Lead "${leadName}" converted to ${convertedTo}`,
+    performed_by: performedBy,
+    metadata: { converted_to: convertedTo },
+  })
+}
+
+// ============================================================================
+// LOG ARCHIVED
+// ============================================================================
+
+export async function logArchived(
+  leadId: string,
+  leadName: string,
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'archived',
+    title: `Lead "${leadName}" was archived`,
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+
+// ============================================================================
+// LOG CALL MADE
+// ============================================================================
+
+export async function logCallMade(
+  leadId: string,
+  performedBy?: string,
+  note?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'call_made',
+    title: 'Phone call logged',
+    description: note,
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+
+// ============================================================================
+// LOG EMAIL SENT
+// ============================================================================
+
+export async function logEmailSent(
+  leadId: string,
+  performedBy?: string,
+  note?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'email_sent',
+    title: 'Email sent',
+    description: note,
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+
+// ============================================================================
+// LOG MEETING SCHEDULED
+// ============================================================================
+
+export async function logMeetingScheduled(
+  leadId: string,
+  performedBy?: string,
+  note?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'meeting_scheduled',
+    title: 'Meeting scheduled',
+    description: note,
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+
+// ============================================================================
+// LOG FOLLOW-UP SCHEDULED
+// ============================================================================
+
+export async function logFollowUpScheduled(
+  leadId: string,
+  title: string,
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'follow_up_scheduled',
+    title: `Follow-up scheduled: "${title}"`,
+    performed_by: performedBy,
+    metadata: { follow_up_title: title },
+  })
+}
+
+// ============================================================================
+// LOG QUOTATION GENERATED
+// ============================================================================
+
+export async function logQuotationGenerated(
+  leadId: string,
+  leadName: string,
+  performedBy?: string
+): Promise<LeadActivity> {
+  return createLeadActivity({
+    lead_id: leadId,
+    activity_type: 'quotation_generated',
+    title: `Quotation generated for "${leadName}"`,
+    performed_by: performedBy,
+    metadata: {},
+  })
+}
+

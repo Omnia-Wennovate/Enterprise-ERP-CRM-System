@@ -58,6 +58,7 @@ export const PIPELINE_STAGES = [
   'negotiation',
   'won',
   'lost',
+  'archived',
 ] as const
 
 export const PIPELINE_STAGE_LABELS: Record<LeadPipelineStage, string> = {
@@ -67,6 +68,7 @@ export const PIPELINE_STAGE_LABELS: Record<LeadPipelineStage, string> = {
   negotiation: 'Negotiation',
   won: 'Won',
   lost: 'Lost',
+  archived: 'Archived',
 }
 
 export const PIPELINE_STAGE_COLORS: Record<LeadPipelineStage, { text: string; bg: string }> = {
@@ -76,6 +78,7 @@ export const PIPELINE_STAGE_COLORS: Record<LeadPipelineStage, { text: string; bg
   negotiation: { text: 'text-orange-700', bg: 'bg-orange-100' },
   won: { text: 'text-green-700', bg: 'bg-green-100' },
   lost: { text: 'text-red-700', bg: 'bg-red-100' },
+  archived: { text: 'text-gray-500', bg: 'bg-gray-200' },
 }
 
 export const PRIORITIES = ['low', 'medium', 'high', 'critical'] as const
@@ -153,10 +156,30 @@ export const ACTIVITY_TYPES = [
   'call_made',
   'meeting_scheduled',
   'task_created',
+  'follow_up_scheduled',
   'assigned',
   'converted',
   'archived',
+  'deleted',
+  'duplicated',
+  'quotation_generated',
 ] as const
+
+export const FOLLOW_UP_TYPES = [
+  'phone_call',
+  'email',
+  'meeting',
+  'reminder',
+  'task',
+] as const
+
+export const FOLLOW_UP_TYPE_LABELS: Record<FollowUpType, string> = {
+  phone_call: 'Phone Call',
+  email: 'Email',
+  meeting: 'Meeting',
+  reminder: 'Reminder',
+  task: 'Task',
+}
 
 export const DOCUMENT_CATEGORIES = [
   'passport',
@@ -180,6 +203,7 @@ export type LeadTag = (typeof LEAD_TAGS)[number]
 export type LeadActiveStatus = (typeof LEAD_STATUSES)[number]
 export type LeadActivityType = (typeof ACTIVITY_TYPES)[number]
 export type DocumentCategory = (typeof DOCUMENT_CATEGORIES)[number]
+export type FollowUpType = (typeof FOLLOW_UP_TYPES)[number]
 
 export interface LeadRow {
   id: string
@@ -257,6 +281,33 @@ export interface LeadDocument {
   document_category: DocumentCategory
   uploaded_by: string | null
   created_at: string
+}
+
+export interface LeadFollowUp {
+  id: string
+  lead_id: string
+  title: string
+  description: string | null
+  follow_up_type: FollowUpType
+  due_date: string | null
+  priority: LeadPriority
+  assigned_to: string | null
+  status: 'pending' | 'completed' | 'cancelled'
+  created_by: string | null
+  created_at: string
+  updated_at: string
+  assigned_agent?: { id: string; full_name: string; avatar_url: string | null } | null
+}
+
+export interface LeadNote {
+  id: string
+  lead_id: string
+  content: string
+  author_id: string | null
+  author_name: string | null
+  mentions: string[]
+  created_at: string
+  updated_at: string
 }
 
 export interface AppNotification {

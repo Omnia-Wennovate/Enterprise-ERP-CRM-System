@@ -17,15 +17,17 @@ import {
 import {
   Loader2, ArrowLeft, Save, Plus, Trash2, CheckCircle2, Circle, Clock,
   Users, MessageSquare, History, Paperclip, Target, Calendar, X,
-  GripVertical, ChevronRight, AlertTriangle, BarChart3
+  GripVertical, ChevronRight, AlertTriangle, BarChart3,
+  Code2, Server, GitMerge, FileText, BookOpen, Wrench, Activity, Rocket
 } from 'lucide-react'
 import { getProjectById, updateProject, getProjectMembers, addProjectMember, removeProjectMember, getProjectComments, addProjectComment, getProjectAttachments, getProjectActivity } from '@/lib/services/projects'
 import { getProjectTasks, getTasksByStatus, createProjectTask, updateTaskStatus, deleteProjectTask } from '@/lib/services/project-tasks'
 import { getMilestones, createMilestone, completeMilestone, deleteMilestone } from '@/lib/services/milestones'
 import { getSprints, createSprint, updateSprintStatus, deleteSprint } from '@/lib/services/sprints'
+import { ProjectArchiveTabs } from '@/components/tech/ProjectArchiveTabs'
 import Link from 'next/link'
 
-type Tab = 'overview' | 'milestones' | 'sprints' | 'tasks' | 'team' | 'comments' | 'activity' | 'attachments'
+type Tab = 'overview' | 'milestones' | 'sprints' | 'tasks' | 'team' | 'comments' | 'activity' | 'attachments' | 'repository' | 'deployment' | 'releases' | 'documents' | 'kb' | 'maintenance' | 'health'
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -235,6 +237,13 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
     { key: 'comments', label: 'Comments', icon: MessageSquare },
     { key: 'activity', label: 'Activity', icon: History },
     { key: 'attachments', label: 'Attachments', icon: Paperclip },
+    { key: 'repository', label: 'Repository', icon: Code2 },
+    { key: 'deployment', label: 'Deployment', icon: Server },
+    { key: 'releases', label: 'Releases', icon: GitMerge },
+    { key: 'documents', label: 'Documents', icon: FileText },
+    { key: 'kb', label: 'Knowledge Base', icon: BookOpen },
+    { key: 'maintenance', label: 'Maintenance', icon: Wrench },
+    { key: 'health', label: 'Health', icon: Activity },
   ]
 
   const totalTasks = Object.values(tasksByStatus).flat().length
@@ -770,6 +779,15 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                         <p className="text-sm text-[#4B6B7A] text-center py-8">No attachments yet.</p>
                       )}
                     </div>
+                  )}
+
+                  {/* ============ ARCHIVE TABS ============ */}
+                  {['repository', 'deployment', 'releases', 'documents', 'kb', 'maintenance', 'health'].includes(activeTab) && (
+                    <ProjectArchiveTabs 
+                      projectId={project.id} 
+                      activeTab={activeTab as any} 
+                      profile={profile} 
+                    />
                   )}
                 </div>
               </div>

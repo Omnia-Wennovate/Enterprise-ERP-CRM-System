@@ -1,158 +1,267 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { FileText, ChevronRight, Calendar, Users, MapPin } from 'lucide-react'
-import type { Quotation, QuotationStatus } from '@/types'
-import { storage } from '@/lib/storage'
-import { Button } from '@/components/ui/button'
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  FileText, ChevronRight, Calendar, Users, MapPin, Search,
+  Filter, RefreshCw, TrendingUp, DollarSign, Clock, CheckCircle2,
+  Loader2,
+} from 'lucide-react'
+import { getQuotations } from '@/lib/services/quotations'
+import type { QuotationWithItems } from '@/types/quotation'
+import { QUOTATION_STATUS_COLORS, QUOTATION_STATUS_LABELS } from '@/types/quotation'
+import { QuotationDetailPanel } from './QuotationDetailPanel'
+import { EditQuotationModal } from './EditQuotationModal'
 
-const STATUS_CONFIG: Record<QuotationStatus, { label: string; color: string; bgColor: string }> = {
-  draft: { label: 'Draft', color: 'text-gray-700', bgColor: 'bg-gray-100' },
-  sent: { label: 'Sent', color: 'text-blue-700', bgColor: 'bg-blue-100' },
-  viewed: { label: 'Viewed', color: 'text-purple-700', bgColor: 'bg-purple-100' },
-  accepted: { label: 'Accepted', color: 'text-green-700', bgColor: 'bg-green-100' },
-  rejected: { label: 'Rejected', color: 'text-red-700', bgColor: 'bg-red-100' },
-  expired: { label: 'Expired', color: 'text-orange-700', bgColor: 'bg-orange-100' },
+// ============================================================================
+// STAT CARD
+// ============================================================================
+function StatCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ComponentType<{ className?: string }>; color: string }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+      <div className={`p-2.5 rounded-xl ${color}`}>
+        <Icon className="w-4 h-4 text-white" />
+      </div>
+      <div>
+        <p className="text-xs text-gray-500 font-medium">{label}</p>
+        <p className="text-sm font-bold text-gray-900">{value}</p>
+      </div>
+    </div>
+  )
 }
 
-export function QuotationsList() {
-  const [quotations, setQuotations] = useState<Quotation[]>([])
-  const [selectedQuotation, setSelectedQuotation] = useState<Quotation | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
-  useEffect(() => {
-    setQuotations(storage.getQuotations())
-    setIsLoading(false)
+interface QuotationsListProps {
+  /** Called by parent to signal a refresh from outside (e.g. after New Quote) */
+  refreshKey?: number
+}
+
+export function QuotationsList({ refreshKey }: QuotationsListProps) {
+  const [quotations, setQuotations]         = useState<QuotationWithItems[]>([])
+  const [filtered, setFiltered]             = useState<QuotationWithItems[]>([])
+  const [selectedQuotation, setSelectedQuotation] = useState<QuotationWithItems | null>(null)
+  const [editingQuotation, setEditingQuotation]   = useState<QuotationWithItems | null>(null)
+  const [isLoading, setIsLoading]           = useState(true)
+  const [isRefreshing, setIsRefreshing]     = useState(false)
+  const [search, setSearch]                 = useState('')
+  const [statusFilter, setStatusFilter]     = useState<string>('all')
+
+  const load = useCallback(async (quiet = false) => {
+    if (!quiet) setIsLoading(true)
+    else setIsRefreshing(true)
+    try {
+      const data = await getQuotations()
+      setQuotations(data)
+    } catch (err) {
+      console.error('Failed to load quotations:', err)
+    } finally {
+      setIsLoading(false)
+      setIsRefreshing(false)
+    }
   }, [])
 
-  if (isLoading) return <div className="p-4">Loading quotations...</div>
+  useEffect(() => { load() }, [load])
+
+  // Reload when parent increments refreshKey (e.g. after New Quote saved)
+  useEffect(() => {
+    if (refreshKey && refreshKey > 0) load(true)
+  }, [refreshKey, load])
+
+  // Filter logic
+  useEffect(() => {
+    let list = [...quotations]
+    if (statusFilter !== 'all') list = list.filter((q) => q.status === statusFilter)
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      list = list.filter(
+        (qt) =>
+          qt.customer_name.toLowerCase().includes(q) ||
+          qt.quote_number.toLowerCase().includes(q) ||
+          qt.destination.toLowerCase().includes(q) ||
+          qt.quote_title.toLowerCase().includes(q)
+      )
+    }
+    setFiltered(list)
+  }, [quotations, search, statusFilter])
+
+  // Keep selected quotation in sync after refresh
+  useEffect(() => {
+    if (selectedQuotation) {
+      const updated = quotations.find((q) => q.id === selectedQuotation.id)
+      if (updated) setSelectedQuotation(updated)
+      else setSelectedQuotation(null)
+    }
+  }, [quotations])
+
+  const formatCurrency = (amount: number, currency: string) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency, minimumFractionDigits: 0 }).format(amount)
+
+  const formatDate = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+
+  // Stats
+  const totalValue  = quotations.reduce((s, q) => s + q.grand_total, 0)
+  const accepted    = quotations.filter((q) => q.status === 'accepted').length
+  const pending     = quotations.filter((q) => ['sent', 'viewed', 'negotiation'].includes(q.status)).length
+  const drafts      = quotations.filter((q) => q.status === 'draft').length
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600 mx-auto mb-3" />
+          <p className="text-sm text-gray-500">Loading quotations...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="flex gap-6 h-full">
-      {/* List */}
-      <div className="flex-1 space-y-3 overflow-y-auto">
-        {quotations.map((quote) => (
-          <div
-            key={quote.id}
-            onClick={() => setSelectedQuotation(quote)}
-            className="bg-white border border-gray-200 rounded-lg p-4 hover:border-teal-300 hover:shadow-md cursor-pointer transition-all"
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <FileText className="w-4 h-4 text-teal-600 flex-shrink-0" />
-                  <h3 className="font-semibold text-gray-900">{quote.quote_number}</h3>
-                </div>
-                <p className="text-sm text-gray-600 truncate">{quote.customer_name}</p>
-              </div>
-              <span
-                className={`text-xs px-2 py-1 rounded-full font-medium whitespace-nowrap flex-shrink-0 ml-2 ${STATUS_CONFIG[quote.status].bgColor} ${STATUS_CONFIG[quote.status].color}`}
-              >
-                {STATUS_CONFIG[quote.status].label}
-              </span>
-            </div>
+    <div className="flex gap-0 h-full">
+      {/* ── LEFT: LIST ── */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Stats */}
+        <div className="px-6 pt-5 pb-4 grid grid-cols-4 gap-3 flex-shrink-0">
+          <StatCard label="Total Value"   value={formatCurrency(totalValue, 'USD')} icon={DollarSign}    color="bg-teal-500" />
+          <StatCard label="Accepted"      value={accepted}                          icon={CheckCircle2}   color="bg-green-500" />
+          <StatCard label="In Progress"   value={pending}                           icon={TrendingUp}     color="bg-blue-500" />
+          <StatCard label="Drafts"        value={drafts}                            icon={Clock}          color="bg-gray-400" />
+        </div>
 
-            <div className="grid grid-cols-3 gap-3 text-sm">
-              <div className="flex items-center gap-2 text-gray-600">
-                <MapPin className="w-4 h-4" />
-                <span className="truncate">{quote.trip_destination}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <Calendar className="w-4 h-4" />
-                <span>{new Date(quote.trip_start_date).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <Users className="w-4 h-4" />
-                <span>{quote.num_travelers} travelers</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-3 pt-3 border-t">
-              <span className="text-sm font-semibold text-teal-700">
-                ${quote.total_amount.toLocaleString()} {quote.currency}
-              </span>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-            </div>
+        {/* Search & Filter */}
+        <div className="px-6 pb-4 flex items-center gap-3 flex-shrink-0">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by customer, quote number, destination..."
+              className="w-full pl-9 pr-4 py-2 text-sm bg-white border border-gray-200 rounded-xl outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300"
+            />
           </div>
-        ))}
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="pl-8 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-xl outline-none focus:border-teal-400 appearance-none cursor-pointer">
+              <option value="all">All Status</option>
+              {Object.entries(QUOTATION_STATUS_LABELS).map(([k, v]) => (
+                <option key={k} value={k}>{v}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            onClick={() => load(true)}
+            disabled={isRefreshing}
+            className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:text-teal-600 hover:border-teal-300 transition-colors">
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+          </button>
+        </div>
+
+        {/* List */}
+        <div className="flex-1 overflow-y-auto px-6 pb-6 space-y-2">
+          <AnimatePresence>
+            {filtered.length === 0 ? (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
+                <FileText className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                <p className="text-sm font-semibold text-gray-500">No quotations found</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  {search || statusFilter !== 'all' ? 'Try adjusting your filters' : 'Click "New Quote" to create your first quotation'}
+                </p>
+              </motion.div>
+            ) : (
+              filtered.map((quote, idx) => {
+                const statusCfg = QUOTATION_STATUS_COLORS[quote.status]
+                const isSelected = selectedQuotation?.id === quote.id
+                const travelers = quote.adults + quote.children + quote.infants
+
+                return (
+                  <motion.div
+                    key={quote.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.03 }}
+                    onClick={() => setSelectedQuotation(isSelected ? null : quote)}
+                    className={`bg-white border-2 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
+                      isSelected ? 'border-teal-400 shadow-md bg-teal-50/30' : 'border-gray-200 hover:border-teal-200'
+                    }`}>
+                    {/* Top Row */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <FileText className="w-3.5 h-3.5 text-teal-600 flex-shrink-0" />
+                          <span className="text-xs font-bold font-mono text-teal-600">{quote.quote_number}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${statusCfg.bg} ${statusCfg.text}`}>
+                            {QUOTATION_STATUS_LABELS[quote.status]}
+                          </span>
+                        </div>
+                        <h3 className="text-sm font-bold text-gray-900 truncate">{quote.quote_title}</h3>
+                        <p className="text-xs text-gray-500 truncate mt-0.5">{quote.customer_name}{quote.company ? ` · ${quote.company}` : ''}</p>
+                      </div>
+                      <ChevronRight className={`w-4 h-4 text-gray-400 flex-shrink-0 ml-2 transition-transform ${isSelected ? 'rotate-90 text-teal-500' : ''}`} />
+                    </div>
+
+                    {/* Info Row */}
+                    <div className="grid grid-cols-3 gap-2 text-xs text-gray-600">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span className="truncate">{quote.destination}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span>{formatDate(quote.departure_date)}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span>{travelers} traveler{travelers !== 1 ? 's' : ''}</span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Row */}
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-bold text-teal-700">
+                          {formatCurrency(quote.grand_total, quote.currency)}
+                        </span>
+                        <span className="text-xs text-gray-400">{quote.currency} · {quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
+                      </div>
+                      <span className="text-xs text-gray-400">Valid to {formatDate(quote.valid_until)}</span>
+                    </div>
+                  </motion.div>
+                )
+              })
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Detail Panel */}
-      {selectedQuotation && (
-        <div className="w-96 bg-white border-l border-gray-200 p-4 overflow-y-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-900">Quotation Details</h3>
-            <Button variant="ghost" size="icon" onClick={() => setSelectedQuotation(null)}>
-              ×
-            </Button>
-          </div>
+      {/* ── RIGHT: DETAIL PANEL ── */}
+      <AnimatePresence>
+        {selectedQuotation && (
+          <QuotationDetailPanel
+            key={selectedQuotation.id}
+            quotation={selectedQuotation}
+            onClose={() => setSelectedQuotation(null)}
+            onEdit={(q) => setEditingQuotation(q)}
+            onRefresh={() => load(true)}
+          />
+        )}
+      </AnimatePresence>
 
-          <div className="space-y-4">
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Quote Number</p>
-              <p className="font-semibold text-gray-900">{selectedQuotation.quote_number}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Customer</p>
-              <p className="text-gray-900">{selectedQuotation.customer_name}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Status</p>
-              <span
-                className={`text-xs px-2 py-1 rounded-full font-medium ${STATUS_CONFIG[selectedQuotation.status].bgColor} ${STATUS_CONFIG[selectedQuotation.status].color}`}
-              >
-                {STATUS_CONFIG[selectedQuotation.status].label}
-              </span>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Trip Details</p>
-              <div className="bg-gray-50 p-2 rounded text-sm space-y-1">
-                <p className="font-semibold text-gray-900">{selectedQuotation.trip_destination}</p>
-                <p className="text-gray-600">
-                  {new Date(selectedQuotation.trip_start_date).toLocaleDateString()} -{' '}
-                  {new Date(selectedQuotation.trip_end_date).toLocaleDateString()}
-                </p>
-                <p className="text-gray-600">{selectedQuotation.num_travelers} travelers</p>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Amount</p>
-              <p className="font-semibold text-teal-700 text-lg">
-                ${selectedQuotation.total_amount.toLocaleString()} {selectedQuotation.currency}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-600 mb-1">Valid Until</p>
-              <p className="text-gray-700">{new Date(selectedQuotation.valid_until).toLocaleDateString()}</p>
-            </div>
-
-            {selectedQuotation.sent_at && (
-              <div>
-                <p className="text-xs text-gray-600 mb-1">Sent</p>
-                <p className="text-gray-700">{new Date(selectedQuotation.sent_at).toLocaleDateString()}</p>
-              </div>
-            )}
-
-            {selectedQuotation.accepted_at && (
-              <div>
-                <p className="text-xs text-gray-600 mb-1">Accepted</p>
-                <p className="text-gray-700">{new Date(selectedQuotation.accepted_at).toLocaleDateString()}</p>
-              </div>
-            )}
-
-            {selectedQuotation.notes && (
-              <div>
-                <p className="text-xs text-gray-600 mb-1">Notes</p>
-                <p className="text-sm text-gray-700">{selectedQuotation.notes}</p>
-              </div>
-            )}
-          </div>
-        </div>
+      {/* ── EDIT MODAL ── */}
+      {editingQuotation && (
+        <EditQuotationModal
+          quotation={editingQuotation}
+          isOpen={!!editingQuotation}
+          onClose={() => setEditingQuotation(null)}
+          onSuccess={() => {
+            setEditingQuotation(null)
+            load(true)
+          }}
+        />
       )}
     </div>
   )

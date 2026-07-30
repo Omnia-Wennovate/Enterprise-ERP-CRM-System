@@ -493,7 +493,7 @@ export async function getNotificationPreferences(profileId: string) {
     .single()
 
   if (error && error.code !== 'PGRST116') throw error
-  
+
   if (!data) {
     return await supabase
       .from('notification_preferences')

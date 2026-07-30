@@ -91,6 +91,8 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Projects', href: '/tech/projects', icon: 'Code2' },
           { label: 'Feature Requests', href: '/tech/feature-requests', icon: 'GitBranch' },
           { label: 'Tech Team', href: '/tech/team', icon: 'Users' },
+          { label: 'Project Archive', href: '/tech/archive', icon: 'Archive' },
+          { label: 'Credential Vault', href: '/tech/credentials', icon: 'KeyRound' },
         ],
       },
       {
@@ -402,6 +404,8 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Projects', href: '/tech/projects', icon: 'Code2' },
           { label: 'Feature Requests', href: '/tech/feature-requests', icon: 'GitBranch' },
           { label: 'Tech Team', href: '/tech/team', icon: 'Users' },
+          { label: 'Project Archive', href: '/tech/archive', icon: 'Archive' },
+          { label: 'Credential Vault', href: '/tech/credentials', icon: 'KeyRound' },
         ],
       },
       {

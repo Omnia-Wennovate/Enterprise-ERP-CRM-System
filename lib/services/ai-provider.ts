@@ -55,7 +55,7 @@ class GeminiProvider implements AIProvider {
   private apiKey: string
 
   constructor(config: { model?: string; apiKey: string }) {
-    this.model = config.model || 'gemini-3.5-flash'
+    this.model = config.model || 'gemini-3.6-flash'
     this.apiKey = config.apiKey
   }
 
