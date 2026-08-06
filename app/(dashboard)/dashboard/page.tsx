@@ -35,8 +35,8 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F0F7FA] flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="animate-spin text-primary" size={48} />
       </div>
     )
   }
@@ -213,7 +213,7 @@ export default function DashboardPage() {
   const stats = getStatsForRole()
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
@@ -233,21 +233,21 @@ export default function DashboardPage() {
               {/* Data Performance Company + Company Growth Overview */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 {/* Data Performance Company Chart */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-semibold text-[#0B1F33]">Data Performance Company</h3>
+                    <h3 className="font-semibold text-foreground">Data Performance Company</h3>
                     <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-[#0A8FA8] text-white text-xs rounded font-medium">12 months</button>
-                      <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">30 days</button>
-                      <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">7 days</button>
-                      <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">24 hours</button>
+                      <button className="px-3 py-1 bg-primary text-primary-foreground text-xs rounded font-medium">12 months</button>
+                      <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">30 days</button>
+                      <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">7 days</button>
+                      <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">24 hours</button>
                     </div>
                   </div>
 
                   {/* Multi-line Chart Area */}
                   <div className="relative h-64 mb-6">
                     {/* Y-axis labels */}
-                    <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-xs text-[#4B6B7A] pr-2">
+                    <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-xs text-muted-foreground pr-2">
                       <span>$5k</span>
                       <span>$4k</span>
                       <span>$3k</span>
@@ -284,7 +284,7 @@ export default function DashboardPage() {
                       </svg>
 
                       {/* X-axis labels */}
-                      <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-[#4B6B7A] ml-12">
+                      <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-muted-foreground ml-12">
                         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'].map((day, i) => (
                           <span key={i} className="flex-1 text-center">{day}</span>
                         ))}
@@ -292,40 +292,40 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  <div className="mt-12 grid grid-cols-2 gap-4 pt-4 border-t border-[#DBEAFE]">
+                  <div className="mt-12 grid grid-cols-2 gap-4 pt-4 border-t border-border">
                     <div>
-                      <p className="text-xs text-[#4B6B7A]">Total Revenue</p>
-                      <p className="text-2xl font-bold text-[#0B1F33]">$482,000</p>
-                      <p className="text-xs text-[#10B981] mt-1">↑ 8.2% vs last 12 months</p>
+                      <p className="text-xs text-muted-foreground">Total Revenue</p>
+                      <p className="text-2xl font-bold text-foreground">$482,000</p>
+                      <p className="text-xs text-success mt-1">↑ 8.2% vs last 12 months</p>
                     </div>
                     <div>
-                      <p className="text-xs text-[#4B6B7A]">Total Bookings</p>
-                      <p className="text-2xl font-bold text-[#0B1F33]">1,248</p>
-                      <p className="text-xs text-[#10B981] mt-1">↑ 12.4% vs last 12 months</p>
+                      <p className="text-xs text-muted-foreground">Total Bookings</p>
+                      <p className="text-2xl font-bold text-foreground">1,248</p>
+                      <p className="text-xs text-success mt-1">↑ 12.4% vs last 12 months</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Company Growth Overview */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-semibold text-[#0B1F33]">Company Growth Overview</h3>
-                    <button className="text-xs text-[#4B6B7A] hover:text-[#0A8FA8]">Sort by Newest ▼</button>
+                    <h3 className="font-semibold text-foreground">Company Growth Overview</h3>
+                    <button className="text-xs text-muted-foreground hover:text-primary">Sort by Newest ▼</button>
                   </div>
 
                   {/* KPI Metrics */}
-                  <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-[#DBEAFE]">
+                  <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-border">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-[#0B1F33]">1,560</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">Total Leads</p>
+                      <p className="text-2xl font-bold text-foreground">1,560</p>
+                      <p className="text-xs text-muted-foreground mt-1">Total Leads</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-[#0B1F33]">780</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">New Customers</p>
+                      <p className="text-2xl font-bold text-foreground">780</p>
+                      <p className="text-xs text-muted-foreground mt-1">New Customers</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-[#0B1F33]">1,560</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">Total Bookings</p>
+                      <p className="text-2xl font-bold text-foreground">1,560</p>
+                      <p className="text-xs text-muted-foreground mt-1">Total Bookings</p>
                     </div>
                   </div>
 
@@ -346,7 +346,7 @@ export default function DashboardPage() {
                     ))}
                   </div>
 
-                  <div className="mt-4 text-center text-xs text-[#4B6B7A]">
+                  <div className="mt-4 text-center text-xs text-muted-foreground">
                     Jan • Feb • Mar • Apr • May • Jun
                   </div>
                 </div>
@@ -355,8 +355,8 @@ export default function DashboardPage() {
               {/* Bottom Analytics Cards Row */}
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
                 {/* Data Performance Donut */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-4">Data Performance Company</h3>
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Data Performance Company</h3>
                   <div className="flex justify-center mb-4">
                     <svg width="140" height="140" viewBox="0 0 140 140" className="mx-auto">
                       <circle cx="70" cy="70" r="60" fill="none" stroke="#F0F7FA" strokeWidth="20" />
@@ -366,7 +366,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="flex items-center gap-2"><span className="w-3 h-3 bg-[#0A8FA8] rounded-full"></span> Product A</span>
+                      <span className="flex items-center gap-2"><span className="w-3 h-3 bg-primary rounded-full"></span> Product A</span>
                       <span className="font-medium">$5.2k +17%</span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -381,8 +381,8 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Ads Promotion Circle */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6">Ads Promotion</h3>
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6">Ads Promotion</h3>
                   <div className="flex justify-center">
                     <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
                       <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F7FA" strokeWidth="15" />
@@ -390,12 +390,12 @@ export default function DashboardPage() {
                       <text x="60" y="65" textAnchor="middle" className="text-xl font-bold" fill="#0B1F33">5</text>
                     </svg>
                   </div>
-                  <p className="text-center text-xs text-[#4B6B7A] mt-4">Days Left</p>
+                  <p className="text-center text-xs text-muted-foreground mt-4">Days Left</p>
                 </div>
 
                 {/* SEO Performance */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6">Seo Performance</h3>
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6">Seo Performance</h3>
                   <div className="flex justify-center">
                     <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
                       <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F7FA" strokeWidth="15" />
@@ -406,33 +406,33 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Budget Allocation Preview */}
-                <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-4">Budget Allocation</h3>
+                <div className="bg-card rounded-lg border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Budget Allocation</h3>
                   <div className="space-y-3 text-sm">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-[#4B6B7A]">Marketing</span>
-                        <span className="text-xs font-medium text-[#0B1F33]">49%</span>
+                        <span className="text-xs text-muted-foreground">Marketing</span>
+                        <span className="text-xs font-medium text-foreground">49%</span>
                       </div>
-                      <div className="w-full h-2 bg-[#F0F7FA] rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-background rounded-full overflow-hidden">
                         <div className="h-full bg-[#F59E0B] rounded-full" style={{width: '49%'}}></div>
                       </div>
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-[#4B6B7A]">Operations</span>
-                        <span className="text-xs font-medium text-[#0B1F33]">68%</span>
+                        <span className="text-xs text-muted-foreground">Operations</span>
+                        <span className="text-xs font-medium text-foreground">68%</span>
                       </div>
-                      <div className="w-full h-2 bg-[#F0F7FA] rounded-full overflow-hidden">
-                        <div className="h-full bg-[#0A8FA8] rounded-full" style={{width: '68%'}}></div>
+                      <div className="w-full h-2 bg-background rounded-full overflow-hidden">
+                        <div className="h-full bg-primary rounded-full" style={{width: '68%'}}></div>
                       </div>
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-[#4B6B7A]">Development</span>
-                        <span className="text-xs font-medium text-[#0B1F33]">59%</span>
+                        <span className="text-xs text-muted-foreground">Development</span>
+                        <span className="text-xs font-medium text-foreground">59%</span>
                       </div>
-                      <div className="w-full h-2 bg-[#F0F7FA] rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-background rounded-full overflow-hidden">
                         <div className="h-full bg-[#8B5CF6] rounded-full" style={{width: '59%'}}></div>
                       </div>
                     </div>
@@ -441,24 +441,24 @@ export default function DashboardPage() {
               </div>
 
               {/* Budget Allocation Full Table */}
-              <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6 mb-8">
+              <div className="bg-card rounded-lg border border-border shadow-sm p-6 mb-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-semibold text-[#0B1F33]">Budget Allocation</h3>
+                  <h3 className="font-semibold text-foreground">Budget Allocation</h3>
                   <div className="flex gap-2">
-                    <button className="text-xs px-3 py-1 border border-[#DBEAFE] rounded hover:border-[#0A8FA8] text-[#4B6B7A]">7 Days</button>
-                    <button className="text-xs px-3 py-1 border border-[#DBEAFE] rounded hover:border-[#0A8FA8] text-[#4B6B7A]">1 Month</button>
-                    <button className="text-xs px-3 py-1 border border-[#DBEAFE] rounded hover:border-[#0A8FA8] text-[#4B6B7A]">3 Months</button>
+                    <button className="text-xs px-3 py-1 border border-border rounded hover:border-primary text-muted-foreground">7 Days</button>
+                    <button className="text-xs px-3 py-1 border border-border rounded hover:border-primary text-muted-foreground">1 Month</button>
+                    <button className="text-xs px-3 py-1 border border-border rounded hover:border-primary text-muted-foreground">3 Months</button>
                   </div>
                 </div>
 
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-[#DBEAFE]">
-                        <th className="text-left py-3 px-4 font-semibold text-[#0B1F33]">Category</th>
-                        <th className="text-left py-3 px-4 font-semibold text-[#0B1F33]">Budget</th>
-                        <th className="text-left py-3 px-4 font-semibold text-[#0B1F33]">Spent</th>
-                        <th className="text-left py-3 px-4 font-semibold text-[#0B1F33]">Progress</th>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-3 px-4 font-semibold text-foreground">Category</th>
+                        <th className="text-left py-3 px-4 font-semibold text-foreground">Budget</th>
+                        <th className="text-left py-3 px-4 font-semibold text-foreground">Spent</th>
+                        <th className="text-left py-3 px-4 font-semibold text-foreground">Progress</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -468,16 +468,16 @@ export default function DashboardPage() {
                         {category: 'Development', icon: '💻', budget: '$6,000', spent: '$3,567', progress: 59},
                         {category: 'HR & Training', icon: '👥', budget: '$4,000', spent: '$1,234', progress: 31},
                       ].map((row, i) => (
-                        <tr key={i} className="border-b border-[#DBEAFE] last:border-0">
+                        <tr key={i} className="border-b border-border last:border-0">
                           <td className="py-3 px-4"><span className="mr-2">{row.icon}</span>{row.category}</td>
-                          <td className="py-3 px-4 font-medium text-[#0B1F33]">{row.budget}</td>
-                          <td className="py-3 px-4 font-medium text-[#0B1F33]">{row.spent}</td>
+                          <td className="py-3 px-4 font-medium text-foreground">{row.budget}</td>
+                          <td className="py-3 px-4 font-medium text-foreground">{row.spent}</td>
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-24 h-2 bg-[#F0F7FA] rounded-full overflow-hidden">
+                              <div className="w-24 h-2 bg-background rounded-full overflow-hidden">
                                 <div className="h-full bg-gradient-to-r from-[#0A8FA8] to-[#0A8FA8] rounded-full" style={{width: `${row.progress}%`}}></div>
                               </div>
-                              <span className="text-xs font-medium text-[#4B6B7A]">{row.progress}%</span>
+                              <span className="text-xs font-medium text-muted-foreground">{row.progress}%</span>
                             </div>
                           </td>
                         </tr>
@@ -492,35 +492,35 @@ export default function DashboardPage() {
           {/* What would you like to do - Quick Actions */}
           {profile.role === 'super_admin' && (
             <div className="mb-8">
-              <h3 className="text-lg font-semibold text-[#0B1F33] mb-4">What would you like to do?</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">What would you like to do?</h3>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <button className="bg-white border border-[#DBEAFE] rounded-lg p-6 hover:border-[#0A8FA8] hover:shadow-md transition-all text-left">
-                  <div className="flex items-center justify-center w-10 h-10 bg-[#E0F2F7] rounded-lg mb-3">
+                <button className="bg-card border border-border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all text-left">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3">
                     <span className="text-2xl">➕</span>
                   </div>
-                  <h4 className="font-semibold text-[#0B1F33] text-sm">New Lead</h4>
-                  <p className="text-xs text-[#4B6B7A] mt-1">Add a new potential customer</p>
+                  <h4 className="font-semibold text-foreground text-sm">New Lead</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Add a new potential customer</p>
                 </button>
-                <button className="bg-white border border-[#DBEAFE] rounded-lg p-6 hover:border-[#0A8FA8] hover:shadow-md transition-all text-left">
-                  <div className="flex items-center justify-center w-10 h-10 bg-[#E0F2F7] rounded-lg mb-3">
+                <button className="bg-card border border-border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all text-left">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3">
                     <span className="text-2xl">📋</span>
                   </div>
-                  <h4 className="font-semibold text-[#0B1F33] text-sm">New Quote</h4>
-                  <p className="text-xs text-[#4B6B7A] mt-1">Create a new quotation</p>
+                  <h4 className="font-semibold text-foreground text-sm">New Quote</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Create a new quotation</p>
                 </button>
-                <button className="bg-white border border-[#DBEAFE] rounded-lg p-6 hover:border-[#0A8FA8] hover:shadow-md transition-all text-left">
-                  <div className="flex items-center justify-center w-10 h-10 bg-[#E0F2F7] rounded-lg mb-3">
+                <button className="bg-card border border-border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all text-left">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3">
                     <span className="text-2xl">📊</span>
                   </div>
-                  <h4 className="font-semibold text-[#0B1F33] text-sm">View Reports</h4>
-                  <p className="text-xs text-[#4B6B7A] mt-1">Explore analytics & insights</p>
+                  <h4 className="font-semibold text-foreground text-sm">View Reports</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Explore analytics & insights</p>
                 </button>
-                <button className="bg-white border border-[#DBEAFE] rounded-lg p-6 hover:border-[#0A8FA8] hover:shadow-md transition-all text-left">
-                  <div className="flex items-center justify-center w-10 h-10 bg-[#E0F2F7] rounded-lg mb-3">
+                <button className="bg-card border border-border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all text-left">
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3">
                     <span className="text-2xl">👥</span>
                   </div>
-                  <h4 className="font-semibold text-[#0B1F33] text-sm">Manage Staff</h4>
-                  <p className="text-xs text-[#4B6B7A] mt-1">Add or manage team members</p>
+                  <h4 className="font-semibold text-foreground text-sm">Manage Staff</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Add or manage team members</p>
                 </button>
               </div>
             </div>
@@ -530,14 +530,14 @@ export default function DashboardPage() {
           {profile.role === 'super_admin' && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               {/* Data Performance Overview - 2 columns */}
-              <div className="lg:col-span-2 bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
+              <div className="lg:col-span-2 bg-card rounded-lg border border-border shadow-sm p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-semibold text-[#0B1F33]">Data Performance Overview</h3>
+                  <h3 className="font-semibold text-foreground">Data Performance Overview</h3>
                   <div className="flex gap-2">
-                    <button className="px-3 py-1 bg-[#0A8FA8] text-white text-xs rounded font-medium">12 Months</button>
-                    <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">30 Days</button>
-                    <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">7 Days</button>
-                    <button className="px-3 py-1 border border-[#DBEAFE] text-[#4B6B7A] text-xs rounded hover:border-[#0A8FA8]">24 Hours</button>
+                    <button className="px-3 py-1 bg-primary text-primary-foreground text-xs rounded font-medium">12 Months</button>
+                    <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">30 Days</button>
+                    <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">7 Days</button>
+                    <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">24 Hours</button>
                   </div>
                 </div>
 
@@ -551,70 +551,70 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-[#DBEAFE]">
+                <div className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-border">
                   <div>
-                    <p className="text-xs text-[#4B6B7A] font-medium">Total Revenue</p>
-                    <p className="text-xl font-bold text-[#0B1F33] mt-1">$482,000</p>
-                    <p className="text-xs text-[#10B981] mt-1">↑ 8.2% vs last 12 months</p>
+                    <p className="text-xs text-muted-foreground font-medium">Total Revenue</p>
+                    <p className="text-xl font-bold text-foreground mt-1">$482,000</p>
+                    <p className="text-xs text-success mt-1">↑ 8.2% vs last 12 months</p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#4B6B7A] font-medium">Total Bookings</p>
-                    <p className="text-xl font-bold text-[#0B1F33] mt-1">1,248</p>
-                    <p className="text-xs text-[#10B981] mt-1">↑ 12.4% vs last 12 months</p>
+                    <p className="text-xs text-muted-foreground font-medium">Total Bookings</p>
+                    <p className="text-xl font-bold text-foreground mt-1">1,248</p>
+                    <p className="text-xs text-success mt-1">↑ 12.4% vs last 12 months</p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#4B6B7A] font-medium">Total Leads</p>
-                    <p className="text-xl font-bold text-[#0B1F33] mt-1">218</p>
-                    <p className="text-xs text-[#EF4444] mt-1">↓ 3.2% vs last 12 months</p>
+                    <p className="text-xs text-muted-foreground font-medium">Total Leads</p>
+                    <p className="text-xl font-bold text-foreground mt-1">218</p>
+                    <p className="text-xs text-destructive mt-1">↓ 3.2% vs last 12 months</p>
                   </div>
                 </div>
               </div>
 
               {/* Recent Activity - 1 column */}
-              <div className="bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
+              <div className="bg-card rounded-lg border border-border shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-[#0B1F33]">Recent Activity</h3>
-                  <button className="text-xs text-[#0A8FA8] hover:text-[#088096] font-medium">View all</button>
+                  <h3 className="font-semibold text-foreground">Recent Activity</h3>
+                  <button className="text-xs text-primary hover:text-[#088096] font-medium">View all</button>
                 </div>
                 <div className="space-y-4">
-                  <div className="flex gap-3 pb-4 border-b border-[#DBEAFE]">
-                    <div className="w-8 h-8 bg-[#E0F2F7] rounded flex items-center justify-center flex-shrink-0 text-sm">📁</div>
+                  <div className="flex gap-3 pb-4 border-b border-border">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0 text-sm">📁</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#0B1F33]">New booking created</p>
-                      <p className="text-xs text-[#4B6B7A]">Booking #BK-2025-1245</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">2 min ago</p>
+                      <p className="text-sm font-medium text-foreground">New booking created</p>
+                      <p className="text-xs text-muted-foreground">Booking #BK-2025-1245</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 min ago</p>
                     </div>
                   </div>
-                  <div className="flex gap-3 pb-4 border-b border-[#DBEAFE]">
-                    <div className="w-8 h-8 bg-[#E0F2F7] rounded flex items-center justify-center flex-shrink-0 text-sm">💳</div>
+                  <div className="flex gap-3 pb-4 border-b border-border">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0 text-sm">💳</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#0B1F33]">Payment received</p>
-                      <p className="text-xs text-[#4B6B7A]">From John Doe</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">15 min ago</p>
+                      <p className="text-sm font-medium text-foreground">Payment received</p>
+                      <p className="text-xs text-muted-foreground">From John Doe</p>
+                      <p className="text-xs text-muted-foreground mt-1">15 min ago</p>
                     </div>
                   </div>
-                  <div className="flex gap-3 pb-4 border-b border-[#DBEAFE]">
-                    <div className="w-8 h-8 bg-[#E0F2F7] rounded flex items-center justify-center flex-shrink-0 text-sm">👤</div>
+                  <div className="flex gap-3 pb-4 border-b border-border">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0 text-sm">👤</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#0B1F33]">New lead assigned</p>
-                      <p className="text-xs text-[#4B6B7A]">Sarah Johnson</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">1 hour ago</p>
+                      <p className="text-sm font-medium text-foreground">New lead assigned</p>
+                      <p className="text-xs text-muted-foreground">Sarah Johnson</p>
+                      <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
                     </div>
                   </div>
-                  <div className="flex gap-3 pb-4 border-b border-[#DBEAFE]">
-                    <div className="w-8 h-8 bg-[#E0F2F7] rounded flex items-center justify-center flex-shrink-0 text-sm">📋</div>
+                  <div className="flex gap-3 pb-4 border-b border-border">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0 text-sm">📋</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#0B1F33]">Quote approved</p>
-                      <p className="text-xs text-[#4B6B7A]">Quote #QT-2025-089</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">2 hours ago</p>
+                      <p className="text-sm font-medium text-foreground">Quote approved</p>
+                      <p className="text-xs text-muted-foreground">Quote #QT-2025-089</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-8 h-8 bg-[#E0F2F7] rounded flex items-center justify-center flex-shrink-0 text-sm">📄</div>
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0 text-sm">📄</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#0B1F33]">Invoice sent</p>
-                      <p className="text-xs text-[#4B6B7A]">Invoice #INV-2025-567</p>
-                      <p className="text-xs text-[#4B6B7A] mt-1">3 hours ago</p>
+                      <p className="text-sm font-medium text-foreground">Invoice sent</p>
+                      <p className="text-xs text-muted-foreground">Invoice #INV-2025-567</p>
+                      <p className="text-xs text-muted-foreground mt-1">3 hours ago</p>
                     </div>
                   </div>
                 </div>
@@ -627,47 +627,47 @@ export default function DashboardPage() {
           {profile.role === 'super_admin' && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               {/* Upcoming Departures */}
-              <div className="lg:col-span-1 bg-white rounded-lg border border-[#DBEAFE] shadow-sm p-6">
+              <div className="lg:col-span-1 bg-card rounded-lg border border-border shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-[#0B1F33]">Upcoming Departures</h3>
-                  <button className="text-xs text-[#0A8FA8] hover:text-[#088096] font-medium">View all</button>
+                  <h3 className="font-semibold text-foreground">Upcoming Departures</h3>
+                  <button className="text-xs text-primary hover:text-[#088096] font-medium">View all</button>
                 </div>
                 <div className="space-y-3">
-                  <div className="border border-[#DBEAFE] rounded-lg p-3 hover:border-[#0A8FA8] transition-colors">
+                  <div className="border border-border rounded-lg p-3 hover:border-primary transition-colors">
                     <div className="flex gap-3">
                       <img src="https://images.unsplash.com/photo-1512453075961-9a832e62fb50?w=100&h=100&fit=crop" alt="Dubai" className="w-16 h-16 rounded object-cover" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#0B1F33]">Booking #BK-2025-1245</p>
-                        <p className="text-xs text-[#4B6B7A]">Dubai, UAE</p>
+                        <p className="text-sm font-medium text-foreground">Booking #BK-2025-1245</p>
+                        <p className="text-xs text-muted-foreground">Dubai, UAE</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-[#4B6B7A]">📅 May 17, 2025</span>
-                          <span className="text-xs bg-[#E0F2F7] text-[#0A8FA8] px-2 py-0.5 rounded-full font-medium">Active</span>
+                          <span className="text-xs text-muted-foreground">📅 May 17, 2025</span>
+                          <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">Active</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="border border-[#DBEAFE] rounded-lg p-3 hover:border-[#0A8FA8] transition-colors">
+                  <div className="border border-border rounded-lg p-3 hover:border-primary transition-colors">
                     <div className="flex gap-3">
                       <img src="https://images.unsplash.com/photo-1537905904737-13e908bfc85f?w=100&h=100&fit=crop" alt="Maldives" className="w-16 h-16 rounded object-cover" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#0B1F33]">Booking #BK-2025-1246</p>
-                        <p className="text-xs text-[#4B6B7A]">Maldives</p>
+                        <p className="text-sm font-medium text-foreground">Booking #BK-2025-1246</p>
+                        <p className="text-xs text-muted-foreground">Maldives</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-[#4B6B7A]">📅 May 18, 2025</span>
-                          <span className="text-xs bg-[#E0F2F7] text-[#0A8FA8] px-2 py-0.5 rounded-full font-medium">Active</span>
+                          <span className="text-xs text-muted-foreground">📅 May 18, 2025</span>
+                          <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">Active</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="border border-[#DBEAFE] rounded-lg p-3 hover:border-[#0A8FA8] transition-colors">
+                  <div className="border border-border rounded-lg p-3 hover:border-primary transition-colors">
                     <div className="flex gap-3">
                       <img src="https://images.unsplash.com/photo-1504681869696-d977e2a54b4b?w=100&h=100&fit=crop" alt="Turkey" className="w-16 h-16 rounded object-cover" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#0B1F33]">Booking #BK-2025-1247</p>
-                        <p className="text-xs text-[#4B6B7A]">Turkey</p>
+                        <p className="text-sm font-medium text-foreground">Booking #BK-2025-1247</p>
+                        <p className="text-xs text-muted-foreground">Turkey</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-[#4B6B7A]">📅 May 19, 2025</span>
-                          <span className="text-xs bg-[#E0F2F7] text-[#0A8FA8] px-2 py-0.5 rounded-full font-medium">Active</span>
+                          <span className="text-xs text-muted-foreground">📅 May 19, 2025</span>
+                          <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">Active</span>
                         </div>
                       </div>
                     </div>
@@ -685,13 +685,13 @@ export default function DashboardPage() {
                   { icon: '💳', label: 'Payments Received', value: '$32,100', trend: 9, color: 'bg-blue-50' },
                   { icon: '✓', label: 'Tasks Pending', value: '12', trend: -3, color: 'bg-red-50', trendColor: 'text-red-600' },
                 ].map((card, i) => (
-                  <div key={i} className={`${card.color} rounded-lg p-4 border border-opacity-0 hover:border hover:border-[#DBEAFE]`}>
+                  <div key={i} className={`${card.color} rounded-lg p-4 border border-opacity-0 hover:border hover:border-border`}>
                     <div className="flex items-start justify-between mb-2">
                       <span className="text-2xl">{card.icon}</span>
                     </div>
-                    <p className="text-xs text-[#4B6B7A] font-medium mb-1">{card.label}</p>
-                    <p className="text-xl font-bold text-[#0B1F33]">{card.value}</p>
-                    <p className={`text-xs mt-2 ${card.trendColor || 'text-[#10B981]'}`}>
+                    <p className="text-xs text-muted-foreground font-medium mb-1">{card.label}</p>
+                    <p className="text-xl font-bold text-foreground">{card.value}</p>
+                    <p className={`text-xs mt-2 ${card.trendColor || 'text-success'}`}>
                       {card.trend > 0 ? '↑' : '↓'} {Math.abs(card.trend)}% this week
                     </p>
                   </div>
@@ -708,41 +708,41 @@ export default function DashboardPage() {
               {/* Content Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Activity */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-4">Recent Activity</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Recent Activity</h3>
                   <div className="space-y-4">
                     {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex items-center gap-3 pb-4 border-b border-[#DBEAFE] last:border-0">
-                        <div className="w-2 h-2 bg-[#0A8FA8] rounded-full flex-shrink-0" />
+                      <div key={i} className="flex items-center gap-3 pb-4 border-b border-border last:border-0">
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm text-[#0B1F33] font-medium truncate">Activity item {i}</p>
-                          <p className="text-xs text-[#4B6B7A]">2 hours ago</p>
+                          <p className="text-sm text-foreground font-medium truncate">Activity item {i}</p>
+                          <p className="text-xs text-muted-foreground">2 hours ago</p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <button className="w-full mt-4 py-2 text-sm text-[#0A8FA8] hover:text-[#088096] font-medium transition-colors">
+                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#088096] font-medium transition-colors">
                     View all activity →
                   </button>
                 </div>
 
                 {/* Upcoming Departures */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-4">Upcoming Departures</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Upcoming Departures</h3>
                   <div className="space-y-4">
                     {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex items-center justify-between pb-4 border-b border-[#DBEAFE] last:border-0">
+                      <div key={i} className="flex items-center justify-between pb-4 border-b border-border last:border-0">
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm text-[#0B1F33] font-medium">Booking {i}</p>
-                          <p className="text-xs text-[#4B6B7A]">In {i} days</p>
+                          <p className="text-sm text-foreground font-medium">Booking {i}</p>
+                          <p className="text-xs text-muted-foreground">In {i} days</p>
                         </div>
-                        <span className="text-xs bg-[#F0F7FA] text-[#0A8FA8] px-2 py-1 rounded-full flex-shrink-0">
+                        <span className="text-xs bg-background text-primary px-2 py-1 rounded-full flex-shrink-0">
                           Active
                         </span>
                       </div>
                     ))}
                   </div>
-                  <button className="w-full mt-4 py-2 text-sm text-[#0A8FA8] hover:text-[#088096] font-medium transition-colors">
+                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#088096] font-medium transition-colors">
                     View all bookings →
                   </button>
                 </div>

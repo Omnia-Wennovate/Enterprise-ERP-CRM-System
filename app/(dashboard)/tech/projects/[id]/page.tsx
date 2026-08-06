@@ -250,30 +250,30 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
   const doneTasks = (tasksByStatus.done || []).length
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : !project ? (
             <div className="text-center py-20">
-              <p className="text-[#4B6B7A]">Project not found</p>
-              <Link href="/tech/projects" className="text-[#0A8FA8] hover:underline text-sm mt-2 inline-block">Back to Projects</Link>
+              <p className="text-muted-foreground">Project not found</p>
+              <Link href="/tech/projects" className="text-primary hover:underline text-sm mt-2 inline-block">Back to Projects</Link>
             </div>
           ) : (
             <>
               {/* Header */}
               <div className="flex items-center gap-4 mb-6">
                 <Link href="/tech/projects" className="p-2 rounded-lg hover:bg-[#DBEAFE] transition-colors">
-                  <ArrowLeft size={20} className="text-[#4B6B7A]" />
+                  <ArrowLeft size={20} className="text-muted-foreground" />
                 </Link>
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
-                    <h1 className="text-2xl font-bold text-[#0B1F33]">{project.name}</h1>
+                    <h1 className="text-2xl font-bold text-foreground">{project.name}</h1>
                     <span className="text-xs px-2 py-0.5 rounded-full font-medium"
                       style={{ backgroundColor: `${PROJECT_STATUS_COLORS[project.status]}15`, color: PROJECT_STATUS_COLORS[project.status] }}>
                       {PROJECT_STATUS_LABELS[project.status]}
@@ -283,21 +283,21 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                       {HEALTH_LABELS[project.health_indicator]}
                     </span>
                   </div>
-                  <p className="text-sm text-[#4B6B7A] mt-1">{project.description || 'No description'}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{project.description || 'No description'}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#0B1F33]">{project.progress_percent}%</p>
+                    <p className="text-2xl font-bold text-foreground">{project.progress_percent}%</p>
                     <div className="w-32 h-2 bg-[#DBEAFE] rounded-full overflow-hidden mt-1">
-                      <div className="h-full rounded-full bg-[#0A8FA8] transition-all" style={{ width: `${project.progress_percent}%` }} />
+                      <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${project.progress_percent}%` }} />
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Tabs */}
-              <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm mb-6">
-                <div className="flex overflow-x-auto border-b border-[#DBEAFE]">
+              <div className="bg-card rounded-xl border border-border shadow-sm mb-6">
+                <div className="flex overflow-x-auto border-b border-border">
                   {tabs.map((tab) => {
                     const Icon = tab.icon
                     return (
@@ -306,8 +306,8 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                         onClick={() => setActiveTab(tab.key)}
                         className={`flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                           activeTab === tab.key
-                            ? 'border-[#0A8FA8] text-[#0A8FA8]'
-                            : 'border-transparent text-[#4B6B7A] hover:text-[#0B1F33]'
+                            ? 'border-primary text-primary'
+                            : 'border-transparent text-muted-foreground hover:text-foreground'
                         }`}
                       >
                         <Icon size={16} />
@@ -322,15 +322,15 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'overview' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Project Details</h3>
+                        <h3 className="font-semibold text-foreground">Project Details</h3>
                         {!editing ? (
-                          <button onClick={() => setEditing(true)} className="text-xs text-[#0A8FA8] hover:underline">Edit</button>
+                          <button onClick={() => setEditing(true)} className="text-xs text-primary hover:underline">Edit</button>
                         ) : (
                           <div className="flex gap-2">
-                            <button onClick={handleSaveOverview} disabled={saving} className="text-xs px-3 py-1 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096]">
+                            <button onClick={handleSaveOverview} disabled={saving} className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90">
                               {saving ? 'Saving...' : 'Save'}
                             </button>
-                            <button onClick={() => { setEditing(false); setEditForm(project) }} className="text-xs px-3 py-1 border border-[#BFDBFE] text-[#4B6B7A] rounded-lg">Cancel</button>
+                            <button onClick={() => { setEditing(false); setEditForm(project) }} className="text-xs px-3 py-1 border border-border text-muted-foreground rounded-lg">Cancel</button>
                           </div>
                         )}
                       </div>
@@ -338,82 +338,82 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                         {editing ? (
                           <>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Status</label>
+                              <label className="text-xs text-muted-foreground">Status</label>
                               <select value={editForm.status} onChange={(e) => setEditForm({...editForm, status: e.target.value})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm bg-card">
                                 {Object.entries(PROJECT_STATUS_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                               </select>
                             </div>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Priority</label>
+                              <label className="text-xs text-muted-foreground">Priority</label>
                               <select value={editForm.priority} onChange={(e) => setEditForm({...editForm, priority: e.target.value})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm bg-card">
                                 {Object.entries(PRIORITY_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                               </select>
                             </div>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Progress %</label>
+                              <label className="text-xs text-muted-foreground">Progress %</label>
                               <input type="number" min={0} max={100} value={editForm.progress_percent}
                                 onChange={(e) => setEditForm({...editForm, progress_percent: parseInt(e.target.value) || 0})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm" />
                             </div>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Health</label>
+                              <label className="text-xs text-muted-foreground">Health</label>
                               <select value={editForm.health_indicator} onChange={(e) => setEditForm({...editForm, health_indicator: e.target.value})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm bg-card">
                                 {Object.entries(HEALTH_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                               </select>
                             </div>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Risk Level</label>
+                              <label className="text-xs text-muted-foreground">Risk Level</label>
                               <select value={editForm.risk_level} onChange={(e) => setEditForm({...editForm, risk_level: e.target.value})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm bg-card">
                                 {Object.entries(RISK_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                               </select>
                             </div>
                             <div>
-                              <label className="text-xs text-[#4B6B7A]">Budget ($)</label>
+                              <label className="text-xs text-muted-foreground">Budget ($)</label>
                               <input type="number" value={editForm.budget}
                                 onChange={(e) => setEditForm({...editForm, budget: parseFloat(e.target.value) || 0})}
-                                className="w-full mt-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                                className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm" />
                             </div>
                           </>
                         ) : (
                           <>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Priority</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Priority</p>
                               <p className="text-sm font-medium mt-1" style={{color: PRIORITY_COLORS[project.priority]}}>{PRIORITY_LABELS[project.priority]}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Risk Level</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Risk Level</p>
                               <p className="text-sm font-medium mt-1">{RISK_LABELS[project.risk_level]}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Budget</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Budget</p>
                               <p className="text-sm font-medium mt-1">${project.budget?.toLocaleString() || '0'}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Start Date</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Start Date</p>
                               <p className="text-sm font-medium mt-1">{project.start_date ? new Date(project.start_date).toLocaleDateString() : '—'}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Deadline</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Deadline</p>
                               <p className="text-sm font-medium mt-1">{project.deadline ? new Date(project.deadline).toLocaleDateString() : '—'}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Tasks</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Tasks</p>
                               <p className="text-sm font-medium mt-1">{doneTasks}/{totalTasks} completed</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Team Members</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Team Members</p>
                               <p className="text-sm font-medium mt-1">{members.length}</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Milestones</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Milestones</p>
                               <p className="text-sm font-medium mt-1">{milestones.filter(m => m.is_completed).length}/{milestones.length} completed</p>
                             </div>
-                            <div className="p-3 bg-[#F0F7FA] rounded-lg">
-                              <p className="text-xs text-[#4B6B7A]">Created</p>
+                            <div className="p-3 bg-background rounded-lg">
+                              <p className="text-xs text-muted-foreground">Created</p>
                               <p className="text-sm font-medium mt-1">{new Date(project.created_at).toLocaleDateString()}</p>
                             </div>
                           </>
@@ -426,25 +426,25 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'milestones' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Milestones</h3>
+                        <h3 className="font-semibold text-foreground">Milestones</h3>
                         <button onClick={() => setShowMilestoneForm(!showMilestoneForm)}
-                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096]">
+                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90">
                           <Plus size={14} /> Add Milestone
                         </button>
                       </div>
                       {showMilestoneForm && (
-                        <div className="bg-[#F0F7FA] p-4 rounded-lg mb-4 space-y-3">
+                        <div className="bg-background p-4 rounded-lg mb-4 space-y-3">
                           <input type="text" placeholder="Milestone title" value={milestoneForm.title}
                             onChange={(e) => setMilestoneForm({...milestoneForm, title: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm" />
                           <input type="date" value={milestoneForm.due_date}
                             onChange={(e) => setMilestoneForm({...milestoneForm, due_date: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm" />
                           <div className="flex gap-2">
                             <button onClick={handleAddMilestone} disabled={saving}
-                              className="text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg">{saving ? 'Adding...' : 'Add'}</button>
+                              className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg">{saving ? 'Adding...' : 'Add'}</button>
                             <button onClick={() => setShowMilestoneForm(false)}
-                              className="text-xs px-3 py-1.5 border border-[#BFDBFE] rounded-lg">Cancel</button>
+                              className="text-xs px-3 py-1.5 border border-border rounded-lg">Cancel</button>
                           </div>
                         </div>
                       )}
@@ -457,16 +457,16 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                                 <button onClick={() => !ms.is_completed && handleCompleteMilestone(ms.id)}
                                   className="absolute left-2 top-1 z-10">
                                   {ms.is_completed ? (
-                                    <CheckCircle2 size={18} className="text-[#10B981]" />
+                                    <CheckCircle2 size={18} className="text-success" />
                                   ) : (
-                                    <Circle size={18} className="text-[#BFDBFE] hover:text-[#0A8FA8] transition-colors" />
+                                    <Circle size={18} className="text-[#BFDBFE] hover:text-primary transition-colors" />
                                   )}
                                 </button>
-                                <div className={`flex-1 p-3 rounded-lg ${ms.is_completed ? 'bg-[#F0FDF4] border border-[#BBF7D0]' : 'bg-[#F0F7FA] border border-[#DBEAFE]'}`}>
-                                  <p className={`text-sm font-medium ${ms.is_completed ? 'text-[#166534] line-through' : 'text-[#0B1F33]'}`}>{ms.title}</p>
+                                <div className={`flex-1 p-3 rounded-lg ${ms.is_completed ? 'bg-[#F0FDF4] border border-[#BBF7D0]' : 'bg-background border border-border'}`}>
+                                  <p className={`text-sm font-medium ${ms.is_completed ? 'text-[#166534] line-through' : 'text-foreground'}`}>{ms.title}</p>
                                   <div className="flex items-center gap-2 mt-1">
-                                    {ms.due_date && <span className="text-xs text-[#4B6B7A]">Due: {new Date(ms.due_date).toLocaleDateString()}</span>}
-                                    {ms.completed_at && <span className="text-xs text-[#10B981]">✓ Completed {new Date(ms.completed_at).toLocaleDateString()}</span>}
+                                    {ms.due_date && <span className="text-xs text-muted-foreground">Due: {new Date(ms.due_date).toLocaleDateString()}</span>}
+                                    {ms.completed_at && <span className="text-xs text-success">✓ Completed {new Date(ms.completed_at).toLocaleDateString()}</span>}
                                   </div>
                                 </div>
                               </div>
@@ -474,7 +474,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                           </div>
                         </div>
                       ) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-8">No milestones yet. Add your first milestone to track progress.</p>
+                        <p className="text-sm text-muted-foreground text-center py-8">No milestones yet. Add your first milestone to track progress.</p>
                       )}
                     </div>
                   )}
@@ -483,30 +483,30 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'sprints' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Sprints</h3>
+                        <h3 className="font-semibold text-foreground">Sprints</h3>
                         <button onClick={() => setShowSprintForm(!showSprintForm)}
-                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096]">
+                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90">
                           <Plus size={14} /> Add Sprint
                         </button>
                       </div>
                       {showSprintForm && (
-                        <div className="bg-[#F0F7FA] p-4 rounded-lg mb-4 space-y-3">
+                        <div className="bg-background p-4 rounded-lg mb-4 space-y-3">
                           <input type="text" placeholder="Sprint name" value={sprintForm.sprint_name}
                             onChange={(e) => setSprintForm({...sprintForm, sprint_name: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm" />
                           <div className="grid grid-cols-2 gap-3">
                             <input type="date" placeholder="Start date" value={sprintForm.start_date}
                               onChange={(e) => setSprintForm({...sprintForm, start_date: e.target.value})}
-                              className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                              className="px-3 py-2 border border-border rounded-lg text-sm" />
                             <input type="date" placeholder="End date" value={sprintForm.end_date}
                               onChange={(e) => setSprintForm({...sprintForm, end_date: e.target.value})}
-                              className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                              className="px-3 py-2 border border-border rounded-lg text-sm" />
                           </div>
                           <div className="flex gap-2">
                             <button onClick={handleAddSprint} disabled={saving}
-                              className="text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg">{saving ? 'Adding...' : 'Add'}</button>
+                              className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg">{saving ? 'Adding...' : 'Add'}</button>
                             <button onClick={() => setShowSprintForm(false)}
-                              className="text-xs px-3 py-1.5 border border-[#BFDBFE] rounded-lg">Cancel</button>
+                              className="text-xs px-3 py-1.5 border border-border rounded-lg">Cancel</button>
                           </div>
                         </div>
                       )}
@@ -515,16 +515,16 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                           {sprints.map((sprint: any) => {
                             const statusColor = sprint.status === 'active' ? '#10B981' : sprint.status === 'completed' ? '#6B7280' : '#3B82F6'
                             return (
-                              <div key={sprint.id} className="p-4 bg-[#F0F7FA] rounded-lg border border-[#DBEAFE]">
+                              <div key={sprint.id} className="p-4 bg-background rounded-lg border border-border">
                                 <div className="flex items-center justify-between">
                                   <div>
-                                    <p className="text-sm font-semibold text-[#0B1F33]">{sprint.sprint_name}</p>
-                                    <p className="text-xs text-[#4B6B7A] mt-1">
+                                    <p className="text-sm font-semibold text-foreground">{sprint.sprint_name}</p>
+                                    <p className="text-xs text-muted-foreground mt-1">
                                       {new Date(sprint.start_date).toLocaleDateString()} — {new Date(sprint.end_date).toLocaleDateString()}
                                     </p>
                                   </div>
                                   <div className="flex items-center gap-3">
-                                    <span className="text-xs text-[#4B6B7A]">
+                                    <span className="text-xs text-muted-foreground">
                                       {sprint.completed_task_count || 0}/{sprint.task_count || 0} tasks
                                     </span>
                                     <span className="text-xs px-2 py-0.5 rounded-full font-medium"
@@ -533,11 +533,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                                     </span>
                                     {sprint.status === 'planned' && (
                                       <button onClick={() => updateSprintStatus(sprint.id, 'active', profile!.id).then(() => getSprints(project!.id).then(setSprints))}
-                                        className="text-xs text-[#0A8FA8] hover:underline">Start</button>
+                                        className="text-xs text-primary hover:underline">Start</button>
                                     )}
                                     {sprint.status === 'active' && (
                                       <button onClick={() => updateSprintStatus(sprint.id, 'completed', profile!.id).then(() => getSprints(project!.id).then(setSprints))}
-                                        className="text-xs text-[#10B981] hover:underline">Complete</button>
+                                        className="text-xs text-success hover:underline">Complete</button>
                                     )}
                                   </div>
                                 </div>
@@ -546,7 +546,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                           })}
                         </div>
                       ) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-8">No sprints yet. Create your first sprint.</p>
+                        <p className="text-sm text-muted-foreground text-center py-8">No sprints yet. Create your first sprint.</p>
                       )}
                     </div>
                   )}
@@ -555,37 +555,37 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'tasks' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Tasks ({totalTasks})</h3>
+                        <h3 className="font-semibold text-foreground">Tasks ({totalTasks})</h3>
                         <button onClick={() => setShowTaskForm(!showTaskForm)}
-                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096]">
+                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90">
                           <Plus size={14} /> Add Task
                         </button>
                       </div>
                       {showTaskForm && (
-                        <div className="bg-[#F0F7FA] p-4 rounded-lg mb-4 space-y-3">
+                        <div className="bg-background p-4 rounded-lg mb-4 space-y-3">
                           <input type="text" placeholder="Task title" value={taskForm.title}
                             onChange={(e) => setTaskForm({...taskForm, title: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm" />
                           <textarea placeholder="Description (optional)" value={taskForm.description}
                             onChange={(e) => setTaskForm({...taskForm, description: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm resize-none" rows={2} />
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm resize-none" rows={2} />
                           <div className="grid grid-cols-3 gap-3">
                             <select value={taskForm.priority} onChange={(e) => setTaskForm({...taskForm, priority: e.target.value})}
-                              className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                              className="px-3 py-2 border border-border rounded-lg text-sm bg-card">
                               {Object.entries(PRIORITY_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                             </select>
                             <select value={taskForm.status} onChange={(e) => setTaskForm({...taskForm, status: e.target.value})}
-                              className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                              className="px-3 py-2 border border-border rounded-lg text-sm bg-card">
                               {Object.entries(TASK_STATUS_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                             </select>
                             <input type="date" value={taskForm.due_date} onChange={(e) => setTaskForm({...taskForm, due_date: e.target.value})}
-                              className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                              className="px-3 py-2 border border-border rounded-lg text-sm" />
                           </div>
                           <div className="flex gap-2">
                             <button onClick={handleAddTask} disabled={saving}
-                              className="text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg">{saving ? 'Adding...' : 'Add Task'}</button>
+                              className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg">{saving ? 'Adding...' : 'Add Task'}</button>
                             <button onClick={() => setShowTaskForm(false)}
-                              className="text-xs px-3 py-1.5 border border-[#BFDBFE] rounded-lg">Cancel</button>
+                              className="text-xs px-3 py-1.5 border border-border rounded-lg">Cancel</button>
                           </div>
                         </div>
                       )}
@@ -595,39 +595,39 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                           const tasks = tasksByStatus[status] || []
                           const color = TASK_STATUS_COLORS[status]
                           return (
-                            <div key={status} className="bg-[#F0F7FA] rounded-lg p-3">
+                            <div key={status} className="bg-background rounded-lg p-3">
                               <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-2">
                                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                                  <span className="text-xs font-semibold text-[#0B1F33]">{TASK_STATUS_LABELS[status]}</span>
+                                  <span className="text-xs font-semibold text-foreground">{TASK_STATUS_LABELS[status]}</span>
                                 </div>
-                                <span className="text-xs text-[#4B6B7A] bg-white px-2 py-0.5 rounded-full">{tasks.length}</span>
+                                <span className="text-xs text-muted-foreground bg-card px-2 py-0.5 rounded-full">{tasks.length}</span>
                               </div>
                               <div className="space-y-2 min-h-[100px]">
                                 {tasks.map((task: any) => (
-                                  <div key={task.id} className="bg-white p-3 rounded-lg border border-[#DBEAFE] shadow-sm hover:shadow-md transition-all">
-                                    <p className="text-sm font-medium text-[#0B1F33] mb-1">{task.title}</p>
+                                  <div key={task.id} className="bg-card p-3 rounded-lg border border-border shadow-sm hover:shadow-md transition-all">
+                                    <p className="text-sm font-medium text-foreground mb-1">{task.title}</p>
                                     <div className="flex items-center justify-between">
                                       <span className="text-xs px-1.5 py-0.5 rounded font-medium"
                                         style={{ backgroundColor: `${PRIORITY_COLORS[task.priority as keyof typeof PRIORITY_COLORS]}15`, color: PRIORITY_COLORS[task.priority as keyof typeof PRIORITY_COLORS] }}>
                                         {task.priority}
                                       </span>
                                       {task.assigned_to_name && (
-                                        <span className="text-xs text-[#4B6B7A]">{task.assigned_to_name}</span>
+                                        <span className="text-xs text-muted-foreground">{task.assigned_to_name}</span>
                                       )}
                                     </div>
                                     {task.due_date && (
-                                      <p className="text-xs text-[#94A3B8] mt-1">{new Date(task.due_date).toLocaleDateString()}</p>
+                                      <p className="text-xs text-muted-foreground mt-1">{new Date(task.due_date).toLocaleDateString()}</p>
                                     )}
                                     {/* Status change buttons */}
                                     <div className="flex gap-1 mt-2 flex-wrap">
                                       {status !== 'todo' && (
                                         <button onClick={() => handleTaskStatusChange(task.id, status === 'in_progress' ? 'todo' : status === 'review' ? 'in_progress' : 'review')}
-                                          className="text-[10px] px-1.5 py-0.5 border border-[#DBEAFE] rounded hover:bg-[#F0F7FA]">← Back</button>
+                                          className="text-[10px] px-1.5 py-0.5 border border-border rounded hover:bg-background">← Back</button>
                                       )}
                                       {status !== 'done' && (
                                         <button onClick={() => handleTaskStatusChange(task.id, status === 'todo' ? 'in_progress' : status === 'in_progress' ? 'review' : 'done')}
-                                          className="text-[10px] px-1.5 py-0.5 bg-[#0A8FA8]/10 text-[#0A8FA8] rounded hover:bg-[#0A8FA8]/20">Next →</button>
+                                          className="text-[10px] px-1.5 py-0.5 bg-primary/10 text-primary rounded hover:bg-primary/20">Next →</button>
                                       )}
                                     </div>
                                   </div>
@@ -644,42 +644,42 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'team' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Team Members ({members.length})</h3>
+                        <h3 className="font-semibold text-foreground">Team Members ({members.length})</h3>
                         <button onClick={() => setShowMemberForm(!showMemberForm)}
-                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096]">
+                          className="flex items-center gap-1 text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90">
                           <Plus size={14} /> Add Member
                         </button>
                       </div>
                       {showMemberForm && (
-                        <div className="bg-[#F0F7FA] p-4 rounded-lg mb-4 space-y-3">
+                        <div className="bg-background p-4 rounded-lg mb-4 space-y-3">
                           <select value={memberForm.role} onChange={(e) => setMemberForm({...memberForm, role: e.target.value})}
-                            className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                            className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card">
                             {Object.entries(MEMBER_ROLE_LABELS).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
                           </select>
-                          <p className="text-xs text-[#4B6B7A]">Note: In production, a developer picker would be shown here. For now, team members are managed through Supabase.</p>
+                          <p className="text-xs text-muted-foreground">Note: In production, a developer picker would be shown here. For now, team members are managed through Supabase.</p>
                           <button onClick={() => setShowMemberForm(false)}
-                            className="text-xs px-3 py-1.5 border border-[#BFDBFE] rounded-lg">Close</button>
+                            className="text-xs px-3 py-1.5 border border-border rounded-lg">Close</button>
                         </div>
                       )}
                       {members.length > 0 ? (
                         <div className="space-y-3">
                           {members.map((member: any) => (
-                            <div key={member.id} className="flex items-center justify-between p-4 bg-[#F0F7FA] rounded-lg">
+                            <div key={member.id} className="flex items-center justify-between p-4 bg-background rounded-lg">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-[#0A8FA8] rounded-full flex items-center justify-center text-white text-sm font-medium">
+                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">
                                   {member.first_name?.[0]}{member.last_name?.[0]}
                                 </div>
                                 <div>
-                                  <p className="text-sm font-medium text-[#0B1F33]">{member.first_name} {member.last_name}</p>
-                                  <p className="text-xs text-[#4B6B7A]">{member.email}</p>
+                                  <p className="text-sm font-medium text-foreground">{member.first_name} {member.last_name}</p>
+                                  <p className="text-xs text-muted-foreground">{member.email}</p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-3">
-                                <span className="text-xs px-2 py-0.5 rounded-full bg-[#0A8FA8]/10 text-[#0A8FA8] font-medium">
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
                                   {MEMBER_ROLE_LABELS[member.role as keyof typeof MEMBER_ROLE_LABELS] || member.role}
                                 </span>
                                 <button onClick={() => removeProjectMember(member.id, project!.id, profile!.id).then(() => getProjectMembers(project!.id).then(setMembers))}
-                                  className="p-1 text-[#EF4444] hover:bg-red-50 rounded">
+                                  className="p-1 text-destructive hover:bg-red-50 rounded">
                                   <Trash2 size={14} />
                                 </button>
                               </div>
@@ -687,7 +687,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-8">No team members assigned yet.</p>
+                        <p className="text-sm text-muted-foreground text-center py-8">No team members assigned yet.</p>
                       )}
                     </div>
                   )}
@@ -695,32 +695,32 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {/* ============ COMMENTS TAB ============ */}
                   {activeTab === 'comments' && (
                     <div>
-                      <h3 className="font-semibold text-[#0B1F33] mb-4">Comments ({comments.length})</h3>
+                      <h3 className="font-semibold text-foreground mb-4">Comments ({comments.length})</h3>
                       <div className="space-y-3 mb-4">
                         {comments.length > 0 ? comments.map((comment: any) => (
-                          <div key={comment.id} className="flex gap-3 p-3 bg-[#F0F7FA] rounded-lg">
-                            <div className="w-8 h-8 bg-[#0A8FA8] rounded-full flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                          <div key={comment.id} className="flex gap-3 p-3 bg-background rounded-lg">
+                            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs font-medium flex-shrink-0">
                               {comment.author_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2) || '?'}
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-[#0B1F33]">{comment.author_name || 'Unknown'}</span>
-                                <span className="text-xs text-[#94A3B8]">{new Date(comment.created_at).toLocaleString()}</span>
+                                <span className="text-sm font-medium text-foreground">{comment.author_name || 'Unknown'}</span>
+                                <span className="text-xs text-muted-foreground">{new Date(comment.created_at).toLocaleString()}</span>
                               </div>
-                              <p className="text-sm text-[#4B6B7A] mt-1">{comment.content}</p>
+                              <p className="text-sm text-muted-foreground mt-1">{comment.content}</p>
                             </div>
                           </div>
                         )) : (
-                          <p className="text-sm text-[#4B6B7A] text-center py-8">No comments yet. Start the conversation!</p>
+                          <p className="text-sm text-muted-foreground text-center py-8">No comments yet. Start the conversation!</p>
                         )}
                       </div>
                       <div className="flex gap-3">
                         <input type="text" placeholder="Write a comment..." value={newComment}
                           onChange={(e) => setNewComment(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
-                          className="flex-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                          className="flex-1 px-3 py-2 border border-border rounded-lg text-sm" />
                         <button onClick={handleAddComment} disabled={saving || !newComment.trim()}
-                          className="px-4 py-2 bg-[#0A8FA8] text-white rounded-lg text-sm hover:bg-[#088096] disabled:opacity-50">
+                          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm hover:bg-primary/90 disabled:opacity-50">
                           {saving ? 'Sending...' : 'Send'}
                         </button>
                       </div>
@@ -730,25 +730,25 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {/* ============ ACTIVITY TAB ============ */}
                   {activeTab === 'activity' && (
                     <div>
-                      <h3 className="font-semibold text-[#0B1F33] mb-4">Activity History</h3>
+                      <h3 className="font-semibold text-foreground mb-4">Activity History</h3>
                       {activity.length > 0 ? (
                         <div className="space-y-3">
                           {activity.map((entry: any) => (
-                            <div key={entry.id} className="flex items-start gap-3 p-3 bg-[#F0F7FA] rounded-lg">
-                              <div className="w-2 h-2 bg-[#0A8FA8] rounded-full mt-1.5 flex-shrink-0" />
+                            <div key={entry.id} className="flex items-start gap-3 p-3 bg-background rounded-lg">
+                              <div className="w-2 h-2 bg-primary rounded-full mt-1.5 flex-shrink-0" />
                               <div className="flex-1">
-                                <p className="text-sm text-[#0B1F33]">
+                                <p className="text-sm text-foreground">
                                   <span className="font-medium">{entry.performed_by_name || 'System'}</span>
                                   {' — '}
                                   {entry.action}
                                 </p>
-                                <p className="text-xs text-[#94A3B8] mt-0.5">{new Date(entry.created_at).toLocaleString()}</p>
+                                <p className="text-xs text-muted-foreground mt-0.5">{new Date(entry.created_at).toLocaleString()}</p>
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-8">No activity recorded yet.</p>
+                        <p className="text-sm text-muted-foreground text-center py-8">No activity recorded yet.</p>
                       )}
                     </div>
                   )}
@@ -757,26 +757,26 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                   {activeTab === 'attachments' && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold text-[#0B1F33]">Attachments ({attachments.length})</h3>
+                        <h3 className="font-semibold text-foreground">Attachments ({attachments.length})</h3>
                       </div>
                       {attachments.length > 0 ? (
                         <div className="space-y-3">
                           {attachments.map((att: any) => (
-                            <div key={att.id} className="flex items-center justify-between p-3 bg-[#F0F7FA] rounded-lg">
+                            <div key={att.id} className="flex items-center justify-between p-3 bg-background rounded-lg">
                               <div className="flex items-center gap-3">
-                                <Paperclip size={16} className="text-[#4B6B7A]" />
+                                <Paperclip size={16} className="text-muted-foreground" />
                                 <div>
-                                  <p className="text-sm font-medium text-[#0B1F33]">{att.file_name}</p>
-                                  <p className="text-xs text-[#94A3B8]">{new Date(att.created_at).toLocaleString()}</p>
+                                  <p className="text-sm font-medium text-foreground">{att.file_name}</p>
+                                  <p className="text-xs text-muted-foreground">{new Date(att.created_at).toLocaleString()}</p>
                                 </div>
                               </div>
                               <a href={att.file_url} target="_blank" rel="noopener noreferrer"
-                                className="text-xs text-[#0A8FA8] hover:underline">Download</a>
+                                className="text-xs text-primary hover:underline">Download</a>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-8">No attachments yet.</p>
+                        <p className="text-sm text-muted-foreground text-center py-8">No attachments yet.</p>
                       )}
                     </div>
                   )}

@@ -83,12 +83,12 @@ export default function CommunicationHub() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900">Communication Center</h1>
-          <p className="text-slate-600 mt-2">Your unified hub for team collaboration and conversations</p>
+          <h1 className="text-4xl font-bold text-foreground">Communication Center</h1>
+          <p className="text-muted-foreground mt-2">Your unified hub for team collaboration and conversations</p>
         </div>
 
         {/* Quick Actions Grid */}
@@ -99,13 +99,13 @@ export default function CommunicationHub() {
               <Link
                 key={action.label}
                 href={action.href}
-                className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow relative group"
+                className="bg-card rounded-lg shadow p-6 hover:shadow-lg transition-shadow relative group"
               >
                 <div className="flex flex-col items-center text-center">
                   <Icon className="w-8 h-8 text-teal-600 mb-3" />
-                  <span className="text-sm font-medium text-slate-900">{action.label}</span>
+                  <span className="text-sm font-medium text-foreground">{action.label}</span>
                   {action.badge && (
-                    <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute top-2 right-2 bg-red-500 text-primary-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                       {action.badge}
                     </span>
                   )}
@@ -117,27 +117,27 @@ export default function CommunicationHub() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Active Conversations</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">12</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Active Conversations</p>
+            <p className="text-3xl font-bold text-foreground mt-2">12</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Team Members Online</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">8</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Team Members Online</p>
+            <p className="text-3xl font-bold text-foreground mt-2">8</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Unread Messages</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">{unreadDMs}</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Unread Messages</p>
+            <p className="text-3xl font-bold text-foreground mt-2">{unreadDMs}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Pending Tasks</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">3</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Pending Tasks</p>
+            <p className="text-3xl font-bold text-foreground mt-2">3</p>
           </div>
         </div>
 
         {/* Recent Activity Feed */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4">Recent Activity</h2>
+        <div className="bg-card rounded-lg shadow p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex items-start gap-4 pb-4 border-b last:border-b-0">
@@ -148,9 +148,9 @@ export default function CommunicationHub() {
                   {activity.type === 'task' && <CheckSquare className="w-5 h-5 text-teal-600" />}
                 </div>
                 <div className="flex-1">
-                  <p className="text-slate-900 font-medium">{activity.actor}</p>
-                  <p className="text-slate-600 text-sm">{activity.action}</p>
-                  <p className="text-slate-400 text-xs mt-1">{activity.timestamp}</p>
+                  <p className="text-foreground font-medium">{activity.actor}</p>
+                  <p className="text-muted-foreground text-sm">{activity.action}</p>
+                  <p className="text-muted-foreground text-xs mt-1">{activity.timestamp}</p>
                 </div>
               </div>
             ))}

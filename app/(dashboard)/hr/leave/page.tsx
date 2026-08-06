@@ -74,16 +74,16 @@ export default function LeavePage() {
       case 'rejected':
         return 'bg-red-100 text-red-700'
       default:
-        return 'bg-slate-100 text-slate-700'
+        return 'bg-muted text-slate-700'
     }
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Leave Management</h1>
-          <p className="text-slate-600 mt-1">Manage employee leave requests and approvals</p>
+          <h1 className="text-3xl font-bold text-foreground">Leave Management</h1>
+          <p className="text-muted-foreground mt-1">Manage employee leave requests and approvals</p>
         </div>
 
         {/* Filter Tabs */}
@@ -92,7 +92,7 @@ export default function LeavePage() {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${filter === status ? 'bg-teal-600 text-white' : 'bg-white text-slate-900 border border-slate-200'
+              className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${filter === status ? 'bg-teal-600 text-primary-foreground' : 'bg-card text-foreground border border-border'
                 }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -101,28 +101,28 @@ export default function LeavePage() {
         </div>
 
         {/* Leave Requests Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-50 border-b">
+              <thead className="bg-muted/50 border-b">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Employee</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Leave Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Date Range</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Days</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Reason</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Action</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Employee</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Leave Type</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Date Range</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Days</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Reason</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {filteredRequests.map((req) => (
-                  <tr key={req.id} className="hover:bg-slate-50">
-                    <td className="px-6 py-4 font-semibold text-slate-900">{req.employeeName}</td>
-                    <td className="px-6 py-4 text-slate-600">{req.leaveType}</td>
-                    <td className="px-6 py-4 text-slate-600">{req.startDate} to {req.endDate}</td>
-                    <td className="px-6 py-4 text-slate-600">{req.daysRequested}</td>
-                    <td className="px-6 py-4 text-slate-600">{req.reason}</td>
+                  <tr key={req.id} className="hover:bg-muted/50">
+                    <td className="px-6 py-4 font-semibold text-foreground">{req.employeeName}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{req.leaveType}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{req.startDate} to {req.endDate}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{req.daysRequested}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{req.reason}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(req.status)}
@@ -134,10 +134,10 @@ export default function LeavePage() {
                     <td className="px-6 py-4">
                       {req.status === 'pending' && (
                         <div className="flex gap-2">
-                          <button className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700">
+                          <button className="px-3 py-1 text-xs font-medium text-primary-foreground bg-green-600 rounded hover:bg-green-700">
                             Approve
                           </button>
-                          <button className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700">
+                          <button className="px-3 py-1 text-xs font-medium text-primary-foreground bg-red-600 rounded hover:bg-red-700">
                             Reject
                           </button>
                         </div>

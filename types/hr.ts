@@ -207,9 +207,28 @@ export interface Asset {
   id: string
   asset_type: string
   asset_name: string
+  asset_code?: string
+  barcode?: string
+  qr_code?: string
+  brand?: string
+  model?: string
+  category?: string
+  purchase_date?: string
+  purchase_price?: number
+  supplier?: string
+  warranty_expiry?: string
+  department?: string
+  current_location?: string
   serial_number?: string
-  condition: 'good' | 'fair' | 'damaged'
+  condition: 'good' | 'fair' | 'poor' | 'damaged' | 'excellent' | string
+  status: 'available' | 'assigned' | 'maintenance' | 'damaged' | 'lost' | 'retired' | 'disposed' | string
+  quantity: number
+  available_quantity: number
+  assigned_quantity: number
   is_assigned: boolean
+  notes?: string
+  attachments?: string[]
+  photos?: string[]
   created_at: string
 }
 
@@ -217,11 +236,54 @@ export interface AssetAssignment {
   id: string
   asset_id: string
   employee_id: string
+  department?: string
   issued_date: string
+  expected_return_date?: string
   return_date?: string
   condition_on_issue?: string
   condition_on_return?: string
+  accessories_included?: string
+  approval_status?: string
+  digital_signature?: string
+  damage_notes?: string
+  missing_accessories?: string
+  photos?: string[]
+  return_signature?: string
   notes?: string
+  created_at: string
+}
+
+export interface AssetMaintenance {
+  id: string
+  asset_id: string
+  maintenance_type: string
+  maintenance_date: string
+  vendor?: string
+  technician?: string
+  cost?: number
+  invoice_url?: string
+  next_maintenance_date?: string
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | string
+  notes?: string
+  attachments?: string[]
+  created_at: string
+  updated_at: string
+}
+
+export interface AssetTransfer {
+  id: string
+  asset_id: string
+  transfer_date: string
+  from_employee_id?: string
+  to_employee_id?: string
+  from_department?: string
+  to_department?: string
+  from_location?: string
+  to_location?: string
+  reason?: string
+  status: string
+  notes?: string
+  created_by?: string
   created_at: string
 }
 

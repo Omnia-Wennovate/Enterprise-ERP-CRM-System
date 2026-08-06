@@ -247,7 +247,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
   if (!itinerary) {
     return (
       <div className="text-center py-16">
-        <p className="text-slate-600">Itinerary not found</p>
+        <p className="text-muted-foreground">Itinerary not found</p>
         <button onClick={onBack} className="mt-4 text-teal-600 font-semibold">← Back to list</button>
       </div>
     )
@@ -273,7 +273,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       {/* Back Button */}
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-slate-600 hover:text-teal-700 font-medium transition-colors">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-teal-700 font-medium transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Itineraries
       </button>
 
@@ -289,16 +289,16 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
           <div className="flex items-start justify-between">
             <div>
               {itinerary.destination_country && (
-                <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-1">
+                <p className="text-primary-foreground/70 text-xs font-medium uppercase tracking-wider mb-1">
                   {itinerary.destination_country}
                 </p>
               )}
-              <h1 className="text-3xl font-bold text-white">{itinerary.title}</h1>
-              <p className="text-white/80 text-lg mt-1">{destination}</p>
+              <h1 className="text-3xl font-bold text-primary-foreground">{itinerary.title}</h1>
+              <p className="text-primary-foreground/80 text-lg mt-1">{destination}</p>
 
-              <div className="flex flex-wrap items-center gap-4 mt-4 text-white/70 text-sm">
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-primary-foreground/70 text-sm">
                 {booking && (
-                  <span className="flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full">
+                  <span className="flex items-center gap-1.5 bg-card/10 px-3 py-1 rounded-full">
                     <BookOpen className="w-3.5 h-3.5" /> {booking.booking_reference}
                   </span>
                 )}
@@ -345,15 +345,15 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
 
       {/* Action Bar */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-white rounded-xl border border-slate-200 p-1">
+        <div className="flex items-center gap-2 bg-card rounded-xl border border-border p-1">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id
-                  ? 'bg-teal-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-muted/50'
               }`}
             >
               <tab.icon className="w-3.5 h-3.5" />
@@ -364,21 +364,21 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
 
         <div className="flex items-center gap-2">
           <button onClick={() => setShowEditForm(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            className="flex items-center gap-1.5 px-3 py-2 bg-card border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 transition-colors">
             <Pencil className="w-3.5 h-3.5" /> Edit
           </button>
           <button onClick={handleSaveAsTemplate}
-            className="flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            className="flex items-center gap-1.5 px-3 py-2 bg-card border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 transition-colors">
             <Bookmark className="w-3.5 h-3.5" /> Save Template
           </button>
           <button onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            className="flex items-center gap-1.5 px-3 py-2 bg-card border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 transition-colors">
             <FileDown className="w-3.5 h-3.5" /> Print / PDF
           </button>
           {itinerary.share_token && (
             <button
               onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/itinerary/${itinerary.share_token}`); alert('Share link copied!') }}
-              className="flex items-center gap-1.5 px-3 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors">
+              className="flex items-center gap-1.5 px-3 py-2 bg-teal-600 text-primary-foreground rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors">
               <Share2 className="w-3.5 h-3.5" /> Share
             </button>
           )}
@@ -387,17 +387,17 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
 
       {/* Traveler Info Banner */}
       {itinerary.travelers && itinerary.travelers.length > 0 && (
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Travelers</h3>
+        <div className="bg-card rounded-xl border border-border p-4">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Travelers</h3>
           <div className="flex flex-wrap gap-3">
             {itinerary.travelers.map(t => (
-              <div key={t.id} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg">
+              <div key={t.id} className="flex items-center gap-2 px-3 py-2 bg-muted/50 rounded-lg">
                 <div className="w-7 h-7 bg-teal-100 rounded-full flex items-center justify-center text-xs font-bold text-teal-700">
                   {t.first_name[0]}{t.last_name[0]}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-800">{t.first_name} {t.last_name}</p>
-                  <p className="text-xs text-slate-500">{t.nationality || 'No nationality'}</p>
+                  <p className="text-sm font-medium text-foreground">{t.first_name} {t.last_name}</p>
+                  <p className="text-xs text-muted-foreground">{t.nationality || 'No nationality'}</p>
                 </div>
               </div>
             ))}
@@ -424,30 +424,30 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
       )}
 
       {activeTab === 'comments' && (
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+        <div className="bg-card rounded-xl border border-border p-6">
+          <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
             <MessageSquare className="w-4 h-4 text-teal-600" />
             Discussion ({comments.length})
           </h3>
 
           <div className="space-y-3 mb-4 max-h-[400px] overflow-y-auto">
             {comments.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-8">No comments yet. Start the discussion!</p>
+              <p className="text-sm text-muted-foreground text-center py-8">No comments yet. Start the discussion!</p>
             ) : (
               comments.map(c => (
-                <div key={c.id} className="flex gap-3 p-3 bg-slate-50 rounded-lg">
+                <div key={c.id} className="flex gap-3 p-3 bg-muted/50 rounded-lg">
                   <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-xs font-bold text-teal-700 flex-shrink-0">
                     {(c.author_name || 'U')[0]}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-800">{c.author_name || 'User'}</span>
+                      <span className="text-sm font-semibold text-foreground">{c.author_name || 'User'}</span>
                       {c.department && (
                         <span className="px-1.5 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-medium rounded">{c.department}</span>
                       )}
-                      <span className="text-xs text-slate-400">{new Date(c.created_at).toLocaleString()}</span>
+                      <span className="text-xs text-muted-foreground">{new Date(c.created_at).toLocaleString()}</span>
                     </div>
-                    <p className="text-sm text-slate-600 mt-1">{c.content}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{c.content}</p>
                   </div>
                 </div>
               ))
@@ -461,10 +461,10 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
               onChange={e => setNewComment(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleAddComment()}
               placeholder="Add a comment..."
-              className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+              className="flex-1 px-4 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
             />
             <button onClick={handleAddComment} disabled={savingComment || !newComment.trim()}
-              className="px-4 py-2.5 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors">
+              className="px-4 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors">
               {savingComment ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Send'}
             </button>
           </div>
@@ -472,15 +472,15 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
       )}
 
       {activeTab === 'versions' && (
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
+        <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
               <History className="w-4 h-4 text-teal-600" />
               Version History
             </h3>
-            <span className="text-xs text-slate-500">Current: v{itinerary.version}</span>
+            <span className="text-xs text-muted-foreground">Current: v{itinerary.version}</span>
           </div>
-          <p className="text-sm text-slate-400 text-center py-8">
+          <p className="text-sm text-muted-foreground text-center py-8">
             Version snapshots are created when the itinerary status changes.
           </p>
         </div>

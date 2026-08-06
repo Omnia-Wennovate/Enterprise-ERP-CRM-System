@@ -11,15 +11,15 @@ export function HotelCard({ item }: HotelCardProps) {
   const meta = (item.metadata || {}) as HotelMeta
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition-all duration-200">
+    <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-md transition-all duration-200">
       {/* Header */}
       <div className="bg-gradient-to-r from-violet-500 to-purple-600 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-white/20 rounded-lg">
-            <Building2 className="w-4 h-4 text-white" />
+          <div className="p-1.5 bg-card/20 rounded-lg">
+            <Building2 className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-white text-sm font-bold">{meta.hotel_name || item.title}</p>
+            <p className="text-primary-foreground text-sm font-bold">{meta.hotel_name || item.title}</p>
             <div className="flex items-center gap-0.5 mt-0.5">
               {Array.from({ length: meta.star_rating || 0 }).map((_, i) => (
                 <Star key={i} className="w-3 h-3 text-yellow-300 fill-yellow-300" />
@@ -39,8 +39,8 @@ export function HotelCard({ item }: HotelCardProps) {
         {/* Room Type */}
         {meta.room_type && (
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-600">Room Type</span>
-            <span className="text-sm font-semibold text-slate-800">{meta.room_type}</span>
+            <span className="text-sm text-muted-foreground">Room Type</span>
+            <span className="text-sm font-semibold text-foreground">{meta.room_type}</span>
           </div>
         )}
 
@@ -77,19 +77,19 @@ export function HotelCard({ item }: HotelCardProps) {
         {/* Address & Contact */}
         <div className="pt-2 border-t border-slate-100 space-y-1.5">
           {(meta.address || item.address) && (
-            <p className="flex items-start gap-1.5 text-xs text-slate-500">
+            <p className="flex items-start gap-1.5 text-xs text-muted-foreground">
               <MapPin className="w-3 h-3 mt-0.5 flex-shrink-0" />
               {meta.address || item.address}
             </p>
           )}
           {(meta.phone || item.contact_phone) && (
-            <p className="flex items-center gap-1.5 text-xs text-slate-500">
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Phone className="w-3 h-3 flex-shrink-0" />
               {meta.phone || item.contact_phone}
             </p>
           )}
           {meta.confirmation_number && (
-            <p className="flex items-center gap-1.5 text-xs text-slate-500">
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Clock className="w-3 h-3 flex-shrink-0" />
               Conf: <span className="font-medium text-slate-700">{meta.confirmation_number}</span>
             </p>
@@ -108,11 +108,11 @@ export function HotelCard({ item }: HotelCardProps) {
         {/* Cost */}
         {item.cost > 0 && (
           <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-            <span className="text-xs text-slate-500">Total Cost</span>
-            <span className="text-sm font-bold text-slate-900">
+            <span className="text-xs text-muted-foreground">Total Cost</span>
+            <span className="text-sm font-bold text-foreground">
               {item.currency} {item.cost.toLocaleString()}
               {item.cost_local && item.currency_local && (
-                <span className="text-xs text-slate-400 font-normal ml-1">
+                <span className="text-xs text-muted-foreground font-normal ml-1">
                   ({item.currency_local} {item.cost_local.toLocaleString()})
                 </span>
               )}

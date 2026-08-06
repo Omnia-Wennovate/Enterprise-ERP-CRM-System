@@ -8,9 +8,9 @@ export const metadata = {
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="min-h-screen flex bg-[#F0F7FA]">
+    <div className="min-h-screen flex bg-background">
       {/* Left Panel */}
-      <div className="hidden lg:flex lg:w-5/12 bg-[#0B2A3D] flex-col justify-between p-8 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-5/12 bg-sidebar flex-col justify-between p-8 relative overflow-hidden">
         {/* Wave decoration */}
         <div className="absolute inset-0 opacity-10">
           <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="none">
@@ -30,44 +30,44 @@ export default function ForgotPasswordPage() {
         {/* Content */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-12">
-            <div className="bg-[#0A8FA8] p-2 rounded-lg">
-              <Plane className="text-white" size={28} />
+            <div className="bg-primary p-2 rounded-lg">
+              <Plane className="text-primary-foreground" size={28} />
             </div>
-            <h1 className="text-white font-bold text-2xl">Omnia Travel</h1>
+            <h1 className="text-primary-foreground font-bold text-2xl">Omnia Travel</h1>
           </div>
 
-          <p className="text-[#38BDF8] text-lg font-semibold mb-8">
+          <p className="text-accent-foreground text-lg font-semibold mb-8">
             The Operating System for Your Travel Business
           </p>
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <div className="bg-[#0A8FA8] rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-white" size={16} />
+              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
+                <Check className="text-primary-foreground" size={16} />
               </div>
               <div>
-                <p className="text-white font-medium">Manage leads and customers</p>
-                <p className="text-[#94A3B8] text-sm">Track every interaction and conversion</p>
+                <p className="text-primary-foreground font-medium">Manage leads and customers</p>
+                <p className="text-muted-foreground text-sm">Track every interaction and conversion</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="bg-[#0A8FA8] rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-white" size={16} />
+              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
+                <Check className="text-primary-foreground" size={16} />
               </div>
               <div>
-                <p className="text-white font-medium">Automate invoices and payments</p>
-                <p className="text-[#94A3B8] text-sm">Streamline your financial workflows</p>
+                <p className="text-primary-foreground font-medium">Automate invoices and payments</p>
+                <p className="text-muted-foreground text-sm">Streamline your financial workflows</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="bg-[#0A8FA8] rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-white" size={16} />
+              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
+                <Check className="text-primary-foreground" size={16} />
               </div>
               <div>
-                <p className="text-white font-medium">Real-time team collaboration</p>
-                <p className="text-[#94A3B8] text-sm">Keep everyone in sync across departments</p>
+                <p className="text-primary-foreground font-medium">Real-time team collaboration</p>
+                <p className="text-muted-foreground text-sm">Keep everyone in sync across departments</p>
               </div>
             </div>
           </div>
@@ -75,19 +75,19 @@ export default function ForgotPasswordPage() {
 
         {/* Bottom branding */}
         <div className="relative z-10">
-          <p className="text-[#94A3B8] text-xs">© 2024 Omnia Travel. All rights reserved.</p>
+          <p className="text-muted-foreground text-xs">© 2024 Omnia Travel. All rights reserved.</p>
         </div>
       </div>
 
       {/* Right Panel */}
-      <div className="w-full lg:w-7/12 bg-[#F0F7FA] flex items-center justify-center p-6">
+      <div className="w-full lg:w-7/12 bg-background flex items-center justify-center p-6">
         <div className="w-full">
           <div className="lg:hidden mb-8 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="bg-[#0A8FA8] p-2 rounded-lg">
-                <Plane className="text-white" size={24} />
+              <div className="bg-primary p-2 rounded-lg">
+                <Plane className="text-primary-foreground" size={24} />
               </div>
-              <h1 className="text-[#0B1F33] font-bold text-2xl">Omnia Travel</h1>
+              <h1 className="text-foreground font-bold text-2xl">Omnia Travel</h1>
             </div>
           </div>
 

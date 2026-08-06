@@ -46,7 +46,7 @@ export default function TasksPage() {
       case 'in_progress':
         return <AlertCircle className="w-5 h-5 text-amber-600" />
       default:
-        return <Circle className="w-5 h-5 text-slate-400" />
+        return <Circle className="w-5 h-5 text-muted-foreground" />
     }
   }
 
@@ -57,24 +57,24 @@ export default function TasksPage() {
       case 'medium':
         return 'bg-amber-100 text-amber-800'
       default:
-        return 'bg-slate-100 text-slate-800'
+        return 'bg-muted text-foreground'
     }
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Tasks</h1>
-            <p className="text-slate-600 mt-1">Tasks assigned to you from conversations</p>
+            <h1 className="text-3xl font-bold text-foreground">Tasks</h1>
+            <p className="text-muted-foreground mt-1">Tasks assigned to you from conversations</p>
           </div>
           <div className="flex gap-2">
-            <button className="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 font-medium">
+            <button className="flex items-center gap-2 px-4 py-2 border border-border text-slate-700 rounded-lg hover:bg-muted/50 font-medium">
               <Filter className="w-5 h-5" />
               Filter
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium">
+            <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
               <Plus className="w-5 h-5" />
               New Task
             </button>
@@ -82,25 +82,25 @@ export default function TasksPage() {
         </div>
 
         {/* Tasks Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
           <table className="w-full">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted/50 border-b border-border">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-600">Task</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-600">Assigned By</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-600">Priority</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-600">Due Date</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-600">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-muted-foreground">Task</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-muted-foreground">Assigned By</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-muted-foreground">Priority</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-muted-foreground">Due Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-muted-foreground">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
               {tasks.map((task) => (
-                <tr key={task.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={task.id} className="hover:bg-muted/50 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-medium text-slate-900">{task.title}</p>
+                    <p className="font-medium text-foreground">{task.title}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-sm text-slate-600">{task.assignedBy}</p>
+                    <p className="text-sm text-muted-foreground">{task.assignedBy}</p>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${getPriorityColor(task.priority)}`}>
@@ -108,12 +108,12 @@ export default function TasksPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-sm text-slate-600">{task.dueDate}</p>
+                    <p className="text-sm text-muted-foreground">{task.dueDate}</p>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       {getStatusIcon(task.status)}
-                      <span className="text-sm text-slate-600 capitalize">{task.status.replace('_', ' ')}</span>
+                      <span className="text-sm text-muted-foreground capitalize">{task.status.replace('_', ' ')}</span>
                     </div>
                   </td>
                 </tr>

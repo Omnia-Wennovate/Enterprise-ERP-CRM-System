@@ -55,7 +55,7 @@ import type {
 } from '@/types/finance'
 import type { Booking } from '@/types'
 
-// EXPENSES
+// ── EXPENSES — existing actions (kept for backward compat) ────────────────────
 export async function fetchExpenses(): Promise<Expense[]> {
   return getExpenses()
 }
@@ -67,6 +67,62 @@ export async function addExpenseAction(formData: AddExpenseFormData): Promise<Ex
 export async function fetchExpensesByCategory(): Promise<{ category: string; total: number }[]> {
   return getExpensesByCategory()
 }
+
+// ── EXPENSES — new enterprise actions ─────────────────────────────────────────
+
+import * as expenseSvc from '@/lib/services/expenses'
+import * as vendorSvc from '@/lib/services/expense-vendors'
+import * as categorySvc from '@/lib/services/expense-categories'
+import * as attachmentSvc from '@/lib/services/expense-attachments'
+import * as approvalSvc from '@/lib/services/expense-approvals'
+import * as budgetSvc from '@/lib/services/expense-budgets'
+import * as reportSvc from '@/lib/services/expense-reports'
+import * as aiSvc from '@/lib/services/expense-ai'
+
+export async function fetchExpensesWithRelations(...args: Parameters<typeof expenseSvc.getExpensesWithRelations>) { return expenseSvc.getExpensesWithRelations(...args) }
+export async function fetchExpenseById(...args: Parameters<typeof expenseSvc.getExpenseById>) { return expenseSvc.getExpenseById(...args) }
+export async function createExpenseAction(...args: Parameters<typeof expenseSvc.createExpense>) { return expenseSvc.createExpense(...args) }
+export async function updateExpenseAction(...args: Parameters<typeof expenseSvc.updateExpense>) { return expenseSvc.updateExpense(...args) }
+export async function deleteExpenseAction(...args: Parameters<typeof expenseSvc.deleteExpense>) { return expenseSvc.deleteExpense(...args) }
+export async function duplicateExpenseAction(...args: Parameters<typeof expenseSvc.duplicateExpense>) { return expenseSvc.duplicateExpense(...args) }
+export async function archiveExpenseAction(...args: Parameters<typeof expenseSvc.archiveExpense>) { return expenseSvc.archiveExpense(...args) }
+export async function markExpensePaidAction(...args: Parameters<typeof expenseSvc.markExpensePaid>) { return expenseSvc.markExpensePaid(...args) }
+export async function generateExpenseNumberAction(...args: Parameters<typeof expenseSvc.generateExpenseNumber>) { return expenseSvc.generateExpenseNumber(...args) }
+export async function fetchExpenseKPIs(...args: Parameters<typeof expenseSvc.getExpenseKPIs>) { return expenseSvc.getExpenseKPIs(...args) }
+export async function fetchExpenseChartData(...args: Parameters<typeof expenseSvc.getExpenseChartData>) { return expenseSvc.getExpenseChartData(...args) }
+
+export async function fetchVendors(...args: Parameters<typeof vendorSvc.getVendors>) { return vendorSvc.getVendors(...args) }
+export async function createVendorAction(...args: Parameters<typeof vendorSvc.createVendor>) { return vendorSvc.createVendor(...args) }
+export async function updateVendorAction(...args: Parameters<typeof vendorSvc.updateVendor>) { return vendorSvc.updateVendor(...args) }
+export async function deleteVendorAction(...args: Parameters<typeof vendorSvc.deleteVendor>) { return vendorSvc.deleteVendor(...args) }
+
+export async function fetchExpenseCategories(...args: Parameters<typeof categorySvc.getExpenseCategories>) { return categorySvc.getExpenseCategories(...args) }
+export async function createExpenseCategoryAction(...args: Parameters<typeof categorySvc.createExpenseCategory>) { return categorySvc.createExpenseCategory(...args) }
+export async function updateExpenseCategoryAction(...args: Parameters<typeof categorySvc.updateExpenseCategory>) { return categorySvc.updateExpenseCategory(...args) }
+export async function deleteExpenseCategoryAction(...args: Parameters<typeof categorySvc.deleteExpenseCategory>) { return categorySvc.deleteExpenseCategory(...args) }
+
+export async function fetchExpenseAttachments(...args: Parameters<typeof attachmentSvc.getExpenseAttachments>) { return attachmentSvc.getExpenseAttachments(...args) }
+export async function uploadExpenseAttachmentAction(...args: Parameters<typeof attachmentSvc.uploadExpenseAttachment>) { return attachmentSvc.uploadExpenseAttachment(...args) }
+export async function deleteExpenseAttachmentAction(...args: Parameters<typeof attachmentSvc.deleteExpenseAttachment>) { return attachmentSvc.deleteExpenseAttachment(...args) }
+export async function findDuplicateAttachmentAction(...args: Parameters<typeof attachmentSvc.findDuplicateAttachment>) { return attachmentSvc.findDuplicateAttachment(...args) }
+export async function reorderAttachmentPagesAction(...args: Parameters<typeof attachmentSvc.reorderAttachmentPages>) { return attachmentSvc.reorderAttachmentPages(...args) }
+
+export async function fetchExpenseApprovals(...args: Parameters<typeof approvalSvc.getExpenseApprovals>) { return approvalSvc.getExpenseApprovals(...args) }
+export async function submitExpenseApprovalAction(...args: Parameters<typeof approvalSvc.submitExpenseApproval>) { return approvalSvc.submitExpenseApproval(...args) }
+export async function skipExpenseApprovalAction(...args: Parameters<typeof approvalSvc.skipExpenseApproval>) { return approvalSvc.skipExpenseApproval(...args) }
+
+export async function fetchExpenseBudgets(...args: Parameters<typeof budgetSvc.getExpenseBudgets>) { return budgetSvc.getExpenseBudgets(...args) }
+export async function createExpenseBudgetAction(...args: Parameters<typeof budgetSvc.createExpenseBudget>) { return budgetSvc.createExpenseBudget(...args) }
+export async function updateExpenseBudgetAction(...args: Parameters<typeof budgetSvc.updateExpenseBudget>) { return budgetSvc.updateExpenseBudget(...args) }
+export async function deleteExpenseBudgetAction(...args: Parameters<typeof budgetSvc.deleteExpenseBudget>) { return budgetSvc.deleteExpenseBudget(...args) }
+export async function fetchBudgetUtilization(...args: Parameters<typeof budgetSvc.getTotalBudgetUtilization>) { return budgetSvc.getTotalBudgetUtilization(...args) }
+
+export async function generateExpenseReportAction(...args: Parameters<typeof reportSvc.generateReportData>) { return reportSvc.generateReportData(...args) }
+export async function exportExpensesCSVAction(...args: Parameters<typeof reportSvc.exportExpensesCSV>) { return reportSvc.exportExpensesCSV(...args) }
+
+export async function extractReceiptDataAction(...args: Parameters<typeof aiSvc.extractReceiptData>) { return aiSvc.extractReceiptData(...args) }
+export async function checkPolicyComplianceAction(...args: Parameters<typeof aiSvc.checkPolicyCompliance>) { return aiSvc.checkPolicyCompliance(...args) }
+export async function suggestExpenseCategoryAction(...args: Parameters<typeof aiSvc.suggestExpenseCategory>) { return aiSvc.suggestExpenseCategory(...args) }
 
 // SUPPLIER PAYMENTS
 export async function fetchSupplierPayments(): Promise<SupplierPayment[]> {

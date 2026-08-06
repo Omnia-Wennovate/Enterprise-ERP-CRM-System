@@ -30,15 +30,15 @@ export function AIQualityCheckPanel({ qualityCheck, onDismiss }: AIQualityCheckP
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl border border-slate-200 overflow-hidden"
+      className="bg-card rounded-xl border border-border overflow-hidden"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
         <div className="flex items-center gap-3">
           <Shield className="w-5 h-5 text-teal-600" />
           <div>
-            <h4 className="text-sm font-bold text-slate-800">AI Quality Check</h4>
-            <p className="text-[10px] text-slate-500">
+            <h4 className="text-sm font-bold text-foreground">AI Quality Check</h4>
+            <p className="text-[10px] text-muted-foreground">
               {qualityCheck.issues.length} issue{qualityCheck.issues.length !== 1 ? 's' : ''} found
             </p>
           </div>
@@ -47,7 +47,7 @@ export function AIQualityCheckPanel({ qualityCheck, onDismiss }: AIQualityCheckP
         <div className="flex items-center gap-3">
           {/* Score Badge */}
           <div className={`flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r ${scoreBg} rounded-full`}>
-            <span className="text-xs font-bold text-white">{qualityCheck.score}/100</span>
+            <span className="text-xs font-bold text-primary-foreground">{qualityCheck.score}/100</span>
           </div>
 
           {/* Status */}
@@ -64,7 +64,7 @@ export function AIQualityCheckPanel({ qualityCheck, onDismiss }: AIQualityCheckP
       </div>
 
       {/* Summary Badges */}
-      <div className="flex gap-2 px-5 py-3 bg-slate-50/50">
+      <div className="flex gap-2 px-5 py-3 bg-muted/50/50">
         {errorCount > 0 && (
           <span className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-700 rounded-lg text-[10px] font-semibold border border-red-200">
             <XCircle className="w-3 h-3" /> {errorCount} Error{errorCount > 1 ? 's' : ''}
@@ -132,12 +132,12 @@ function IssueRow({ issue }: { issue: AIQualityIssue }) {
       <div className="flex-1 min-w-0">
         <p className={`text-xs font-medium ${config.text}`}>{issue.message}</p>
         {issue.dayNumber && (
-          <p className="text-[10px] text-slate-500 mt-0.5">
+          <p className="text-[10px] text-muted-foreground mt-0.5">
             Day {issue.dayNumber}{issue.itemTitle ? ` — ${issue.itemTitle}` : ''}
           </p>
         )}
         {issue.suggestion && (
-          <p className="text-[10px] text-slate-600 mt-1 italic">
+          <p className="text-[10px] text-muted-foreground mt-1 italic">
             💡 {issue.suggestion}
           </p>
         )}

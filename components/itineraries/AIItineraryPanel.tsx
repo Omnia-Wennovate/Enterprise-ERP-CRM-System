@@ -322,7 +322,7 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
       {state.status !== 'completed' && (
         <>
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
               Describe the trip
             </label>
             <textarea
@@ -331,14 +331,14 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
               rows={3}
               disabled={isGenerating}
               placeholder="e.g. Luxury honeymoon in Dubai for 5 days with spa treatments and desert safari. Budget around $5000..."
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 resize-none disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 resize-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
 
           {/* Advanced Parameters Toggle */}
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-teal-600 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-teal-600 transition-colors"
           >
             {showAdvanced ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             Advanced Parameters
@@ -595,7 +595,7 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
             <button
               onClick={handleGenerate}
               disabled={isGenerating || !prompt.trim()}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl text-sm font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-primary-foreground rounded-xl text-sm font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
             >
               {isGenerating ? (
                 <>
@@ -621,7 +621,7 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
 
           {/* Progress Bar */}
           {isGenerating && (
-            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
                 initial={{ width: 0 }}
@@ -684,7 +684,7 @@ function ParamField({
 }) {
   return (
     <div className={fullWidth ? 'col-span-full' : ''}>
-      <label className="flex items-center gap-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">
+      <label className="flex items-center gap-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">
         {icon} {label}
       </label>
       {children}

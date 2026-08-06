@@ -87,7 +87,7 @@ export function QuickActions({ role }: QuickActionsProps) {
 
   return (
     <div className="mb-8">
-      <h2 className="text-lg font-semibold text-[#0B1F33] mb-4">What would you like to do?</h2>
+      <h2 className="text-lg font-semibold text-foreground mb-4">What would you like to do?</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {actions.map((action) => {
           const Icon = getIconComponent(action.icon)
@@ -95,18 +95,18 @@ export function QuickActions({ role }: QuickActionsProps) {
             <button
               key={action.label}
               onClick={() => window.location.href = action.href}
-              className="bg-white border border-[#BFDBFE] rounded-xl p-4 hover:border-[#0A8FA8] hover:bg-[#F0F7FA] transition-all duration-150 text-left group"
+              className="bg-card border border-border rounded-xl p-4 hover:border-primary hover:bg-background transition-all duration-150 text-left group"
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="bg-[#F0F7FA] group-hover:bg-[#0A8FA8]/10 p-2 rounded-lg transition-colors">
-                  <Icon className="text-[#0A8FA8]" size={20} />
+                <div className="bg-background group-hover:bg-primary/10 p-2 rounded-lg transition-colors">
+                  <Icon className="text-primary" size={20} />
                 </div>
                 <ArrowRight
-                  className="text-[#0A8FA8] opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="text-primary opacity-0 group-hover:opacity-100 transition-opacity"
                   size={18}
                 />
               </div>
-              <p className="font-medium text-[#0B1F33] text-sm">{action.label}</p>
+              <p className="font-medium text-foreground text-sm">{action.label}</p>
             </button>
           )
         })}

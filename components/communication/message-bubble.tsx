@@ -41,15 +41,15 @@ export function MessageBubble({
         <div
           className={`px-4 py-2 rounded-lg ${
             isOwn
-              ? 'bg-teal-600 text-white rounded-br-none'
-              : 'bg-white text-slate-900 rounded-bl-none shadow'
+              ? 'bg-teal-600 text-primary-foreground rounded-br-none'
+              : 'bg-card text-foreground rounded-bl-none shadow'
           }`}
         >
-          {!isOwn && <p className="text-xs font-semibold text-slate-600 mb-1">{sender}</p>}
+          {!isOwn && <p className="text-xs font-semibold text-muted-foreground mb-1">{sender}</p>}
           <p className="break-words">{message}</p>
 
           <div className="flex items-center justify-between gap-2 mt-1">
-            <p className={`text-xs ${isOwn ? 'text-teal-100' : 'text-slate-500'}`}>
+            <p className={`text-xs ${isOwn ? 'text-teal-100' : 'text-muted-foreground'}`}>
               {timestamp}
             </p>
             {isOwn && (
@@ -76,7 +76,7 @@ export function MessageBubble({
                     ? 'bg-teal-100 text-teal-700'
                     : isOwn
                     ? 'bg-teal-500/20 text-teal-100 hover:bg-teal-500/30'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    : 'bg-muted text-slate-700 hover:bg-slate-200'
                 }`}
               >
                 <span>{reaction.emoji}</span>
@@ -88,18 +88,18 @@ export function MessageBubble({
 
         {/* Actions */}
         {showActions && (
-          <div className="absolute -top-2 -right-2 hidden group-hover:flex gap-1 bg-white rounded-lg shadow-lg p-1 z-10">
+          <div className="absolute -top-2 -right-2 hidden group-hover:flex gap-1 bg-card rounded-lg shadow-lg p-1 z-10">
             <div className="relative">
               <button
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className="p-1 hover:bg-slate-100 rounded transition-colors"
+                className="p-1 hover:bg-muted rounded transition-colors"
                 title="Add reaction"
               >
-                <Smile className="w-4 h-4 text-slate-600" />
+                <Smile className="w-4 h-4 text-muted-foreground" />
               </button>
 
               {showEmojiPicker && (
-                <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg p-2 z-20">
+                <div className="absolute right-0 top-full mt-1 bg-card rounded-lg shadow-lg p-2 z-20">
                   <div className="grid grid-cols-4 gap-1">
                     {emojis.map((emoji) => (
                       <button
@@ -108,7 +108,7 @@ export function MessageBubble({
                           onReact?.(emoji)
                           setShowEmojiPicker(false)
                         }}
-                        className="text-lg hover:bg-slate-100 rounded p-1 transition-colors"
+                        className="text-lg hover:bg-muted rounded p-1 transition-colors"
                       >
                         {emoji}
                       </button>
@@ -121,20 +121,20 @@ export function MessageBubble({
             <div className="relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="p-1 hover:bg-slate-100 rounded transition-colors"
+                className="p-1 hover:bg-muted rounded transition-colors"
               >
-                <MoreVertical className="w-4 h-4 text-slate-600" />
+                <MoreVertical className="w-4 h-4 text-muted-foreground" />
               </button>
 
               {showMenu && (
-                <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg z-20 min-w-max">
+                <div className="absolute right-0 top-full mt-1 bg-card rounded-lg shadow-lg z-20 min-w-max">
                   {onReply && (
                     <button
                       onClick={() => {
                         onReply()
                         setShowMenu(false)
                       }}
-                      className="block w-full text-left px-4 py-2 hover:bg-slate-100 text-sm text-slate-700 transition-colors"
+                      className="block w-full text-left px-4 py-2 hover:bg-muted text-sm text-slate-700 transition-colors"
                     >
                       Reply
                     </button>

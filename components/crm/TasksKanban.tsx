@@ -106,7 +106,7 @@ export function TasksKanban() {
                   className={`p-3 rounded-lg border cursor-move transition-all hover:shadow-md ${
                     isOverdue(task.due_date) && task.status !== 'completed'
                       ? 'border-red-300 bg-red-50 hover:border-red-400'
-                      : 'border-gray-200 bg-white hover:border-teal-300'
+                      : 'border-gray-200 bg-card hover:border-teal-300'
                   }`}
                 >
                   <div className="flex items-start gap-2 mb-2">

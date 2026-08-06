@@ -54,35 +54,35 @@ export default function MeetingsPage() {
       case 'scheduled':
         return 'bg-blue-100 text-blue-800'
       case 'completed':
-        return 'bg-slate-100 text-slate-800'
+        return 'bg-muted text-foreground'
       default:
-        return 'bg-slate-100 text-slate-800'
+        return 'bg-muted text-foreground'
     }
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Meetings</h1>
-            <p className="text-slate-600 mt-1">Schedule and manage team meetings</p>
+            <h1 className="text-3xl font-bold text-foreground">Meetings</h1>
+            <p className="text-muted-foreground mt-1">Schedule and manage team meetings</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
             <Plus className="w-5 h-5" />
             Schedule Meeting
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-6 border-b border-slate-200">
+        <div className="flex gap-4 mb-6 border-b border-border">
           <button className="px-4 py-3 border-b-2 border-teal-600 text-teal-600 font-medium">
             Upcoming
           </button>
-          <button className="px-4 py-3 text-slate-600 font-medium hover:text-slate-900">
+          <button className="px-4 py-3 text-muted-foreground font-medium hover:text-foreground">
             Past
           </button>
-          <button className="px-4 py-3 text-slate-600 font-medium hover:text-slate-900">
+          <button className="px-4 py-3 text-muted-foreground font-medium hover:text-foreground">
             Calendar
           </button>
         </div>
@@ -90,9 +90,9 @@ export default function MeetingsPage() {
         {/* Meetings List */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {meetings.map((meeting) => (
-            <div key={meeting.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div key={meeting.id} className="bg-card rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-start justify-between mb-4">
-                <h3 className="text-lg font-semibold text-slate-900">{meeting.title}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{meeting.title}</h3>
                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(meeting.status)}`}>
                   {meeting.status.replace('_', ' ')}
                 </span>
@@ -100,35 +100,35 @@ export default function MeetingsPage() {
 
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-3 text-slate-700">
-                  <Calendar className="w-4 h-4 text-slate-400" />
+                  <Calendar className="w-4 h-4 text-muted-foreground" />
                   <span>{meeting.date}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-slate-700">
-                  <Clock className="w-4 h-4 text-slate-400" />
+                  <Clock className="w-4 h-4 text-muted-foreground" />
                   <span>{meeting.time}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-slate-700">
-                  <MapPin className="w-4 h-4 text-slate-400" />
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
                   <span>{meeting.location}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-slate-700">
-                  <Users className="w-4 h-4 text-slate-400" />
+                  <Users className="w-4 h-4 text-muted-foreground" />
                   <span>{meeting.participants} participants</span>
                 </div>
               </div>
 
-              <div className="mt-4 p-3 bg-slate-50 rounded">
-                <p className="text-xs text-slate-600">Organizer: <span className="font-medium text-slate-900">{meeting.organizer}</span></p>
+              <div className="mt-4 p-3 bg-muted/50 rounded">
+                <p className="text-xs text-muted-foreground">Organizer: <span className="font-medium text-foreground">{meeting.organizer}</span></p>
               </div>
 
               <div className="mt-4 flex gap-2">
-                <button className="flex-1 px-3 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition-colors font-medium text-sm">
+                <button className="flex-1 px-3 py-2 bg-teal-600 text-primary-foreground rounded hover:bg-teal-700 transition-colors font-medium text-sm">
                   Join
                 </button>
-                <button className="flex-1 px-3 py-2 border border-slate-200 text-slate-700 rounded hover:bg-slate-50 transition-colors font-medium text-sm">
+                <button className="flex-1 px-3 py-2 border border-border text-slate-700 rounded hover:bg-muted/50 transition-colors font-medium text-sm">
                   Details
                 </button>
               </div>

@@ -48,16 +48,16 @@ export function AICostEstimatePanel({ costEstimate }: AICostEstimatePanelProps) 
     : costEstimate.total
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-200 p-5">
+    <div className="bg-gradient-to-br from-slate-50 to-white rounded-xl border border-border p-5">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+        <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
           <DollarSign className="w-4 h-4 text-emerald-600" />
           Cost Estimation
         </h4>
         {costEstimate.destinationCurrency && costEstimate.destinationCurrency !== costEstimate.baseCurrency && (
           <button
             onClick={() => setShowDestCurrency(!showDestCurrency)}
-            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-teal-600 bg-white border border-slate-200 rounded-lg transition-colors"
+            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-muted-foreground hover:text-teal-600 bg-card border border-border rounded-lg transition-colors"
           >
             <ArrowRightLeft className="w-3 h-3" />
             {showDestCurrency ? costEstimate.baseCurrency : costEstimate.destinationCurrency}
@@ -86,15 +86,15 @@ export function AICostEstimatePanel({ costEstimate }: AICostEstimatePanelProps) 
           return (
             <div key={cat.key}>
               <div className="flex items-center justify-between mb-0.5">
-                <span className="text-xs text-slate-600 flex items-center gap-1.5">
+                <span className="text-xs text-muted-foreground flex items-center gap-1.5">
                   <span className="text-sm">{cat.icon}</span>
                   {cat.label}
                 </span>
-                <span className="text-xs font-semibold text-slate-800">
+                <span className="text-xs font-semibold text-foreground">
                   {formatCurrency(displayAmount, displayCurrency)}
                 </span>
               </div>
-              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${pct}%` }}
@@ -109,9 +109,9 @@ export function AICostEstimatePanel({ costEstimate }: AICostEstimatePanelProps) 
       </div>
 
       {/* Total */}
-      <div className="pt-3 border-t border-slate-200">
+      <div className="pt-3 border-t border-border">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-slate-800 flex items-center gap-2">
+          <span className="text-sm font-bold text-foreground flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-emerald-600" />
             Estimated Total
           </span>
@@ -120,7 +120,7 @@ export function AICostEstimatePanel({ costEstimate }: AICostEstimatePanelProps) 
           </span>
         </div>
         {costEstimate.exchangeRate && costEstimate.destinationCurrency && !showDestCurrency && (
-          <p className="text-[10px] text-slate-400 text-right mt-1">
+          <p className="text-[10px] text-muted-foreground text-right mt-1">
             ≈ {formatCurrency(
               costEstimate.totalInDestinationCurrency || costEstimate.total * costEstimate.exchangeRate,
               costEstimate.destinationCurrency

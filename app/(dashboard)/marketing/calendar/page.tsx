@@ -75,59 +75,59 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Content Calendar</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">Visual overview of scheduled and published content</p>
+              <h1 className="text-2xl font-bold text-foreground">Content Calendar</h1>
+              <p className="text-sm text-muted-foreground mt-1">Visual overview of scheduled and published content</p>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex bg-white rounded-lg border border-[#DBEAFE] overflow-hidden">
-                <button onClick={() => setView('month')} className={`px-3 py-1.5 text-xs font-medium ${view === 'month' ? 'bg-[#0A8FA8] text-white' : 'text-[#4B6B7A]'}`}>Month</button>
-                <button onClick={() => setView('week')} className={`px-3 py-1.5 text-xs font-medium ${view === 'week' ? 'bg-[#0A8FA8] text-white' : 'text-[#4B6B7A]'}`}>Week</button>
+              <div className="flex bg-card rounded-lg border border-border overflow-hidden">
+                <button onClick={() => setView('month')} className={`px-3 py-1.5 text-xs font-medium ${view === 'month' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Month</button>
+                <button onClick={() => setView('week')} className={`px-3 py-1.5 text-xs font-medium ${view === 'week' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Week</button>
               </div>
             </div>
           </div>
 
           {/* Month Navigation */}
-          <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm mb-6">
-            <div className="flex items-center justify-between p-4 border-b border-[#DBEAFE]">
-              <button onClick={() => navigateMonth(-1)} className="p-2 rounded-lg hover:bg-[#F0F7FA] text-[#4B6B7A]"><ChevronLeft size={20} /></button>
-              <h2 className="text-lg font-semibold text-[#0B1F33]">
+          <div className="bg-card rounded-xl border border-border shadow-sm mb-6">
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <button onClick={() => navigateMonth(-1)} className="p-2 rounded-lg hover:bg-background text-muted-foreground"><ChevronLeft size={20} /></button>
+              <h2 className="text-lg font-semibold text-foreground">
                 {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
               </h2>
-              <button onClick={() => navigateMonth(1)} className="p-2 rounded-lg hover:bg-[#F0F7FA] text-[#4B6B7A]"><ChevronRight size={20} /></button>
+              <button onClick={() => navigateMonth(1)} className="p-2 rounded-lg hover:bg-background text-muted-foreground"><ChevronRight size={20} /></button>
             </div>
 
             {isLoading ? (
-              <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-[#0A8FA8]" size={48} /></div>
+              <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-primary" size={48} /></div>
             ) : (
               <div className="p-4">
                 {/* Day Headers */}
                 <div className="grid grid-cols-7 gap-1 mb-2">
                   {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
-                    <div key={day} className="text-center text-xs font-medium text-[#4B6B7A] py-2">{day}</div>
+                    <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">{day}</div>
                   ))}
                 </div>
 
                 {/* Calendar Grid */}
                 <div className="grid grid-cols-7 gap-1">
                   {calendarDays.map((day, i) => {
-                    if (day === null) return <div key={i} className="min-h-[100px] bg-[#F8FAFC] rounded-lg" />
+                    if (day === null) return <div key={i} className="min-h-[100px] bg-muted rounded-lg" />
                     const dayPosts = getPostsForDay(day)
                     return (
                       <div
                         key={i}
                         className={`min-h-[100px] rounded-lg border p-2 transition-all hover:shadow-sm cursor-pointer ${
-                          isToday(day) ? 'border-[#0A8FA8] bg-[#0A8FA8]/5' : 'border-[#DBEAFE] bg-white'
+                          isToday(day) ? 'border-primary bg-primary/5' : 'border-border bg-card'
                         }`}
                         onClick={() => router.push('/marketing/content')}
                       >
-                        <div className={`text-xs font-medium mb-1 ${isToday(day) ? 'text-[#0A8FA8]' : 'text-[#0B1F33]'}`}>
+                        <div className={`text-xs font-medium mb-1 ${isToday(day) ? 'text-primary' : 'text-foreground'}`}>
                           {day}
                         </div>
                         <div className="space-y-1">
@@ -144,7 +144,7 @@ export default function CalendarPage() {
                             </div>
                           ))}
                           {dayPosts.length > 3 && (
-                            <div className="text-[10px] text-[#4B6B7A] text-center">+{dayPosts.length - 3} more</div>
+                            <div className="text-[10px] text-muted-foreground text-center">+{dayPosts.length - 3} more</div>
                           )}
                         </div>
                       </div>
@@ -156,13 +156,13 @@ export default function CalendarPage() {
           </div>
 
           {/* Legend */}
-          <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-4">
-            <h3 className="text-sm font-medium text-[#0B1F33] mb-3">Status Legend</h3>
+          <div className="bg-card rounded-xl border border-border shadow-sm p-4">
+            <h3 className="text-sm font-medium text-foreground mb-3">Status Legend</h3>
             <div className="flex flex-wrap gap-4">
               {Object.entries(statusColors).map(([status, color]) => (
                 <div key={status} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                  <span className="text-xs text-[#4B6B7A] capitalize">{status.replace(/_/g, ' ')}</span>
+                  <span className="text-xs text-muted-foreground capitalize">{status.replace(/_/g, ' ')}</span>
                 </div>
               ))}
             </div>

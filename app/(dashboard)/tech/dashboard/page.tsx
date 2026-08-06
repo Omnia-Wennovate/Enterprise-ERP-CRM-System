@@ -80,34 +80,34 @@ export default function TechDashboardPage() {
   ]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : (
             <>
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h1 className="text-2xl font-bold text-[#0B1F33]">Technology Dashboard</h1>
-                  <p className="text-sm text-[#4B6B7A] mt-1">Software project management & feature request operations</p>
+                  <h1 className="text-2xl font-bold text-foreground">Technology Dashboard</h1>
+                  <p className="text-sm text-muted-foreground mt-1">Software project management & feature request operations</p>
                 </div>
                 <div className="flex gap-3">
                   <Link
                     href="/tech/archive"
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-[#DBEAFE] text-[#0A8FA8] rounded-lg hover:bg-[#F0F7FA] transition-colors text-sm font-medium shadow-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-card border border-border text-primary rounded-lg hover:bg-background transition-colors text-sm font-medium shadow-sm"
                   >
                     <Archive size={16} />
                     View Archive
                   </Link>
                   <Link
                     href="/tech/projects/new"
-                    className="flex items-center gap-2 px-4 py-2 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096] transition-colors text-sm font-medium shadow-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium shadow-sm"
                   >
                     <Plus size={16} />
                     New Project
@@ -121,12 +121,12 @@ export default function TechDashboardPage() {
                   const Icon = card.icon
                   return (
                     <Link key={i} href={card.href}>
-                      <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm hover:shadow-md hover:border-[#0A8FA8] transition-all p-5 cursor-pointer group">
+                      <div className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all p-5 cursor-pointer group">
                         <div className="w-full h-1 -mx-5 -mt-5 mb-4 rounded-t-xl opacity-80 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: card.color }} />
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <p className="text-xs text-[#4B6B7A] font-medium group-hover:text-[#0B1F33] transition-colors">{card.label}</p>
-                            <p className="text-2xl font-bold text-[#0B1F33] mt-1">{card.value}</p>
+                            <p className="text-xs text-muted-foreground font-medium group-hover:text-foreground transition-colors">{card.label}</p>
+                            <p className="text-2xl font-bold text-foreground mt-1">{card.value}</p>
                           </div>
                           <div className="w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110" style={{ backgroundColor: `${card.color}15` }}>
                             <Icon size={20} style={{ color: card.color }} />
@@ -141,18 +141,18 @@ export default function TechDashboardPage() {
               {/* Main Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 {/* Recent Projects */}
-                <div className="lg:col-span-2 bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
+                <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-[#0B1F33]">Recent Projects</h3>
-                    <Link href="/tech/projects" className="text-xs text-[#0A8FA8] hover:underline font-medium">View All</Link>
+                    <h3 className="font-semibold text-foreground">Recent Projects</h3>
+                    <Link href="/tech/projects" className="text-xs text-primary hover:underline font-medium">View All</Link>
                   </div>
                   {recentProjects.length > 0 ? (
                     <div className="space-y-3">
                       {recentProjects.map((project) => (
                         <Link key={project.id} href={`/tech/projects/${project.id}`}>
-                          <div className="flex items-center justify-between p-3 bg-[#F0F7FA] rounded-lg hover:bg-[#E0EEF5] transition-colors cursor-pointer group">
+                          <div className="flex items-center justify-between p-3 bg-background rounded-lg hover:bg-primary/10 transition-colors cursor-pointer group">
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-[#0B1F33] truncate group-hover:text-[#0A8FA8] transition-colors">{project.name}</p>
+                              <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">{project.name}</p>
                               <div className="flex items-center gap-2 mt-1">
                                 <span
                                   className="text-[11px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"
@@ -178,8 +178,8 @@ export default function TechDashboardPage() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="text-right">
-                                <p className="text-sm font-bold text-[#0B1F33]">{project.progress_percent}%</p>
-                                <p className="text-[10px] text-[#4B6B7A] uppercase tracking-wider font-semibold">progress</p>
+                                <p className="text-sm font-bold text-foreground">{project.progress_percent}%</p>
+                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">progress</p>
                               </div>
                               <div className="w-16 h-2 bg-[#DBEAFE] rounded-full overflow-hidden shadow-inner">
                                 <div
@@ -196,7 +196,7 @@ export default function TechDashboardPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-48 text-[#4B6B7A]">
+                    <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
                       <Code2 size={32} className="mb-2 text-[#DBEAFE]" />
                       <p className="text-sm font-medium">No projects yet. Create your first project!</p>
                     </div>
@@ -204,26 +204,26 @@ export default function TechDashboardPage() {
                 </div>
 
                 {/* Team Workload */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6 flex flex-col">
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6 flex flex-col">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-[#0B1F33]">Team Workload</h3>
-                    <Link href="/tech/team" className="text-xs text-[#0A8FA8] hover:underline font-medium">View All</Link>
+                    <h3 className="font-semibold text-foreground">Team Workload</h3>
+                    <Link href="/tech/team" className="text-xs text-primary hover:underline font-medium">View All</Link>
                   </div>
                   {teamWorkload.length > 0 ? (
                     <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
                       {teamWorkload.map((member) => (
-                        <div key={member.profile_id} className="flex items-center justify-between p-3 bg-[#F0F7FA] rounded-lg border border-transparent hover:border-[#BFDBFE] transition-colors">
+                        <div key={member.profile_id} className="flex items-center justify-between p-3 bg-background rounded-lg border border-transparent hover:border-border transition-colors">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-gradient-to-br from-[#0A8FA8] to-[#088096] rounded-full flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                            <div className="w-9 h-9 bg-gradient-to-br from-[#0A8FA8] to-[#088096] rounded-full flex items-center justify-center text-primary-foreground text-xs font-bold shadow-sm">
                               {member.first_name?.[0]}{member.last_name?.[0]}
                             </div>
                             <div>
-                              <p className="text-sm font-semibold text-[#0B1F33]">{member.first_name} {member.last_name}</p>
-                              <p className="text-[11px] text-[#4B6B7A] uppercase tracking-wider font-medium">{member.position}</p>
+                              <p className="text-sm font-semibold text-foreground">{member.first_name} {member.last_name}</p>
+                              <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-medium">{member.position}</p>
                             </div>
                           </div>
                           <div className="flex flex-col items-end gap-1">
-                            <span className="text-xs font-bold text-[#0B1F33]">{member.total_items} <span className="font-medium text-[#4B6B7A]">items</span></span>
+                            <span className="text-xs font-bold text-foreground">{member.total_items} <span className="font-medium text-muted-foreground">items</span></span>
                             <span
                               className="w-12 h-1.5 rounded-full shadow-inner"
                               style={{ backgroundColor: member.color }}
@@ -234,7 +234,7 @@ export default function TechDashboardPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-48 text-[#4B6B7A] flex-1">
+                    <div className="flex flex-col items-center justify-center h-48 text-muted-foreground flex-1">
                       <Users size={32} className="mb-2 text-[#DBEAFE]" />
                       <p className="text-sm font-medium">No tech team members found</p>
                     </div>
@@ -245,21 +245,21 @@ export default function TechDashboardPage() {
               {/* Bottom Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Pending Feature Requests */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-[#0B1F33]">Pending Feature Requests</h3>
-                    <Link href="/tech/feature-requests" className="text-xs text-[#0A8FA8] hover:underline font-medium">View All</Link>
+                    <h3 className="font-semibold text-foreground">Pending Feature Requests</h3>
+                    <Link href="/tech/feature-requests" className="text-xs text-primary hover:underline font-medium">View All</Link>
                   </div>
                   {recentRequests.length > 0 ? (
                     <div className="space-y-3">
                       {recentRequests.slice(0, 5).map((req) => (
                         <Link key={req.id} href={`/tech/feature-requests/${req.id}`}>
-                          <div className="flex items-start justify-between p-3 bg-[#F0F7FA] rounded-lg hover:bg-[#E0EEF5] transition-colors cursor-pointer group">
+                          <div className="flex items-start justify-between p-3 bg-background rounded-lg hover:bg-primary/10 transition-colors cursor-pointer group">
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-[#0B1F33] truncate group-hover:text-[#0A8FA8] transition-colors">{req.title}</p>
+                              <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">{req.title}</p>
                               <div className="flex items-center gap-2 mt-1">
-                                <span className="text-[11px] text-[#4B6B7A] uppercase tracking-wider font-semibold">{req.department}</span>
-                                <span className="text-xs text-[#94A3B8]">•</span>
+                                <span className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">{req.department}</span>
+                                <span className="text-xs text-muted-foreground">•</span>
                                 <span
                                   className="text-[11px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"
                                   style={{
@@ -272,7 +272,7 @@ export default function TechDashboardPage() {
                                 </span>
                               </div>
                             </div>
-                            <span className="text-[11px] px-2.5 py-1 rounded-md bg-[#FFFBEB] text-[#F59E0B] font-bold border border-[#FDE68A] shadow-sm uppercase tracking-wider">
+                            <span className="text-[11px] px-2.5 py-1 rounded-md bg-warning/10 text-warning font-bold border border-[#FDE68A] shadow-sm uppercase tracking-wider">
                               Pending
                             </span>
                           </div>
@@ -280,7 +280,7 @@ export default function TechDashboardPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-48 text-[#4B6B7A]">
+                    <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
                       <GitBranch size={32} className="mb-2 text-[#DBEAFE]" />
                       <p className="text-sm font-medium">No pending feature requests</p>
                     </div>
@@ -288,10 +288,10 @@ export default function TechDashboardPage() {
                 </div>
 
                 {/* Projects Near Deadline */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-[#0B1F33]">⚠️ Near Deadline</h3>
-                    <Link href="/tech/projects" className="text-xs text-[#0A8FA8] hover:underline font-medium">View All</Link>
+                    <h3 className="font-semibold text-foreground">⚠️ Near Deadline</h3>
+                    <Link href="/tech/projects" className="text-xs text-primary hover:underline font-medium">View All</Link>
                   </div>
                   {nearDeadline.length > 0 ? (
                     <div className="space-y-3">
@@ -311,9 +311,9 @@ export default function TechDashboardPage() {
                               </div>
                               {daysLeft !== null && (
                                 <span className={`text-[11px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider shadow-sm border ${
-                                  daysLeft <= 1 ? 'bg-[#FEF2F2] text-[#EF4444] border-[#FECACA]' :
-                                  daysLeft <= 3 ? 'bg-[#FFFBEB] text-[#F59E0B] border-[#FDE68A]' :
-                                  'bg-[#EFF6FF] text-[#3B82F6] border-[#BFDBFE]'
+                                  daysLeft <= 1 ? 'bg-destructive/10 text-destructive border-destructive/20' :
+                                  daysLeft <= 3 ? 'bg-warning/10 text-warning border-[#FDE68A]' :
+                                  'bg-blue-500/10 text-blue-500 border-border'
                                 }`}>
                                   {daysLeft} day{daysLeft !== 1 ? 's' : ''} left
                                 </span>
@@ -324,7 +324,7 @@ export default function TechDashboardPage() {
                       })}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-48 text-[#4B6B7A]">
+                    <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
                       <Calendar size={32} className="mb-2 text-[#DBEAFE]" />
                       <p className="text-sm font-medium">No projects near deadline</p>
                     </div>
@@ -333,9 +333,9 @@ export default function TechDashboardPage() {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6 mt-6">
-                <h3 className="font-semibold text-[#0B1F33] mb-4 flex items-center gap-2">
-                  <Activity size={18} className="text-[#0A8FA8]" />
+              <div className="bg-card rounded-xl border border-border shadow-sm p-6 mt-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Activity size={18} className="text-primary" />
                   Quick Actions
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -352,12 +352,12 @@ export default function TechDashboardPage() {
                       <button
                         key={i}
                         onClick={() => router.push(action.href)}
-                        className="flex flex-col items-center gap-3 p-4 rounded-xl border border-[#DBEAFE] hover:border-[#0A8FA8] hover:shadow-md transition-all group bg-white"
+                        className="flex flex-col items-center gap-3 p-4 rounded-xl border border-border hover:border-primary hover:shadow-md transition-all group bg-card"
                       >
                         <div className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-110" style={{ backgroundColor: action.bg, color: action.color }}>
                           <Icon size={24} />
                         </div>
-                        <span className="text-xs font-semibold text-[#0B1F33] group-hover:text-[#0A8FA8] transition-colors">{action.label}</span>
+                        <span className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">{action.label}</span>
                       </button>
                     )
                   })}

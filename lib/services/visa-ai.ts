@@ -21,7 +21,7 @@ export async function estimateApprovalProbability(
   visaType: string,
   historySummary?: string
 ): Promise<VisaAIResponse> {
-  const ai = getGeminiProvider()
+  const ai = getAIProvider()
   
   const prompt = `
     You are an expert visa consultant. Estimate the approval probability for:
@@ -58,7 +58,7 @@ export async function estimateApprovalProbability(
 }
 
 export async function generateEmbassyChecklist(nationality: string, destination: string, purpose: string): Promise<VisaAIResponse> {
-  const ai = getGeminiProvider()
+  const ai = getAIProvider()
   const rule = await getCountryRule(nationality, destination)
   
   const prompt = `
@@ -97,7 +97,7 @@ export async function generateEmbassyChecklist(nationality: string, destination:
 // Note: Real OCR requires a vision model or OCR service.
 // This is a stub for the architecture assuming a vision-capable provider or pre-extracted text.
 export async function analyzePassportData(extractedText: string): Promise<VisaAIResponse & { extractedData: PassportExtractedData }> {
-  const ai = getGeminiProvider()
+  const ai = getAIProvider()
   
   const prompt = `
     Extract passport data from the following raw OCR text:

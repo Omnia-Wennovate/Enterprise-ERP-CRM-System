@@ -402,29 +402,87 @@ export async function completeOnboardingTask(taskId: string, completedBy: string
 // ASSET MANAGEMENT
 // ============================================================================
 
-export async function assignAsset(assetId: string, employeeId: string, issuedDate: string) {
+export async function getAssets() {
   const supabase = createClient()
   const { data, error } = await supabase
+    .from('assets')
+    .select(`
+      *,
+      asset_assignments (
+        *,
+        employee:profiles!asset_assignments_employee_id_fkey(first_name, last_name, department, email)
+      )
+    `)
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+export async function createAsset(assetData: any) {
+  const supabase = createClient()
+  
+  if (!assetData.asset_code) {
+    const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0')
+    assetData.asset_code = `AST-${new Date().getFullYear()}-${randomNum}`
+  }
+
+  const { data, error } = await supabase
+    .from('assets')
+    .insert(assetData)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function updateAsset(id: string, updates: any) {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('assets')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function assignAsset(assignmentData: any) {
+  const supabase = createClient()
+  
+  // Create assignment
+  const { data, error } = await supabase
     .from('asset_assignments')
-    .insert({
-      asset_id: assetId,
-      employee_id: employeeId,
-      issued_date: issuedDate,
-      condition_on_issue: 'good',
-    })
+    .insert(assignmentData)
     .select()
     .single()
 
   if (error) throw error
 
-  // Update asset assigned status
-  await supabase.from('assets').update({ is_assigned: true }).eq('id', assetId)
+  // Update asset assigned status and quantities
+  const { data: asset } = await supabase.from('assets').select('quantity, assigned_quantity, available_quantity').eq('id', assignmentData.asset_id).single()
+  
+  if (asset) {
+    const assigned = (asset.assigned_quantity || 0) + 1
+    const available = Math.max(0, (asset.quantity || 1) - assigned)
+    
+    await supabase.from('assets').update({ 
+      is_assigned: available === 0,
+      status: available === 0 ? 'assigned' : 'available',
+      assigned_quantity: assigned,
+      available_quantity: available
+    }).eq('id', assignmentData.asset_id)
+  }
 
-  return data as AssetAssignment
+  return data
 }
 
-export async function returnAsset(assignmentId: string, returnDate: string) {
+export async function returnAsset(assignmentId: string, returnData: any) {
   const supabase = createClient()
+  
   const { data: assignment, error: fetchError } = await supabase
     .from('asset_assignments')
     .select('*')
@@ -433,10 +491,14 @@ export async function returnAsset(assignmentId: string, returnDate: string) {
 
   if (fetchError) throw fetchError
 
+  // Update assignment with return details
   const { data, error } = await supabase
     .from('asset_assignments')
     .update({
-      return_date: returnDate,
+      return_date: returnData.return_date || new Date().toISOString().split('T')[0],
+      condition_on_return: returnData.condition_on_return,
+      damage_notes: returnData.damage_notes,
+      missing_accessories: returnData.missing_accessories,
     })
     .eq('id', assignmentId)
     .select()
@@ -444,10 +506,52 @@ export async function returnAsset(assignmentId: string, returnDate: string) {
 
   if (error) throw error
 
-  // Update asset assigned status
-  await supabase.from('assets').update({ is_assigned: false }).eq('id', assignment.asset_id)
+  // Update asset assigned status and quantities
+  const { data: asset } = await supabase.from('assets').select('quantity, assigned_quantity, available_quantity').eq('id', assignment.asset_id).single()
+  
+  if (asset) {
+    const assigned = Math.max(0, (asset.assigned_quantity || 1) - 1)
+    const available = (asset.quantity || 1) - assigned
+    
+    await supabase.from('assets').update({ 
+      is_assigned: assigned > 0,
+      status: returnData.condition_on_return === 'damaged' ? 'damaged' : 'available',
+      condition: returnData.condition_on_return || asset.condition,
+      assigned_quantity: assigned,
+      available_quantity: available
+    }).eq('id', assignment.asset_id)
+  }
 
-  return data as AssetAssignment
+  return data
+}
+
+export async function createAssetMaintenance(maintenanceData: any) {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('asset_maintenance')
+    .insert(maintenanceData)
+    .select()
+    .single()
+
+  if (error) throw error
+  
+  // Optionally update asset status to maintenance
+  if (maintenanceData.status === 'in_progress') {
+    await supabase.from('assets').update({ status: 'maintenance' }).eq('id', maintenanceData.asset_id)
+  }
+
+  return data
+}
+
+export async function getAssetMaintenance(assetId?: string) {
+  const supabase = createClient()
+  let query = supabase.from('asset_maintenance').select('*').order('maintenance_date', { ascending: false })
+  if (assetId) {
+    query = query.eq('asset_id', assetId)
+  }
+  const { data, error } = await query
+  if (error) throw error
+  return data
 }
 
 // ============================================================================

@@ -115,7 +115,7 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white outline-none focus:border-teal-400"
+            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-card outline-none focus:border-teal-400"
           >
             {['passport', 'quotation', 'contract', 'invoice', 'visa', 'itinerary', 'other'].map((cat) => (
               <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
@@ -163,7 +163,7 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
-                className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl hover:border-teal-200 hover:shadow-sm transition-all"
+                className="flex items-center gap-3 p-3 bg-card border border-gray-200 rounded-xl hover:border-teal-200 hover:shadow-sm transition-all"
               >
                 <div className="text-xl flex-shrink-0">{getFileIcon(doc.file_type)}</div>
                 <div className="flex-1 min-w-0">

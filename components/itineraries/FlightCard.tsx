@@ -30,21 +30,21 @@ export function FlightCard({ item }: FlightCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition-all duration-200">
+    <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-md transition-all duration-200">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-white/20 rounded-lg">
-            <Plane className="w-4 h-4 text-white" />
+          <div className="p-1.5 bg-card/20 rounded-lg">
+            <Plane className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-white text-sm font-bold">{meta.airline || 'Airline'}</p>
+            <p className="text-primary-foreground text-sm font-bold">{meta.airline || 'Airline'}</p>
             <p className="text-blue-100 text-xs">{meta.flight_number || item.title}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {item.flight_status && (
-            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${flightStatusColors[item.flight_status] || 'bg-slate-100 text-slate-700'}`}>
+            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${flightStatusColors[item.flight_status] || 'bg-muted text-slate-700'}`}>
               {item.flight_status.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
             </span>
           )}
@@ -59,10 +59,10 @@ export function FlightCard({ item }: FlightCardProps) {
         <div className="flex items-center justify-between">
           {/* Departure */}
           <div className="text-center flex-1">
-            <p className="text-2xl font-bold text-slate-900">{meta.departure_code || '---'}</p>
-            <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{meta.departure_airport || 'Departure'}</p>
-            {item.start_time && <p className="text-sm font-semibold text-slate-800 mt-1">{item.start_time}</p>}
-            {meta.departure_terminal && <p className="text-xs text-slate-400">Terminal {meta.departure_terminal}</p>}
+            <p className="text-2xl font-bold text-foreground">{meta.departure_code || '---'}</p>
+            <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{meta.departure_airport || 'Departure'}</p>
+            {item.start_time && <p className="text-sm font-semibold text-foreground mt-1">{item.start_time}</p>}
+            {meta.departure_terminal && <p className="text-xs text-muted-foreground">Terminal {meta.departure_terminal}</p>}
           </div>
 
           {/* Arrow */}
@@ -73,7 +73,7 @@ export function FlightCard({ item }: FlightCardProps) {
               <div className="h-px w-8 bg-slate-300" />
             </div>
             {item.duration_minutes && (
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 {Math.floor(item.duration_minutes / 60)}h {item.duration_minutes % 60}m
               </p>
             )}
@@ -81,10 +81,10 @@ export function FlightCard({ item }: FlightCardProps) {
 
           {/* Arrival */}
           <div className="text-center flex-1">
-            <p className="text-2xl font-bold text-slate-900">{meta.arrival_code || '---'}</p>
-            <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{meta.arrival_airport || 'Arrival'}</p>
-            {item.end_time && <p className="text-sm font-semibold text-slate-800 mt-1">{item.end_time}</p>}
-            {meta.arrival_terminal && <p className="text-xs text-slate-400">Terminal {meta.arrival_terminal}</p>}
+            <p className="text-2xl font-bold text-foreground">{meta.arrival_code || '---'}</p>
+            <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{meta.arrival_airport || 'Arrival'}</p>
+            {item.end_time && <p className="text-sm font-semibold text-foreground mt-1">{item.end_time}</p>}
+            {meta.arrival_terminal && <p className="text-xs text-muted-foreground">Terminal {meta.arrival_terminal}</p>}
           </div>
         </div>
 
@@ -114,8 +114,8 @@ export function FlightCard({ item }: FlightCardProps) {
 function DetailItem({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs text-slate-400 uppercase">{label}</p>
-      <p className="text-sm font-medium text-slate-800">{value}</p>
+      <p className="text-xs text-muted-foreground uppercase">{label}</p>
+      <p className="text-sm font-medium text-foreground">{value}</p>
     </div>
   )
 }

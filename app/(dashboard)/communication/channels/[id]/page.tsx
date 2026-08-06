@@ -34,14 +34,14 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
   }
 
   return (
-    <div className="h-screen bg-[#F0F7FA] flex flex-col">
+    <div className="h-screen bg-background flex flex-col">
       {/* Channel Header */}
-      <div className="bg-white border-b border-slate-200 px-6 py-4">
+      <div className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center gap-3">
           <Hash className="w-6 h-6 text-teal-600" />
           <div>
-            <h2 className="font-semibold text-slate-900">general</h2>
-            <p className="text-sm text-slate-600">24 members</p>
+            <h2 className="font-semibold text-foreground">general</h2>
+            <p className="text-sm text-muted-foreground">24 members</p>
           </div>
         </div>
       </div>
@@ -55,8 +55,8 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <p className="font-medium text-slate-900">{msg.sender}</p>
-                <p className="text-xs text-slate-500">{msg.timestamp}</p>
+                <p className="font-medium text-foreground">{msg.sender}</p>
+                <p className="text-xs text-muted-foreground">{msg.timestamp}</p>
               </div>
               <p className="text-slate-700 mt-1">{msg.content}</p>
             </div>
@@ -66,12 +66,12 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
       </div>
 
       {/* Message Input */}
-      <div className="bg-white border-t border-slate-200 px-6 py-4">
+      <div className="bg-card border-t border-border px-6 py-4">
         <div className="flex items-end gap-3">
-          <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-            <Paperclip className="w-5 h-5 text-slate-600" />
+          <button className="p-2 hover:bg-muted rounded-lg transition-colors">
+            <Paperclip className="w-5 h-5 text-muted-foreground" />
           </button>
-          <div className="flex-1 flex items-center gap-2 bg-slate-100 rounded-lg px-4 py-2">
+          <div className="flex-1 flex items-center gap-2 bg-muted rounded-lg px-4 py-2">
             <input
               type="text"
               value={messageInput}
@@ -83,16 +83,16 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
                 }
               }}
               placeholder="Type a message..."
-              className="flex-1 bg-transparent outline-none text-slate-900 placeholder-slate-500"
+              className="flex-1 bg-transparent outline-none text-foreground placeholder-slate-500"
             />
             <button className="p-1 hover:bg-slate-200 rounded transition-colors">
-              <Smile className="w-5 h-5 text-slate-600" />
+              <Smile className="w-5 h-5 text-muted-foreground" />
             </button>
           </div>
           <button
             onClick={handleSendMessage}
             disabled={!messageInput.trim()}
-            className="p-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
+            className="p-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
           >
             <Send className="w-5 h-5" />
           </button>

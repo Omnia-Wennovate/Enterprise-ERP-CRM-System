@@ -42,7 +42,7 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
     paid: { icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
     partial: { icon: AlertCircle, color: 'text-blue-600', bg: 'bg-blue-50' },
     overdue: { icon: AlertCircle, color: 'text-red-600', bg: 'bg-red-50' },
-    refunded: { icon: DollarSign, color: 'text-slate-600', bg: 'bg-slate-50' },
+    refunded: { icon: DollarSign, color: 'text-muted-foreground', bg: 'bg-muted/50' },
   }
 
   const handleFieldChange = (field: string, value: string) => {
@@ -56,10 +56,10 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-bold text-slate-800">Fee Summary</h4>
+          <h4 className="text-sm font-bold text-foreground">Fee Summary</h4>
           <button onClick={() => setEditing(true)} className="text-xs font-medium text-teal-600 hover:text-teal-800">Edit</button>
         </div>
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+        <div className="bg-card border border-border rounded-xl overflow-hidden">
           <div className="divide-y divide-slate-100">
             {[
               { label: 'Government Fee', value: fee.government_fee },
@@ -70,8 +70,8 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
               { label: 'VAT', value: fee.vat },
             ].filter(r => r.value > 0).map(row => (
               <div key={row.label} className="flex items-center justify-between px-4 py-2.5">
-                <span className="text-sm text-slate-600">{row.label}</span>
-                <span className="text-sm font-medium text-slate-900">${row.value.toFixed(2)}</span>
+                <span className="text-sm text-muted-foreground">{row.label}</span>
+                <span className="text-sm font-medium text-foreground">${row.value.toFixed(2)}</span>
               </div>
             ))}
             {fee.discount > 0 && (
@@ -81,12 +81,12 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
               </div>
             )}
           </div>
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-t border-slate-200">
-            <span className="text-sm font-bold text-slate-900">Total</span>
-            <span className="text-lg font-bold text-slate-900">${fee.total_amount?.toFixed(2)}</span>
+          <div className="flex items-center justify-between px-4 py-3 bg-muted/50 border-t border-border">
+            <span className="text-sm font-bold text-foreground">Total</span>
+            <span className="text-lg font-bold text-foreground">${fee.total_amount?.toFixed(2)}</span>
           </div>
-          <div className="px-4 py-3 border-t border-slate-200 flex items-center justify-between">
-            <span className="text-xs text-slate-500">Payment Status</span>
+          <div className="px-4 py-3 border-t border-border flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Payment Status</span>
             <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${ps.bg} ${ps.color}`}>
               <PsIcon className="w-3 h-3" />
               {fee.payment_status.charAt(0).toUpperCase() + fee.payment_status.slice(1)}
@@ -99,7 +99,7 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
 
   return (
     <div className="space-y-4">
-      <h4 className="text-sm font-bold text-slate-800">{fee ? 'Edit Fees' : 'Add Fees'}</h4>
+      <h4 className="text-sm font-bold text-foreground">{fee ? 'Edit Fees' : 'Add Fees'}</h4>
       <div className="grid grid-cols-2 gap-3">
         {[
           { key: 'government_fee', label: 'Government Fee' },
@@ -111,20 +111,20 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
           { key: 'discount', label: 'Discount' },
         ].map(field => (
           <div key={field.key}>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">{field.label}</label>
+            <label className="block text-xs font-semibold text-muted-foreground mb-1">{field.label}</label>
             <input
               type="number"
               step="0.01"
               min="0"
-              className="w-full border-slate-300 rounded-lg text-sm"
+              className="w-full border-border rounded-lg text-sm"
               value={form[field.key as keyof typeof form]}
               onChange={e => handleFieldChange(field.key, e.target.value)}
             />
           </div>
         ))}
         <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-1">Payment Status</label>
-          <select className="w-full border-slate-300 rounded-lg text-sm" value={form.payment_status} onChange={e => setForm(p => ({ ...p, payment_status: e.target.value }))}>
+          <label className="block text-xs font-semibold text-muted-foreground mb-1">Payment Status</label>
+          <select className="w-full border-border rounded-lg text-sm" value={form.payment_status} onChange={e => setForm(p => ({ ...p, payment_status: e.target.value }))}>
             <option value="pending">Pending</option>
             <option value="partial">Partial</option>
             <option value="paid">Paid</option>
@@ -133,11 +133,11 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
           </select>
         </div>
       </div>
-      <div className="flex items-center justify-between pt-3 border-t border-slate-200">
-        <p className="text-sm font-bold text-slate-900">Total: <span className="text-lg">${total.toFixed(2)}</span></p>
+      <div className="flex items-center justify-between pt-3 border-t border-border">
+        <p className="text-sm font-bold text-foreground">Total: <span className="text-lg">${total.toFixed(2)}</span></p>
         <div className="flex gap-2">
-          {fee && <button onClick={() => setEditing(false)} className="px-3 py-1.5 text-xs border border-slate-300 rounded-lg">Cancel</button>}
-          <button onClick={handleSave} disabled={saving} className="px-4 py-1.5 text-xs bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
+          {fee && <button onClick={() => setEditing(false)} className="px-3 py-1.5 text-xs border border-border rounded-lg">Cancel</button>}
+          <button onClick={handleSave} disabled={saving} className="px-4 py-1.5 text-xs bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
             {saving && <Loader2 className="w-3 h-3 animate-spin" />} Save
           </button>
         </div>

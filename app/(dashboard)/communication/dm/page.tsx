@@ -41,14 +41,14 @@ export default function DirectMessagesPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Direct Messages</h1>
-            <p className="text-slate-600 mt-1">One-on-one conversations with team members</p>
+            <h1 className="text-3xl font-bold text-foreground">Direct Messages</h1>
+            <p className="text-muted-foreground mt-1">One-on-one conversations with team members</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
             <Plus className="w-5 h-5" />
             New Message
           </button>
@@ -56,16 +56,16 @@ export default function DirectMessagesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Conversations List */}
-          <div className="md:col-span-1 bg-white rounded-lg shadow">
+          <div className="md:col-span-1 bg-card rounded-lg shadow">
             <div className="p-4 border-b">
               <div className="relative">
-                <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search conversations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
@@ -75,7 +75,7 @@ export default function DirectMessagesPage() {
                 <Link
                   key={conv.id}
                   href={`/communication/dm/${conv.id}`}
-                  className="p-4 hover:bg-slate-50 transition-colors block"
+                  className="p-4 hover:bg-muted/50 transition-colors block"
                 >
                   <div className="flex items-start gap-3">
                     <div className="relative flex-shrink-0">
@@ -94,15 +94,15 @@ export default function DirectMessagesPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className={`font-medium ${conv.unread ? 'text-slate-900 font-semibold' : 'text-slate-600'}`}>
+                        <p className={`font-medium ${conv.unread ? 'text-foreground font-semibold' : 'text-muted-foreground'}`}>
                           {conv.participantName}
                         </p>
                         {conv.unread && (
                           <div className="w-2 h-2 rounded-full bg-teal-600" />
                         )}
                       </div>
-                      <p className="text-sm text-slate-600 truncate">{conv.lastMessage}</p>
-                      <p className="text-xs text-slate-400 mt-1">{conv.timestamp}</p>
+                      <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{conv.timestamp}</p>
                     </div>
                   </div>
                 </Link>
@@ -111,13 +111,13 @@ export default function DirectMessagesPage() {
           </div>
 
           {/* Empty State */}
-          <div className="md:col-span-2 bg-white rounded-lg shadow p-12 flex items-center justify-center">
+          <div className="md:col-span-2 bg-card rounded-lg shadow p-12 flex items-center justify-center">
             <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-                <MessageSquare className="w-10 h-10 text-slate-400" />
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                <MessageSquare className="w-10 h-10 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Select a conversation</h3>
-              <p className="text-slate-600">Choose a conversation from the list to start messaging</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">Select a conversation</h3>
+              <p className="text-muted-foreground">Choose a conversation from the list to start messaging</p>
             </div>
           </div>
         </div>

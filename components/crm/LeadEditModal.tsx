@@ -53,11 +53,11 @@ interface Props {
 }
 
 const inputClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
 const selectClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
 const textareaClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none'
 
 function SectionHeader({ icon: Icon, title }: { icon: React.ComponentType<{ className?: string }>; title: string }) {
   return (
@@ -227,7 +227,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[700px] max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[700px] max-h-[90vh] bg-card rounded-2xl shadow-2xl border border-gray-200 flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
@@ -429,7 +429,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
                           selectedTags.includes(tag)
                             ? 'bg-teal-100 text-teal-700 border-teal-300'
-                            : 'bg-white text-gray-600 border-gray-200 hover:border-teal-300'
+                            : 'bg-card text-gray-600 border-gray-200 hover:border-teal-300'
                         }`}
                       >
                         {tag}
@@ -459,7 +459,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   disabled={isSaving}
-                  className="bg-teal-600 hover:bg-teal-700 text-white px-6"
+                  className="bg-teal-600 hover:bg-teal-700 text-primary-foreground px-6"
                 >
                   {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
                   Save Changes

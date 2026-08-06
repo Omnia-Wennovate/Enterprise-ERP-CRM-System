@@ -30,43 +30,43 @@ export default function RefundsPage() {
   const paidRefunds = refunds.filter((r) => r.status === 'completed')
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Refunds & Cancellations</h1>
-          <p className="text-slate-600 mt-1">Manage refunds and booking cancellations</p>
+          <h1 className="text-3xl font-bold text-foreground">Refunds & Cancellations</h1>
+          <p className="text-muted-foreground mt-1">Manage refunds and booking cancellations</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-6 mt-8 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Total Refunds</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Total Refunds</p>
             <p className="text-2xl font-bold text-red-600 mt-2">${totalRefundAmount.toFixed(2)}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Pending</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Pending</p>
             <p className="text-2xl font-bold text-amber-600 mt-2">{pendingRefunds.length}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Approved</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Approved</p>
             <p className="text-2xl font-bold text-blue-600 mt-2">{approvedRefunds.length}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Completed</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Completed</p>
             <p className="text-2xl font-bold text-green-600 mt-2">{paidRefunds.length}</p>
           </div>
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
           {loading ? (
-            <div className="p-8 text-center text-slate-600">Loading...</div>
+            <div className="p-8 text-center text-muted-foreground">Loading...</div>
           ) : refunds.length === 0 ? (
-            <div className="p-8 text-center text-slate-600">No refunds</div>
+            <div className="p-8 text-center text-muted-foreground">No refunds</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-slate-50 border-b border-slate-200">
+                <thead className="bg-muted/50 border-b border-border">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-semibold uppercase">
                       Booking
@@ -87,15 +87,15 @@ export default function RefundsPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   {refunds.map((refund) => (
-                    <tr key={refund.id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4 text-slate-900">{refund.booking_id.slice(0, 8)}</td>
-                      <td className="px-6 py-4 text-slate-600">
+                    <tr key={refund.id} className="hover:bg-muted/50">
+                      <td className="px-6 py-4 text-foreground">{refund.booking_id.slice(0, 8)}</td>
+                      <td className="px-6 py-4 text-muted-foreground">
                         {refund.customer_name || '—'}
                       </td>
                       <td className="px-6 py-4 font-semibold text-red-600">
                         ${refund.amount.toFixed(2)}
                       </td>
-                      <td className="px-6 py-4 text-slate-600">{refund.reason}</td>
+                      <td className="px-6 py-4 text-muted-foreground">{refund.reason}</td>
                       <td className="px-6 py-4">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-semibold ${

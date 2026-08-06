@@ -66,13 +66,13 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
         {cards.map((card) => (
           <div
             key={card.label}
-            className="relative overflow-hidden bg-white rounded-xl border border-slate-200/60 p-5 hover:shadow-lg transition-all duration-300 group cursor-pointer"
+            className="relative overflow-hidden bg-card rounded-xl border border-border/60 p-5 hover:shadow-lg transition-all duration-300 group cursor-pointer"
             onClick={onViewAll}
           >
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{card.label}</p>
-                <p className="text-3xl font-bold text-slate-900 mt-2">{card.value}</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{card.label}</p>
+                <p className="text-3xl font-bold text-foreground mt-2">{card.value}</p>
               </div>
               <div className={`p-2.5 rounded-xl ${card.iconBg}`}>
                 <card.icon className="w-5 h-5 text-slate-700" />
@@ -87,11 +87,11 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Itineraries Chart */}
-        <div className="bg-white rounded-xl border border-slate-200/60 p-6">
+        <div className="bg-card rounded-xl border border-border/60 p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">Monthly Itineraries</h3>
-              <p className="text-sm text-slate-500 mt-0.5">Created vs Completed</p>
+              <h3 className="text-lg font-semibold text-foreground">Monthly Itineraries</h3>
+              <p className="text-sm text-muted-foreground mt-0.5">Created vs Completed</p>
             </div>
             <div className="flex items-center gap-1.5 text-xs">
               <span className="w-3 h-3 rounded-sm bg-teal-500" /> Created
@@ -118,7 +118,7 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex items-center justify-center h-full text-slate-400">
+              <div className="flex items-center justify-center h-full text-muted-foreground">
                 <div className="text-center">
                   <TrendingUp className="w-10 h-10 mx-auto mb-2 opacity-40" />
                   <p className="text-sm">No data yet</p>
@@ -130,8 +130,8 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
         </div>
 
         {/* Quick Stats */}
-        <div className="bg-white rounded-xl border border-slate-200/60 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Trip Overview</h3>
+        <div className="bg-card rounded-xl border border-border/60 p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-6">Trip Overview</h3>
           <div className="space-y-5">
             <StatRow label="Active Itineraries" value={kpis.totalActive} max={Math.max(kpis.totalActive + kpis.completedTrips, 1)} color="bg-teal-500" />
             <StatRow label="Upcoming Trips" value={kpis.upcomingTrips} max={Math.max(kpis.totalActive, 1)} color="bg-blue-500" />
@@ -145,10 +145,10 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
                 <Globe className="w-5 h-5 text-teal-600" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">
+                <p className="text-sm font-semibold text-foreground">
                   {kpis.totalCountries} {kpis.totalCountries === 1 ? 'Country' : 'Countries'} Covered
                 </p>
-                <p className="text-xs text-slate-500 mt-0.5">{kpis.totalTravelers} total travelers managed</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{kpis.totalTravelers} total travelers managed</p>
               </div>
             </div>
           </div>
@@ -163,10 +163,10 @@ function StatRow({ label, value, max, color }: { label: string; value: number; m
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <span className="text-sm text-slate-600">{label}</span>
-        <span className="text-sm font-bold text-slate-900">{value}</span>
+        <span className="text-sm text-muted-foreground">{label}</span>
+        <span className="text-sm font-bold text-foreground">{value}</span>
       </div>
-      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2 bg-muted rounded-full overflow-hidden">
         <div className={`h-full rounded-full ${color} transition-all duration-700`} style={{ width: `${pct}%` }} />
       </div>
     </div>

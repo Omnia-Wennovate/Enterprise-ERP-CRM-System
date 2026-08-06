@@ -100,7 +100,7 @@ export default function ArchivePage() {
   ]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
@@ -108,29 +108,29 @@ export default function ArchivePage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <div className="flex items-center gap-2 text-sm text-[#4B6B7A] mb-1">
-                <Link href="/tech/dashboard" className="hover:text-[#0A8FA8]">Technology</Link>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                <Link href="/tech/dashboard" className="hover:text-primary">Technology</Link>
                 <ChevronRight size={14} />
-                <span className="text-[#0B1F33] font-medium">Project Archive</span>
+                <span className="text-foreground font-medium">Project Archive</span>
               </div>
-              <h1 className="text-2xl font-bold text-[#0B1F33] flex items-center gap-3">
-                <Archive size={28} className="text-[#0A8FA8]" />
+              <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
+                <Archive size={28} className="text-primary" />
                 Project Archive & Analytics
               </h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 Permanent knowledge base, analytics, and repository data for completed projects
               </p>
             </div>
             <Link
               href="/tech/credentials"
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-[#DBEAFE] text-[#0A8FA8] rounded-lg hover:bg-[#F0F7FA] transition-colors text-sm font-medium shadow-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-card border border-border text-primary rounded-lg hover:bg-background transition-colors text-sm font-medium shadow-sm"
             >
               Credential Vault
             </Link>
           </div>
 
           {error && (
-            <div className="bg-[#FEF2F2] border border-[#FECACA] text-[#EF4444] px-4 py-4 rounded-lg mb-6 shadow-sm flex items-start gap-3">
+            <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-4 rounded-lg mb-6 shadow-sm flex items-start gap-3">
               <Database size={20} className="mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-sm">Database Error</h3>
@@ -142,7 +142,7 @@ export default function ArchivePage() {
 
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : (
             <>
@@ -151,12 +151,12 @@ export default function ArchivePage() {
                 {statCards.map((card, i) => {
                   const Icon = card.icon
                   return (
-                    <div key={i} className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-4 hover:shadow-md hover:border-[#0A8FA8] transition-all group">
+                    <div key={i} className="bg-card rounded-xl border border-border shadow-sm p-4 hover:shadow-md hover:border-primary transition-all group">
                       <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform group-hover:scale-110" style={{ backgroundColor: card.bg, color: card.color }}>
                         <Icon size={20} />
                       </div>
-                      <p className="text-2xl font-bold text-[#0B1F33] mb-1">{card.value}</p>
-                      <p className="text-[11px] font-semibold text-[#4B6B7A] uppercase tracking-wider leading-tight">{card.label}</p>
+                      <p className="text-2xl font-bold text-foreground mb-1">{card.value}</p>
+                      <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider leading-tight">{card.label}</p>
                     </div>
                   )
                 })}
@@ -165,9 +165,9 @@ export default function ArchivePage() {
               {/* Analytics Section */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 {/* Most Used Tech (Bar Chart) */}
-                <div className="lg:col-span-2 bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6 flex items-center gap-2">
-                    <Code2 size={18} className="text-[#0A8FA8]" />
+                <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6 flex items-center gap-2">
+                    <Code2 size={18} className="text-primary" />
                     Most Used Technologies
                   </h3>
                   <div className="h-[300px] w-full">
@@ -195,7 +195,7 @@ export default function ArchivePage() {
                         </BarChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="flex items-center justify-center h-full text-[#4B6B7A] text-sm">
+                      <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
                         No technology data available yet
                       </div>
                     )}
@@ -203,9 +203,9 @@ export default function ArchivePage() {
                 </div>
 
                 {/* Status Distribution (Pie Chart) */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6 flex items-center gap-2">
-                    <Layers size={18} className="text-[#0A8FA8]" />
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6 flex items-center gap-2">
+                    <Layers size={18} className="text-primary" />
                     Archive Status Distribution
                   </h3>
                   <div className="h-[300px] w-full">
@@ -233,7 +233,7 @@ export default function ArchivePage() {
                         </PieChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="flex items-center justify-center h-full text-[#4B6B7A] text-sm">
+                      <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
                         No archive data available
                       </div>
                     )}
@@ -242,23 +242,23 @@ export default function ArchivePage() {
               </div>
 
               {/* Archive Search & List */}
-              <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm">
-                <div className="p-6 border-b border-[#DBEAFE]">
+              <div className="bg-card rounded-xl border border-border shadow-sm">
+                <div className="p-6 border-b border-border">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                      <h3 className="font-semibold text-[#0B1F33] text-lg">Knowledge Base & Repositories</h3>
-                      <p className="text-sm text-[#4B6B7A] mt-1">Search through {projects.length} archived projects</p>
+                      <h3 className="font-semibold text-foreground text-lg">Knowledge Base & Repositories</h3>
+                      <p className="text-sm text-muted-foreground mt-1">Search through {projects.length} archived projects</p>
                     </div>
 
-                    <div className="flex items-center gap-2 min-w-[300px] bg-[#F0F7FA] border border-[#BFDBFE] rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
-                      <Search size={18} className="text-[#4B6B7A]" />
+                    <div className="flex items-center gap-2 min-w-[300px] bg-background border border-border rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
+                      <Search size={18} className="text-muted-foreground" />
                       <input
                         type="text"
                         placeholder="Search by project name, tech, or client..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                        className="bg-transparent text-sm text-[#0B1F33] placeholder-[#94A3B8] outline-none flex-1"
+                        className="bg-transparent text-sm text-foreground placeholder-[#94A3B8] outline-none flex-1"
                       />
                     </div>
                   </div>
@@ -268,11 +268,11 @@ export default function ArchivePage() {
                   <div className="divide-y divide-[#DBEAFE]">
                     {projects.map((project) => (
                       <Link key={project.id} href={`/tech/projects/${project.id}`}>
-                        <div className="p-6 hover:bg-[#F0F7FA] transition-colors cursor-pointer group">
+                        <div className="p-6 hover:bg-background transition-colors cursor-pointer group">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-2">
-                                <h4 className="text-lg font-bold text-[#0B1F33] group-hover:text-[#0A8FA8] transition-colors">{project.name}</h4>
+                                <h4 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">{project.name}</h4>
                                 <span
                                   className="text-[11px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider"
                                   style={{
@@ -285,30 +285,30 @@ export default function ArchivePage() {
                                 </span>
                               </div>
                               {project.description && (
-                                <p className="text-sm text-[#4B6B7A] mb-4 line-clamp-2">{project.description}</p>
+                                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
                               )}
-                              <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#4B6B7A]">
+                              <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-muted-foreground">
                                 {project.client && (
-                                  <span className="flex items-center gap-1.5 bg-white border border-[#DBEAFE] px-2.5 py-1.5 rounded-md shadow-sm">
-                                    <span className="text-[#94A3B8]">Client:</span>
-                                    <span className="text-[#0B1F33]">{project.client}</span>
+                                  <span className="flex items-center gap-1.5 bg-card border border-border px-2.5 py-1.5 rounded-md shadow-sm">
+                                    <span className="text-muted-foreground">Client:</span>
+                                    <span className="text-foreground">{project.client}</span>
                                   </span>
                                 )}
                                 {project.start_date && project.deadline && (
-                                  <span className="flex items-center gap-1.5 bg-white border border-[#DBEAFE] px-2.5 py-1.5 rounded-md shadow-sm">
-                                    <Calendar size={14} className="text-[#0A8FA8]" />
+                                  <span className="flex items-center gap-1.5 bg-card border border-border px-2.5 py-1.5 rounded-md shadow-sm">
+                                    <Calendar size={14} className="text-primary" />
                                     {new Date(project.start_date).toLocaleDateString()} — {new Date(project.deadline).toLocaleDateString()}
                                   </span>
                                 )}
                                 {project.updated_at && (
                                   <span className="flex items-center gap-1.5">
-                                    <span className="text-[#94A3B8]">Archived on:</span>
+                                    <span className="text-muted-foreground">Archived on:</span>
                                     {new Date(project.updated_at).toLocaleDateString()}
                                   </span>
                                 )}
                               </div>
                             </div>
-                            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white border border-[#DBEAFE] flex items-center justify-center text-[#0A8FA8] shadow-sm group-hover:bg-[#0A8FA8] group-hover:text-white transition-all group-hover:scale-110 group-hover:border-[#0A8FA8]">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-primary shadow-sm group-hover:bg-primary group-hover:text-primary-foreground transition-all group-hover:scale-110 group-hover:border-primary">
                               <ChevronRight size={20} />
                             </div>
                           </div>
@@ -318,11 +318,11 @@ export default function ArchivePage() {
                   </div>
                 ) : (
                   <div className="p-12 text-center">
-                    <div className="w-20 h-20 bg-[#F0F7FA] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#DBEAFE]">
+                    <div className="w-20 h-20 bg-background rounded-full flex items-center justify-center mx-auto mb-4 border border-border">
                       <Archive size={40} className="text-[#DBEAFE]" />
                     </div>
-                    <h3 className="text-xl font-bold text-[#0B1F33] mb-2">No Archived Projects Found</h3>
-                    <p className="text-[#4B6B7A] max-w-md mx-auto">
+                    <h3 className="text-xl font-bold text-foreground mb-2">No Archived Projects Found</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
                       {search ? "No projects match your search query." : "There are currently no completed or archived projects in the knowledge base."}
                     </p>
                   </div>

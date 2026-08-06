@@ -37,27 +37,27 @@ export default function SupplierPaymentsPage() {
     .reduce((sum, p) => sum + p.amount, 0)
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Supplier Payments</h1>
-          <p className="text-slate-600 mt-1">Manage payments to suppliers</p>
+          <h1 className="text-3xl font-bold text-foreground">Supplier Payments</h1>
+          <p className="text-muted-foreground mt-1">Manage payments to suppliers</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-6 mt-8 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Total Payments</p>
-            <p className="text-2xl font-bold text-slate-900 mt-2">{payments.length}</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Total Payments</p>
+            <p className="text-2xl font-bold text-foreground mt-2">{payments.length}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Pending</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Pending</p>
             <p className="text-2xl font-bold text-amber-600 mt-2">
               ${pendingTotal.toFixed(2)}
             </p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-slate-600 text-sm font-medium">Paid</p>
+          <div className="bg-card rounded-lg shadow p-6">
+            <p className="text-muted-foreground text-sm font-medium">Paid</p>
             <p className="text-2xl font-bold text-green-600 mt-2">${paidTotal.toFixed(2)}</p>
           </div>
           <div className="bg-red-50 rounded-lg shadow p-6 border border-red-200">
@@ -67,15 +67,15 @@ export default function SupplierPaymentsPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
           {loading ? (
-            <div className="p-8 text-center text-slate-600">Loading...</div>
+            <div className="p-8 text-center text-muted-foreground">Loading...</div>
           ) : payments.length === 0 ? (
-            <div className="p-8 text-center text-slate-600">No supplier payments</div>
+            <div className="p-8 text-center text-muted-foreground">No supplier payments</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-slate-50 border-b border-slate-200">
+                <thead className="bg-muted/50 border-b border-border">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-semibold uppercase">
                       Supplier
@@ -93,9 +93,9 @@ export default function SupplierPaymentsPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   {payments.map((payment) => (
-                    <tr key={payment.id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4 text-slate-900">{payment.supplier_name || '—'}</td>
-                      <td className="px-6 py-4 font-semibold text-slate-900">
+                    <tr key={payment.id} className="hover:bg-muted/50">
+                      <td className="px-6 py-4 text-foreground">{payment.supplier_name || '—'}</td>
+                      <td className="px-6 py-4 font-semibold text-foreground">
                         ${payment.amount.toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
@@ -111,7 +111,7 @@ export default function SupplierPaymentsPage() {
                           {payment.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-slate-600">
+                      <td className="px-6 py-4 text-muted-foreground">
                         {payment.due_date
                           ? new Date(payment.due_date).toLocaleDateString()
                           : '—'}

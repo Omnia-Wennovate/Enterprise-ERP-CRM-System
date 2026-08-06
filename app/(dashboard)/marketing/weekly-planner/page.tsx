@@ -79,39 +79,39 @@ export default function WeeklyPlannerPage() {
   const getPlans = (day: number, platform: string) => plans.filter(p => p.day_of_week === day && p.platform === platform)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Weekly Content Planner</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">Plan and coordinate posts across all platforms by week</p>
+              <h1 className="text-2xl font-bold text-foreground">Weekly Content Planner</h1>
+              <p className="text-sm text-muted-foreground mt-1">Plan and coordinate posts across all platforms by week</p>
             </div>
-            <div className="flex items-center gap-4 bg-white border border-[#DBEAFE] rounded-lg p-2">
-              <button onClick={() => navigateWeek(-1)} className="p-1 text-[#4B6B7A] hover:bg-[#F0F7FA] rounded"><ChevronLeft size={20} /></button>
-              <div className="flex items-center gap-2 font-medium text-[#0B1F33]">
-                <CalendarIcon size={16} className="text-[#0A8FA8]" />
+            <div className="flex items-center gap-4 bg-card border border-border rounded-lg p-2">
+              <button onClick={() => navigateWeek(-1)} className="p-1 text-muted-foreground hover:bg-background rounded"><ChevronLeft size={20} /></button>
+              <div className="flex items-center gap-2 font-medium text-foreground">
+                <CalendarIcon size={16} className="text-primary" />
                 {new Date(weekStart).toLocaleDateString()} - {new Date(weekDates[6].date).toLocaleDateString()}
               </div>
-              <button onClick={() => navigateWeek(1)} className="p-1 text-[#4B6B7A] hover:bg-[#F0F7FA] rounded"><ChevronRight size={20} /></button>
+              <button onClick={() => navigateWeek(1)} className="p-1 text-muted-foreground hover:bg-background rounded"><ChevronRight size={20} /></button>
             </div>
           </div>
 
           {isLoading ? (
-            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-[#0A8FA8]" size={48} /></div>
+            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-primary" size={48} /></div>
           ) : (
-            <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[1000px]">
                   <thead>
-                    <tr className="border-b border-[#DBEAFE] bg-[#F8FAFC]">
-                      <th className="p-3 border-r border-[#DBEAFE] w-32 bg-white sticky left-0 z-10">Platform</th>
+                    <tr className="border-b border-border bg-muted">
+                      <th className="p-3 border-r border-border w-32 bg-card sticky left-0 z-10">Platform</th>
                       {weekDates.map((d, i) => (
-                        <th key={i} className={`p-3 text-center border-r border-[#DBEAFE] min-w-[180px] ${d.date === new Date().toISOString().split('T')[0] ? 'bg-[#0A8FA8]/10' : ''}`}>
-                          <p className={`text-xs font-bold ${d.date === new Date().toISOString().split('T')[0] ? 'text-[#0A8FA8]' : 'text-[#0B1F33]'}`}>{d.day}</p>
-                          <p className="text-[10px] text-[#4B6B7A]">{new Date(d.date).toLocaleDateString()}</p>
+                        <th key={i} className={`p-3 text-center border-r border-border min-w-[180px] ${d.date === new Date().toISOString().split('T')[0] ? 'bg-primary/10' : ''}`}>
+                          <p className={`text-xs font-bold ${d.date === new Date().toISOString().split('T')[0] ? 'text-primary' : 'text-foreground'}`}>{d.day}</p>
+                          <p className="text-[10px] text-muted-foreground">{new Date(d.date).toLocaleDateString()}</p>
                         </th>
                       ))}
                     </tr>
@@ -120,35 +120,35 @@ export default function WeeklyPlannerPage() {
                     {platforms.map(platform => {
                       const pColor = PLATFORM_COLORS[platform as keyof typeof PLATFORM_COLORS] || '#6B7280'
                       return (
-                        <tr key={platform} className="border-b border-[#DBEAFE]">
-                          <td className="p-3 border-r border-[#DBEAFE] bg-white sticky left-0 z-10 align-top">
+                        <tr key={platform} className="border-b border-border">
+                          <td className="p-3 border-r border-border bg-card sticky left-0 z-10 align-top">
                             <div className="flex items-center gap-2">
                               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: pColor }} />
-                              <span className="text-sm font-medium text-[#0B1F33]">{PLATFORM_LABELS[platform as keyof typeof PLATFORM_LABELS] || platform}</span>
+                              <span className="text-sm font-medium text-foreground">{PLATFORM_LABELS[platform as keyof typeof PLATFORM_LABELS] || platform}</span>
                             </div>
                           </td>
                           {weekDates.map((_, dayIdx) => {
                             const dayPlans = getPlans(dayIdx, platform)
                             return (
-                              <td key={dayIdx} className="p-2 border-r border-[#DBEAFE] align-top bg-[#F8FAFC]/50 hover:bg-[#F0F7FA]/50 transition-colors group">
+                              <td key={dayIdx} className="p-2 border-r border-border align-top bg-muted/50 hover:bg-background/50 transition-colors group">
                                 <div className="space-y-2">
                                   {dayPlans.map(plan => (
-                                    <div key={plan.id} className="bg-white border border-[#DBEAFE] rounded p-2 shadow-sm text-xs relative group/item">
+                                    <div key={plan.id} className="bg-card border border-border rounded p-2 shadow-sm text-xs relative group/item">
                                       <div className="flex items-start justify-between mb-1">
-                                        <span className="font-semibold text-[#0B1F33] truncate pr-2">{plan.content_theme || 'Untitled'}</span>
-                                        {plan.status === 'ready' ? <CheckCircle size={12} className="text-[#22C55E] flex-shrink-0" /> : plan.status === 'in_progress' ? <Clock size={12} className="text-[#F59E0B] flex-shrink-0" /> : <div className="w-3 h-3 rounded-full bg-[#E5E7EB] flex-shrink-0" />}
+                                        <span className="font-semibold text-foreground truncate pr-2">{plan.content_theme || 'Untitled'}</span>
+                                        {plan.status === 'ready' ? <CheckCircle size={12} className="text-[#22C55E] flex-shrink-0" /> : plan.status === 'in_progress' ? <Clock size={12} className="text-warning flex-shrink-0" /> : <div className="w-3 h-3 rounded-full bg-[#E5E7EB] flex-shrink-0" />}
                                       </div>
-                                      <p className="text-[10px] text-[#4B6B7A] capitalize mb-1">{plan.post_type}</p>
+                                      <p className="text-[10px] text-muted-foreground capitalize mb-1">{plan.post_type}</p>
                                       {plan.caption_draft && <p className="text-[10px] text-[#6B7280] truncate italic">"{plan.caption_draft}"</p>}
                                       
-                                      <div className="absolute top-1 right-1 opacity-0 group-hover/item:opacity-100 bg-white shadow rounded flex gap-1 p-0.5">
-                                        {plan.status === 'draft' && <button onClick={() => handleStatusChange(plan.id, 'in_progress')} className="text-[#F59E0B] hover:bg-[#F59E0B]/10 p-0.5 rounded"><Clock size={12} /></button>}
+                                      <div className="absolute top-1 right-1 opacity-0 group-hover/item:opacity-100 bg-card shadow rounded flex gap-1 p-0.5">
+                                        {plan.status === 'draft' && <button onClick={() => handleStatusChange(plan.id, 'in_progress')} className="text-warning hover:bg-[#F59E0B]/10 p-0.5 rounded"><Clock size={12} /></button>}
                                         {plan.status === 'in_progress' && <button onClick={() => handleStatusChange(plan.id, 'ready')} className="text-[#22C55E] hover:bg-[#22C55E]/10 p-0.5 rounded"><CheckCircle size={12} /></button>}
-                                        <button onClick={() => handleDelete(plan.id)} className="text-[#EF4444] hover:bg-[#EF4444]/10 p-0.5 rounded"><X size={12} /></button>
+                                        <button onClick={() => handleDelete(plan.id)} className="text-destructive hover:bg-destructive/10 p-0.5 rounded"><X size={12} /></button>
                                       </div>
                                     </div>
                                   ))}
-                                  <button onClick={() => openModal(dayIdx, platform)} className="w-full py-1.5 flex justify-center items-center text-[#94A3B8] hover:text-[#0A8FA8] hover:bg-[#0A8FA8]/10 rounded border border-dashed border-[#CBD5E1] opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button onClick={() => openModal(dayIdx, platform)} className="w-full py-1.5 flex justify-center items-center text-muted-foreground hover:text-primary hover:bg-primary/10 rounded border border-dashed border-[#CBD5E1] opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Plus size={14} />
                                   </button>
                                 </div>
@@ -167,26 +167,26 @@ export default function WeeklyPlannerPage() {
           {/* Create Plan Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
-                <div className="flex items-center justify-between p-6 border-b border-[#DBEAFE]">
+              <div className="bg-card rounded-xl shadow-xl w-full max-w-md">
+                <div className="flex items-center justify-between p-6 border-b border-border">
                   <div>
-                    <h3 className="text-lg font-semibold text-[#0B1F33]">Plan Content</h3>
-                    <p className="text-xs text-[#4B6B7A] mt-1">{weekDates[selectedDay].day}, {PLATFORM_LABELS[selectedPlatform as keyof typeof PLATFORM_LABELS]}</p>
+                    <h3 className="text-lg font-semibold text-foreground">Plan Content</h3>
+                    <p className="text-xs text-muted-foreground mt-1">{weekDates[selectedDay].day}, {PLATFORM_LABELS[selectedPlatform as keyof typeof PLATFORM_LABELS]}</p>
                   </div>
-                  <button onClick={() => setShowModal(false)} className="text-[#4B6B7A] hover:text-[#0B1F33]"><X size={20} /></button>
+                  <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground"><X size={20} /></button>
                 </div>
                 <div className="p-6 space-y-4">
-                  <div><label className="block text-sm font-medium text-[#0B1F33] mb-1">Theme / Title</label><input type="text" value={form.content_theme} onChange={e => setForm({ ...form, content_theme: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]" placeholder="e.g. Testimonial Tuesday" /></div>
+                  <div><label className="block text-sm font-medium text-foreground mb-1">Theme / Title</label><input type="text" value={form.content_theme} onChange={e => setForm({ ...form, content_theme: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary" placeholder="e.g. Testimonial Tuesday" /></div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div><label className="block text-sm font-medium text-[#0B1F33] mb-1">Post Type</label><select value={form.post_type} onChange={e => setForm({ ...form, post_type: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]">{postTypes.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}</select></div>
-                    <div><label className="block text-sm font-medium text-[#0B1F33] mb-1">Campaign</label><select value={form.campaign_id} onChange={e => setForm({ ...form, campaign_id: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]"><option value="">None</option>{campaigns.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
+                    <div><label className="block text-sm font-medium text-foreground mb-1">Post Type</label><select value={form.post_type} onChange={e => setForm({ ...form, post_type: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary">{postTypes.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}</select></div>
+                    <div><label className="block text-sm font-medium text-foreground mb-1">Campaign</label><select value={form.campaign_id} onChange={e => setForm({ ...form, campaign_id: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary"><option value="">None</option>{campaigns.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
                   </div>
-                  <div><label className="block text-sm font-medium text-[#0B1F33] mb-1">Required Media / Notes</label><input type="text" value={form.required_media} onChange={e => setForm({ ...form, required_media: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]" placeholder="Need high-res logo" /></div>
-                  <div><label className="block text-sm font-medium text-[#0B1F33] mb-1">Caption Draft (Optional)</label><textarea value={form.caption_draft} onChange={e => setForm({ ...form, caption_draft: e.target.value })} rows={3} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8] resize-none" /></div>
+                  <div><label className="block text-sm font-medium text-foreground mb-1">Required Media / Notes</label><input type="text" value={form.required_media} onChange={e => setForm({ ...form, required_media: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary" placeholder="Need high-res logo" /></div>
+                  <div><label className="block text-sm font-medium text-foreground mb-1">Caption Draft (Optional)</label><textarea value={form.caption_draft} onChange={e => setForm({ ...form, caption_draft: e.target.value })} rows={3} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary resize-none" /></div>
                 </div>
-                <div className="flex justify-end gap-3 p-6 border-t border-[#DBEAFE]">
-                  <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-[#4B6B7A]">Cancel</button>
-                  <button onClick={handleCreate} className="px-4 py-2 bg-[#0A8FA8] text-white text-sm font-medium rounded-lg hover:bg-[#088096]">Save Plan</button>
+                <div className="flex justify-end gap-3 p-6 border-t border-border">
+                  <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-muted-foreground">Cancel</button>
+                  <button onClick={handleCreate} className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90">Save Plan</button>
                 </div>
               </div>
             </div>

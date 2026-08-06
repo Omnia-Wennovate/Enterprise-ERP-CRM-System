@@ -34,7 +34,7 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+      <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
         <Globe className="w-4 h-4 text-teal-600" />
         Travel Intelligence
       </h3>
@@ -52,13 +52,13 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Timezone */}
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="w-4 h-4 text-blue-500" />
-            <span className="text-xs font-semibold text-slate-500 uppercase">Local Time</span>
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Local Time</span>
           </div>
-          <p className="text-lg font-bold text-slate-900">{localTimeStr}</p>
-          <p className="text-xs text-slate-500 mt-0.5">{tz}</p>
+          <p className="text-lg font-bold text-foreground">{localTimeStr}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{tz}</p>
           {/* Timezone change detection between days */}
           {itinerary.days && itinerary.days.length > 1 && (
             <div className="mt-2 space-y-1">
@@ -77,25 +77,25 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
         </div>
 
         {/* Multi-Currency */}
-        <div className="bg-white rounded-xl border border-slate-200 p-4">
+        <div className="bg-card rounded-xl border border-border p-4">
           <div className="flex items-center gap-2 mb-2">
             <Banknote className="w-4 h-4 text-green-500" />
-            <span className="text-xs font-semibold text-slate-500 uppercase">Currency</span>
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Currency</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-slate-900">{itinerary.base_currency}</span>
+            <span className="text-lg font-bold text-foreground">{itinerary.base_currency}</span>
             {itinerary.local_currency && itinerary.local_currency !== itinerary.base_currency && (
               <>
-                <ArrowRightLeft className="w-4 h-4 text-slate-400" />
-                <span className="text-lg font-bold text-slate-900">{itinerary.local_currency}</span>
+                <ArrowRightLeft className="w-4 h-4 text-muted-foreground" />
+                <span className="text-lg font-bold text-foreground">{itinerary.local_currency}</span>
               </>
             )}
           </div>
           {itinerary.exchange_rate && (
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               1 {itinerary.base_currency} = {itinerary.exchange_rate} {itinerary.local_currency}
               {itinerary.exchange_rate_date && (
-                <span className="text-slate-400 ml-1">
+                <span className="text-muted-foreground ml-1">
                   (as of {new Date(itinerary.exchange_rate_date).toLocaleDateString()})
                 </span>
               )}
@@ -104,11 +104,11 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
           {/* Total cost in both currencies */}
           {itinerary.total_cost > 0 && (
             <div className="mt-2 pt-2 border-t border-slate-100">
-              <p className="text-xs text-slate-500">Total Itinerary Cost</p>
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-xs text-muted-foreground">Total Itinerary Cost</p>
+              <p className="text-sm font-bold text-foreground">
                 {itinerary.base_currency} {itinerary.total_cost.toLocaleString()}
                 {itinerary.exchange_rate && itinerary.local_currency && (
-                  <span className="text-xs text-slate-400 font-normal ml-1">
+                  <span className="text-xs text-muted-foreground font-normal ml-1">
                     ({itinerary.local_currency} {(itinerary.total_cost * itinerary.exchange_rate).toLocaleString()})
                   </span>
                 )}
@@ -119,19 +119,19 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
 
         {/* Visa Requirements */}
         {hasVisaData && (
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <div className="bg-card rounded-xl border border-border p-4">
             <div className="flex items-center gap-2 mb-2">
               <Landmark className="w-4 h-4 text-indigo-500" />
-              <span className="text-xs font-semibold text-slate-500 uppercase">Visa Requirements</span>
+              <span className="text-xs font-semibold text-muted-foreground uppercase">Visa Requirements</span>
             </div>
             <div className="space-y-2">
               {itinerary.travelers?.map(t => (
                 <div key={t.id} className="flex items-center justify-between">
                   <span className="text-sm text-slate-700">{t.first_name} {t.last_name}</span>
-                  <span className="text-xs text-slate-500">{t.nationality || 'No nationality set'}</span>
+                  <span className="text-xs text-muted-foreground">{t.nationality || 'No nationality set'}</span>
                 </div>
               ))}
-              <p className="text-xs text-slate-400 mt-1 italic">
+              <p className="text-xs text-muted-foreground mt-1 italic">
                 Cross-reference with visa_applications table for actual requirements per traveler
               </p>
             </div>
@@ -140,34 +140,34 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
 
         {/* Emergency Contacts */}
         {(itinerary.emergency_police || itinerary.emergency_ambulance || itinerary.emergency_embassy) && (
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
+          <div className="bg-card rounded-xl border border-border p-4">
             <div className="flex items-center gap-2 mb-2">
               <Phone className="w-4 h-4 text-red-500" />
-              <span className="text-xs font-semibold text-slate-500 uppercase">Emergency Numbers</span>
+              <span className="text-xs font-semibold text-muted-foreground uppercase">Emergency Numbers</span>
             </div>
             <div className="space-y-1.5">
               {itinerary.emergency_police && (
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">Police</span>
-                  <span className="text-sm font-bold text-slate-900">{itinerary.emergency_police}</span>
+                  <span className="text-xs text-muted-foreground">Police</span>
+                  <span className="text-sm font-bold text-foreground">{itinerary.emergency_police}</span>
                 </div>
               )}
               {itinerary.emergency_ambulance && (
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">Ambulance</span>
-                  <span className="text-sm font-bold text-slate-900">{itinerary.emergency_ambulance}</span>
+                  <span className="text-xs text-muted-foreground">Ambulance</span>
+                  <span className="text-sm font-bold text-foreground">{itinerary.emergency_ambulance}</span>
                 </div>
               )}
               {itinerary.emergency_embassy && (
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">Nearest Embassy</span>
-                  <span className="text-sm font-bold text-slate-900">{itinerary.emergency_embassy}</span>
+                  <span className="text-xs text-muted-foreground">Nearest Embassy</span>
+                  <span className="text-sm font-bold text-foreground">{itinerary.emergency_embassy}</span>
                 </div>
               )}
               {itinerary.emergency_embassy_phone && (
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">Embassy Phone</span>
-                  <span className="text-sm font-bold text-slate-900">{itinerary.emergency_embassy_phone}</span>
+                  <span className="text-xs text-muted-foreground">Embassy Phone</span>
+                  <span className="text-sm font-bold text-foreground">{itinerary.emergency_embassy_phone}</span>
                 </div>
               )}
             </div>

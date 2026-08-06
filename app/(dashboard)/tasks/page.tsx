@@ -6,9 +6,9 @@ import { Plus } from 'lucide-react'
 
 export default function TasksPage() {
   return (
-    <div className="flex flex-col h-full bg-[#F0F7FA]">
+    <div className="flex flex-col h-full bg-background">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-white px-6 py-4">
+      <div className="border-b border-gray-200 bg-card px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">My Tasks</h1>

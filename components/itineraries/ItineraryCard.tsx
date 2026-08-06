@@ -59,7 +59,7 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="group bg-white rounded-xl border border-slate-200/60 overflow-hidden hover:shadow-xl hover:border-slate-300/60 transition-all duration-300 cursor-pointer"
+      className="group bg-card rounded-xl border border-border/60 overflow-hidden hover:shadow-xl hover:border-border/60 transition-all duration-300 cursor-pointer"
       onClick={() => onOpen(itinerary.id)}
     >
       {/* Destination Banner */}
@@ -74,18 +74,18 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
         <div className="absolute bottom-3 left-4 right-4">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-white/70 text-xs font-medium uppercase tracking-wider">
+              <p className="text-primary-foreground/70 text-xs font-medium uppercase tracking-wider">
                 {itinerary.destination_country || 'Destination'}
               </p>
-              <h3 className="text-white text-lg font-bold mt-0.5 line-clamp-1">{destination}</h3>
+              <h3 className="text-primary-foreground text-lg font-bold mt-0.5 line-clamp-1">{destination}</h3>
             </div>
             {daysUntil !== null && daysUntil > 0 && (
-              <span className="px-2.5 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+              <span className="px-2.5 py-1 bg-card/20 backdrop-blur-sm rounded-full text-xs font-semibold text-primary-foreground">
                 {daysUntil}d away
               </span>
             )}
             {daysUntil !== null && daysUntil === 0 && (
-              <span className="px-2.5 py-1 bg-green-400/30 backdrop-blur-sm rounded-full text-xs font-semibold text-white animate-pulse">
+              <span className="px-2.5 py-1 bg-green-400/30 backdrop-blur-sm rounded-full text-xs font-semibold text-primary-foreground animate-pulse">
                 Today!
               </span>
             )}
@@ -105,31 +105,31 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
         <div className="absolute top-3 right-3" onClick={e => e.stopPropagation()}>
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="p-1.5 rounded-lg bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors"
+            className="p-1.5 rounded-lg bg-card/20 backdrop-blur-sm text-primary-foreground hover:bg-card/30 transition-colors"
           >
             <MoreHorizontal className="w-4 h-4" />
           </button>
           {showMenu && (
-            <div className="absolute right-0 top-9 w-44 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-20">
+            <div className="absolute right-0 top-9 w-44 bg-card rounded-xl shadow-xl border border-border py-1.5 z-20">
               {onEdit && (
                 <button onClick={() => { onEdit(itinerary.id); setShowMenu(false) }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-muted/50">
                   <Pencil className="w-3.5 h-3.5" /> Edit
                 </button>
               )}
               {onDuplicate && (
                 <button onClick={() => { onDuplicate(itinerary.id); setShowMenu(false) }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-muted/50">
                   <Copy className="w-3.5 h-3.5" /> Duplicate
                 </button>
               )}
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-muted/50">
                 <FileDown className="w-3.5 h-3.5" /> Export PDF
               </button>
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-muted/50">
                 <Share2 className="w-3.5 h-3.5" /> Share
               </button>
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-muted/50">
                 <Archive className="w-3.5 h-3.5" /> Archive
               </button>
               <div className="border-t border-slate-100 my-1" />
@@ -148,18 +148,18 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
       <div className="p-4 space-y-3">
         {/* Title & Booking Ref */}
         <div>
-          <h4 className="font-semibold text-slate-900 text-sm line-clamp-1 group-hover:text-teal-700 transition-colors">
+          <h4 className="font-semibold text-foreground text-sm line-clamp-1 group-hover:text-teal-700 transition-colors">
             {itinerary.title}
           </h4>
           {booking && (
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               {booking.booking_reference} · {booking.customer_name}
             </p>
           )}
         </div>
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+        <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           {startDate && (
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
@@ -183,7 +183,7 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-50 rounded text-xs text-slate-600 font-medium">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-muted/50 rounded text-xs text-muted-foreground font-medium">
             <MapPin className="w-3 h-3" /> {travelTypeLabel}
           </span>
           <span className="flex items-center gap-1 text-xs text-teal-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">

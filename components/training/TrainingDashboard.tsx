@@ -62,7 +62,7 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="bg-white rounded-xl p-5 animate-pulse">
+          <div key={i} className="bg-card rounded-xl p-5 animate-pulse">
             <div className="h-4 bg-slate-200 rounded w-20 mb-3" />
             <div className="h-8 bg-slate-200 rounded w-16" />
           </div>
@@ -96,16 +96,16 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
-              className="bg-white rounded-xl border border-slate-200/80 p-5 hover:shadow-md transition-all cursor-pointer"
+              className="bg-card rounded-xl border border-border/80 p-5 hover:shadow-md transition-all cursor-pointer"
               onClick={onViewCourses}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{card.label}</span>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{card.label}</span>
                 <div className={`p-2 rounded-lg ${card.bg}`}>
                   <Icon className={`w-4 h-4 ${card.color}`} />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{card.value}</p>
+              <p className="text-2xl font-bold text-foreground">{card.value}</p>
             </motion.div>
           )
         })}
@@ -118,9 +118,9 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white rounded-xl border border-slate-200/80 p-6"
+          className="bg-card rounded-xl border border-border/80 p-6"
         >
-          <h3 className="text-sm font-bold text-slate-800 mb-4">Monthly Completions</h3>
+          <h3 className="text-sm font-bold text-foreground mb-4">Monthly Completions</h3>
           {monthlyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={monthlyData}>
@@ -138,7 +138,7 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex items-center justify-center h-[250px] text-sm text-slate-400">
+            <div className="flex items-center justify-center h-[250px] text-sm text-muted-foreground">
               No completion data yet
             </div>
           )}
@@ -149,9 +149,9 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white rounded-xl border border-slate-200/80 p-6"
+          className="bg-card rounded-xl border border-border/80 p-6"
         >
-          <h3 className="text-sm font-bold text-slate-800 mb-4">Department Participation</h3>
+          <h3 className="text-sm font-bold text-foreground mb-4">Department Participation</h3>
           {deptData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={deptData}>
@@ -164,7 +164,7 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex items-center justify-center h-[250px] text-sm text-slate-400">
+            <div className="flex items-center justify-center h-[250px] text-sm text-muted-foreground">
               No department data yet
             </div>
           )}

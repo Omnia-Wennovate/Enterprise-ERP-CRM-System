@@ -117,3 +117,52 @@ export async function exportPaymentsAction(payments: Payment[]): Promise<string>
     throw new Error(`Failed to export payments: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
+
+// ── Invoice Dashboard actions ─────────────────────────────────────────────────
+
+import * as dashSvc from '@/lib/services/invoice-dashboard'
+import type { InvoiceFilter } from '@/lib/services/invoice-dashboard'
+
+export async function fetchInvoiceKPIs(
+  startDate: string, endDate: string,
+  prevStartDate: string, prevEndDate: string,
+  periodLabel: string, compareLabel: string
+) {
+  return dashSvc.getInvoiceKPIs(startDate, endDate, prevStartDate, prevEndDate, periodLabel, compareLabel)
+}
+
+export async function fetchInvoiceChartData(startDate: string, endDate: string) {
+  return dashSvc.getInvoiceChartData(startDate, endDate)
+}
+
+export async function fetchInvoiceAgingBuckets() {
+  return dashSvc.getAgingBuckets()
+}
+
+export async function fetchCustomerLeaderboard(startDate: string, endDate: string) {
+  return dashSvc.getCustomerLeaderboard(startDate, endDate)
+}
+
+export async function fetchInvoiceHealthScore() {
+  return dashSvc.getInvoiceHealthScore()
+}
+
+export async function fetchRecentActivity(limit?: number) {
+  return dashSvc.getRecentActivity(limit)
+}
+
+export async function fetchInvoicesWithRelations(filter: InvoiceFilter) {
+  return dashSvc.getInvoicesWithRelations(filter)
+}
+
+export async function fetchRevenueIntelligence() {
+  return dashSvc.getRevenueIntelligence()
+}
+
+export async function generateBoardReportDataAction(
+  kpis: Awaited<ReturnType<typeof dashSvc.getInvoiceKPIs>>,
+  health: Awaited<ReturnType<typeof dashSvc.getInvoiceHealthScore>>,
+  periodLabel: string
+) {
+  return dashSvc.generateBoardReportData(kpis, health, periodLabel)
+}

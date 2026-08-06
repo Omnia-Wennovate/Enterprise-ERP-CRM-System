@@ -70,7 +70,7 @@ export function ActivitiesTimeline() {
 
           {/* Activity content */}
           <div className="flex-1 pt-1">
-            <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-teal-300 transition-colors">
+            <div className="bg-card border border-gray-200 rounded-lg p-4 hover:border-teal-300 transition-colors">
               <div className="flex items-start justify-between mb-2">
                 <h4 className="font-semibold text-gray-900">{activity.title}</h4>
                 <span className={`text-xs px-2 py-1 rounded-full font-medium capitalize ${ACTIVITY_COLORS[activity.type]}`}>

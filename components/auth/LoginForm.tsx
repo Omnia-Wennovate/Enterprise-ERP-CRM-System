@@ -64,25 +64,25 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-white rounded-2xl shadow-lg border border-[#BFDBFE] p-8">
-        <h1 className="text-2xl font-semibold text-[#0B1F33] mb-2">Welcome back</h1>
-        <p className="text-[#4B6B7A] text-sm mb-6">Sign in to your Omnia Travel account</p>
+      <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
+        <h1 className="text-2xl font-semibold text-foreground mb-2">Welcome back</h1>
+        <p className="text-muted-foreground text-sm mb-6">Sign in to your Omnia Travel account</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Input */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#0B1F33] mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
               Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-3 text-[#4B6B7A]" size={18} />
+              <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2.5 border border-[#BFDBFE] rounded-lg focus:border-[#0A8FA8] focus:ring-2 focus:ring-[#0A8FA8]/20 bg-white text-[#0B1F33] placeholder-[#94A3B8] transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 bg-card text-foreground placeholder-[#94A3B8] transition-all"
                 required
               />
             </div>
@@ -90,24 +90,24 @@ export function LoginForm() {
 
           {/* Password Input */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[#0B1F33] mb-2">
+            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-3 text-[#4B6B7A]" size={18} />
+              <Lock className="absolute left-3 top-3 text-muted-foreground" size={18} />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-2.5 border border-[#BFDBFE] rounded-lg focus:border-[#0A8FA8] focus:ring-2 focus:ring-[#0A8FA8]/20 bg-white text-[#0B1F33] placeholder-[#94A3B8] transition-all"
+                className="w-full pl-10 pr-10 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 bg-card text-foreground placeholder-[#94A3B8] transition-all"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-[#4B6B7A] hover:text-[#0B1F33] transition-colors"
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -116,7 +116,7 @@ export function LoginForm() {
 
           {/* Forgot Password Link */}
           <div className="text-right">
-            <a href="/forgot-password" className="text-sm text-[#0A8FA8] hover:text-[#088096] transition-colors">
+            <a href="/forgot-password" className="text-sm text-primary hover:text-[#088096] transition-colors">
               Forgot password?
             </a>
           </div>
@@ -133,7 +133,7 @@ export function LoginForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#0A8FA8] hover:bg-[#088096] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -146,29 +146,29 @@ export function LoginForm() {
           </button>
         </form>
 
-        <div className="mt-6 border-t border-[#DBEAFE] pt-6">
-          <p className="text-xs text-[#4B6B7A] font-medium mb-3">Demo Credentials:</p>
+        <div className="mt-6 border-t border-border pt-6">
+          <p className="text-xs text-muted-foreground font-medium mb-3">Demo Credentials:</p>
           <div className="space-y-2">
             {demoCredentials.map((cred) => (
               <button
                 key={cred.email}
                 onClick={() => handleDemoLogin(cred.email)}
                 disabled={isLoading}
-                className="w-full text-left px-3 py-2 text-xs bg-[#F0F7FA] hover:bg-[#E0F2F7] border border-[#BFDBFE] rounded-lg transition-colors disabled:opacity-50 text-[#0B1F33]"
+                className="w-full text-left px-3 py-2 text-xs bg-background hover:bg-primary/10 border border-border rounded-lg transition-colors disabled:opacity-50 text-foreground"
               >
                 <span className="font-medium">
                   {cred.role === 'marketing' 
                     ? 'SOCIAL MEDIA TEAM' 
                     : cred.role.replace(/_/g, ' ').toUpperCase()}
                 </span>
-                <div className="text-[#4B6B7A] truncate">{cred.email}</div>
+                <div className="text-muted-foreground truncate">{cred.email}</div>
               </button>
             ))}
           </div>
         </div>
 
-        <p className="text-center text-sm text-[#4B6B7A] mt-6">
-          Don&apos;t have an account? <span className="text-[#0A8FA8] font-medium">Contact your admin</span>
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          Don&apos;t have an account? <span className="text-primary font-medium">Contact your admin</span>
         </p>
       </div>
     </div>

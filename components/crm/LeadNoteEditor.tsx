@@ -102,7 +102,7 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
           onChange={(e) => setNewContent(e.target.value)}
           placeholder="Add an internal note... Use @name to mention someone."
           rows={3}
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none resize-none"
+          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none resize-none"
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleAdd()
           }}
@@ -113,7 +113,7 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
             size="sm"
             onClick={handleAdd}
             disabled={!newContent.trim() || isSaving}
-            className="bg-teal-600 hover:bg-teal-700 text-white h-7 px-3 text-xs"
+            className="bg-teal-600 hover:bg-teal-700 text-primary-foreground h-7 px-3 text-xs"
           >
             {isSaving ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : <Send className="w-3 h-3 mr-1" />}
             Post Note
@@ -148,7 +148,7 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
                   <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
                     <span className="text-[11px] font-bold text-teal-700">{initials}</span>
                   </div>
-                  <div className="flex-1 bg-white border border-gray-200 rounded-xl p-3 hover:border-teal-200 transition-colors">
+                  <div className="flex-1 bg-card border border-gray-200 rounded-xl p-3 hover:border-teal-200 transition-colors">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-semibold text-gray-800">
@@ -184,7 +184,7 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
                           autoFocus
                         />
                         <div className="flex gap-2">
-                          <Button size="sm" onClick={() => handleEdit(note.id)} className="h-6 px-2 text-xs bg-teal-600 hover:bg-teal-700 text-white">
+                          <Button size="sm" onClick={() => handleEdit(note.id)} className="h-6 px-2 text-xs bg-teal-600 hover:bg-teal-700 text-primary-foreground">
                             Save
                           </Button>
                           <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="h-6 px-2 text-xs">

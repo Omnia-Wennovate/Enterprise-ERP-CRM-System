@@ -38,7 +38,7 @@ export function ConversationHeader({
   }
 
   return (
-    <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+    <div className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
       <div className="flex items-center gap-3">
         {avatar ? (
           <div className="relative flex-shrink-0">
@@ -52,8 +52,8 @@ export function ConversationHeader({
         ) : null}
 
         <div>
-          <h2 className="font-semibold text-slate-900">{title}</h2>
-          {subtitle && <p className="text-sm text-slate-600">{subtitle}</p>}
+          <h2 className="font-semibold text-foreground">{title}</h2>
+          {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
         </div>
       </div>
 
@@ -62,35 +62,35 @@ export function ConversationHeader({
           {onCall && (
             <button
               onClick={onCall}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               title="Start call"
             >
-              <Phone className="w-5 h-5 text-slate-600" />
+              <Phone className="w-5 h-5 text-muted-foreground" />
             </button>
           )}
 
           {onVideoCall && (
             <button
               onClick={onVideoCall}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               title="Start video call"
             >
-              <Video className="w-5 h-5 text-slate-600" />
+              <Video className="w-5 h-5 text-muted-foreground" />
             </button>
           )}
 
           {onInfo && (
             <button
               onClick={onInfo}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               title="Conversation info"
             >
-              <Info className="w-5 h-5 text-slate-600" />
+              <Info className="w-5 h-5 text-muted-foreground" />
             </button>
           )}
 
-          <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-            <MoreVertical className="w-5 h-5 text-slate-600" />
+          <button className="p-2 hover:bg-muted rounded-lg transition-colors">
+            <MoreVertical className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
       )}

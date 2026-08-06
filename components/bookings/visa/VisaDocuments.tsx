@@ -68,16 +68,16 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
       {/* Upload Area */}
       <div
         className={`border-2 border-dashed rounded-xl p-6 text-center transition-colors ${
-          dragOver ? 'border-teal-400 bg-teal-50' : 'border-slate-300 bg-slate-50'
+          dragOver ? 'border-teal-400 bg-teal-50' : 'border-border bg-muted/50'
         }`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
         onDragLeave={() => setDragOver(false)}
         onDrop={(e) => { e.preventDefault(); setDragOver(false) }}
       >
-        <Upload className="w-8 h-8 text-slate-400 mx-auto mb-3" />
+        <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
         <div className="flex items-center justify-center gap-3 mb-3">
           <select
-            className="border-slate-300 rounded-lg text-sm focus:border-teal-500 focus:ring-teal-500"
+            className="border-border rounded-lg text-sm focus:border-teal-500 focus:ring-teal-500"
             value={selectedType}
             onChange={e => setSelectedType(e.target.value)}
           >
@@ -85,12 +85,12 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
               <option key={key} value={key}>{label}</option>
             ))}
           </select>
-          <label className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors cursor-pointer">
+          <label className="px-4 py-2 bg-teal-600 text-primary-foreground text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors cursor-pointer">
             {uploading ? 'Uploading...' : 'Choose File'}
             <input type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={handleFileSelect} disabled={uploading} />
           </label>
         </div>
-        <p className="text-xs text-slate-500">PDF, JPG, PNG, DOC up to 10MB</p>
+        <p className="text-xs text-muted-foreground">PDF, JPG, PNG, DOC up to 10MB</p>
       </div>
 
       {/* Documents List */}
@@ -98,26 +98,26 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
         {documents.length === 0 ? (
           <div className="text-center py-8">
             <FileText className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-            <p className="text-sm text-slate-500">No documents uploaded yet</p>
+            <p className="text-sm text-muted-foreground">No documents uploaded yet</p>
           </div>
         ) : (
           documents.map(doc => {
             const st = statusIcons[doc.verification_status as keyof typeof statusIcons] || statusIcons.pending
             const StatusIcon = st.icon
             return (
-              <div key={doc.id} className="flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-xl hover:border-slate-300 transition-colors group">
+              <div key={doc.id} className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl hover:border-border transition-colors group">
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${st.bg}`}>
                   <FileText className={`w-5 h-5 ${st.color}`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-slate-900 truncate">{doc.file_name}</p>
+                    <p className="text-sm font-semibold text-foreground truncate">{doc.file_name}</p>
                     {doc.is_required && <span className="text-[10px] font-bold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded">REQUIRED</span>}
                   </div>
                   <div className="flex items-center gap-3 mt-1">
-                    <span className="text-xs text-slate-500">{DOCUMENT_TYPE_LABELS[doc.document_type] || doc.document_type}</span>
+                    <span className="text-xs text-muted-foreground">{DOCUMENT_TYPE_LABELS[doc.document_type] || doc.document_type}</span>
                     <span className="w-1 h-1 rounded-full bg-slate-300" />
-                    <span className="text-xs text-slate-400">{doc.file_size_kb ? `${doc.file_size_kb} KB` : ''}</span>
+                    <span className="text-xs text-muted-foreground">{doc.file_size_kb ? `${doc.file_size_kb} KB` : ''}</span>
                     <span className="w-1 h-1 rounded-full bg-slate-300" />
                     <span className={`inline-flex items-center gap-1 text-xs font-medium ${st.color}`}>
                       <StatusIcon className="w-3 h-3" /> {st.label}
@@ -135,7 +135,7 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
                       </button>
                     </>
                   )}
-                  <button onClick={() => onDelete(doc.id)} className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg" title="Delete">
+                  <button onClick={() => onDelete(doc.id)} className="p-1.5 text-muted-foreground hover:text-red-500 hover:bg-red-50 rounded-lg" title="Delete">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>

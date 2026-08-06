@@ -11,15 +11,15 @@ export function TransportCard({ item }: TransportCardProps) {
   const meta = (item.metadata || {}) as TransportMeta
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition-all duration-200">
+    <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-md transition-all duration-200">
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-white/20 rounded-lg">
-            <Car className="w-4 h-4 text-white" />
+          <div className="p-1.5 bg-card/20 rounded-lg">
+            <Car className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-white text-sm font-bold">{item.title}</p>
+            <p className="text-primary-foreground text-sm font-bold">{item.title}</p>
             {meta.company && <p className="text-amber-100 text-xs">{meta.company}</p>}
           </div>
         </div>
@@ -42,13 +42,13 @@ export function TransportCard({ item }: TransportCardProps) {
           <div className="flex-1 space-y-3">
             <div>
               <p className="text-xs text-green-600 font-medium">Pickup</p>
-              <p className="text-sm font-semibold text-slate-800">{meta.pickup_location || item.location || 'TBD'}</p>
-              {item.start_time && <p className="text-xs text-slate-500 mt-0.5">{item.start_time}</p>}
+              <p className="text-sm font-semibold text-foreground">{meta.pickup_location || item.location || 'TBD'}</p>
+              {item.start_time && <p className="text-xs text-muted-foreground mt-0.5">{item.start_time}</p>}
             </div>
             <div>
               <p className="text-xs text-red-600 font-medium">Drop-off</p>
-              <p className="text-sm font-semibold text-slate-800">{meta.dropoff_location || 'TBD'}</p>
-              {item.end_time && <p className="text-xs text-slate-500 mt-0.5">{item.end_time}</p>}
+              <p className="text-sm font-semibold text-foreground">{meta.dropoff_location || 'TBD'}</p>
+              {item.end_time && <p className="text-xs text-muted-foreground mt-0.5">{item.end_time}</p>}
             </div>
           </div>
         </div>
@@ -57,28 +57,28 @@ export function TransportCard({ item }: TransportCardProps) {
         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100">
           {meta.vehicle_type && (
             <div>
-              <p className="text-xs text-slate-400">Vehicle</p>
-              <p className="text-sm font-medium text-slate-800">{meta.vehicle_type}</p>
+              <p className="text-xs text-muted-foreground">Vehicle</p>
+              <p className="text-sm font-medium text-foreground">{meta.vehicle_type}</p>
             </div>
           )}
           {meta.driver_name && (
             <div>
-              <p className="text-xs text-slate-400">Driver</p>
-              <p className="text-sm font-medium text-slate-800 flex items-center gap-1">
+              <p className="text-xs text-muted-foreground">Driver</p>
+              <p className="text-sm font-medium text-foreground flex items-center gap-1">
                 <User className="w-3 h-3" /> {meta.driver_name}
               </p>
             </div>
           )}
           {meta.plate_number && (
             <div>
-              <p className="text-xs text-slate-400">Plate</p>
-              <p className="text-sm font-mono font-bold text-slate-800">{meta.plate_number}</p>
+              <p className="text-xs text-muted-foreground">Plate</p>
+              <p className="text-sm font-mono font-bold text-foreground">{meta.plate_number}</p>
             </div>
           )}
           {meta.driver_phone && (
             <div>
-              <p className="text-xs text-slate-400">Phone</p>
-              <p className="text-sm font-medium text-slate-800 flex items-center gap-1">
+              <p className="text-xs text-muted-foreground">Phone</p>
+              <p className="text-sm font-medium text-foreground flex items-center gap-1">
                 <Phone className="w-3 h-3" /> {meta.driver_phone}
               </p>
             </div>
@@ -97,8 +97,8 @@ export function TransportCard({ item }: TransportCardProps) {
         {/* Cost */}
         {item.cost > 0 && (
           <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-            <span className="text-xs text-slate-500">Cost</span>
-            <span className="text-sm font-bold text-slate-900">
+            <span className="text-xs text-muted-foreground">Cost</span>
+            <span className="text-sm font-bold text-foreground">
               {item.currency} {item.cost.toLocaleString()}
             </span>
           </div>

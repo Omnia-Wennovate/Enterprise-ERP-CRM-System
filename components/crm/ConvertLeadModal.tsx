@@ -118,7 +118,7 @@ export function ConvertLeadModal({ isOpen, lead, onClose, onConverted }: Props) 
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[460px] bg-white rounded-2xl shadow-2xl border border-gray-200"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[460px] bg-card rounded-2xl shadow-2xl border border-gray-200"
           >
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <div>

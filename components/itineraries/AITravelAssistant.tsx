@@ -244,7 +244,7 @@ export function AITravelAssistant({
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-2xl shadow-lg hover:shadow-xl hover:from-teal-700 hover:to-emerald-700 transition-all"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-primary-foreground rounded-2xl shadow-lg hover:shadow-xl hover:from-teal-700 hover:to-emerald-700 transition-all"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         style={{ display: isOpen ? 'none' : 'flex' }}
@@ -260,14 +260,14 @@ export function AITravelAssistant({
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[400px] max-h-[600px] bg-card rounded-2xl shadow-2xl border border-border flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-teal-600 to-emerald-600">
               <div className="flex items-center gap-2">
-                <Bot className="w-5 h-5 text-white" />
+                <Bot className="w-5 h-5 text-primary-foreground" />
                 <div>
-                  <h3 className="text-sm font-bold text-white">AI Travel Assistant</h3>
+                  <h3 className="text-sm font-bold text-primary-foreground">AI Travel Assistant</h3>
                   <p className="text-[10px] text-teal-100">
                     {itinerary.destination_city || 'Travel'} itinerary editor
                   </p>
@@ -275,9 +275,9 @@ export function AITravelAssistant({
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-1.5 hover:bg-card/20 rounded-lg transition-colors"
               >
-                <X className="w-4 h-4 text-white" />
+                <X className="w-4 h-4 text-primary-foreground" />
               </button>
             </div>
 
@@ -286,7 +286,7 @@ export function AITravelAssistant({
               {history.length === 0 && (
                 <div className="text-center py-8">
                   <Bot className="w-10 h-10 text-teal-200 mx-auto mb-3" />
-                  <p className="text-sm text-slate-500 font-medium">Hi! I can help edit your itinerary.</p>
+                  <p className="text-sm text-muted-foreground font-medium">Hi! I can help edit your itinerary.</p>
                   <div className="mt-3 space-y-1.5">
                     {[
                       'Add a desert safari on Day 3',
@@ -314,8 +314,8 @@ export function AITravelAssistant({
                   <div
                     className={`max-w-[85%] px-3 py-2 rounded-xl text-xs leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-teal-600 text-white rounded-br-sm'
-                        : 'bg-slate-100 text-slate-700 rounded-bl-sm'
+                        ? 'bg-teal-600 text-primary-foreground rounded-br-sm'
+                        : 'bg-muted text-slate-700 rounded-bl-sm'
                     }`}
                   >
                     {msg.content}
@@ -325,7 +325,7 @@ export function AITravelAssistant({
 
               {sending && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-100 rounded-xl rounded-bl-sm px-4 py-2">
+                  <div className="bg-muted rounded-xl rounded-bl-sm px-4 py-2">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                       <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -351,7 +351,7 @@ export function AITravelAssistant({
                     <button
                       onClick={handleApplyActions}
                       disabled={applyingActions}
-                      className="flex items-center gap-1 px-3 py-1.5 bg-teal-600 text-white rounded-lg text-[10px] font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors"
+                      className="flex items-center gap-1 px-3 py-1.5 bg-teal-600 text-primary-foreground rounded-lg text-[10px] font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors"
                     >
                       {applyingActions ? (
                         <Loader2 className="w-3 h-3 animate-spin" />
@@ -362,7 +362,7 @@ export function AITravelAssistant({
                     </button>
                     <button
                       onClick={() => setPendingActions([])}
-                      className="px-3 py-1.5 text-slate-500 hover:text-slate-700 text-[10px] font-medium transition-colors"
+                      className="px-3 py-1.5 text-muted-foreground hover:text-slate-700 text-[10px] font-medium transition-colors"
                     >
                       Dismiss
                     </button>
@@ -383,12 +383,12 @@ export function AITravelAssistant({
                   onKeyDown={e => e.key === 'Enter' && handleSend()}
                   placeholder="Ask me to modify the itinerary..."
                   disabled={sending}
-                  className="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/40 disabled:opacity-60"
+                  className="flex-1 px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/40 disabled:opacity-60"
                 />
                 <button
                   onClick={handleSend}
                   disabled={sending || !message.trim()}
-                  className="p-2 bg-teal-600 text-white rounded-xl hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <Send className="w-4 h-4" />
                 </button>

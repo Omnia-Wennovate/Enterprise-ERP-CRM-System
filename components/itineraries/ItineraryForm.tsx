@@ -137,16 +137,16 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className={`bg-white rounded-2xl shadow-2xl w-full ${
+        className={`bg-card rounded-2xl shadow-2xl w-full ${
           showAIPanel ? 'max-w-5xl' : 'max-w-lg'
         } max-h-[90vh] overflow-y-auto transition-all duration-300`}
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-slate-200 sticky top-0 bg-white z-10 rounded-t-2xl">
-          <h2 className="text-lg font-bold text-slate-900">
+        <div className="flex items-center justify-between p-6 border-b border-border sticky top-0 bg-card z-10 rounded-t-2xl">
+          <h2 className="text-lg font-bold text-foreground">
             {itinerary ? 'Edit Itinerary' : 'Create New Itinerary'}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+          <button onClick={onClose} className="p-2 hover:bg-muted rounded-lg transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -154,13 +154,13 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Booking Link */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
               Link to Booking
             </label>
             <select
               value={form.booking_id}
               onChange={e => handleBookingSelect(e.target.value)}
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
             >
               <option value="">— No Booking (Standalone) —</option>
               {bookings.map(b => (
@@ -173,7 +173,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
 
           {/* Title */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
               Itinerary Title *
             </label>
             <input
@@ -182,14 +182,14 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               placeholder="e.g. Classic Dubai 5-Day Adventure"
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
             />
           </div>
 
           {/* Destination */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 City
               </label>
               <input
@@ -197,11 +197,11 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
                 value={form.destination_city}
                 onChange={e => setForm(f => ({ ...f, destination_city: e.target.value }))}
                 placeholder="Dubai"
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Country
               </label>
               <input
@@ -209,20 +209,20 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
                 value={form.destination_country}
                 onChange={e => setForm(f => ({ ...f, destination_country: e.target.value }))}
                 placeholder="UAE"
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               />
             </div>
           </div>
 
           {/* Travel Type */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
               Travel Type
             </label>
             <select
               value={form.travel_type}
               onChange={e => setForm(f => ({ ...f, travel_type: e.target.value as typeof f.travel_type }))}
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
             >
               {TRAVEL_TYPES.map(tt => (
                 <option key={tt.value} value={tt.value}>{tt.label}</option>
@@ -233,38 +233,38 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
           {/* Currency & Timezone */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Base Currency
               </label>
               <select
                 value={form.base_currency}
                 onChange={e => setForm(f => ({ ...f, base_currency: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               >
                 {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Local Currency
               </label>
               <select
                 value={form.local_currency}
                 onChange={e => setForm(f => ({ ...f, local_currency: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               >
                 <option value="">Same as base</option>
                 {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Timezone
               </label>
               <select
                 value={form.timezone}
                 onChange={e => setForm(f => ({ ...f, timezone: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               >
                 {TIMEZONES.map(tz => <option key={tz} value={tz}>{tz}</option>)}
               </select>
@@ -273,7 +273,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
 
           {/* Notes */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
               Notes
             </label>
             <textarea
@@ -281,7 +281,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
               onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
               rows={3}
               placeholder="Internal notes about this itinerary..."
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none"
             />
           </div>
 
@@ -289,7 +289,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
               AI ITINERARY BUILDER SECTION (NEW — Phase X)
               ════════════════════════════════════════════════════════════════════ */}
           {isCreating && (
-            <div className="border-t border-slate-200 pt-4">
+            <div className="border-t border-border pt-4">
               {/* AI Toggle Button */}
               <button
                 type="button"
@@ -297,7 +297,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                   showAIPanel
                     ? 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-700 border border-teal-200'
-                    : 'bg-gradient-to-r from-slate-50 to-slate-100 text-slate-600 border border-slate-200 hover:from-teal-50 hover:to-emerald-50 hover:text-teal-700 hover:border-teal-200'
+                    : 'bg-gradient-to-r from-slate-50 to-slate-100 text-muted-foreground border border-border hover:from-teal-50 hover:to-emerald-50 hover:text-teal-700 hover:border-teal-200'
                 }`}
               >
                 <span className="flex items-center gap-2">
@@ -341,13 +341,13 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
 
           {/* Actions */}
           <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
-            <button type="button" onClick={onClose} className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+            <button type="button" onClick={onClose} className="px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving || !form.title.trim()}
-              className="px-6 py-2.5 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {itinerary ? 'Update' : 'Create'} Itinerary

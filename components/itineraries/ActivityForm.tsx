@@ -144,14 +144,14 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="bg-card rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-slate-200 sticky top-0 bg-white z-10 rounded-t-2xl">
-          <h2 className="text-lg font-bold text-slate-900">
+        <div className="flex items-center justify-between p-6 border-b border-border sticky top-0 bg-card z-10 rounded-t-2xl">
+          <h2 className="text-lg font-bold text-foreground">
             {item ? 'Edit Activity' : 'Add Activity'}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-lg">
+          <button onClick={onClose} className="p-2 hover:bg-muted rounded-lg">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -159,7 +159,7 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Activity Type */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">Activity Type</label>
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-2">Activity Type</label>
             <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
               {ACTIVITY_TYPES.map(at => (
                 <button
@@ -169,7 +169,7 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
                   className={`flex flex-col items-center gap-1 p-2 rounded-xl text-xs font-medium transition-all ${
                     form.type === at.value
                       ? 'ring-2 ring-teal-500 bg-teal-50 text-teal-700'
-                      : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                      : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${at.color}20` }}>
@@ -183,31 +183,31 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
 
           {/* Title */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Title *</label>
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">Title *</label>
             <input
               type="text" required value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               placeholder={`e.g. ${typeConfig?.label || 'Activity'} name`}
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
             />
           </div>
 
           {/* Time & Duration */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Start Time</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">Start Time</label>
               <input type="time" value={form.start_time} onChange={e => setForm(f => ({ ...f, start_time: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">End Time</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">End Time</label>
               <input type="time" value={form.end_time} onChange={e => setForm(f => ({ ...f, end_time: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Duration (min)</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">Duration (min)</label>
               <input type="number" value={form.duration_minutes || ''} onChange={e => setForm(f => ({ ...f, duration_minutes: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+                className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
             </div>
           </div>
 
@@ -237,9 +237,9 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
               <div className="grid grid-cols-2 gap-3">
                 <Input label="Hotel Name" value={form.hotel_name} onChange={v => setForm(f => ({ ...f, hotel_name: v }))} placeholder="Burj Al Arab" />
                 <div>
-                  <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Star Rating</label>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Star Rating</label>
                   <select value={form.star_rating} onChange={e => setForm(f => ({ ...f, star_rating: parseInt(e.target.value) }))}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40">
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40">
                     {[0,1,2,3,4,5].map(n => <option key={n} value={n}>{n === 0 ? 'Not rated' : `${n} Star`}</option>)}
                   </select>
                 </div>
@@ -250,11 +250,11 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
               </div>
               <div className="flex gap-4">
                 <label className="flex items-center gap-2 text-sm text-slate-700">
-                  <input type="checkbox" checked={form.breakfast_included} onChange={e => setForm(f => ({ ...f, breakfast_included: e.target.checked }))} className="rounded border-slate-300" />
+                  <input type="checkbox" checked={form.breakfast_included} onChange={e => setForm(f => ({ ...f, breakfast_included: e.target.checked }))} className="rounded border-border" />
                   Breakfast Included
                 </label>
                 <label className="flex items-center gap-2 text-sm text-slate-700">
-                  <input type="checkbox" checked={form.wifi_included} onChange={e => setForm(f => ({ ...f, wifi_included: e.target.checked }))} className="rounded border-slate-300" />
+                  <input type="checkbox" checked={form.wifi_included} onChange={e => setForm(f => ({ ...f, wifi_included: e.target.checked }))} className="rounded border-border" />
                   WiFi Included
                 </label>
               </div>
@@ -287,9 +287,9 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
             <Input label="Booking Ref" value={form.booking_reference} onChange={v => setForm(f => ({ ...f, booking_reference: v }))} placeholder="REF-123" />
             <Input label="Voucher #" value={form.voucher_number} onChange={v => setForm(f => ({ ...f, voucher_number: v }))} placeholder="VOUCH-456" />
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Status</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Status</label>
               <select value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40">
+                className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40">
                 <option value="pending">Pending</option>
                 <option value="confirmed">Confirmed</option>
                 <option value="cancelled">Cancelled</option>
@@ -301,9 +301,9 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
           {/* Cost & Contact */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Cost</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Cost</label>
               <input type="number" step="0.01" value={form.cost || ''} onChange={e => setForm(f => ({ ...f, cost: parseFloat(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+                className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
             </div>
             <Input label="Contact Phone" value={form.contact_phone} onChange={v => setForm(f => ({ ...f, contact_phone: v }))} placeholder="+1..." />
             <Input label="Contact Email" value={form.contact_email} onChange={v => setForm(f => ({ ...f, contact_email: v }))} placeholder="email@..." />
@@ -311,21 +311,21 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
 
           {/* Description & Notes */}
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Description</label>
+            <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Description</label>
             <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none" />
+              className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Notes</label>
+            <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Notes</label>
             <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={2}
-              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none" />
+              className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none" />
           </div>
 
           {/* Submit */}
           <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
-            <button type="button" onClick={onClose} className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900">Cancel</button>
+            <button type="button" onClick={onClose} className="px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Cancel</button>
             <button type="submit" disabled={saving || !form.title.trim()}
-              className="px-6 py-2.5 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 flex items-center gap-2">
+              className="px-6 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 flex items-center gap-2">
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {item ? 'Update' : 'Add'} Activity
             </button>
@@ -339,9 +339,9 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
 function Input({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div>
-      <label className="text-xs font-semibold text-slate-500 uppercase block mb-1">{label}</label>
+      <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">{label}</label>
       <input type="text" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+        className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
     </div>
   )
 }

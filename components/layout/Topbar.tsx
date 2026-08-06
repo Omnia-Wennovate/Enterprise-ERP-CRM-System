@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { Search } from 'lucide-react'
+import { ThemeToggle } from './ThemeToggle'
 import { NotificationBell } from './NotificationBell'
 import { UserMenu } from './UserMenu'
 import { MobileSidebar } from './MobileSidebar'
@@ -64,24 +65,27 @@ export function Topbar({ profile }: TopbarProps) {
   const pageTitle = PAGE_TITLES[pathname] || 'Dashboard'
 
   return (
-    <div className="h-14 bg-white border-b border-[#BFDBFE] shadow-sm flex items-center justify-between px-6">
+    <div className="h-14 bg-card border-b border-border shadow-sm flex items-center justify-between px-6">
       {/* Left Side */}
       <div className="flex items-center gap-4 flex-1">
         <MobileSidebar profile={profile} />
-        <h2 className="text-[#0B1F33] font-medium text-sm hidden md:block">{pageTitle}</h2>
+        <h2 className="text-foreground font-medium text-sm hidden md:block">{pageTitle}</h2>
       </div>
 
       {/* Right Side */}
       <div className="flex items-center gap-4">
         {/* Search Bar */}
-        <div className="hidden lg:flex items-center gap-2 bg-[#F0F7FA] border border-[#BFDBFE] rounded-full px-3 py-2 focus-within:border-[#0A8FA8] focus-within:ring-2 focus-within:ring-[#0A8FA8]/20 transition-all w-60">
-          <Search className="text-[#4B6B7A]" size={16} />
+        <div className="hidden lg:flex items-center gap-2 bg-background border border-border rounded-full px-3 py-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all w-60">
+          <Search className="text-muted-foreground" size={16} />
           <input
             type="text"
             placeholder="Search customers, bookings..."
-            className="bg-transparent text-sm text-[#0B1F33] placeholder-[#94A3B8] outline-none flex-1"
+            className="bg-transparent text-sm text-foreground placeholder-[#94A3B8] outline-none flex-1"
           />
         </div>
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
 
         {/* Notification Bell */}
         <NotificationBell />

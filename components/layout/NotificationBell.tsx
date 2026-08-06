@@ -84,7 +84,7 @@ export function NotificationBell() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-[#4B6B7A] hover:text-[#0B1F33] transition-colors"
+        className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <Bell size={20} />
         {unreadCount > 0 && (
@@ -93,13 +93,13 @@ export function NotificationBell() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white border border-[#BFDBFE] rounded-xl shadow-lg z-50">
+        <div className="absolute right-0 mt-2 w-80 bg-card border border-border rounded-xl shadow-lg z-50">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#DBEAFE]">
-            <h3 className="font-semibold text-[#0B1F33]">Notifications</h3>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+            <h3 className="font-semibold text-foreground">Notifications</h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-[#4B6B7A] hover:text-[#0B1F33]"
+              className="text-muted-foreground hover:text-foreground"
             >
               <X size={18} />
             </button>
@@ -109,19 +109,19 @@ export function NotificationBell() {
           <div className="max-h-96 overflow-y-auto">
             {isLoading ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-[#4B6B7A] text-sm">Loading...</p>
+                <p className="text-muted-foreground text-sm">Loading...</p>
               </div>
             ) : notifications.length === 0 ? (
               <div className="px-4 py-8 text-center">
                 <Bell className="mx-auto text-[#DBEAFE] mb-2" size={32} />
-                <p className="text-[#4B6B7A] text-sm">All caught up!</p>
+                <p className="text-muted-foreground text-sm">All caught up!</p>
               </div>
             ) : (
               <div className="divide-y divide-[#DBEAFE]">
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`px-4 py-3 hover:bg-[#F0F7FA] transition-colors cursor-pointer ${
+                    className={`px-4 py-3 hover:bg-background transition-colors cursor-pointer ${
                       !notification.is_read ? 'bg-blue-50' : ''
                     }`}
                     onClick={() => handleMarkAsRead(notification.id)}
@@ -129,13 +129,13 @@ export function NotificationBell() {
                     <div className="flex gap-3">
                       <div
                         className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                          notification.is_read ? 'bg-[#DBEAFE]' : 'bg-[#0A8FA8]'
+                          notification.is_read ? 'bg-[#DBEAFE]' : 'bg-primary'
                         }`}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-[#0B1F33] text-sm">{notification.title}</p>
-                        <p className="text-xs text-[#4B6B7A] mt-1">{notification.message}</p>
-                        <p className="text-xs text-[#94A3B8] mt-2">
+                        <p className="font-medium text-foreground text-sm">{notification.title}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{notification.message}</p>
+                        <p className="text-xs text-muted-foreground mt-2">
                           {timeAgo(notification.created_at)}
                         </p>
                       </div>
@@ -148,10 +148,10 @@ export function NotificationBell() {
 
           {/* Footer */}
           {unreadCount > 0 && (
-            <div className="border-t border-[#DBEAFE] px-4 py-3">
+            <div className="border-t border-border px-4 py-3">
               <button
                 onClick={handleMarkAllRead}
-                className="w-full text-center text-xs font-medium text-[#0A8FA8] hover:text-[#088096] transition-colors"
+                className="w-full text-center text-xs font-medium text-primary hover:text-[#088096] transition-colors"
               >
                 Mark all as read
               </button>

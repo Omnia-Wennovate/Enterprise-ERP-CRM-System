@@ -47,7 +47,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'draft':
-        return 'bg-slate-50 text-slate-700 border-slate-200'
+        return 'bg-muted/50 text-slate-700 border-border'
       case 'confirmed':
         return 'bg-blue-50 text-blue-700 border-blue-200'
       case 'processing':
@@ -61,7 +61,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
       case 'cancelled':
         return 'bg-red-50 text-red-700 border-red-200'
       default:
-        return 'bg-slate-50 text-slate-700 border-slate-200'
+        return 'bg-muted/50 text-slate-700 border-border'
     }
   }
 
@@ -70,7 +70,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
       <div className="flex items-center justify-center h-64">
         <div className="flex flex-col items-center gap-2">
           <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
-          <p className="text-sm text-slate-600">Loading bookings...</p>
+          <p className="text-sm text-muted-foreground">Loading bookings...</p>
         </div>
       </div>
     )
@@ -84,7 +84,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
           <p className="text-sm text-red-700">{error}</p>
           <button
             onClick={loadBookings}
-            className="mt-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
+            className="mt-2 px-4 py-2 bg-red-600 text-primary-foreground rounded-md hover:bg-red-700 text-sm"
           >
             Try Again
           </button>
@@ -97,19 +97,19 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
     <div className="space-y-4">
       <div className="flex gap-4">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search by reference, customer, or destination..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           <option value="all">All Statuses</option>
           <option value="draft">Draft</option>
@@ -123,13 +123,13 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
       </div>
 
       {filteredBookings.length === 0 ? (
-        <div className="text-center py-12 bg-slate-50 rounded-lg border border-slate-200">
-          <p className="text-slate-600">No bookings found</p>
+        <div className="text-center py-12 bg-muted/50 rounded-lg border border-border">
+          <p className="text-muted-foreground">No bookings found</p>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-200 rounded-lg">
+        <div className="overflow-x-auto border border-border rounded-lg">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted/50 border-b border-border">
               <tr>
                 <th className="px-6 py-3 text-left font-semibold text-slate-700">Reference</th>
                 <th className="px-6 py-3 text-left font-semibold text-slate-700">Customer</th>
@@ -145,16 +145,16 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
                 <tr
                   key={booking.id}
                   onClick={() => onSelectBooking(booking)}
-                  className="hover:bg-slate-50 cursor-pointer transition-colors"
+                  className="hover:bg-muted/50 cursor-pointer transition-colors"
                 >
-                  <td className="px-6 py-4 font-medium text-slate-900">{booking.booking_reference}</td>
-                  <td className="px-6 py-4 text-slate-600">{booking.customer_name}</td>
-                  <td className="px-6 py-4 text-slate-600">{booking.destination}</td>
-                  <td className="px-6 py-4 text-slate-600 text-xs">
+                  <td className="px-6 py-4 font-medium text-foreground">{booking.booking_reference}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{booking.customer_name}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{booking.destination}</td>
+                  <td className="px-6 py-4 text-muted-foreground text-xs">
                     {new Date(booking.trip_start_date).toLocaleDateString()} -{' '}
                     {new Date(booking.trip_end_date).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 font-medium text-slate-900">
+                  <td className="px-6 py-4 font-medium text-foreground">
                     {formatCurrency(booking.total_cost)}
                   </td>
                   <td className="px-6 py-4">
@@ -167,7 +167,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <ChevronRight className="w-4 h-4 text-slate-400" />
+                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
                   </td>
                 </tr>
               ))}

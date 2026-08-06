@@ -73,7 +73,7 @@ export default function ProjectsListPage() {
   if (!profile) return null
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
@@ -81,20 +81,20 @@ export default function ProjectsListPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Software Projects</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">{projects.length} project{projects.length !== 1 ? 's' : ''}</p>
+              <h1 className="text-2xl font-bold text-foreground">Software Projects</h1>
+              <p className="text-sm text-muted-foreground mt-1">{projects.length} project{projects.length !== 1 ? 's' : ''}</p>
             </div>
             <div className="flex items-center gap-3">
               <Link
                 href="/tech/archive"
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-[#DBEAFE] text-[#0A8FA8] rounded-lg hover:bg-[#F0F7FA] transition-colors text-sm font-medium shadow-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-card border border-border text-primary rounded-lg hover:bg-background transition-colors text-sm font-medium shadow-sm"
               >
                 <Archive size={16} />
                 Archive Analytics
               </Link>
               <Link
                 href="/tech/projects/new"
-                className="flex items-center gap-2 px-4 py-2 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096] transition-colors text-sm font-medium shadow-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium shadow-sm"
               >
                 <Plus size={16} />
                 New Project
@@ -103,13 +103,13 @@ export default function ProjectsListPage() {
           </div>
           
           {/* Tabs */}
-          <div className="flex border-b border-[#BFDBFE] mb-6">
+          <div className="flex border-b border-border mb-6">
             <button
               onClick={() => { setActiveTab('active'); setStatusFilter('all'); }}
               className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === 'active' 
-                  ? 'border-[#0A8FA8] text-[#0A8FA8] bg-white rounded-t-lg' 
-                  : 'border-transparent text-[#4B6B7A] hover:text-[#0B1F33] hover:border-[#94A3B8]'
+                  ? 'border-primary text-primary bg-card rounded-t-lg' 
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-[#94A3B8]'
               }`}
             >
               <LayoutGrid size={16} />
@@ -119,8 +119,8 @@ export default function ProjectsListPage() {
               onClick={() => { setActiveTab('archived'); setStatusFilter('all'); }}
               className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === 'archived' 
-                  ? 'border-[#0A8FA8] text-[#0A8FA8] bg-white rounded-t-lg' 
-                  : 'border-transparent text-[#4B6B7A] hover:text-[#0B1F33] hover:border-[#94A3B8]'
+                  ? 'border-primary text-primary bg-card rounded-t-lg' 
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-[#94A3B8]'
               }`}
             >
               <Archive size={16} />
@@ -129,17 +129,17 @@ export default function ProjectsListPage() {
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-4 mb-6">
+          <div className="bg-card rounded-xl border border-border shadow-sm p-4 mb-6">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-[#F0F7FA] border border-[#BFDBFE] rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
-                <Search size={16} className="text-[#4B6B7A]" />
+              <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-background border border-border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
+                <Search size={16} className="text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  className="bg-transparent text-sm text-[#0B1F33] placeholder-[#94A3B8] outline-none flex-1"
+                  className="bg-transparent text-sm text-foreground placeholder-[#94A3B8] outline-none flex-1"
                 />
               </div>
               
@@ -148,7 +148,7 @@ export default function ProjectsListPage() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white hover:border-[#0A8FA8] transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
+                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
                   >
                     <option value="all">All Statuses</option>
                     {Object.entries(PROJECT_STATUS_LABELS)
@@ -160,7 +160,7 @@ export default function ProjectsListPage() {
                   <select
                     value={priorityFilter}
                     onChange={(e) => setPriorityFilter(e.target.value)}
-                    className="px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white hover:border-[#0A8FA8] transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
+                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
                   >
                     <option value="all">All Priorities</option>
                     {Object.entries(PRIORITY_LABELS).map(([key, label]) => (
@@ -175,7 +175,7 @@ export default function ProjectsListPage() {
           {/* Project List */}
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : projects.length > 0 ? (
             <div className="space-y-4">
@@ -185,11 +185,11 @@ export default function ProjectsListPage() {
                   : null
                 return (
                   <Link key={project.id} href={`/tech/projects/${project.id}`}>
-                    <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm hover:shadow-md hover:border-[#0A8FA8] transition-all p-5 cursor-pointer group">
+                    <div className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all p-5 cursor-pointer group">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-base font-semibold text-[#0B1F33] truncate group-hover:text-[#0A8FA8] transition-colors">{project.name}</h3>
+                            <h3 className="text-base font-semibold text-foreground truncate group-hover:text-primary transition-colors">{project.name}</h3>
                             <span
                               className="text-xs px-2.5 py-1 rounded-md font-semibold flex-shrink-0"
                               style={{
@@ -224,29 +224,29 @@ export default function ProjectsListPage() {
                             )}
                           </div>
                           {project.description && (
-                            <p className="text-sm text-[#4B6B7A] truncate mb-3">{project.description}</p>
+                            <p className="text-sm text-muted-foreground truncate mb-3">{project.description}</p>
                           )}
-                          <div className="flex items-center gap-4 text-xs text-[#4B6B7A] font-medium">
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground font-medium">
                             {project.start_date && (
-                              <span className="flex items-center gap-1.5 bg-[#F0F7FA] px-2 py-1 rounded-md">
-                                <Calendar size={14} className="text-[#0A8FA8]" />
+                              <span className="flex items-center gap-1.5 bg-background px-2 py-1 rounded-md">
+                                <Calendar size={14} className="text-primary" />
                                 Start: {new Date(project.start_date).toLocaleDateString()}
                               </span>
                             )}
                             {project.deadline && (
-                              <span className="flex items-center gap-1.5 bg-[#F0F7FA] px-2 py-1 rounded-md">
-                                <Calendar size={14} className="text-[#0A8FA8]" />
+                              <span className="flex items-center gap-1.5 bg-background px-2 py-1 rounded-md">
+                                <Calendar size={14} className="text-primary" />
                                 Deadline: {new Date(project.deadline).toLocaleDateString()}
                               </span>
                             )}
                             {project.budget > 0 && (
-                              <span className="bg-[#F0F7FA] px-2 py-1 rounded-md text-[#0A8FA8]">
+                              <span className="bg-background px-2 py-1 rounded-md text-primary">
                                 Budget: ${project.budget.toLocaleString()}
                               </span>
                             )}
                             {activeTab === 'active' && daysLeft !== null && daysLeft >= 0 && (
                               <span className={`px-2 py-1 rounded-md ${
-                                daysLeft <= 3 ? 'bg-[#FEF2F2] text-[#EF4444]' : daysLeft <= 7 ? 'bg-[#FFFBEB] text-[#F59E0B]' : 'bg-[#ECFDF5] text-[#10B981]'
+                                daysLeft <= 3 ? 'bg-destructive/10 text-destructive' : daysLeft <= 7 ? 'bg-warning/10 text-warning' : 'bg-success/10 text-success'
                               }`}>
                                 {daysLeft} day{daysLeft !== 1 ? 's' : ''} left
                               </span>
@@ -255,10 +255,10 @@ export default function ProjectsListPage() {
                         </div>
                         
                         {activeTab === 'active' && (
-                          <div className="flex flex-col items-end gap-2 flex-shrink-0 bg-[#F0F7FA] p-3 rounded-lg border border-[#DBEAFE]">
+                          <div className="flex flex-col items-end gap-2 flex-shrink-0 bg-background p-3 rounded-lg border border-border">
                             <div className="flex items-baseline gap-1">
-                              <p className="text-2xl font-bold text-[#0B1F33] leading-none">{project.progress_percent}</p>
-                              <span className="text-sm font-semibold text-[#4B6B7A]">%</span>
+                              <p className="text-2xl font-bold text-foreground leading-none">{project.progress_percent}</p>
+                              <span className="text-sm font-semibold text-muted-foreground">%</span>
                             </div>
                             <div className="w-24 h-2.5 bg-[#DBEAFE] rounded-full overflow-hidden shadow-inner">
                               <div
@@ -280,18 +280,18 @@ export default function ProjectsListPage() {
               })}
             </div>
           ) : (
-            <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-12 text-center">
-              <div className="w-16 h-16 bg-[#F0F7FA] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#BFDBFE]">
+            <div className="bg-card rounded-xl border border-border shadow-sm p-12 text-center">
+              <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-4 border border-border">
                 {activeTab === 'archived' ? (
-                  <Archive size={32} className="text-[#0A8FA8]" />
+                  <Archive size={32} className="text-primary" />
                 ) : (
-                  <Code2 size={32} className="text-[#0A8FA8]" />
+                  <Code2 size={32} className="text-primary" />
                 )}
               </div>
-              <h3 className="text-lg font-semibold text-[#0B1F33] mb-2">
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 {activeTab === 'archived' ? 'No Archived Projects' : 'No Projects Found'}
               </h3>
-              <p className="text-sm text-[#4B6B7A] mb-6 max-w-md mx-auto">
+              <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
                 {search || (statusFilter !== 'all') || (priorityFilter !== 'all')
                   ? 'No projects match your filters. Try adjusting your search criteria.'
                   : activeTab === 'archived' 
@@ -301,7 +301,7 @@ export default function ProjectsListPage() {
               {activeTab === 'active' && !search && statusFilter === 'all' && (
                 <Link
                   href="/tech/projects/new"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096] transition-colors text-sm font-semibold shadow-md hover:shadow-lg"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-semibold shadow-md hover:shadow-lg"
                 >
                   <Plus size={18} />
                   Create Your First Project

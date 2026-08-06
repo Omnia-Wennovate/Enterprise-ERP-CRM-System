@@ -165,7 +165,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 w-[620px] bg-white shadow-2xl z-[110] flex flex-col border-l border-gray-200"
+              className="fixed right-0 top-0 bottom-0 w-[620px] bg-card shadow-2xl z-[110] flex flex-col border-l border-gray-200"
             >
               {isLoading || !lead ? (
                 <div className="flex flex-col items-center justify-center flex-1">
@@ -175,7 +175,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
               ) : (
                 <>
                   {/* ── HEADER ────────────────────────────────────────────── */}
-                  <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white flex-shrink-0">
+                  <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-primary-foreground flex-shrink-0">
                     {/* Top bar */}
                     <div className="flex items-start justify-between px-5 pt-4 pb-3">
                       <div className="min-w-0 flex-1">
@@ -195,7 +195,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                             </button>
                           )}
                         </div>
-                        <h2 className="text-xl font-bold text-white truncate">{lead.lead_name}</h2>
+                        <h2 className="text-xl font-bold text-primary-foreground truncate">{lead.lead_name}</h2>
                         {lead.company && (
                           <p className="text-sm text-teal-200 flex items-center gap-1 mt-0.5">
                             <Building2 className="w-3.5 h-3.5" />
@@ -205,9 +205,9 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                       </div>
                       <button
                         onClick={onClose}
-                        className="p-2 rounded-xl hover:bg-white/20 transition-colors flex-shrink-0 ml-3"
+                        className="p-2 rounded-xl hover:bg-card/20 transition-colors flex-shrink-0 ml-3"
                       >
-                        <X className="w-5 h-5 text-white" />
+                        <X className="w-5 h-5 text-primary-foreground" />
                       </button>
                     </div>
 
@@ -215,19 +215,19 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                     <div className="grid grid-cols-3 divide-x divide-teal-500/40 px-0 border-t border-teal-500/30">
                       <div className="px-5 py-3">
                         <p className="text-[11px] text-teal-300 uppercase tracking-wider">Value</p>
-                        <p className="text-base font-bold text-white">
+                        <p className="text-base font-bold text-primary-foreground">
                           {lead.currency} {Number(lead.estimated_value).toLocaleString()}
                         </p>
                       </div>
                       <div className="px-5 py-3">
                         <p className="text-[11px] text-teal-300 uppercase tracking-wider">Close Date</p>
-                        <p className="text-base font-bold text-white">
+                        <p className="text-base font-bold text-primary-foreground">
                           {lead.expected_close_date ? new Date(lead.expected_close_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
                         </p>
                       </div>
                       <div className="px-5 py-3">
                         <p className="text-[11px] text-teal-300 uppercase tracking-wider">Probability</p>
-                        <p className="text-base font-bold text-white">{lead.probability}%</p>
+                        <p className="text-base font-bold text-primary-foreground">{lead.probability}%</p>
                       </div>
                     </div>
 
@@ -235,20 +235,20 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                     <div className="flex items-center gap-1.5 px-5 py-3 border-t border-teal-500/30 overflow-x-auto">
                       <button
                         onClick={() => setShowEdit(true)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-all whitespace-nowrap"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                       >
                         <Pencil className="w-3.5 h-3.5" /> Edit
                       </button>
                       <button
                         onClick={() => setShowMoveStage(true)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-all whitespace-nowrap"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                       >
                         <ArrowRight className="w-3.5 h-3.5" /> Move Stage
                       </button>
                       {lead.phone && (
                         <a
                           href={`tel:${lead.phone}`}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-all whitespace-nowrap"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                         >
                           <Phone className="w-3.5 h-3.5" /> Call
                         </a>
@@ -256,21 +256,21 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                       {lead.email && (
                         <a
                           href={`mailto:${lead.email}`}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-all whitespace-nowrap"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                         >
                           <Mail className="w-3.5 h-3.5" /> Email
                         </a>
                       )}
                       <button
                         onClick={() => setShowAssign(true)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-all whitespace-nowrap"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                       >
                         <UserCheck className="w-3.5 h-3.5" /> Assign
                       </button>
                       {lead.pipeline_stage === 'won' && (
                         <button
                           onClick={() => setShowConvert(true)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/30 hover:bg-green-500/50 text-white text-xs font-medium transition-all whitespace-nowrap"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/30 hover:bg-green-500/50 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
                         >
                           <FileText className="w-3.5 h-3.5" /> Convert
                         </button>
@@ -291,7 +291,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                   )}
 
                   {/* ── TABS ──────────────────────────────────────────────── */}
-                  <div className="flex border-b border-gray-200 overflow-x-auto flex-shrink-0 bg-white">
+                  <div className="flex border-b border-gray-200 overflow-x-auto flex-shrink-0 bg-card">
                     {TABS.map((tab) => {
                       const Icon = tab.icon
                       return (

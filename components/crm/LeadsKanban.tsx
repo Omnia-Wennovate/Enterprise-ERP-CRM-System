@@ -344,7 +344,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                       onDragStart={(e) => handleDragStart(e, lead)}
                       onDragEnd={handleDragEnd}
                       onClick={() => setSelectedLeadId(lead.id)}
-                      className={`bg-white p-3 rounded-lg border hover:border-teal-300 hover:shadow-md cursor-pointer transition-all select-none ${
+                      className={`bg-card p-3 rounded-lg border hover:border-teal-300 hover:shadow-md cursor-pointer transition-all select-none ${
                         draggedLeadId === lead.id ? 'opacity-40 border-teal-400 shadow-lg scale-95' : 'border-gray-200'
                       }`}
                     >
@@ -425,7 +425,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
       {contextMenu && (
         <div
           ref={menuRef}
-          className="fixed z-[150] bg-white rounded-xl shadow-2xl border border-gray-200 py-1.5 w-52 overflow-hidden"
+          className="fixed z-[150] bg-card rounded-xl shadow-2xl border border-gray-200 py-1.5 w-52 overflow-hidden"
           style={{ left: Math.min(contextMenu.x, window.innerWidth - 220), top: Math.min(contextMenu.y, window.innerHeight - 400) }}
         >
           <div className="px-3 py-2 border-b border-gray-100 mb-1">

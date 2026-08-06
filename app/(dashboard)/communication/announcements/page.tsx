@@ -72,14 +72,14 @@ export default function AnnouncementsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Announcements</h1>
-            <p className="text-slate-600 mt-1">Company-wide announcements and important updates</p>
+            <h1 className="text-3xl font-bold text-foreground">Announcements</h1>
+            <p className="text-muted-foreground mt-1">Company-wide announcements and important updates</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
             <Plus className="w-5 h-5" />
             New Announcement
           </button>
@@ -97,7 +97,7 @@ export default function AnnouncementsPage() {
             <div
               key={announcement.id}
               className={`rounded-lg p-6 transition-colors ${
-                announcement.read ? 'bg-white' : 'bg-teal-50'
+                announcement.read ? 'bg-card' : 'bg-teal-50'
               } shadow hover:shadow-lg cursor-pointer`}
             >
               <div className="flex items-start gap-4">
@@ -108,7 +108,7 @@ export default function AnnouncementsPage() {
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className={`font-semibold ${announcement.read ? 'text-slate-900' : 'text-slate-900 font-bold'}`}>
+                      <h3 className={`font-semibold ${announcement.read ? 'text-foreground' : 'text-foreground font-bold'}`}>
                         {announcement.title}
                       </h3>
                       <p className="text-slate-700 mt-2">{announcement.content}</p>
@@ -117,8 +117,8 @@ export default function AnnouncementsPage() {
                         <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${getPriorityBadgeColor(announcement.priority)}`}>
                           {announcement.priority}
                         </span>
-                        <span className="text-sm text-slate-500">{announcement.author}</span>
-                        <span className="text-sm text-slate-400">{announcement.date}</span>
+                        <span className="text-sm text-muted-foreground">{announcement.author}</span>
+                        <span className="text-sm text-muted-foreground">{announcement.date}</span>
                       </div>
                     </div>
                     {!announcement.read && (

@@ -93,7 +93,7 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="md:hidden p-2 text-[#4B6B7A] hover:text-[#0B1F33] transition-colors"
+        className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <Menu size={24} />
       </button>
@@ -107,32 +107,32 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
           />
 
           {/* Sidebar */}
-          <div className="fixed left-0 top-0 h-screen w-56 bg-[#0B2A3D] border-r border-[#0D3A52] z-50 overflow-y-auto flex flex-col">
+          <div className="fixed left-0 top-0 h-screen w-56 bg-sidebar border-r border-sidebar-border z-50 overflow-y-auto flex flex-col">
             {/* Header */}
-            <div className="h-16 border-b border-[#0D3A52] bg-[#0A2D42] flex items-center justify-between gap-2 px-4 flex-shrink-0">
+            <div className="h-16 border-b border-sidebar-border bg-sidebar-accent flex items-center justify-between gap-2 px-4 flex-shrink-0">
               <div className="flex items-center gap-2 flex-1">
-                <div className="bg-[#0A8FA8] p-1.5 rounded-lg">
-                  <Plane className="text-white" size={20} />
+                <div className="bg-primary p-1.5 rounded-lg">
+                  <Plane className="text-primary-foreground" size={20} />
                 </div>
-                <span className="text-white font-bold text-lg">Omnia Travel</span>
+                <span className="text-primary-foreground font-bold text-lg">Omnia Travel</span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:text-[#94A3B8]"
+                className="text-primary-foreground hover:text-muted-foreground"
               >
                 <X size={20} />
               </button>
             </div>
 
             {/* User Profile */}
-            <div className="px-4 py-3 border-b border-[#0D3A52]">
+            <div className="px-4 py-3 border-b border-sidebar-border">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-[#0A8FA8] rounded-full flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs font-medium flex-shrink-0">
                   {getInitials(profile.full_name)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-medium truncate">{profile.full_name}</p>
-                  <p className="text-xs px-2 py-0.5 rounded-full bg-[#0D3A52] text-[#38BDF8] capitalize inline-block mt-1">
+                  <p className="text-primary-foreground text-sm font-medium truncate">{profile.full_name}</p>
+                  <p className="text-xs px-2 py-0.5 rounded-full bg-sidebar-accent text-accent-foreground capitalize inline-block mt-1">
                     {profile.role.replace(/_/g, ' ')}
                   </p>
                 </div>
@@ -143,7 +143,7 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
             <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-6">
               {nav.map((section) => (
                 <div key={section.title}>
-                  <h3 className="text-xs font-medium uppercase tracking-widest text-[#4B6B7A] px-3 pb-2">
+                  <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground px-3 pb-2">
                     {section.title}
                   </h3>
                   <div className="space-y-1">
@@ -163,10 +163,10 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
                           disabled={item.locked}
                           className={`w-full flex items-center gap-2.5 px-3 py-2 mx-1 rounded-lg text-sm font-medium transition-all duration-150 ${
                             item.locked
-                              ? 'opacity-50 cursor-not-allowed text-[#4B6B7A]'
+                              ? 'opacity-50 cursor-not-allowed text-muted-foreground'
                               : active
-                                ? 'bg-[#0A8FA8] text-white'
-                                : 'text-[#94A3B8] hover:bg-[#0D3A52] hover:text-white'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'text-muted-foreground hover:bg-sidebar-accent hover:text-primary-foreground'
                           }`}
                         >
                           <Icon size={16} className="flex-shrink-0" />
@@ -174,7 +174,7 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
                           {item.locked ? (
                             <Lock size={12} className="flex-shrink-0" />
                           ) : item.badge ? (
-                            <span className="text-xs px-1.5 py-0.5 rounded-full bg-[#EF4444] text-white flex-shrink-0">
+                            <span className="text-xs px-1.5 py-0.5 rounded-full bg-destructive text-primary-foreground flex-shrink-0">
                               {item.badge}
                             </span>
                           ) : null}
@@ -187,8 +187,8 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
             </nav>
 
             {/* Bottom Section */}
-            <div className="border-t border-[#0D3A52] p-2 flex-shrink-0 space-y-1">
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[#94A3B8] hover:bg-[#0D3A52] hover:text-white transition-all duration-150">
+            <div className="border-t border-sidebar-border p-2 flex-shrink-0 space-y-1">
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-primary-foreground transition-all duration-150">
                 <Settings size={16} />
                 <span>Settings</span>
               </button>

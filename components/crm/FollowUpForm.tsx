@@ -149,7 +149,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
                 placeholder="Follow-up title *"
                 value={form.title}
                 onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none"
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none"
                 required
               />
             </div>
@@ -157,7 +157,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               <select
                 value={form.follow_up_type}
                 onChange={(e) => setForm((p) => ({ ...p, follow_up_type: e.target.value as FollowUpType }))}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-white outline-none focus:border-teal-400"
+                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
               >
                 {FOLLOW_UP_TYPES.map((t) => (
                   <option key={t} value={t}>{FOLLOW_UP_TYPE_LABELS[t]}</option>
@@ -166,7 +166,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               <select
                 value={form.priority}
                 onChange={(e) => setForm((p) => ({ ...p, priority: e.target.value as LeadPriority }))}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-white outline-none focus:border-teal-400"
+                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
               >
                 {PRIORITIES.map((p) => (
                   <option key={p} value={p}>{PRIORITY_LABELS[p]}</option>
@@ -177,13 +177,13 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               type="datetime-local"
               value={form.due_date}
               onChange={(e) => setForm((p) => ({ ...p, due_date: e.target.value }))}
-              className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-white outline-none focus:border-teal-400"
+              className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
             />
             {agents.length > 0 && (
               <select
                 value={form.assigned_to}
                 onChange={(e) => setForm((p) => ({ ...p, assigned_to: e.target.value }))}
-                className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-white outline-none focus:border-teal-400"
+                className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
               >
                 <option value="">— Assign to agent —</option>
                 {agents.map((a) => <option key={a.id} value={a.id}>{a.full_name}</option>)}
@@ -194,9 +194,9 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               value={form.description}
               onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
               rows={2}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:border-teal-400 outline-none resize-none"
+              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 outline-none resize-none"
             />
-            <Button type="submit" size="sm" disabled={isSaving} className="w-full bg-teal-600 hover:bg-teal-700 text-white">
+            <Button type="submit" size="sm" disabled={isSaving} className="w-full bg-teal-600 hover:bg-teal-700 text-primary-foreground">
               {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
               Save Follow-up
             </Button>
@@ -228,7 +228,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
                     ? 'bg-gray-50 border-gray-100 opacity-60'
                     : overdue
                     ? 'bg-red-50 border-red-200'
-                    : 'bg-white border-gray-200 hover:border-teal-200'
+                    : 'bg-card border-gray-200 hover:border-teal-200'
                 }`}
               >
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${

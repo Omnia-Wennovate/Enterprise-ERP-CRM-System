@@ -187,30 +187,30 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
   const currentStepIndex = request ? statusSteps.indexOf(request.status) : -1
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : !request ? (
             <div className="text-center py-20">
-              <p className="text-[#4B6B7A]">Feature request not found</p>
-              <Link href="/tech/feature-requests" className="text-[#0A8FA8] hover:underline text-sm mt-2 inline-block">Back to Requests</Link>
+              <p className="text-muted-foreground">Feature request not found</p>
+              <Link href="/tech/feature-requests" className="text-primary hover:underline text-sm mt-2 inline-block">Back to Requests</Link>
             </div>
           ) : (
             <>
               {/* Header */}
               <div className="flex items-start gap-4 mb-6">
                 <Link href="/tech/feature-requests" className="p-2 rounded-lg hover:bg-[#DBEAFE] transition-colors mt-1">
-                  <ArrowLeft size={20} className="text-[#4B6B7A]" />
+                  <ArrowLeft size={20} className="text-muted-foreground" />
                 </Link>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
-                    <h1 className="text-2xl font-bold text-[#0B1F33]">{request.title}</h1>
+                    <h1 className="text-2xl font-bold text-foreground">{request.title}</h1>
                     <span className="text-xs px-2 py-0.5 rounded-full font-medium"
                       style={{ backgroundColor: `${FR_STATUS_COLORS[request.status]}15`, color: FR_STATUS_COLORS[request.status] }}>
                       {FR_STATUS_LABELS[request.status]}
@@ -220,7 +220,7 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                       {PRIORITY_LABELS[request.priority]}
                     </span>
                   </div>
-                  <p className="text-sm text-[#4B6B7A]">
+                  <p className="text-sm text-muted-foreground">
                     From {DEPARTMENT_LABELS[request.department] || request.department} department
                     {request.requested_by_name && ` — by ${request.requested_by_name}`}
                   </p>
@@ -229,8 +229,8 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
 
               {/* Status Timeline */}
               {request.status !== 'rejected' && (
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6 mb-6">
-                  <h3 className="text-sm font-semibold text-[#0B1F33] mb-4">Status Timeline</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6 mb-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Status Timeline</h3>
                   <div className="flex items-center justify-between">
                     {statusSteps.map((step, i) => {
                       const isActive = i <= currentStepIndex
@@ -240,13 +240,13 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                         <div key={step} className="flex items-center flex-1">
                           <div className="flex flex-col items-center">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all ${
-                              isCurrent ? 'border-[#0A8FA8] bg-[#0A8FA8] text-white scale-110' :
-                              isActive ? 'border-[#10B981] bg-[#10B981] text-white' :
-                              'border-[#DBEAFE] bg-white text-[#94A3B8]'
+                              isCurrent ? 'border-primary bg-primary text-primary-foreground scale-110' :
+                              isActive ? 'border-[#10B981] bg-[#10B981] text-primary-foreground' :
+                              'border-border bg-card text-muted-foreground'
                             }`}>
                               {isActive && i < currentStepIndex ? '✓' : i + 1}
                             </div>
-                            <span className={`text-[10px] mt-1 font-medium ${isCurrent ? 'text-[#0A8FA8]' : isActive ? 'text-[#10B981]' : 'text-[#94A3B8]'}`}>
+                            <span className={`text-[10px] mt-1 font-medium ${isCurrent ? 'text-primary' : isActive ? 'text-success' : 'text-muted-foreground'}`}>
                               {FR_STATUS_LABELS[step as keyof typeof FR_STATUS_LABELS]}
                             </span>
                           </div>
@@ -271,9 +271,9 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Description */}
-                  <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                    <h3 className="font-semibold text-[#0B1F33] mb-3">Description</h3>
-                    <p className="text-sm text-[#4B6B7A] whitespace-pre-wrap">{request.description || 'No description provided'}</p>
+                  <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                    <h3 className="font-semibold text-foreground mb-3">Description</h3>
+                    <p className="text-sm text-muted-foreground whitespace-pre-wrap">{request.description || 'No description provided'}</p>
                     {request.business_impact && (
                       <div className="mt-4 p-3 bg-[#FEF3C7] rounded-lg">
                         <p className="text-xs font-medium text-[#92400E]">💡 Business Impact</p>
@@ -284,17 +284,17 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
 
                   {/* Actions for Tech Team */}
                   {isTechTeam && (
-                    <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                      <h3 className="font-semibold text-[#0B1F33] mb-4">Actions</h3>
+                    <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                      <h3 className="font-semibold text-foreground mb-4">Actions</h3>
                       <div className="flex flex-wrap gap-3">
                         {request.status === 'requested' && (
                           <>
                             <button onClick={handleApprove} disabled={saving}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#10B981] text-white rounded-lg hover:bg-[#059669] text-sm font-medium disabled:opacity-50">
+                              className="flex items-center gap-2 px-4 py-2 bg-[#10B981] text-primary-foreground rounded-lg hover:bg-[#059669] text-sm font-medium disabled:opacity-50">
                               <CheckCircle2 size={16} /> Approve
                             </button>
                             <button onClick={() => setShowRejectForm(!showRejectForm)} disabled={saving}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#EF4444] text-white rounded-lg hover:bg-[#DC2626] text-sm font-medium disabled:opacity-50">
+                              className="flex items-center gap-2 px-4 py-2 bg-destructive text-primary-foreground rounded-lg hover:bg-[#DC2626] text-sm font-medium disabled:opacity-50">
                               <XCircle size={16} /> Reject
                             </button>
                           </>
@@ -302,30 +302,30 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                         {request.status === 'approved' && (
                           <>
                             <button onClick={() => handleStatusChange('development')} disabled={saving}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#8B5CF6] text-white rounded-lg hover:bg-[#7C3AED] text-sm font-medium disabled:opacity-50">
+                              className="flex items-center gap-2 px-4 py-2 bg-[#8B5CF6] text-primary-foreground rounded-lg hover:bg-[#7C3AED] text-sm font-medium disabled:opacity-50">
                               <ArrowRight size={16} /> Move to Development
                             </button>
                             <button onClick={openConvertForm} disabled={saving}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096] text-sm font-medium disabled:opacity-50">
+                              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 text-sm font-medium disabled:opacity-50">
                               <Zap size={16} /> Convert to Project Task
                             </button>
                           </>
                         )}
                         {request.status === 'development' && (
                           <button onClick={() => handleStatusChange('testing')} disabled={saving}
-                            className="flex items-center gap-2 px-4 py-2 bg-[#0A8FA8] text-white rounded-lg text-sm font-medium disabled:opacity-50">
+                            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium disabled:opacity-50">
                             <ArrowRight size={16} /> Move to Testing
                           </button>
                         )}
                         {request.status === 'testing' && (
                           <button onClick={() => handleStatusChange('completed')} disabled={saving}
-                            className="flex items-center gap-2 px-4 py-2 bg-[#10B981] text-white rounded-lg text-sm font-medium disabled:opacity-50">
+                            className="flex items-center gap-2 px-4 py-2 bg-[#10B981] text-primary-foreground rounded-lg text-sm font-medium disabled:opacity-50">
                             <CheckCircle2 size={16} /> Mark Completed
                           </button>
                         )}
                         {!request.assigned_developer && request.status !== 'rejected' && request.status !== 'completed' && (
                           <button onClick={() => setShowAssignForm(!showAssignForm)}
-                            className="flex items-center gap-2 px-4 py-2 border border-[#BFDBFE] text-[#4B6B7A] rounded-lg text-sm font-medium hover:bg-[#F0F7FA]">
+                            className="flex items-center gap-2 px-4 py-2 border border-border text-muted-foreground rounded-lg text-sm font-medium hover:bg-background">
                             <User size={16} /> Assign Developer
                           </button>
                         )}
@@ -339,7 +339,7 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                             className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm resize-none" rows={3} />
                           <div className="flex gap-2">
                             <button onClick={handleReject} disabled={saving}
-                              className="text-xs px-3 py-1.5 bg-[#EF4444] text-white rounded-lg">{saving ? 'Rejecting...' : 'Confirm Reject'}</button>
+                              className="text-xs px-3 py-1.5 bg-destructive text-primary-foreground rounded-lg">{saving ? 'Rejecting...' : 'Confirm Reject'}</button>
                             <button onClick={() => setShowRejectForm(false)}
                               className="text-xs px-3 py-1.5 border border-red-200 rounded-lg">Cancel</button>
                           </div>
@@ -348,23 +348,23 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
 
                       {/* Assign Developer Form */}
                       {showAssignForm && (
-                        <div className="mt-4 p-4 bg-[#F0F7FA] rounded-lg space-y-3">
-                          <p className="text-xs font-medium text-[#0B1F33]">Select a developer to assign:</p>
+                        <div className="mt-4 p-4 bg-background rounded-lg space-y-3">
+                          <p className="text-xs font-medium text-foreground">Select a developer to assign:</p>
                           <div className="space-y-2 max-h-60 overflow-y-auto">
                             {developers.map((dev) => (
                               <button key={dev.profile_id} onClick={() => handleAssign(dev.profile_id)}
-                                className="w-full flex items-center justify-between p-3 bg-white rounded-lg border border-[#DBEAFE] hover:border-[#0A8FA8] transition-colors text-left">
+                                className="w-full flex items-center justify-between p-3 bg-card rounded-lg border border-border hover:border-primary transition-colors text-left">
                                 <div className="flex items-center gap-3">
-                                  <div className="w-8 h-8 bg-[#0A8FA8] rounded-full flex items-center justify-center text-white text-xs">
+                                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs">
                                     {dev.first_name?.[0]}{dev.last_name?.[0]}
                                   </div>
                                   <div>
-                                    <p className="text-sm font-medium text-[#0B1F33]">{dev.first_name} {dev.last_name}</p>
-                                    <p className="text-xs text-[#4B6B7A]">{dev.position}</p>
+                                    <p className="text-sm font-medium text-foreground">{dev.first_name} {dev.last_name}</p>
+                                    <p className="text-xs text-muted-foreground">{dev.position}</p>
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-xs text-[#4B6B7A]">{dev.total_items} items</span>
+                                  <span className="text-xs text-muted-foreground">{dev.total_items} items</span>
                                   <span className="w-3 h-3 rounded-full" style={{ backgroundColor: dev.color }}
                                     title={dev.level} />
                                 </div>
@@ -376,17 +376,17 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
 
                       {/* Convert to Project Task Form */}
                       {showConvertForm && (
-                        <div className="mt-4 p-4 bg-[#F0F7FA] rounded-lg space-y-3">
-                          <p className="text-sm font-medium text-[#0B1F33]">Convert to Project Task</p>
+                        <div className="mt-4 p-4 bg-background rounded-lg space-y-3">
+                          <p className="text-sm font-medium text-foreground">Convert to Project Task</p>
                           <div className="space-y-2">
                             <label className="flex items-center gap-2 cursor-pointer">
                               <input type="radio" checked={!createNewProject} onChange={() => setCreateNewProject(false)}
                                 className="accent-[#0A8FA8]" />
-                              <span className="text-sm text-[#0B1F33]">Add to existing project</span>
+                              <span className="text-sm text-foreground">Add to existing project</span>
                             </label>
                             {!createNewProject && (
                               <select value={selectedProjectId} onChange={(e) => setSelectedProjectId(e.target.value)}
-                                className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm bg-white">
+                                className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-card">
                                 <option value="">Select a project...</option>
                                 {projects.map((p) => (
                                   <option key={p.id} value={p.id}>{p.name}</option>
@@ -396,17 +396,17 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                             <label className="flex items-center gap-2 cursor-pointer">
                               <input type="radio" checked={createNewProject} onChange={() => setCreateNewProject(true)}
                                 className="accent-[#0A8FA8]" />
-                              <span className="text-sm text-[#0B1F33]">Create new project from this request</span>
+                              <span className="text-sm text-foreground">Create new project from this request</span>
                             </label>
                           </div>
                           <div className="flex gap-2">
                             <button onClick={handleConvertToTask}
                               disabled={saving || (!createNewProject && !selectedProjectId)}
-                              className="text-xs px-3 py-1.5 bg-[#0A8FA8] text-white rounded-lg disabled:opacity-50">
+                              className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-lg disabled:opacity-50">
                               {saving ? 'Converting...' : 'Convert'}
                             </button>
                             <button onClick={() => setShowConvertForm(false)}
-                              className="text-xs px-3 py-1.5 border border-[#BFDBFE] rounded-lg">Cancel</button>
+                              className="text-xs px-3 py-1.5 border border-border rounded-lg">Cancel</button>
                           </div>
                         </div>
                       )}
@@ -414,42 +414,42 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                   )}
 
                   {/* Comments */}
-                  <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                    <h3 className="font-semibold text-[#0B1F33] mb-4">
+                  <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                    <h3 className="font-semibold text-foreground mb-4">
                       <MessageSquare size={16} className="inline mr-2" />
                       Discussion ({comments.length})
                     </h3>
                     <div className="space-y-3 mb-4">
                       {comments.length > 0 ? comments.map((comment: any) => (
-                        <div key={comment.id} className="flex gap-3 p-3 bg-[#F0F7FA] rounded-lg">
-                          <div className="w-8 h-8 bg-[#0A8FA8] rounded-full flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                        <div key={comment.id} className="flex gap-3 p-3 bg-background rounded-lg">
+                          <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs font-medium flex-shrink-0">
                             {comment.author_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2) || '?'}
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-[#0B1F33]">{comment.author_name || 'Unknown'}</span>
-                              <span className="text-xs text-[#94A3B8]">{new Date(comment.created_at).toLocaleString()}</span>
+                              <span className="text-sm font-medium text-foreground">{comment.author_name || 'Unknown'}</span>
+                              <span className="text-xs text-muted-foreground">{new Date(comment.created_at).toLocaleString()}</span>
                             </div>
-                            <p className="text-sm text-[#4B6B7A] mt-1">{comment.content}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{comment.content}</p>
                           </div>
                         </div>
                       )) : (
-                        <p className="text-sm text-[#4B6B7A] text-center py-6">No comments yet</p>
+                        <p className="text-sm text-muted-foreground text-center py-6">No comments yet</p>
                       )}
                     </div>
                     <div className="flex gap-3">
                       <input type="text" placeholder="Write a comment..." value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
-                        className="flex-1 px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm" />
+                        className="flex-1 px-3 py-2 border border-border rounded-lg text-sm" />
                       <button onClick={handleAddComment} disabled={saving || !newComment.trim()}
-                        className="px-4 py-2 bg-[#0A8FA8] text-white rounded-lg text-sm hover:bg-[#088096] disabled:opacity-50">
+                        className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm hover:bg-primary/90 disabled:opacity-50">
                         Send
                       </button>
                     </div>
                     {request.conversation_id && (
-                      <p className="text-xs text-[#94A3B8] mt-2">
-                        💬 <Link href="/communication" className="text-[#0A8FA8] hover:underline">Open in Communication Center</Link>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        💬 <Link href="/communication" className="text-primary hover:underline">Open in Communication Center</Link>
                       </p>
                     )}
                   </div>
@@ -457,39 +457,39 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
 
                 {/* Sidebar Details */}
                 <div className="space-y-6">
-                  <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                    <h3 className="font-semibold text-[#0B1F33] mb-4">Details</h3>
+                  <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Details</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Department</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5 capitalize">{DEPARTMENT_LABELS[request.department] || request.department}</p>
+                        <p className="text-xs text-muted-foreground">Department</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5 capitalize">{DEPARTMENT_LABELS[request.department] || request.department}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Requested By</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5">{request.requested_by_name || '—'}</p>
+                        <p className="text-xs text-muted-foreground">Requested By</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5">{request.requested_by_name || '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Assigned Developer</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5">{request.assigned_developer_name || 'Unassigned'}</p>
+                        <p className="text-xs text-muted-foreground">Assigned Developer</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5">{request.assigned_developer_name || 'Unassigned'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Approved By</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5">{request.approved_by_name || '—'}</p>
+                        <p className="text-xs text-muted-foreground">Approved By</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5">{request.approved_by_name || '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Requested Date</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5">{request.requested_date ? new Date(request.requested_date).toLocaleDateString() : '—'}</p>
+                        <p className="text-xs text-muted-foreground">Requested Date</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5">{request.requested_date ? new Date(request.requested_date).toLocaleDateString() : '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Due Date</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5">{request.due_date ? new Date(request.due_date).toLocaleDateString() : '—'}</p>
+                        <p className="text-xs text-muted-foreground">Due Date</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5">{request.due_date ? new Date(request.due_date).toLocaleDateString() : '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Estimated Effort</p>
-                        <p className="text-sm font-medium text-[#0B1F33] mt-0.5 capitalize">{request.estimated_effort || '—'}</p>
+                        <p className="text-xs text-muted-foreground">Estimated Effort</p>
+                        <p className="text-sm font-medium text-foreground mt-0.5 capitalize">{request.estimated_effort || '—'}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-[#4B6B7A]">Completion</p>
+                        <p className="text-xs text-muted-foreground">Completion</p>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex-1 h-2 bg-[#DBEAFE] rounded-full overflow-hidden">
                             <div className="h-full rounded-full transition-all" style={{
@@ -497,44 +497,44 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                               backgroundColor: FR_STATUS_COLORS[request.status],
                             }} />
                           </div>
-                          <span className="text-xs font-bold text-[#0B1F33]">{request.completion_percent}%</span>
+                          <span className="text-xs font-bold text-foreground">{request.completion_percent}%</span>
                         </div>
                       </div>
                       {request.converted_project_id && (
                         <div>
-                          <p className="text-xs text-[#4B6B7A]">Linked Project</p>
+                          <p className="text-xs text-muted-foreground">Linked Project</p>
                           <Link href={`/tech/projects/${request.converted_project_id}`}
-                            className="text-sm font-medium text-[#0A8FA8] hover:underline mt-0.5 inline-block">
+                            className="text-sm font-medium text-primary hover:underline mt-0.5 inline-block">
                             View Project →
                           </Link>
                         </div>
                       )}
                       {request.notes && (
                         <div>
-                          <p className="text-xs text-[#4B6B7A]">Notes</p>
-                          <p className="text-sm text-[#0B1F33] mt-0.5">{request.notes}</p>
+                          <p className="text-xs text-muted-foreground">Notes</p>
+                          <p className="text-sm text-foreground mt-0.5">{request.notes}</p>
                         </div>
                       )}
                     </div>
                   </div>
 
                   {/* Attachments */}
-                  <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                    <h3 className="font-semibold text-[#0B1F33] mb-3">
+                  <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                    <h3 className="font-semibold text-foreground mb-3">
                       <Paperclip size={14} className="inline mr-2" />
                       Attachments ({attachments.length})
                     </h3>
                     {attachments.length > 0 ? (
                       <div className="space-y-2">
                         {attachments.map((att: any) => (
-                          <div key={att.id} className="flex items-center gap-2 p-2 bg-[#F0F7FA] rounded-lg">
-                            <Paperclip size={12} className="text-[#4B6B7A]" />
-                            <span className="text-xs text-[#0B1F33] truncate flex-1">{att.file_name}</span>
+                          <div key={att.id} className="flex items-center gap-2 p-2 bg-background rounded-lg">
+                            <Paperclip size={12} className="text-muted-foreground" />
+                            <span className="text-xs text-foreground truncate flex-1">{att.file_name}</span>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p className="text-xs text-[#94A3B8]">No attachments</p>
+                      <p className="text-xs text-muted-foreground">No attachments</p>
                     )}
                   </div>
                 </div>

@@ -74,21 +74,21 @@ export default function AttendancePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Attendance</h1>
-          <p className="text-slate-600 mt-1">Track employee attendance and working hours</p>
+          <h1 className="text-3xl font-bold text-foreground">Attendance</h1>
+          <p className="text-muted-foreground mt-1">Track employee attendance and working hours</p>
         </div>
 
         {/* Date Selector */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <label className="block text-sm font-semibold text-slate-900 mb-2">Select Date</label>
+        <div className="bg-card rounded-lg shadow p-6 mb-6">
+          <label className="block text-sm font-semibold text-foreground mb-2">Select Date</label>
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-600"
+            className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-teal-600"
           />
         </div>
 
@@ -101,32 +101,32 @@ export default function AttendancePage() {
             { label: 'On Leave', count: 0, color: 'bg-blue-50' },
           ].map((stat) => (
             <div key={stat.label} className={`${stat.color} rounded-lg p-4`}>
-              <p className="text-slate-600 text-sm font-medium">{stat.label}</p>
-              <p className="text-2xl font-bold text-slate-900 mt-1">{stat.count}</p>
+              <p className="text-muted-foreground text-sm font-medium">{stat.label}</p>
+              <p className="text-2xl font-bold text-foreground mt-1">{stat.count}</p>
             </div>
           ))}
         </div>
 
         {/* Attendance Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-50 border-b">
+              <thead className="bg-muted/50 border-b">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Employee</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Clock In</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Clock Out</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Total Hours</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-slate-900">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Employee</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Clock In</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Clock Out</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Total Hours</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase text-foreground">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {attendanceRecords.map((record) => (
-                  <tr key={record.id} className="hover:bg-slate-50">
-                    <td className="px-6 py-4 font-semibold text-slate-900">{record.name}</td>
-                    <td className="px-6 py-4 text-slate-600">{record.clockIn}</td>
-                    <td className="px-6 py-4 text-slate-600">{record.clockOut}</td>
-                    <td className="px-6 py-4 text-slate-600">{record.totalHours} hrs</td>
+                  <tr key={record.id} className="hover:bg-muted/50">
+                    <td className="px-6 py-4 font-semibold text-foreground">{record.name}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{record.clockIn}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{record.clockOut}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{record.totalHours} hrs</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(record.status)}

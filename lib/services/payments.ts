@@ -42,7 +42,6 @@ export async function getPaymentsFiltered(
   let query = supabase.from('payments').select('*', { count: 'exact' })
 
   if (method) {
-  const supabase = createClient()
     query = query.eq('payment_method', method)
   }
 
@@ -195,4 +194,107 @@ export async function exportPaymentsToCSV(payments: Payment[]): Promise<string> 
 
   const csv = [headers, ...rows].map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n')
   return csv
+}
+
+// ============================================================================
+// BANK STATEMENT RECONCILIATION
+// ============================================================================
+
+export interface BankTransactionData {
+  transaction_date: string
+  description: string
+  amount: number
+}
+
+export async function uploadBankStatement(transactions: BankTransactionData[]): Promise<{ inserted: number; suggested_matches: number }> {
+  const supabase = await createClient()
+  const user = (await supabase.auth.getUser()).data.user?.id
+
+  // 1. Insert bank transactions
+  const { data: insertedTxs, error: insertError } = await supabase
+    .from('bank_transactions')
+    .insert(
+      transactions.map(t => ({
+        ...t,
+        uploaded_by: user,
+        status: 'unmatched'
+      }))
+    )
+    .select()
+
+  if (insertError) throw new Error(`Failed to insert bank transactions: ${insertError.message}`)
+
+  let suggestedMatchesCount = 0
+
+  // 2. Auto-suggest matches for unmatched payments
+  const { data: unmatchedPayments } = await supabase
+    .from('payments')
+    .select('id, amount, payment_date')
+    .eq('bank_reconciled', false)
+
+  if (unmatchedPayments && insertedTxs) {
+    for (const tx of insertedTxs) {
+      // Find a payment with the exact amount within 3 days
+      const txDate = new Date(tx.transaction_date)
+      const potentialMatches = unmatchedPayments.filter(p => {
+        if (p.amount !== tx.amount) return false
+        const pDate = new Date(p.payment_date)
+        const diffDays = Math.abs((txDate.getTime() - pDate.getTime()) / (1000 * 3600 * 24))
+        return diffDays <= 3
+      })
+
+      if (potentialMatches.length === 1) {
+        // Suggest match
+        await supabase
+          .from('bank_transactions')
+          .update({
+            matched_payment_id: potentialMatches[0].id,
+            status: 'suggested'
+          })
+          .eq('id', tx.id)
+        suggestedMatchesCount++
+      }
+    }
+  }
+
+  return { inserted: insertedTxs?.length || 0, suggested_matches: suggestedMatchesCount }
+}
+
+export async function confirmBankMatch(transactionId: string, paymentId: string, referenceNumber?: string): Promise<void> {
+  const supabase = await createClient()
+
+  // 1. Mark transaction as matched
+  const { error: txError } = await supabase
+    .from('bank_transactions')
+    .update({ status: 'matched', matched_payment_id: paymentId })
+    .eq('id', transactionId)
+
+  if (txError) throw new Error(`Failed to update bank transaction: ${txError.message}`)
+
+  // 2. Mark payment as reconciled
+  const { error: payError } = await supabase
+    .from('payments')
+    .update({
+      bank_reconciled: true,
+      reference_number: referenceNumber || undefined
+    })
+    .eq('id', paymentId)
+
+  if (payError) {
+    // Rollback
+    await supabase.from('bank_transactions').update({ status: 'suggested' }).eq('id', transactionId)
+    throw new Error(`Failed to mark payment as reconciled: ${payError.message}`)
+  }
+}
+
+export async function getUnmatchedBankTransactions() {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('bank_transactions')
+    .select('*')
+    .in('status', ['unmatched', 'suggested'])
+    .order('transaction_date', { ascending: false })
+
+  if (error) throw new Error(`Failed to fetch bank transactions: ${error.message}`)
+  return data || []
 }

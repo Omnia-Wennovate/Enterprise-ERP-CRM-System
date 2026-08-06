@@ -45,11 +45,11 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
   return (
     <div className="space-y-4">
       {/* Header with guardrail notice */}
-      <div className="flex items-start gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
-        <ShieldAlert className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
+      <div className="flex items-start gap-3 p-3 bg-muted/50 border border-border rounded-xl">
+        <ShieldAlert className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
         <div>
           <p className="text-xs font-bold text-slate-700">AI Assistant — Advisory Only</p>
-          <p className="text-[11px] text-slate-500 mt-0.5">
+          <p className="text-[11px] text-muted-foreground mt-0.5">
             All AI outputs are suggestions for officer review. The AI does not auto-submit, change application status, or make final decisions. Officers must confirm all recommendations.
           </p>
         </div>
@@ -64,7 +64,7 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
               key={action.id}
               onClick={() => runAction(action.id)}
               disabled={loading}
-              className={`flex items-center gap-2 px-4 py-3 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 ${action.bg} transition-colors disabled:opacity-50`}
+              className={`flex items-center gap-2 px-4 py-3 border border-border rounded-xl text-sm font-medium text-slate-700 ${action.bg} transition-colors disabled:opacity-50`}
             >
               {loading && activeAction === action.id ? (
                 <Loader2 className="w-4 h-4 animate-spin text-teal-600" />
@@ -87,12 +87,12 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
 
       {/* Result */}
       {result && (
-        <div className="border border-slate-200 rounded-xl overflow-hidden">
+        <div className="border border-border rounded-xl overflow-hidden">
           {/* AI Badge */}
-          <div className="px-4 py-2 bg-gradient-to-r from-violet-50 to-blue-50 border-b border-slate-200 flex items-center gap-2">
+          <div className="px-4 py-2 bg-gradient-to-r from-violet-50 to-blue-50 border-b border-border flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-violet-500" />
             <span className="text-xs font-bold text-violet-700">AI-Generated Content</span>
-            <span className="text-[10px] text-slate-400 ml-auto">Requires officer review</span>
+            <span className="text-[10px] text-muted-foreground ml-auto">Requires officer review</span>
           </div>
 
           {/* Content */}
@@ -101,9 +101,9 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
 
             {/* Confidence/Probability */}
             {result.confidence !== undefined && result.type === 'probability' && (
-              <div className="mt-4 p-3 bg-slate-50 rounded-lg">
+              <div className="mt-4 p-3 bg-muted/50 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-slate-600">Estimated Probability</span>
+                  <span className="text-xs font-semibold text-muted-foreground">Estimated Probability</span>
                   <span className={`text-lg font-bold ${result.confidence >= 70 ? 'text-emerald-600' : result.confidence >= 40 ? 'text-amber-600' : 'text-red-600'}`}>
                     {result.confidence}%
                   </span>

@@ -86,7 +86,7 @@ export default function ReportsPage() {
   ]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
@@ -94,12 +94,12 @@ export default function ReportsPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Marketing Reports</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">Comprehensive analytics and performance insights</p>
+              <h1 className="text-2xl font-bold text-foreground">Marketing Reports</h1>
+              <p className="text-sm text-muted-foreground mt-1">Comprehensive analytics and performance insights</p>
             </div>
-            <div className="flex items-center gap-2 bg-white border border-[#DBEAFE] rounded-lg p-1">
+            <div className="flex items-center gap-2 bg-card border border-border rounded-lg p-1">
               {(['7d', '30d', '90d'] as const).map(p => (
-                <button key={p} onClick={() => setActivePeriod(p)} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activePeriod === p ? 'bg-[#0A8FA8] text-white' : 'text-[#4B6B7A] hover:text-[#0B1F33]'}`}>
+                <button key={p} onClick={() => setActivePeriod(p)} className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activePeriod === p ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
                   {p === '7d' ? '7 Days' : p === '30d' ? '30 Days' : '90 Days'}
                 </button>
               ))}
@@ -107,7 +107,7 @@ export default function ReportsPage() {
           </div>
 
           {isLoading ? (
-            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-[#0A8FA8]" size={48} /></div>
+            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-primary" size={48} /></div>
           ) : (
             <>
               {/* KPI Grid */}
@@ -115,22 +115,22 @@ export default function ReportsPage() {
                 {kpiCards.map((card, i) => {
                   const Icon = card.icon
                   return (
-                    <div key={i} className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-5 hover:shadow-md transition-all">
+                    <div key={i} className="bg-card rounded-xl border border-border shadow-sm p-5 hover:shadow-md transition-all">
                       <div className="w-1 h-8 rounded-full mb-3 absolute" style={{ backgroundColor: card.color }} />
                       <div className="flex items-start justify-between mb-1">
                         <div className="flex-1">
-                          <p className="text-xs text-[#4B6B7A] font-medium">{card.label}</p>
-                          <p className="text-xl font-bold text-[#0B1F33] mt-1">{card.value}</p>
-                          <p className="text-[10px] text-[#94A3B8] mt-1">{card.sub}</p>
+                          <p className="text-xs text-muted-foreground font-medium">{card.label}</p>
+                          <p className="text-xl font-bold text-foreground mt-1">{card.value}</p>
+                          <p className="text-[10px] text-muted-foreground mt-1">{card.sub}</p>
                         </div>
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${card.color}12` }}>
                           <Icon size={18} style={{ color: card.color }} />
                         </div>
                       </div>
                       <div className="flex items-center gap-1 mt-2">
-                        <ArrowUpRight size={12} className="text-[#10B981]" />
-                        <span className="text-xs text-[#10B981] font-medium">+{Math.floor(Math.random() * 15) + 3}%</span>
-                        <span className="text-[10px] text-[#94A3B8]">vs last period</span>
+                        <ArrowUpRight size={12} className="text-success" />
+                        <span className="text-xs text-success font-medium">+{Math.floor(Math.random() * 15) + 3}%</span>
+                        <span className="text-[10px] text-muted-foreground">vs last period</span>
                       </div>
                     </div>
                   )
@@ -140,8 +140,8 @@ export default function ReportsPage() {
               {/* Row 1: Monthly Posts + Platform Followers */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 {/* Monthly Posts Bar Chart */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="text-sm font-semibold text-[#0B1F33] mb-4">Posts Published (Last 6 Months)</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Posts Published (Last 6 Months)</h3>
                   {monthlyPosts.length > 0 ? (
                     <ResponsiveContainer width="100%" height={220}>
                       <BarChart data={monthlyPosts} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
@@ -153,13 +153,13 @@ export default function ReportsPage() {
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-sm text-[#4B6B7A]">No post data yet</div>
+                    <div className="flex items-center justify-center h-48 text-sm text-muted-foreground">No post data yet</div>
                   )}
                 </div>
 
                 {/* Platform Followers Breakdown */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="text-sm font-semibold text-[#0B1F33] mb-4">Followers by Platform</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Followers by Platform</h3>
                   {platformMetrics.length > 0 ? (
                     <div className="flex items-center gap-6">
                       <ResponsiveContainer width={160} height={160}>
@@ -181,10 +181,10 @@ export default function ReportsPage() {
                               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between text-xs">
-                                  <span className="text-[#0B1F33] font-medium capitalize">{p.platform}</span>
-                                  <span className="text-[#4B6B7A]">{pct}%</span>
+                                  <span className="text-foreground font-medium capitalize">{p.platform}</span>
+                                  <span className="text-muted-foreground">{pct}%</span>
                                 </div>
-                                <div className="w-full h-1.5 bg-[#F0F7FA] rounded-full mt-1">
+                                <div className="w-full h-1.5 bg-background rounded-full mt-1">
                                   <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />
                                 </div>
                               </div>
@@ -194,7 +194,7 @@ export default function ReportsPage() {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-sm text-[#4B6B7A]">No platform data yet</div>
+                    <div className="flex items-center justify-center h-48 text-sm text-muted-foreground">No platform data yet</div>
                   )}
                 </div>
               </div>
@@ -202,8 +202,8 @@ export default function ReportsPage() {
               {/* Row 2: Campaign ROI + Leads by Platform */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 {/* Campaign ROI Bar Chart */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="text-sm font-semibold text-[#0B1F33] mb-4">Campaign Performance (ROI & Leads)</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Campaign Performance (ROI & Leads)</h3>
                   {campaignROI.length > 0 ? (
                     <ResponsiveContainer width="100%" height={220}>
                       <BarChart data={campaignROI} margin={{ top: 5, right: 5, bottom: 20, left: -20 }}>
@@ -217,13 +217,13 @@ export default function ReportsPage() {
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-sm text-[#4B6B7A]">No campaign data yet</div>
+                    <div className="flex items-center justify-center h-48 text-sm text-muted-foreground">No campaign data yet</div>
                   )}
                 </div>
 
                 {/* Leads by Platform Pie */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="text-sm font-semibold text-[#0B1F33] mb-4">Leads by Platform</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="text-sm font-semibold text-foreground mb-4">Leads by Platform</h3>
                   {leadsByPlatform.length > 0 ? (
                     <div className="flex items-center gap-6">
                       <ResponsiveContainer width={160} height={160}>
@@ -242,8 +242,8 @@ export default function ReportsPage() {
                             <div key={i} className="flex items-center gap-2">
                               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />
                               <div className="flex-1 flex items-center justify-between text-xs">
-                                <span className="text-[#0B1F33] font-medium capitalize">{p.name}</span>
-                                <span className="text-[#4B6B7A]">{p.value} ({pct}%)</span>
+                                <span className="text-foreground font-medium capitalize">{p.name}</span>
+                                <span className="text-muted-foreground">{p.value} ({pct}%)</span>
                               </div>
                             </div>
                           )
@@ -251,27 +251,27 @@ export default function ReportsPage() {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-sm text-[#4B6B7A]">No lead data yet</div>
+                    <div className="flex items-center justify-center h-48 text-sm text-muted-foreground">No lead data yet</div>
                   )}
                 </div>
               </div>
 
               {/* Budget Summary */}
-              <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                <h3 className="text-sm font-semibold text-[#0B1F33] mb-6">Marketing Budget Overview</h3>
+              <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                <h3 className="text-sm font-semibold text-foreground mb-6">Marketing Budget Overview</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {[
                     { label: 'Total Ad Budget', value: budgetData.adBudget, color: '#3B82F6', sub: 'Across all ad platforms' },
                     { label: 'Total Ad Spend', value: budgetData.adSpend, color: '#EF4444', sub: `${budgetData.adBudget > 0 ? Math.round((budgetData.adSpend / budgetData.adBudget) * 100) : 0}% used` },
                     { label: 'Influencer Spend', value: budgetData.influencerSpend, color: '#8B5CF6', sub: 'Paid influencer contracts' },
                   ].map((b, i) => (
-                    <div key={i} className="p-4 rounded-xl border border-[#DBEAFE] bg-[#F8FAFC]">
+                    <div key={i} className="p-4 rounded-xl border border-border bg-muted">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: b.color }} />
-                        <p className="text-xs font-medium text-[#4B6B7A]">{b.label}</p>
+                        <p className="text-xs font-medium text-muted-foreground">{b.label}</p>
                       </div>
-                      <p className="text-2xl font-bold text-[#0B1F33]">${b.value.toLocaleString()}</p>
-                      <p className="text-xs text-[#94A3B8] mt-1">{b.sub}</p>
+                      <p className="text-2xl font-bold text-foreground">${b.value.toLocaleString()}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{b.sub}</p>
                     </div>
                   ))}
                 </div>
@@ -279,16 +279,16 @@ export default function ReportsPage() {
                 {/* Budget spend bar */}
                 <div className="mt-6">
                   <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-[#4B6B7A] font-medium">Overall Marketing Budget Utilization</span>
-                    <span className="font-bold text-[#0B1F33]">${totalSpend.toLocaleString()} / ${totalBudget.toLocaleString()}</span>
+                    <span className="text-muted-foreground font-medium">Overall Marketing Budget Utilization</span>
+                    <span className="font-bold text-foreground">${totalSpend.toLocaleString()} / ${totalBudget.toLocaleString()}</span>
                   </div>
-                  <div className="w-full h-4 bg-[#F0F7FA] rounded-full overflow-hidden">
+                  <div className="w-full h-4 bg-background rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all duration-700 ${totalBudget > 0 && (totalSpend / totalBudget) > 0.9 ? 'bg-[#EF4444]' : totalBudget > 0 && (totalSpend / totalBudget) > 0.7 ? 'bg-[#F59E0B]' : 'bg-gradient-to-r from-[#0A8FA8] to-[#06B6D4]'}`}
+                      className={`h-full rounded-full transition-all duration-700 ${totalBudget > 0 && (totalSpend / totalBudget) > 0.9 ? 'bg-destructive' : totalBudget > 0 && (totalSpend / totalBudget) > 0.7 ? 'bg-[#F59E0B]' : 'bg-gradient-to-r from-[#0A8FA8] to-[#06B6D4]'}`}
                       style={{ width: `${totalBudget > 0 ? Math.min(100, (totalSpend / totalBudget) * 100) : 0}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between mt-1 text-[10px] text-[#94A3B8]">
+                  <div className="flex items-center justify-between mt-1 text-[10px] text-muted-foreground">
                     <span>$0</span>
                     <span>${totalBudget.toLocaleString()}</span>
                   </div>

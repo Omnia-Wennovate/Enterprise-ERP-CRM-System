@@ -55,7 +55,7 @@ export function ItineraryTimeline({
       <div className="absolute left-[23px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-teal-400 via-teal-300 to-slate-200 hidden md:block" />
 
       {/* Sticky Day Navigation */}
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-thin sticky top-0 z-10 bg-[#F0F7FA] pt-1">
+      <div className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-thin sticky top-0 z-10 bg-background pt-1">
         {days.map(day => (
           <button
             key={day.id}
@@ -63,10 +63,10 @@ export function ItineraryTimeline({
               setExpandedDays(prev => new Set(prev).add(day.id))
               document.getElementById(`day-${day.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }}
-            className="flex-shrink-0 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:bg-teal-50 hover:border-teal-200 hover:text-teal-700 transition-all whitespace-nowrap"
+            className="flex-shrink-0 px-3 py-1.5 bg-card border border-border rounded-lg text-xs font-semibold text-slate-700 hover:bg-teal-50 hover:border-teal-200 hover:text-teal-700 transition-all whitespace-nowrap"
           >
             Day {day.day_number}
-            {day.city && <span className="text-slate-400 font-normal ml-1">· {day.city}</span>}
+            {day.city && <span className="text-muted-foreground font-normal ml-1">· {day.city}</span>}
           </button>
         ))}
         {!readOnly && (
@@ -95,11 +95,11 @@ export function ItineraryTimeline({
           >
             {/* Timeline dot */}
             <div className="hidden md:flex absolute left-0 top-4 w-[46px] items-center justify-center">
-              <div className={`w-5 h-5 rounded-full border-[3px] ${isExpanded ? 'bg-teal-500 border-teal-200' : 'bg-white border-slate-300'} transition-colors shadow-sm`} />
+              <div className={`w-5 h-5 rounded-full border-[3px] ${isExpanded ? 'bg-teal-500 border-teal-200' : 'bg-card border-border'} transition-colors shadow-sm`} />
             </div>
 
             {/* Day Card */}
-            <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div className="bg-card rounded-xl border border-border/80 overflow-hidden shadow-sm hover:shadow-md transition-all">
               {/* Day Header */}
               <div
                 className="flex items-center gap-3 px-5 py-4 cursor-pointer select-none"
@@ -118,10 +118,10 @@ export function ItineraryTimeline({
                         onBlur={() => setEditingDayTitle(null)}
                         onKeyDown={e => e.key === 'Enter' && setEditingDayTitle(null)}
                         onClick={e => e.stopPropagation()}
-                        className="text-sm font-semibold text-slate-900 border-b border-teal-400 outline-none bg-transparent px-1"
+                        className="text-sm font-semibold text-foreground border-b border-teal-400 outline-none bg-transparent px-1"
                       />
                     ) : (
-                      <h3 className="text-sm font-semibold text-slate-900 truncate">
+                      <h3 className="text-sm font-semibold text-foreground truncate">
                         {day.title || `Day ${day.day_number}`}
                       </h3>
                     )}
@@ -134,7 +134,7 @@ export function ItineraryTimeline({
                       </button>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                  <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
                     {day.date && (
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
@@ -151,7 +151,7 @@ export function ItineraryTimeline({
                         <Sun className="w-3 h-3" /> {day.weather_note}
                       </span>
                     )}
-                    <span className="text-slate-400">{items.length} {items.length === 1 ? 'activity' : 'activities'}</span>
+                    <span className="text-muted-foreground">{items.length} {items.length === 1 ? 'activity' : 'activities'}</span>
                   </div>
                 </div>
 
@@ -164,14 +164,14 @@ export function ItineraryTimeline({
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   )}
-                  {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+                  {isExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
                 </div>
               </div>
 
               {/* Day description */}
               {day.description && isExpanded && (
                 <div className="px-5 pb-2">
-                  <p className="text-xs text-slate-500 italic">{day.description}</p>
+                  <p className="text-xs text-muted-foreground italic">{day.description}</p>
                 </div>
               )}
 
@@ -187,8 +187,8 @@ export function ItineraryTimeline({
                   >
                     <div className="px-5 pb-4 space-y-3">
                       {items.length === 0 ? (
-                        <div className="text-center py-6 border-2 border-dashed border-slate-200 rounded-xl">
-                          <p className="text-sm text-slate-400">No activities yet</p>
+                        <div className="text-center py-6 border-2 border-dashed border-border rounded-xl">
+                          <p className="text-sm text-muted-foreground">No activities yet</p>
                           {!readOnly && (
                             <button
                               onClick={() => setEditingItem({ item: null, dayId: day.id })}
@@ -212,13 +212,13 @@ export function ItineraryTimeline({
                                 <div className="absolute -left-2 top-1/2 -translate-y-1/2 flex flex-col gap-0.5">
                                   {itemIndex > 0 && (
                                     <button onClick={() => handleMoveItem(day.id, item.id, 'up')}
-                                      className="p-0.5 bg-white border border-slate-200 rounded text-slate-400 hover:text-teal-600 shadow-sm">
+                                      className="p-0.5 bg-card border border-border rounded text-muted-foreground hover:text-teal-600 shadow-sm">
                                       <ChevronUp className="w-3 h-3" />
                                     </button>
                                   )}
                                   {itemIndex < items.length - 1 && (
                                     <button onClick={() => handleMoveItem(day.id, item.id, 'down')}
-                                      className="p-0.5 bg-white border border-slate-200 rounded text-slate-400 hover:text-teal-600 shadow-sm">
+                                      className="p-0.5 bg-card border border-border rounded text-muted-foreground hover:text-teal-600 shadow-sm">
                                       <ChevronDown className="w-3 h-3" />
                                     </button>
                                   )}
@@ -233,7 +233,7 @@ export function ItineraryTimeline({
                       {!readOnly && (
                         <button
                           onClick={() => setEditingItem({ item: null, dayId: day.id })}
-                          className="w-full flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-slate-200 rounded-xl text-sm font-medium text-slate-500 hover:text-teal-600 hover:border-teal-300 hover:bg-teal-50/50 transition-all"
+                          className="w-full flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-border rounded-xl text-sm font-medium text-muted-foreground hover:text-teal-600 hover:border-teal-300 hover:bg-teal-50/50 transition-all"
                         >
                           <Plus className="w-4 h-4" /> Add Activity
                         </button>
@@ -252,7 +252,7 @@ export function ItineraryTimeline({
         <div className="md:pl-12">
           <button
             onClick={onAddDay}
-            className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-slate-300 rounded-xl text-sm font-semibold text-slate-500 hover:text-teal-600 hover:border-teal-300 hover:bg-teal-50/30 transition-all"
+            className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-border rounded-xl text-sm font-semibold text-muted-foreground hover:text-teal-600 hover:border-teal-300 hover:bg-teal-50/30 transition-all"
           >
             <Plus className="w-4 h-4" /> Add Day {days.length + 1}
           </button>

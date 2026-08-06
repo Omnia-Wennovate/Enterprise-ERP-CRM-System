@@ -91,7 +91,7 @@ export function CustomersTable() {
 
       {/* Detail Panel */}
       {selectedCustomer && (
-        <div className="w-80 bg-white border-l border-gray-200 p-4 overflow-y-auto">
+        <div className="w-80 bg-card border-l border-gray-200 p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-900">Customer Details</h3>
             <Button variant="ghost" size="icon" onClick={() => setSelectedCustomer(null)}>

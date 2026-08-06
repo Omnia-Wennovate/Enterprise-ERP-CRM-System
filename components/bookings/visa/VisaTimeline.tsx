@@ -69,11 +69,11 @@ export function VisaTimeline({ events }: VisaTimelineProps) {
   if (events.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-          <Clock className="w-6 h-6 text-slate-400" />
+        <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-3">
+          <Clock className="w-6 h-6 text-muted-foreground" />
         </div>
-        <p className="text-sm font-medium text-slate-600">No timeline events yet</p>
-        <p className="text-xs text-slate-400 mt-1">Events will appear here as the application progresses</p>
+        <p className="text-sm font-medium text-muted-foreground">No timeline events yet</p>
+        <p className="text-xs text-muted-foreground mt-1">Events will appear here as the application progresses</p>
       </div>
     )
   }
@@ -93,7 +93,7 @@ export function VisaTimeline({ events }: VisaTimelineProps) {
             <div key={event.id} className="relative flex items-start gap-4 py-4">
               {/* Icon node */}
               <div
-                className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full border-2 bg-white flex-shrink-0"
+                className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full border-2 bg-card flex-shrink-0"
                 style={{ borderColor: color }}
               >
                 <Icon className="w-4 h-4" style={{ color }} />
@@ -102,10 +102,10 @@ export function VisaTimeline({ events }: VisaTimelineProps) {
               {/* Content */}
               <div className="flex-1 min-w-0 pt-1">
                 <div className="flex items-center justify-between gap-4">
-                  <p className={`text-sm font-semibold ${isFirst ? 'text-slate-900' : 'text-slate-700'}`}>
+                  <p className={`text-sm font-semibold ${isFirst ? 'text-foreground' : 'text-slate-700'}`}>
                     {event.title}
                   </p>
-                  <time className="text-xs text-slate-400 whitespace-nowrap">
+                  <time className="text-xs text-muted-foreground whitespace-nowrap">
                     {new Date(event.created_at).toLocaleDateString('en-US', {
                       month: 'short', day: 'numeric', year: 'numeric',
                       hour: '2-digit', minute: '2-digit'
@@ -113,10 +113,10 @@ export function VisaTimeline({ events }: VisaTimelineProps) {
                   </time>
                 </div>
                 {event.description && (
-                  <p className="text-xs text-slate-500 mt-1">{event.description}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{event.description}</p>
                 )}
                 {event.performed_by_name && (
-                  <p className="text-[11px] text-slate-400 mt-1">by {event.performed_by_name}</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">by {event.performed_by_name}</p>
                 )}
               </div>
             </div>

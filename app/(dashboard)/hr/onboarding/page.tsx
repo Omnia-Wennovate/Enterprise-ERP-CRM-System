@@ -50,14 +50,14 @@ export default function OnboardingPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Onboarding</h1>
-            <p className="text-slate-600 mt-1">Track new employee onboarding progress</p>
+            <h1 className="text-3xl font-bold text-foreground">Onboarding</h1>
+            <p className="text-muted-foreground mt-1">Track new employee onboarding progress</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
             <Plus className="w-5 h-5" />
             Start Onboarding
           </button>
@@ -66,36 +66,36 @@ export default function OnboardingPage() {
         {/* Categories */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           {onboardingCategories.map((cat) => (
-            <div key={cat.label} className="bg-white rounded-lg shadow p-6">
-              <p className="text-slate-600 text-sm font-medium">{cat.label}</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">{cat.count}</p>
-              <p className="text-slate-500 text-xs mt-2">tasks</p>
+            <div key={cat.label} className="bg-card rounded-lg shadow p-6">
+              <p className="text-muted-foreground text-sm font-medium">{cat.label}</p>
+              <p className="text-3xl font-bold text-foreground mt-2">{cat.count}</p>
+              <p className="text-muted-foreground text-xs mt-2">tasks</p>
             </div>
           ))}
         </div>
 
         {/* Active Onboardings */}
         <div className="space-y-6">
-          <h2 className="text-xl font-semibold text-slate-900">Active Onboardings</h2>
+          <h2 className="text-xl font-semibold text-foreground">Active Onboardings</h2>
           {loading ? (
-            <div className="text-center text-slate-600">Loading...</div>
+            <div className="text-center text-muted-foreground">Loading...</div>
           ) : (
             employees.map((emp) => (
-              <div key={emp.id} className="bg-white rounded-lg shadow p-6">
+              <div key={emp.id} className="bg-card rounded-lg shadow p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
                       <User className="w-6 h-6 text-teal-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900">{emp.name}</h3>
-                      <p className="text-slate-600 text-sm">{emp.position}</p>
-                      <p className="text-slate-500 text-xs mt-1">Started {new Date(emp.startDate).toLocaleDateString()}</p>
+                      <h3 className="font-semibold text-foreground">{emp.name}</h3>
+                      <p className="text-muted-foreground text-sm">{emp.position}</p>
+                      <p className="text-muted-foreground text-xs mt-1">Started {new Date(emp.startDate).toLocaleDateString()}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-teal-600">{emp.progress}%</p>
-                    <p className="text-slate-600 text-sm">Complete</p>
+                    <p className="text-muted-foreground text-sm">Complete</p>
                   </div>
                 </div>
 
@@ -107,13 +107,13 @@ export default function OnboardingPage() {
                 {/* Tasks */}
                 <div className="grid grid-cols-2 gap-4">
                   {emp.tasks.map((task, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded">
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-muted/50 rounded">
                       {task.completed ? (
                         <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                       ) : (
-                        <Clock className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
+                        <Clock className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                       )}
-                      <span className={task.completed ? 'text-slate-600 line-through' : 'text-slate-900'}>{task.label}</span>
+                      <span className={task.completed ? 'text-muted-foreground line-through' : 'text-foreground'}>{task.label}</span>
                     </div>
                   ))}
                 </div>

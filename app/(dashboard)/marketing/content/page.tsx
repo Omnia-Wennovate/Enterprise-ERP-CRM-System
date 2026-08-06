@@ -97,17 +97,17 @@ export default function ContentPage() {
   const contentTypes = ['image', 'video', 'carousel', 'reel', 'story', 'short', 'live', 'text'] as const
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Content Management</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">Create, manage, and track all social media content</p>
+              <h1 className="text-2xl font-bold text-foreground">Content Management</h1>
+              <p className="text-sm text-muted-foreground mt-1">Create, manage, and track all social media content</p>
             </div>
-            <button onClick={() => setShowModal(true)} className="flex items-center gap-2 px-4 py-2 bg-[#0A8FA8] text-white text-sm font-medium rounded-lg hover:bg-[#088096]">
+            <button onClick={() => setShowModal(true)} className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90">
               <Plus size={16} /> Create Post
             </button>
           </div>
@@ -122,7 +122,7 @@ export default function ContentPage() {
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
-                    activeTab === tab.key ? 'bg-[#0A8FA8] text-white' : 'bg-white text-[#4B6B7A] border border-[#DBEAFE] hover:border-[#0A8FA8]'
+                    activeTab === tab.key ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground border border-border hover:border-primary'
                   }`}
                 >
                   <Icon size={14} /> {tab.label} <span className="text-xs opacity-75">({count})</span>
@@ -132,53 +132,53 @@ export default function ContentPage() {
           </div>
 
           {isLoading ? (
-            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-[#0A8FA8]" size={48} /></div>
+            <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-primary" size={48} /></div>
           ) : filteredPosts.length === 0 ? (
-            <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-12 text-center">
-              <p className="text-[#4B6B7A]">No posts found for this filter</p>
+            <div className="bg-card rounded-xl border border-border shadow-sm p-12 text-center">
+              <p className="text-muted-foreground">No posts found for this filter</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredPosts.map(post => {
                 const statusColor = getStatusColor(post.status)
                 return (
-                  <div key={post.id} className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm hover:shadow-md transition-all overflow-hidden">
+                  <div key={post.id} className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md transition-all overflow-hidden">
                     <div className="h-1.5" style={{ backgroundColor: statusColor }} />
                     <div className="p-5">
                       <div className="flex items-start justify-between mb-3">
                         <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: `${statusColor}15`, color: statusColor }}>
                           {post.status.replace(/_/g, ' ')}
                         </span>
-                        <span className="text-xs px-2 py-1 rounded-full bg-[#F0F7FA] text-[#4B6B7A] capitalize">{post.content_type}</span>
+                        <span className="text-xs px-2 py-1 rounded-full bg-background text-muted-foreground capitalize">{post.content_type}</span>
                       </div>
-                      <p className="text-sm text-[#0B1F33] font-medium mb-3 line-clamp-3">{post.caption || 'No caption'}</p>
+                      <p className="text-sm text-foreground font-medium mb-3 line-clamp-3">{post.caption || 'No caption'}</p>
                       {post.is_top_performing && (
-                        <div className="flex items-center gap-1 mb-3 text-xs text-[#F59E0B] font-medium">⭐ Top Performing</div>
+                        <div className="flex items-center gap-1 mb-3 text-xs text-warning font-medium">⭐ Top Performing</div>
                       )}
                       <div className="grid grid-cols-4 gap-2 mb-4">
                         <div className="text-center">
-                          <Eye size={12} className="mx-auto text-[#4B6B7A] mb-1" />
-                          <p className="text-xs font-medium text-[#0B1F33]">{post.reach_count?.toLocaleString() || 0}</p>
+                          <Eye size={12} className="mx-auto text-muted-foreground mb-1" />
+                          <p className="text-xs font-medium text-foreground">{post.reach_count?.toLocaleString() || 0}</p>
                         </div>
                         <div className="text-center">
-                          <Heart size={12} className="mx-auto text-[#4B6B7A] mb-1" />
-                          <p className="text-xs font-medium text-[#0B1F33]">{post.likes_count?.toLocaleString() || 0}</p>
+                          <Heart size={12} className="mx-auto text-muted-foreground mb-1" />
+                          <p className="text-xs font-medium text-foreground">{post.likes_count?.toLocaleString() || 0}</p>
                         </div>
                         <div className="text-center">
-                          <Share2 size={12} className="mx-auto text-[#4B6B7A] mb-1" />
-                          <p className="text-xs font-medium text-[#0B1F33]">{post.shares_count?.toLocaleString() || 0}</p>
+                          <Share2 size={12} className="mx-auto text-muted-foreground mb-1" />
+                          <p className="text-xs font-medium text-foreground">{post.shares_count?.toLocaleString() || 0}</p>
                         </div>
                         <div className="text-center">
-                          <MousePointerClick size={12} className="mx-auto text-[#4B6B7A] mb-1" />
-                          <p className="text-xs font-medium text-[#0B1F33]">{post.clicks_count?.toLocaleString() || 0}</p>
+                          <MousePointerClick size={12} className="mx-auto text-muted-foreground mb-1" />
+                          <p className="text-xs font-medium text-foreground">{post.clicks_count?.toLocaleString() || 0}</p>
                         </div>
                       </div>
-                      <div className="flex flex-wrap gap-2 pt-3 border-t border-[#DBEAFE]">
+                      <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
                         {post.status === 'draft' && (
-                          <button onClick={() => handleAction(post.id, 'submit')} className="text-xs px-3 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] rounded-lg hover:bg-[#F59E0B]/20">Submit</button>
+                          <button onClick={() => handleAction(post.id, 'submit')} className="text-xs px-3 py-1.5 bg-[#F59E0B]/10 text-warning rounded-lg hover:bg-[#F59E0B]/20">Submit</button>
                         )}
                         {post.status === 'pending_approval' && (
-                          <button onClick={() => handleAction(post.id, 'approve')} className="text-xs px-3 py-1.5 bg-[#10B981]/10 text-[#10B981] rounded-lg hover:bg-[#10B981]/20">Approve</button>
+                          <button onClick={() => handleAction(post.id, 'approve')} className="text-xs px-3 py-1.5 bg-[#10B981]/10 text-success rounded-lg hover:bg-[#10B981]/20">Approve</button>
                         )}
                         {(post.status === 'approved' || post.status === 'scheduled') && (
                           <button onClick={() => handleAction(post.id, 'publish')} className="text-xs px-3 py-1.5 bg-[#22C55E]/10 text-[#22C55E] rounded-lg hover:bg-[#22C55E]/20">Publish</button>
@@ -186,7 +186,7 @@ export default function ContentPage() {
                         {post.status === 'published' && (
                           <button onClick={() => handleAction(post.id, 'archive')} className="text-xs px-3 py-1.5 bg-[#9CA3AF]/10 text-[#9CA3AF] rounded-lg hover:bg-[#9CA3AF]/20">Archive</button>
                         )}
-                        <button onClick={() => handleAction(post.id, 'delete')} className="text-xs px-3 py-1.5 bg-[#EF4444]/10 text-[#EF4444] rounded-lg hover:bg-[#EF4444]/20 ml-auto">Delete</button>
+                        <button onClick={() => handleAction(post.id, 'delete')} className="text-xs px-3 py-1.5 bg-destructive/10 text-destructive rounded-lg hover:bg-destructive/20 ml-auto">Delete</button>
                       </div>
                     </div>
                   </div>
@@ -198,44 +198,44 @@ export default function ContentPage() {
           {/* Create Post Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-xl w-full max-w-lg">
-                <div className="flex items-center justify-between p-6 border-b border-[#DBEAFE]">
-                  <h3 className="text-lg font-semibold text-[#0B1F33]">Create New Post</h3>
-                  <button onClick={() => setShowModal(false)} className="text-[#4B6B7A] hover:text-[#0B1F33]"><X size={20} /></button>
+              <div className="bg-card rounded-xl shadow-xl w-full max-w-lg">
+                <div className="flex items-center justify-between p-6 border-b border-border">
+                  <h3 className="text-lg font-semibold text-foreground">Create New Post</h3>
+                  <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground"><X size={20} /></button>
                 </div>
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#0B1F33] mb-1">Content Type</label>
-                    <select value={form.content_type} onChange={e => setForm({ ...form, content_type: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]">
+                    <label className="block text-sm font-medium text-foreground mb-1">Content Type</label>
+                    <select value={form.content_type} onChange={e => setForm({ ...form, content_type: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary">
                       {contentTypes.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0B1F33] mb-1">Account</label>
-                    <select value={form.account_id} onChange={e => setForm({ ...form, account_id: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]">
+                    <label className="block text-sm font-medium text-foreground mb-1">Account</label>
+                    <select value={form.account_id} onChange={e => setForm({ ...form, account_id: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary">
                       <option value="">Select Account</option>
                       {accounts.map(a => <option key={a.id} value={a.id}>{a.account_name} ({a.platform})</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0B1F33] mb-1">Campaign (Optional)</label>
-                    <select value={form.campaign_id} onChange={e => setForm({ ...form, campaign_id: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]">
+                    <label className="block text-sm font-medium text-foreground mb-1">Campaign (Optional)</label>
+                    <select value={form.campaign_id} onChange={e => setForm({ ...form, campaign_id: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary">
                       <option value="">No Campaign</option>
                       {campaigns.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0B1F33] mb-1">Caption</label>
-                    <textarea value={form.caption} onChange={e => setForm({ ...form, caption: e.target.value })} rows={4} placeholder="Write your caption..." className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8] resize-none" />
+                    <label className="block text-sm font-medium text-foreground mb-1">Caption</label>
+                    <textarea value={form.caption} onChange={e => setForm({ ...form, caption: e.target.value })} rows={4} placeholder="Write your caption..." className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary resize-none" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0B1F33] mb-1">Schedule For (Optional)</label>
-                    <input type="datetime-local" value={form.scheduled_for} onChange={e => setForm({ ...form, scheduled_for: e.target.value })} className="w-full border border-[#DBEAFE] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0A8FA8]" />
+                    <label className="block text-sm font-medium text-foreground mb-1">Schedule For (Optional)</label>
+                    <input type="datetime-local" value={form.scheduled_for} onChange={e => setForm({ ...form, scheduled_for: e.target.value })} className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary" />
                   </div>
                 </div>
-                <div className="flex justify-end gap-3 p-6 border-t border-[#DBEAFE]">
-                  <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-[#4B6B7A]">Cancel</button>
-                  <button onClick={handleCreate} className="px-4 py-2 bg-[#0A8FA8] text-white text-sm font-medium rounded-lg hover:bg-[#088096]">Create Draft</button>
+                <div className="flex justify-end gap-3 p-6 border-t border-border">
+                  <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-muted-foreground">Cancel</button>
+                  <button onClick={handleCreate} className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90">Create Draft</button>
                 </div>
               </div>
             </div>

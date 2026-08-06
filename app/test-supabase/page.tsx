@@ -30,13 +30,13 @@ export default function TestSupabasePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA] p-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-8">
+    <div className="min-h-screen bg-background p-8">
+      <div className="max-w-2xl mx-auto bg-card rounded-lg shadow p-8">
         <h1 className="text-2xl font-bold mb-4">Supabase Connection Test</h1>
 
         <button
           onClick={testConnection}
-          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 mb-4"
+          className="px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 mb-4"
         >
           Test Connection & Insert Demo Data
         </button>
@@ -49,10 +49,10 @@ export default function TestSupabasePage() {
           <div className="space-y-2">
             <h2 className="font-bold">Bookings in Database:</h2>
             {bookings.map((booking: any) => (
-              <div key={booking.id} className="p-2 bg-slate-50 border border-slate-200 rounded">
+              <div key={booking.id} className="p-2 bg-muted/50 border border-border rounded">
                 <p className="font-medium">{booking.booking_reference}</p>
-                <p className="text-sm text-slate-600">Customer: {booking.customer_name}</p>
-                <p className="text-sm text-slate-600">Destination: {booking.destination}</p>
+                <p className="text-sm text-muted-foreground">Customer: {booking.customer_name}</p>
+                <p className="text-sm text-muted-foreground">Destination: {booking.destination}</p>
               </div>
             ))}
           </div>

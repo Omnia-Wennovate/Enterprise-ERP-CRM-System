@@ -33,17 +33,17 @@ export function MessageInput({
   }
 
   return (
-    <div className="bg-white border-t border-slate-200 px-6 py-4">
+    <div className="bg-card border-t border-border px-6 py-4">
       <div className="flex items-end gap-3">
         <button
           disabled={disabled}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 hover:bg-muted rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Attach file"
         >
-          <Paperclip className="w-5 h-5 text-slate-600" />
+          <Paperclip className="w-5 h-5 text-muted-foreground" />
         </button>
 
-        <div className="flex-1 flex items-center gap-2 bg-slate-100 rounded-lg px-4 py-2">
+        <div className="flex-1 flex items-center gap-2 bg-muted rounded-lg px-4 py-2">
           <input
             ref={inputRef}
             type="text"
@@ -52,30 +52,30 @@ export function MessageInput({
             onKeyPress={handleKeyPress}
             placeholder={placeholder}
             disabled={disabled}
-            className="flex-1 bg-transparent outline-none text-slate-900 placeholder-slate-500 disabled:opacity-50"
+            className="flex-1 bg-transparent outline-none text-foreground placeholder-slate-500 disabled:opacity-50"
           />
           <button
             disabled={disabled}
             className="p-1 hover:bg-slate-200 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             title="Add emoji"
           >
-            <Smile className="w-5 h-5 text-slate-600" />
+            <Smile className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
 
         <button
           disabled={disabled}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 hover:bg-muted rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Send voice message"
           onClick={() => setIsRecording(!isRecording)}
         >
-          <Mic className={`w-5 h-5 ${isRecording ? 'text-red-600' : 'text-slate-600'}`} />
+          <Mic className={`w-5 h-5 ${isRecording ? 'text-red-600' : 'text-muted-foreground'}`} />
         </button>
 
         <button
           onClick={handleSend}
           disabled={!message.trim() || disabled}
-          className="p-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Send message"
         >
           <Send className="w-5 h-5" />

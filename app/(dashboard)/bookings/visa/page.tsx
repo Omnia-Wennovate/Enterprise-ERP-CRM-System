@@ -95,29 +95,29 @@ export default function VisaPage() {
   const editingVisa = editId ? applications.find(a => a.id === editId) : null
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 py-8">
         
         {/* Header (hidden in detail view) */}
         {view !== 'detail' && (
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl">
-                  <FileText className="w-6 h-6 text-white" />
+                  <FileText className="w-6 h-6 text-primary-foreground" />
                 </div>
                 Visa Management
               </h1>
-              <p className="text-slate-500 mt-1 ml-14">Enterprise visa processing & intelligence</p>
+              <p className="text-muted-foreground mt-1 ml-14">Enterprise visa processing & intelligence</p>
             </div>
 
             <div className="flex items-center gap-3">
               {/* View Switcher */}
-              <div className="flex items-center bg-white rounded-xl border border-slate-200 p-1">
+              <div className="flex items-center bg-card rounded-xl border border-border p-1">
                 <button
                   onClick={() => setView('dashboard')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
-                    view === 'dashboard' ? 'bg-teal-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+                    view === 'dashboard' ? 'bg-teal-600 text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
                   <LayoutDashboard className="w-4 h-4" /> Dashboard
@@ -125,7 +125,7 @@ export default function VisaPage() {
                 <button
                   onClick={() => setView('list')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
-                    view === 'list' ? 'bg-teal-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+                    view === 'list' ? 'bg-teal-600 text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
                   <List className="w-4 h-4" /> Applications
@@ -133,7 +133,7 @@ export default function VisaPage() {
                 <button
                   onClick={() => setView('reports')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
-                    view === 'reports' ? 'bg-teal-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+                    view === 'reports' ? 'bg-teal-600 text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
                   <BarChart3 className="w-4 h-4" /> Reports
@@ -142,7 +142,7 @@ export default function VisaPage() {
 
               <button
                 onClick={() => openForm()}
-                className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-semibold text-sm shadow-sm"
+                className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors font-semibold text-sm shadow-sm"
               >
                 <Plus className="w-4 h-4" /> New Visa
               </button>

@@ -41,7 +41,7 @@ export function WelcomeBanner({ firstName, role }: WelcomeBannerProps) {
   const message = getRoleMessage(role)
 
   return (
-    <div className="bg-gradient-to-r from-[#0B2A3D] to-[#0A8FA8] rounded-2xl p-8 mb-8 text-white shadow-lg">
+    <div className="bg-gradient-to-r from-[#0B2A3D] to-[#0A8FA8] rounded-2xl p-8 mb-8 text-primary-foreground shadow-lg">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <h1 className="text-3xl font-bold mb-2">

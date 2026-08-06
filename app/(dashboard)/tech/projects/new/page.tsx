@@ -67,7 +67,7 @@ export default function NewProjectPage() {
   if (!profile) return null
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
@@ -75,11 +75,11 @@ export default function NewProjectPage() {
           {/* Header */}
           <div className="flex items-center gap-4 mb-6">
             <Link href="/tech/projects" className="p-2 rounded-lg hover:bg-[#DBEAFE] transition-colors">
-              <ArrowLeft size={20} className="text-[#4B6B7A]" />
+              <ArrowLeft size={20} className="text-muted-foreground" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-[#0B1F33]">Create New Project</h1>
-              <p className="text-sm text-[#4B6B7A] mt-1">Set up a new software project</p>
+              <h1 className="text-2xl font-bold text-foreground">Create New Project</h1>
+              <p className="text-sm text-muted-foreground mt-1">Set up a new software project</p>
             </div>
           </div>
 
@@ -90,10 +90,10 @@ export default function NewProjectPage() {
           )}
 
           <form onSubmit={handleSubmit} className="max-w-3xl">
-            <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6 space-y-6">
+            <div className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-6">
               {/* Project Name */}
               <div>
-                <label className="block text-sm font-medium text-[#0B1F33] mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Project Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -101,31 +101,31 @@ export default function NewProjectPage() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g., Omnia TravelOS v2.0"
-                  className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#0A8FA8]/20 focus:border-[#0A8FA8]"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-[#0B1F33] mb-1">Description</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Description</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   placeholder="Describe the project objectives, scope, and deliverables..."
                   rows={4}
-                  className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#0A8FA8]/20 focus:border-[#0A8FA8] resize-none"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none"
                 />
               </div>
 
               {/* Priority & Status */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Priority</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Priority</label>
                   <select
                     value={form.priority}
                     onChange={(e) => setForm({ ...form, priority: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   >
                     {Object.entries(PRIORITY_LABELS).map(([key, label]) => (
                       <option key={key} value={key}>{label}</option>
@@ -133,11 +133,11 @@ export default function NewProjectPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Status</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Status</label>
                   <select
                     value={form.status}
                     onChange={(e) => setForm({ ...form, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   >
                     {Object.entries(PROJECT_STATUS_LABELS).map(([key, label]) => (
                       <option key={key} value={key}>{label}</option>
@@ -149,21 +149,21 @@ export default function NewProjectPage() {
               {/* Dates */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Start Date</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Start Date</label>
                   <input
                     type="date"
                     value={form.start_date}
                     onChange={(e) => setForm({ ...form, start_date: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Deadline</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Deadline</label>
                   <input
                     type="date"
                     value={form.deadline}
                     onChange={(e) => setForm({ ...form, deadline: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   />
                 </div>
               </div>
@@ -171,22 +171,22 @@ export default function NewProjectPage() {
               {/* Budget & Risk */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Budget ($)</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Budget ($)</label>
                   <input
                     type="number"
                     value={form.budget}
                     onChange={(e) => setForm({ ...form, budget: parseFloat(e.target.value) || 0 })}
                     min={0}
                     step={0.01}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#0B1F33] mb-1">Risk Level</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Risk Level</label>
                   <select
                     value={form.risk_level}
                     onChange={(e) => setForm({ ...form, risk_level: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#BFDBFE] rounded-lg text-sm text-[#0B1F33] bg-white"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card"
                   >
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
@@ -202,14 +202,14 @@ export default function NewProjectPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex items-center gap-2 px-6 py-2.5 bg-[#0A8FA8] text-white rounded-lg hover:bg-[#088096] transition-colors text-sm font-medium disabled:opacity-50"
+                className="flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium disabled:opacity-50"
               >
                 {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                 {isLoading ? 'Creating...' : 'Create Project'}
               </button>
               <Link
                 href="/tech/projects"
-                className="px-6 py-2.5 border border-[#BFDBFE] text-[#4B6B7A] rounded-lg hover:bg-[#F0F7FA] transition-colors text-sm font-medium"
+                className="px-6 py-2.5 border border-border text-muted-foreground rounded-lg hover:bg-background transition-colors text-sm font-medium"
               >
                 Cancel
               </Link>

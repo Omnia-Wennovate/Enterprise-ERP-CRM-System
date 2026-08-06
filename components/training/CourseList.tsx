@@ -75,13 +75,13 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
       {/* Toolbar */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search courses by name, description, or instructor..."
             value={filters.search}
             onChange={(e) => setFilters(f => ({ ...f, search: e.target.value }))}
-            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm"
+            className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm"
           />
         </div>
 
@@ -90,20 +90,20 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
             onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border transition-colors ${
               showFilters 
-                ? 'bg-slate-100 border-slate-200 text-slate-900' 
-                : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                ? 'bg-muted border-border text-foreground' 
+                : 'bg-card border-border text-slate-700 hover:bg-muted/50'
             }`}
           >
             <Filter className="w-4 h-4" /> Filters
           </button>
           
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-white border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-card border border-border text-slate-700 rounded-lg hover:bg-muted/50 transition-colors">
             <FileDown className="w-4 h-4" /> Export
           </button>
           
           <button
             onClick={onNew}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors shadow-sm shadow-teal-600/20"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors shadow-sm shadow-teal-600/20"
           >
             <Plus className="w-4 h-4" /> New Course
           </button>
@@ -119,13 +119,13 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="bg-white p-5 rounded-xl border border-slate-200/80 grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="bg-card p-5 rounded-xl border border-border/80 grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5">Status</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Status</label>
                 <select 
                   value={filters.status}
                   onChange={(e) => setFilters(f => ({ ...f, status: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                 >
                   <option value="all">All Statuses</option>
                   <option value="active">Active</option>
@@ -135,11 +135,11 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
               </div>
               
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5">Category</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Category</label>
                 <select 
                   value={filters.category}
                   onChange={(e) => setFilters(f => ({ ...f, category: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                 >
                   <option value="all">All Categories</option>
                   {COURSE_CATEGORIES.map(c => (
@@ -149,11 +149,11 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5">Department</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Department</label>
                 <select 
                   value={filters.department}
                   onChange={(e) => setFilters(f => ({ ...f, department: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                 >
                   <option value="all">All Departments</option>
                   {DEPARTMENTS.map(d => (
@@ -163,11 +163,11 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5">Difficulty</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Difficulty</label>
                 <select 
                   value={filters.difficulty}
                   onChange={(e) => setFilters(f => ({ ...f, difficulty: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                 >
                   <option value="all">All Levels</option>
                   <option value="beginner">Beginner</option>
@@ -178,11 +178,11 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5">Requirement</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Requirement</label>
                 <select 
                   value={filters.mandatory}
                   onChange={(e) => setFilters(f => ({ ...f, mandatory: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                 >
                   <option value="all">All</option>
                   <option value="mandatory">Mandatory Only</option>
@@ -198,7 +198,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-xl h-64 animate-pulse border border-slate-200/80" />
+            <div key={i} className="bg-card rounded-xl h-64 animate-pulse border border-border/80" />
           ))}
         </div>
       ) : courses.length > 0 ? (
@@ -217,10 +217,10 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-white rounded-xl border border-slate-200/80">
+        <div className="text-center py-20 bg-card rounded-xl border border-border/80">
           <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-slate-900 mb-2">No courses found</h3>
-          <p className="text-slate-500 text-sm max-w-sm mx-auto mb-6">
+          <h3 className="text-lg font-bold text-foreground mb-2">No courses found</h3>
+          <p className="text-muted-foreground text-sm max-w-sm mx-auto mb-6">
             We couldn't find any training courses matching your current filters.
           </p>
           <button

@@ -116,43 +116,43 @@ export function VisaCountryRules({ onRuleSelected }: VisaCountryRulesProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2"><Globe className="w-4 h-4 text-teal-600" /> Country Visa Rules</h4>
-        <button onClick={() => { resetForm(); setEditingRule(null); setShowForm(true) }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700">
+        <h4 className="text-sm font-bold text-foreground flex items-center gap-2"><Globe className="w-4 h-4 text-teal-600" /> Country Visa Rules</h4>
+        <button onClick={() => { resetForm(); setEditingRule(null); setShowForm(true) }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700">
           <Plus className="w-3.5 h-3.5" /> Add Rule
         </button>
       </div>
 
       {/* Form */}
       {showForm && (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+        <div className="bg-muted/50 border border-border rounded-xl p-5 space-y-4">
           <div className="flex items-center justify-between">
             <h5 className="text-sm font-bold text-slate-700">{editingRule ? 'Edit Rule' : 'New Rule'}</h5>
-            <button onClick={() => { setShowForm(false); setEditingRule(null) }}><X className="w-4 h-4 text-slate-400" /></button>
+            <button onClick={() => { setShowForm(false); setEditingRule(null) }}><X className="w-4 h-4 text-muted-foreground" /></button>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Nationality *</label>
-              <input type="text" className="w-full border-slate-300 rounded-lg text-sm" placeholder="e.g. Ethiopian" value={form.nationality} onChange={e => setForm(p => ({ ...p, nationality: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Nationality *</label>
+              <input type="text" className="w-full border-border rounded-lg text-sm" placeholder="e.g. Ethiopian" value={form.nationality} onChange={e => setForm(p => ({ ...p, nationality: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Destination *</label>
-              <input type="text" className="w-full border-slate-300 rounded-lg text-sm" placeholder="e.g. United States" value={form.destination_country} onChange={e => setForm(p => ({ ...p, destination_country: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Destination *</label>
+              <input type="text" className="w-full border-border rounded-lg text-sm" placeholder="e.g. United States" value={form.destination_country} onChange={e => setForm(p => ({ ...p, destination_country: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Processing Days</label>
-              <input type="number" className="w-full border-slate-300 rounded-lg text-sm" value={form.processing_time_days} onChange={e => setForm(p => ({ ...p, processing_time_days: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Processing Days</label>
+              <input type="number" className="w-full border-border rounded-lg text-sm" value={form.processing_time_days} onChange={e => setForm(p => ({ ...p, processing_time_days: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Visa Fee ($)</label>
-              <input type="number" step="0.01" className="w-full border-slate-300 rounded-lg text-sm" value={form.visa_fee} onChange={e => setForm(p => ({ ...p, visa_fee: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Visa Fee ($)</label>
+              <input type="number" step="0.01" className="w-full border-border rounded-lg text-sm" value={form.visa_fee} onChange={e => setForm(p => ({ ...p, visa_fee: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Embassy Name</label>
-              <input type="text" className="w-full border-slate-300 rounded-lg text-sm" value={form.embassy_name} onChange={e => setForm(p => ({ ...p, embassy_name: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Embassy Name</label>
+              <input type="text" className="w-full border-border rounded-lg text-sm" value={form.embassy_name} onChange={e => setForm(p => ({ ...p, embassy_name: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Min Passport Validity (months)</label>
-              <input type="number" className="w-full border-slate-300 rounded-lg text-sm" value={form.min_passport_validity_months} onChange={e => setForm(p => ({ ...p, min_passport_validity_months: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Min Passport Validity (months)</label>
+              <input type="number" className="w-full border-border rounded-lg text-sm" value={form.min_passport_validity_months} onChange={e => setForm(p => ({ ...p, min_passport_validity_months: e.target.value }))} />
             </div>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -169,7 +169,7 @@ export function VisaCountryRules({ onRuleSelected }: VisaCountryRulesProps) {
             ))}
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-2">Required Documents</label>
+            <label className="block text-xs font-semibold text-muted-foreground mb-2">Required Documents</label>
             <div className="flex flex-wrap gap-2">
               {docOptions.map(([key, label]) => (
                 <button
@@ -179,7 +179,7 @@ export function VisaCountryRules({ onRuleSelected }: VisaCountryRulesProps) {
                   className={`px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
                     form.required_documents.includes(key)
                       ? 'bg-teal-100 text-teal-700 border-teal-300'
-                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      : 'bg-card text-muted-foreground border-border hover:bg-muted/50'
                   }`}
                 >
                   {form.required_documents.includes(key) && <CheckCircle className="w-3 h-3 inline mr-1" />}
@@ -189,8 +189,8 @@ export function VisaCountryRules({ onRuleSelected }: VisaCountryRulesProps) {
             </div>
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            <button onClick={() => { setShowForm(false); setEditingRule(null) }} className="px-3 py-1.5 text-xs border border-slate-300 rounded-lg">Cancel</button>
-            <button onClick={handleSave} disabled={saving || !form.nationality || !form.destination_country} className="px-4 py-1.5 text-xs bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
+            <button onClick={() => { setShowForm(false); setEditingRule(null) }} className="px-3 py-1.5 text-xs border border-border rounded-lg">Cancel</button>
+            <button onClick={handleSave} disabled={saving || !form.nationality || !form.destination_country} className="px-4 py-1.5 text-xs bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
               {saving && <Loader2 className="w-3 h-3 animate-spin" />} Save
             </button>
           </div>
@@ -201,22 +201,22 @@ export function VisaCountryRules({ onRuleSelected }: VisaCountryRulesProps) {
       {rules.length === 0 ? (
         <div className="text-center py-8">
           <Globe className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-          <p className="text-sm text-slate-500">No country rules configured yet</p>
+          <p className="text-sm text-muted-foreground">No country rules configured yet</p>
         </div>
       ) : (
         <div className="space-y-2">
           {rules.map(rule => (
-            <div key={rule.id} className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl hover:border-slate-300 transition-colors group cursor-pointer" onClick={() => onRuleSelected?.(rule)}>
+            <div key={rule.id} className="flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:border-border transition-colors group cursor-pointer" onClick={() => onRuleSelected?.(rule)}>
               <div>
-                <p className="text-sm font-semibold text-slate-900">{rule.nationality} → {rule.destination_country}</p>
-                <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                <p className="text-sm font-semibold text-foreground">{rule.nationality} → {rule.destination_country}</p>
+                <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
                   {rule.visa_required ? <span className="text-amber-600 font-medium">Visa Required</span> : <span className="text-emerald-600 font-medium">Visa Free</span>}
                   {rule.processing_time_days && <span>{rule.processing_time_days} days processing</span>}
                   {rule.visa_fee && <span>${rule.visa_fee}</span>}
                   {rule.required_documents?.length > 0 && <span>{rule.required_documents.length} docs required</span>}
                 </div>
               </div>
-              <button onClick={(e) => { e.stopPropagation(); handleEdit(rule) }} className="p-1.5 text-slate-400 hover:text-teal-600 opacity-0 group-hover:opacity-100 transition-all">
+              <button onClick={(e) => { e.stopPropagation(); handleEdit(rule) }} className="p-1.5 text-muted-foreground hover:text-teal-600 opacity-0 group-hover:opacity-100 transition-all">
                 <Edit className="w-4 h-4" />
               </button>
             </div>

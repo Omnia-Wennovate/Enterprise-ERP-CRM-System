@@ -74,21 +74,21 @@ export default function MarketingDashboardPage() {
   ]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F7FA]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar profile={profile} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Topbar profile={profile} />
         <main className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-64">
-              <Loader2 className="animate-spin text-[#0A8FA8]" size={48} />
+              <Loader2 className="animate-spin text-primary" size={48} />
             </div>
           ) : (
             <>
               {/* Header */}
               <div className="mb-8">
-                <h1 className="text-2xl font-bold text-[#0B1F33]">Marketing Dashboard</h1>
-                <p className="text-sm text-[#4B6B7A] mt-1">Social media performance overview and analytics</p>
+                <h1 className="text-2xl font-bold text-foreground">Marketing Dashboard</h1>
+                <p className="text-sm text-muted-foreground mt-1">Social media performance overview and analytics</p>
               </div>
 
               {/* KPI Stats Grid */}
@@ -97,19 +97,19 @@ export default function MarketingDashboardPage() {
                   const Icon = card.icon
                   const isPositive = card.trend >= 0
                   return (
-                    <div key={i} className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm hover:shadow-md transition-all p-5">
+                    <div key={i} className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md transition-all p-5">
                       <div className="w-full h-1 -mx-5 -mt-5 mb-4 rounded-t-xl" style={{ backgroundColor: card.color }} />
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-xs text-[#4B6B7A] font-medium">{card.label}</p>
-                          <p className="text-xl font-bold text-[#0B1F33] mt-1">{card.value}</p>
+                          <p className="text-xs text-muted-foreground font-medium">{card.label}</p>
+                          <p className="text-xl font-bold text-foreground mt-1">{card.value}</p>
                           <div className="flex items-center gap-1 mt-2">
                             {isPositive ? (
-                              <ArrowUpRight size={14} className="text-[#10B981]" />
+                              <ArrowUpRight size={14} className="text-success" />
                             ) : (
-                              <ArrowDownRight size={14} className="text-[#EF4444]" />
+                              <ArrowDownRight size={14} className="text-destructive" />
                             )}
-                            <span className={`text-xs font-medium ${isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                            <span className={`text-xs font-medium ${isPositive ? 'text-success' : 'text-destructive'}`}>
                               {card.trend > 0 ? '+' : ''}{card.trend}%
                             </span>
                           </div>
@@ -130,20 +130,20 @@ export default function MarketingDashboardPage() {
                   {postCards.map((card, i) => {
                     const Icon = card.icon
                     return (
-                      <div key={i} className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-4">
+                      <div key={i} className="bg-card rounded-xl border border-border shadow-sm p-4">
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: `${card.color}15` }}>
                           <Icon size={16} style={{ color: card.color }} />
                         </div>
-                        <p className="text-xs text-[#4B6B7A]">{card.label}</p>
-                        <p className="text-lg font-bold text-[#0B1F33] mt-1">{card.value}</p>
+                        <p className="text-xs text-muted-foreground">{card.label}</p>
+                        <p className="text-lg font-bold text-foreground mt-1">{card.value}</p>
                       </div>
                     )
                   })}
                 </div>
 
                 {/* Platform Comparison Chart */}
-                <div className="lg:col-span-2 bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6">Platform Comparison</h3>
+                <div className="lg:col-span-2 bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6">Platform Comparison</h3>
                   {platformData.length > 0 ? (
                     <div className="space-y-4">
                       {platformData.map((p: any, i: number) => {
@@ -153,15 +153,15 @@ export default function MarketingDashboardPage() {
                         return (
                           <div key={i}>
                             <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm font-medium text-[#0B1F33]">
+                              <span className="text-sm font-medium text-foreground">
                                 {PLATFORM_LABELS[p.platform as keyof typeof PLATFORM_LABELS] || p.platform}
                               </span>
-                              <div className="flex items-center gap-4 text-xs text-[#4B6B7A]">
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
                                 <span>{p.followers.toLocaleString()} followers</span>
                                 <span>{p.posts} posts</span>
                               </div>
                             </div>
-                            <div className="w-full h-3 bg-[#F0F7FA] rounded-full overflow-hidden">
+                            <div className="w-full h-3 bg-background rounded-full overflow-hidden">
                               <div
                                 className="h-full rounded-full transition-all duration-500"
                                 style={{ width: `${width}%`, backgroundColor: color }}
@@ -172,7 +172,7 @@ export default function MarketingDashboardPage() {
                       })}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-[#4B6B7A] text-sm">
+                    <div className="flex items-center justify-center h-48 text-muted-foreground text-sm">
                       No platform data yet. Connect your social accounts to see metrics.
                     </div>
                   )}
@@ -182,19 +182,19 @@ export default function MarketingDashboardPage() {
               {/* Campaign ROI + Top Performing Content */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 {/* Campaign ROI */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6">Campaign ROI</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6">Campaign ROI</h3>
                   {campaignROI.length > 0 ? (
                     <div className="space-y-4">
                       {campaignROI.map((c: any, i: number) => (
-                        <div key={i} className="flex items-center justify-between p-3 bg-[#F0F7FA] rounded-lg">
+                        <div key={i} className="flex items-center justify-between p-3 bg-background rounded-lg">
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-[#0B1F33] truncate">{c.name}</p>
-                            <p className="text-xs text-[#4B6B7A]">Budget: ${c.budget.toLocaleString()}</p>
+                            <p className="text-sm font-medium text-foreground truncate">{c.name}</p>
+                            <p className="text-xs text-muted-foreground">Budget: ${c.budget.toLocaleString()}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-bold text-[#0B1F33]">{c.leads} leads</p>
-                            <p className={`text-xs font-medium ${c.roi >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                            <p className="text-sm font-bold text-foreground">{c.leads} leads</p>
+                            <p className={`text-xs font-medium ${c.roi >= 0 ? 'text-success' : 'text-destructive'}`}>
                               ROI: {c.roi}%
                             </p>
                           </div>
@@ -202,40 +202,40 @@ export default function MarketingDashboardPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-[#4B6B7A] text-sm">
+                    <div className="flex items-center justify-center h-48 text-muted-foreground text-sm">
                       No campaign data yet. Create campaigns to track ROI.
                     </div>
                   )}
                 </div>
 
                 {/* Best Performing Content */}
-                <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                  <h3 className="font-semibold text-[#0B1F33] mb-6">🏆 Best Performing Content</h3>
+                <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                  <h3 className="font-semibold text-foreground mb-6">🏆 Best Performing Content</h3>
                   {topPosts.length > 0 ? (
                     <div className="space-y-3">
                       {topPosts.map((post: any, i: number) => (
-                        <div key={i} className="flex items-start gap-3 p-3 bg-gradient-to-r from-[#F0F7FA] to-white rounded-lg border border-[#DBEAFE]">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0A8FA8] to-[#06B6D4] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                        <div key={i} className="flex items-start gap-3 p-3 bg-gradient-to-r from-[#F0F7FA] to-white rounded-lg border border-border">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0A8FA8] to-[#06B6D4] flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0">
                             #{i + 1}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-[#0B1F33] truncate">
+                            <p className="text-sm font-medium text-foreground truncate">
                               {post.caption || 'Untitled Post'}
                             </p>
                             <div className="flex items-center gap-3 mt-1">
-                              <span className="text-xs text-[#4B6B7A]">👁 {post.reach_count?.toLocaleString() || 0}</span>
-                              <span className="text-xs text-[#4B6B7A]">❤️ {post.engagement_count?.toLocaleString() || 0}</span>
-                              <span className="text-xs text-[#4B6B7A]">🔗 {post.clicks_count?.toLocaleString() || 0}</span>
+                              <span className="text-xs text-muted-foreground">👁 {post.reach_count?.toLocaleString() || 0}</span>
+                              <span className="text-xs text-muted-foreground">❤️ {post.engagement_count?.toLocaleString() || 0}</span>
+                              <span className="text-xs text-muted-foreground">🔗 {post.clicks_count?.toLocaleString() || 0}</span>
                             </div>
                           </div>
-                          <span className="text-xs px-2 py-1 rounded-full bg-[#10B981]/10 text-[#10B981] font-medium flex-shrink-0">
+                          <span className="text-xs px-2 py-1 rounded-full bg-[#10B981]/10 text-success font-medium flex-shrink-0">
                             Top ⚡
                           </span>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-48 text-[#4B6B7A] text-sm">
+                    <div className="flex items-center justify-center h-48 text-muted-foreground text-sm">
                       No top-performing content yet. Publish posts and track engagement.
                     </div>
                   )}
@@ -243,8 +243,8 @@ export default function MarketingDashboardPage() {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm p-6">
-                <h3 className="font-semibold text-[#0B1F33] mb-4">Quick Actions</h3>
+              <div className="bg-card rounded-xl border border-border shadow-sm p-6">
+                <h3 className="font-semibold text-foreground mb-4">Quick Actions</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
                   {[
                     { label: 'New Post', href: '/marketing/content', emoji: '✏️' },
@@ -258,10 +258,10 @@ export default function MarketingDashboardPage() {
                     <button
                       key={i}
                       onClick={() => router.push(action.href)}
-                      className="flex flex-col items-center gap-2 p-4 rounded-lg border border-[#DBEAFE] hover:border-[#0A8FA8] hover:shadow-md transition-all"
+                      className="flex flex-col items-center gap-2 p-4 rounded-lg border border-border hover:border-primary hover:shadow-md transition-all"
                     >
                       <span className="text-2xl">{action.emoji}</span>
-                      <span className="text-xs font-medium text-[#0B1F33]">{action.label}</span>
+                      <span className="text-xs font-medium text-foreground">{action.label}</span>
                     </button>
                   ))}
                 </div>

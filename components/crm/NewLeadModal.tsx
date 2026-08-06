@@ -110,13 +110,13 @@ function SectionHeader({ icon: Icon, title }: { icon: React.ComponentType<{ clas
 }
 
 const inputClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
 
 const selectClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
 
 const textareaClass =
-  'w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none placeholder:text-gray-300'
 
 const inputErrorClass = 'border-red-300 focus:border-red-400 focus:ring-red-400/20'
 
@@ -334,7 +334,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-5xl mx-4 mt-8 mb-8 bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-4rem)]"
+            className="relative w-full max-w-5xl mx-4 mt-8 mb-8 bg-card rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-4rem)]"
           >
             {/* ============================================================ */}
             {/* HEADER */}
@@ -342,7 +342,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-teal-50 to-cyan-50 flex-shrink-0">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-teal-600 rounded-xl shadow-lg shadow-teal-200">
-                  <Sparkles className="w-5 h-5 text-white" />
+                  <Sparkles className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-gray-900">Create New Lead</h2>
@@ -352,7 +352,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
               <button
                 onClick={handleClose}
                 disabled={isSaving}
-                className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-white/60 transition-all disabled:opacity-50"
+                className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-card/60 transition-all disabled:opacity-50"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -710,8 +710,8 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                             onClick={() => toggleTag(tag)}
                             className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
                               selectedTags.includes(tag)
-                                ? 'bg-teal-600 text-white border-teal-600 shadow-sm shadow-teal-200'
-                                : 'bg-white text-gray-600 border-gray-200 hover:border-teal-300 hover:text-teal-700'
+                                ? 'bg-teal-600 text-primary-foreground border-teal-600 shadow-sm shadow-teal-200'
+                                : 'bg-card text-gray-600 border-gray-200 hover:border-teal-300 hover:text-teal-700'
                             }`}
                           >
                             {tag}
@@ -792,7 +792,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="bg-teal-600 hover:bg-teal-700 text-white px-6 min-w-[120px]"
+                    className="bg-teal-600 hover:bg-teal-700 text-primary-foreground px-6 min-w-[120px]"
                   >
                     {isSaving ? (
                       <span className="flex items-center gap-2">

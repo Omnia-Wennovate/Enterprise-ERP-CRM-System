@@ -5,6 +5,7 @@ import { ChevronLeft, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { fetchInvoiceDetail, recordPaymentAction, fetchPaymentsByInvoice } from '@/app/actions/invoices'
 import { InvoiceDetailView } from '@/components/finance/InvoiceDetailView'
+import { FinanceAIAssistant } from '@/components/finance/FinanceAIAssistant'
 import { PaymentForm } from '@/components/finance/PaymentForm'
 import { PaymentsTable } from '@/components/finance/PaymentsTable'
 import type { InvoiceDetail, Payment, PaymentMethod } from '@/types/finance'
@@ -68,18 +69,18 @@ export default function InvoiceDetailPage({ params }: PageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F0F7FA] flex items-center justify-center">
-        <div className="text-slate-600">Loading invoice...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground">Loading invoice...</div>
       </div>
     )
   }
 
   if (!invoice) {
     return (
-      <div className="min-h-screen bg-[#F0F7FA]">
+      <div className="min-h-screen bg-background">
         <div className="max-w-6xl mx-auto px-6 py-8">
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-slate-600 mb-4">Invoice not found</p>
+          <div className="bg-card rounded-lg shadow p-8 text-center">
+            <p className="text-muted-foreground mb-4">Invoice not found</p>
             <Link href="/finance/invoices" className="text-teal-600 hover:text-teal-700">
               Back to Invoices
             </Link>
@@ -90,19 +91,19 @@ export default function InvoiceDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
+    <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
           <Link
             href="/finance/invoices"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white transition-colors"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-card transition-colors"
           >
-            <ChevronLeft className="w-6 h-6 text-slate-600" />
+            <ChevronLeft className="w-6 h-6 text-muted-foreground" />
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">{invoice.invoice_number}</h1>
-            <p className="text-slate-600 mt-1">{invoice.customer_name}</p>
+            <h1 className="text-3xl font-bold text-foreground">{invoice.invoice_number}</h1>
+            <p className="text-muted-foreground mt-1">{invoice.customer_name}</p>
           </div>
         </div>
 
@@ -114,18 +115,18 @@ export default function InvoiceDetailPage({ params }: PageProps) {
           </div>
 
           {/* Summary Card */}
-          <div className="bg-white rounded-lg shadow p-6 h-fit sticky top-8">
-            <h3 className="font-semibold text-slate-900 mb-4">Summary</h3>
+          <div className="bg-card rounded-lg shadow p-6 h-fit sticky top-8">
+            <h3 className="font-semibold text-foreground mb-4">Summary</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-slate-600 text-sm">Subtotal</span>
+                <span className="text-muted-foreground text-sm">Subtotal</span>
                 <span className="font-semibold">${invoice.amount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-600 text-sm">Tax</span>
+                <span className="text-muted-foreground text-sm">Tax</span>
                 <span className="font-semibold">${invoice.tax.toFixed(2)}</span>
               </div>
-              <div className="border-t border-slate-200 pt-3 flex justify-between">
+              <div className="border-t border-border pt-3 flex justify-between">
                 <span className="font-semibold">Total</span>
                 <span className="text-lg font-bold text-teal-600">
                   ${invoice.total_amount.toFixed(2)}
@@ -139,7 +140,7 @@ export default function InvoiceDetailPage({ params }: PageProps) {
               </div>
               <button
                 onClick={() => setShowPaymentForm(!showPaymentForm)}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Record Payment
@@ -150,8 +151,8 @@ export default function InvoiceDetailPage({ params }: PageProps) {
 
         {/* Payment Form */}
         {showPaymentForm && (
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h3 className="font-semibold text-slate-900 mb-4">Record Payment</h3>
+          <div className="bg-card rounded-lg shadow p-6 mb-8">
+            <h3 className="font-semibold text-foreground mb-4">Record Payment</h3>
             <PaymentForm
               maxAmount={invoice.outstanding_balance}
               onSubmit={handlePaymentSubmit}
@@ -161,14 +162,14 @@ export default function InvoiceDetailPage({ params }: PageProps) {
         )}
 
         {/* Payments Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200">
-            <h3 className="font-semibold text-slate-900">
+        <div className="bg-card rounded-lg shadow overflow-hidden">
+          <div className="px-6 py-4 border-b border-border">
+            <h3 className="font-semibold text-foreground">
               Payments ({payments.length})
             </h3>
           </div>
           {payments.length === 0 ? (
-            <div className="px-6 py-8 text-center text-slate-600">
+            <div className="px-6 py-8 text-center text-muted-foreground">
               No payments recorded yet
             </div>
           ) : (
@@ -176,6 +177,7 @@ export default function InvoiceDetailPage({ params }: PageProps) {
           )}
         </div>
       </div>
+      <FinanceAIAssistant invoice={invoice} />
     </div>
   )
 }

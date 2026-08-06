@@ -132,7 +132,7 @@ export function QuotationDetailPanel({ quotation, onClose, onEdit, onRefresh }: 
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 40 }}
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-      className="w-[420px] flex-shrink-0 bg-white border-l border-gray-200 flex flex-col h-full overflow-hidden"
+      className="w-[420px] flex-shrink-0 bg-card border-l border-gray-200 flex flex-col h-full overflow-hidden"
     >
       {/* Toast */}
       <AnimatePresence>
@@ -140,7 +140,7 @@ export function QuotationDetailPanel({ quotation, onClose, onEdit, onRefresh }: 
           <motion.div
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             className={`absolute top-4 right-4 z-50 flex items-center gap-2 px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium ${
-              toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+              toast.type === 'success' ? 'bg-green-600 text-primary-foreground' : 'bg-red-600 text-primary-foreground'
             }`}>
             <CheckCircle2 className="w-4 h-4" />
             {toast.msg}
@@ -200,7 +200,7 @@ export function QuotationDetailPanel({ quotation, onClose, onEdit, onRefresh }: 
         </Button>
         {quotation.status === 'accepted' && (
           <Button size="sm" onClick={handleConvertToBooking} disabled={isConverting}
-            className="gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-white">
+            className="gap-1.5 text-xs bg-green-600 hover:bg-green-700 text-primary-foreground">
             {isConverting ? <Loader2 className="w-3 h-3 animate-spin" /> : <ArrowRight className="w-3 h-3" />}
             Convert to Booking
           </Button>
@@ -218,7 +218,7 @@ export function QuotationDetailPanel({ quotation, onClose, onEdit, onRefresh }: 
           value={quotation.status}
           onChange={(e) => handleStatusChange(e.target.value)}
           disabled={statusUpdating}
-          className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-white focus:border-teal-400 outline-none cursor-pointer flex-1">
+          className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-card focus:border-teal-400 outline-none cursor-pointer flex-1">
           {QUOTATION_STATUSES.map((s) => (
             <option key={s} value={s}>{QUOTATION_STATUS_LABELS[s]}</option>
           ))}
@@ -279,7 +279,7 @@ export function QuotationDetailPanel({ quotation, onClose, onEdit, onRefresh }: 
                   <div className="px-3 py-2 flex justify-between text-xs text-gray-600"><span>Subtotal</span><span className="font-medium">{formatCurrency(quotation.subtotal)}</span></div>
                   <div className="px-3 py-2 flex justify-between text-xs text-gray-600"><span>Discount</span><span className="font-medium text-red-500">−{formatCurrency(quotation.discount_amount)}</span></div>
                   <div className="px-3 py-2 flex justify-between text-xs text-gray-600 border-b border-gray-200"><span>Tax</span><span className="font-medium">{formatCurrency(quotation.tax_amount)}</span></div>
-                  <div className="px-3 py-3 flex justify-between bg-teal-600 text-white"><span className="text-xs font-bold">GRAND TOTAL</span><span className="text-sm font-bold">{formatCurrency(quotation.grand_total)}</span></div>
+                  <div className="px-3 py-3 flex justify-between bg-teal-600 text-primary-foreground"><span className="text-xs font-bold">GRAND TOTAL</span><span className="text-sm font-bold">{formatCurrency(quotation.grand_total)}</span></div>
                 </div>
               </section>
 

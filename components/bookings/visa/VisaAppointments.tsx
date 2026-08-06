@@ -81,7 +81,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
   const statusColors: Record<string, { bg: string; text: string }> = {
     scheduled: { bg: 'bg-blue-50', text: 'text-blue-700' },
     completed: { bg: 'bg-emerald-50', text: 'text-emerald-700' },
-    cancelled: { bg: 'bg-slate-100', text: 'text-slate-500' },
+    cancelled: { bg: 'bg-muted', text: 'text-muted-foreground' },
     rescheduled: { bg: 'bg-amber-50', text: 'text-amber-700' },
     no_show: { bg: 'bg-red-50', text: 'text-red-700' },
   }
@@ -90,10 +90,10 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-bold text-slate-800">Appointments</h4>
+        <h4 className="text-sm font-bold text-foreground">Appointments</h4>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors"
         >
           <Plus className="w-3.5 h-3.5" /> Schedule
         </button>
@@ -101,12 +101,12 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
 
       {/* Create Form */}
       {showForm && (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+        <div className="bg-muted/50 border border-border rounded-xl p-4 space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Type</label>
               <select
-                className="w-full border-slate-300 rounded-lg text-sm"
+                className="w-full border-border rounded-lg text-sm"
                 value={formData.appointment_type}
                 onChange={e => setFormData(p => ({ ...p, appointment_type: e.target.value }))}
               >
@@ -116,10 +116,10 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Date & Time *</label>
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Date & Time *</label>
               <input
                 type="datetime-local"
-                className="w-full border-slate-300 rounded-lg text-sm"
+                className="w-full border-border rounded-lg text-sm"
                 value={formData.scheduled_datetime}
                 onChange={e => setFormData(p => ({ ...p, scheduled_datetime: e.target.value }))}
               />
@@ -127,21 +127,21 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Location</label>
-              <input type="text" className="w-full border-slate-300 rounded-lg text-sm" placeholder="e.g. US Embassy" value={formData.location} onChange={e => setFormData(p => ({ ...p, location: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Location</label>
+              <input type="text" className="w-full border-border rounded-lg text-sm" placeholder="e.g. US Embassy" value={formData.location} onChange={e => setFormData(p => ({ ...p, location: e.target.value }))} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1">Address</label>
-              <input type="text" className="w-full border-slate-300 rounded-lg text-sm" placeholder="Full address" value={formData.address} onChange={e => setFormData(p => ({ ...p, address: e.target.value }))} />
+              <label className="block text-xs font-semibold text-muted-foreground mb-1">Address</label>
+              <input type="text" className="w-full border-border rounded-lg text-sm" placeholder="Full address" value={formData.address} onChange={e => setFormData(p => ({ ...p, address: e.target.value }))} />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">Notes</label>
-            <input type="text" className="w-full border-slate-300 rounded-lg text-sm" placeholder="Any notes..." value={formData.notes} onChange={e => setFormData(p => ({ ...p, notes: e.target.value }))} />
+            <label className="block text-xs font-semibold text-muted-foreground mb-1">Notes</label>
+            <input type="text" className="w-full border-border rounded-lg text-sm" placeholder="Any notes..." value={formData.notes} onChange={e => setFormData(p => ({ ...p, notes: e.target.value }))} />
           </div>
           <div className="flex justify-end gap-2">
-            <button onClick={() => setShowForm(false)} className="px-3 py-1.5 text-xs border border-slate-300 rounded-lg hover:bg-slate-100">Cancel</button>
-            <button onClick={handleCreate} disabled={saving || !formData.scheduled_datetime} className="px-3 py-1.5 text-xs bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
+            <button onClick={() => setShowForm(false)} className="px-3 py-1.5 text-xs border border-border rounded-lg hover:bg-muted">Cancel</button>
+            <button onClick={handleCreate} disabled={saving || !formData.scheduled_datetime} className="px-3 py-1.5 text-xs bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
               {saving && <Loader2 className="w-3 h-3 animate-spin" />} Save
             </button>
           </div>
@@ -152,7 +152,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
       {appointments.length === 0 ? (
         <div className="text-center py-8">
           <Calendar className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-          <p className="text-sm text-slate-500">No appointments scheduled</p>
+          <p className="text-sm text-muted-foreground">No appointments scheduled</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -160,17 +160,17 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
             const sc = statusColors[apt.status] || statusColors.scheduled
             const isPast = new Date(apt.scheduled_datetime) < new Date()
             return (
-              <div key={apt.id} className={`border rounded-xl p-4 ${apt.status === 'cancelled' ? 'opacity-50 border-slate-200' : 'border-slate-200 hover:border-slate-300'} transition-colors`}>
+              <div key={apt.id} className={`border rounded-xl p-4 ${apt.status === 'cancelled' ? 'opacity-50 border-border' : 'border-border hover:border-border'} transition-colors`}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${sc.bg}`}>
                       <Calendar className={`w-5 h-5 ${sc.text}`} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-900">
+                      <p className="text-sm font-semibold text-foreground">
                         {APPOINTMENT_TYPE_LABELS[apt.appointment_type as AppointmentType] || apt.appointment_type}
                       </p>
-                      <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                      <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {new Date(apt.scheduled_datetime).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
@@ -181,7 +181,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
                           </span>
                         )}
                       </div>
-                      {apt.notes && <p className="text-xs text-slate-400 mt-1">{apt.notes}</p>}
+                      {apt.notes && <p className="text-xs text-muted-foreground mt-1">{apt.notes}</p>}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -193,12 +193,12 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
                         <button onClick={() => handleMarkComplete(apt.id)} className="p-1 text-emerald-500 hover:bg-emerald-50 rounded" title="Complete">
                           <CheckCircle className="w-4 h-4" />
                         </button>
-                        <button onClick={() => handleCancel(apt.id)} className="p-1 text-slate-400 hover:text-red-500 rounded" title="Cancel">
+                        <button onClick={() => handleCancel(apt.id)} className="p-1 text-muted-foreground hover:text-red-500 rounded" title="Cancel">
                           <XCircle className="w-4 h-4" />
                         </button>
                       </>
                     )}
-                    <button onClick={() => exportIcal(apt)} className="p-1 text-slate-400 hover:text-teal-600 rounded" title="Export to Calendar">
+                    <button onClick={() => exportIcal(apt)} className="p-1 text-muted-foreground hover:text-teal-600 rounded" title="Export to Calendar">
                       <Calendar className="w-4 h-4" />
                     </button>
                   </div>

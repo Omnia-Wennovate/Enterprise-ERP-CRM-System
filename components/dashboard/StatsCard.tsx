@@ -42,7 +42,7 @@ export function StatsCard({
   const isPositive = trend && trend >= 0
 
   return (
-    <div className="bg-white rounded-xl border border-[#DBEAFE] shadow-sm hover:shadow-md transition-shadow p-6">
+    <div className="bg-card rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow p-6">
       {/* Top accent bar */}
       <div
         className="w-full h-1 -mx-6 -mt-6 mb-4 rounded-t-xl"
@@ -52,19 +52,19 @@ export function StatsCard({
       {/* Icon and content */}
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm text-[#4B6B7A] mb-1">{label}</p>
-          <p className="text-2xl font-bold text-[#0B1F33] mb-3">{value}</p>
+          <p className="text-sm text-muted-foreground mb-1">{label}</p>
+          <p className="text-2xl font-bold text-foreground mb-3">{value}</p>
 
           {trend !== undefined && (
             <div className="flex items-center gap-1">
               {isPositive ? (
-                <TrendingUp className="text-[#10B981]" size={16} />
+                <TrendingUp className="text-success" size={16} />
               ) : (
-                <TrendingDown className="text-[#EF4444]" size={16} />
+                <TrendingDown className="text-destructive" size={16} />
               )}
               <span
                 className={`text-xs font-medium ${
-                  isPositive ? 'text-[#10B981]' : 'text-[#EF4444]'
+                  isPositive ? 'text-success' : 'text-destructive'
                 }`}
               >
                 {trend > 0 ? '+' : ''}{trend}% {trendLabel || 'vs last month'}

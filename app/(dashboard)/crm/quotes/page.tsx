@@ -16,9 +16,9 @@ export default function QuotationsPage() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-[#F0F7FA]">
+    <div className="flex flex-col h-full bg-background">
       {/* ── HEADER ── */}
-      <div className="border-b border-gray-200 bg-white px-6 py-4 flex-shrink-0">
+      <div className="border-b border-gray-200 bg-card px-6 py-4 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-teal-50">
@@ -31,7 +31,7 @@ export default function QuotationsPage() {
           </div>
           <Button
             onClick={() => setIsNewModalOpen(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-white gap-2"
+            className="bg-teal-600 hover:bg-teal-700 text-primary-foreground gap-2"
           >
             <Plus className="w-4 h-4" />
             New Quote

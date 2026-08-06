@@ -65,7 +65,7 @@ export function AIGeneratedPreview({
     if (slot === 'morning') return <Sunrise className="w-3 h-3 text-amber-500" />
     if (slot === 'afternoon') return <Sun className="w-3 h-3 text-orange-500" />
     if (slot === 'evening') return <Moon className="w-3 h-3 text-indigo-500" />
-    return <Clock className="w-3 h-3 text-slate-400" />
+    return <Clock className="w-3 h-3 text-muted-foreground" />
   }
 
   const getActivityColor = (type: string) => {
@@ -82,26 +82,26 @@ export function AIGeneratedPreview({
       >
         <div className="flex items-start gap-3 mb-3">
           <div className="p-2 bg-gradient-to-br from-teal-500 to-sky-600 rounded-lg">
-            <Sparkles className="w-4 h-4 text-white" />
+            <Sparkles className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-800">{itinerary.suggestedTitle}</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h3 className="text-sm font-bold text-foreground">{itinerary.suggestedTitle}</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
               {itinerary.destinationCity}, {itinerary.destinationCountry} · {itinerary.days.length} Days · {itinerary.travelType}
             </p>
           </div>
         </div>
-        <p className="text-xs text-slate-600 leading-relaxed">{itinerary.tripSummary}</p>
+        <p className="text-xs text-muted-foreground leading-relaxed">{itinerary.tripSummary}</p>
 
         {/* Travel Info Chips */}
         <div className="flex flex-wrap gap-2 mt-3">
           {itinerary.timezone && (
-            <span className="px-2 py-0.5 bg-white border border-slate-200 rounded-full text-[10px] text-slate-600">
+            <span className="px-2 py-0.5 bg-card border border-border rounded-full text-[10px] text-muted-foreground">
               🕐 {itinerary.timezone}
             </span>
           )}
           {itinerary.localCurrency && (
-            <span className="px-2 py-0.5 bg-white border border-slate-200 rounded-full text-[10px] text-slate-600">
+            <span className="px-2 py-0.5 bg-card border border-border rounded-full text-[10px] text-muted-foreground">
               💱 {itinerary.localCurrency}
             </span>
           )}
@@ -143,17 +143,17 @@ export function AIGeneratedPreview({
 
           {/* Travel Notes */}
           {(itinerary.visaNotes || itinerary.packingTips?.length || itinerary.localCustoms?.length) && (
-            <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-3">
+            <div className="bg-card rounded-xl border border-border p-4 space-y-3">
               {itinerary.visaNotes && (
                 <div>
-                  <h5 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Visa Notes</h5>
-                  <p className="text-xs text-slate-600">{itinerary.visaNotes}</p>
+                  <h5 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Visa Notes</h5>
+                  <p className="text-xs text-muted-foreground">{itinerary.visaNotes}</p>
                 </div>
               )}
               {itinerary.packingTips && itinerary.packingTips.length > 0 && (
                 <div>
-                  <h5 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Packing Tips</h5>
-                  <ul className="text-xs text-slate-600 space-y-0.5">
+                  <h5 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Packing Tips</h5>
+                  <ul className="text-xs text-muted-foreground space-y-0.5">
                     {itinerary.packingTips.slice(0, 5).map((tip, i) => (
                       <li key={i}>• {tip}</li>
                     ))}
@@ -162,8 +162,8 @@ export function AIGeneratedPreview({
               )}
               {itinerary.localCustoms && itinerary.localCustoms.length > 0 && (
                 <div>
-                  <h5 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Local Customs</h5>
-                  <ul className="text-xs text-slate-600 space-y-0.5">
+                  <h5 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Local Customs</h5>
+                  <ul className="text-xs text-muted-foreground space-y-0.5">
                     {itinerary.localCustoms.slice(0, 5).map((custom, i) => (
                       <li key={i}>• {custom}</li>
                     ))}
@@ -184,7 +184,7 @@ export function AIGeneratedPreview({
       <div className="flex items-center justify-between pt-2">
         <button
           onClick={onReject}
-          className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-red-600 transition-colors"
+          className="px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-red-600 transition-colors"
         >
           Discard AI Plan
         </button>
@@ -198,7 +198,7 @@ export function AIGeneratedPreview({
           <button
             onClick={onAccept}
             disabled={accepting}
-            className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl text-sm font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
+            className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 text-primary-foreground rounded-xl text-sm font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
           >
             {accepting ? (
               <>
@@ -249,19 +249,19 @@ function DayCard({
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: dayIndex * 0.05 }}
-      className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow"
     >
       {/* Day Header */}
       <div
-        className="flex items-center gap-3 px-4 py-3 cursor-pointer select-none hover:bg-slate-50/50 transition-colors"
+        className="flex items-center gap-3 px-4 py-3 cursor-pointer select-none hover:bg-muted/50/50 transition-colors"
         onClick={onToggle}
       >
         <span className="px-2.5 py-0.5 bg-teal-50 text-teal-700 rounded-lg text-xs font-bold flex-shrink-0">
           Day {day.dayNumber}
         </span>
         <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-semibold text-slate-800 truncate">{day.title}</h4>
-          <div className="flex items-center gap-2 mt-0.5 text-[10px] text-slate-500">
+          <h4 className="text-sm font-semibold text-foreground truncate">{day.title}</h4>
+          <div className="flex items-center gap-2 mt-0.5 text-[10px] text-muted-foreground">
             {day.city && (
               <span className="flex items-center gap-0.5">
                 <MapPin className="w-2.5 h-2.5" /> {day.city}
@@ -278,12 +278,12 @@ function DayCard({
         <button
           onClick={e => { e.stopPropagation(); onRegenerateDay() }}
           disabled={isRegenerating}
-          className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors disabled:opacity-50"
+          className="p-1.5 text-muted-foreground hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors disabled:opacity-50"
           title="Regenerate this day"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
-        {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+        {isExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
       </div>
 
       {/* Day Content */}
@@ -298,7 +298,7 @@ function DayCard({
           >
             <div className="px-4 pb-4 space-y-3">
               {day.description && (
-                <p className="text-xs text-slate-500 italic px-1">{day.description}</p>
+                <p className="text-xs text-muted-foreground italic px-1">{day.description}</p>
               )}
 
               {/* All Day Items */}
@@ -306,7 +306,7 @@ function DayCard({
                 <TimeSlotSection
                   label="All Day" items={allDayItems}
                   dayIndex={dayIndex} startIndex={day.items.indexOf(allDayItems[0])}
-                  icon={<Clock className="w-3 h-3 text-slate-400" />}
+                  icon={<Clock className="w-3 h-3 text-muted-foreground" />}
                   onRefineItem={onRefineItem} getActivityColor={getActivityColor}
                   refineModes={refineModes} showRefineMenu={showRefineMenu}
                   setShowRefineMenu={setShowRefineMenu}
@@ -381,13 +381,13 @@ function TimeSlotSection({
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <span className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+        <span className="flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           {icon} {label}
         </span>
         {onRegenerateSlot && (
           <button
             onClick={onRegenerateSlot}
-            className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-teal-600 transition-colors"
+            className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-teal-600 transition-colors"
           >
             <RotateCcw className="w-2.5 h-2.5" /> Regenerate
           </button>
@@ -402,7 +402,7 @@ function TimeSlotSection({
           return (
             <div
               key={menuId}
-              className="group flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-slate-50 transition-colors relative"
+              className="group flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-muted/50 transition-colors relative"
             >
               {/* Type indicator */}
               <div
@@ -412,7 +412,7 @@ function TimeSlotSection({
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-medium text-slate-800">{item.title}</span>
+                  <span className="text-xs font-medium text-foreground">{item.title}</span>
                   {item.isAiSuggested && (
                     <Sparkles className="w-2.5 h-2.5 text-teal-500 flex-shrink-0" />
                   )}
@@ -423,9 +423,9 @@ function TimeSlotSection({
                   )}
                 </div>
                 {item.description && (
-                  <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-2">{item.description}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">{item.description}</p>
                 )}
-                <div className="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
+                <div className="flex items-center gap-2 mt-1 text-[10px] text-muted-foreground">
                   {item.startTime && <span>🕐 {item.startTime}{item.endTime ? ` – ${item.endTime}` : ''}</span>}
                   {item.durationMinutes && <span>⏱ {item.durationMinutes}min</span>}
                   {item.location && <span>📍 {item.location}</span>}
@@ -448,7 +448,7 @@ function TimeSlotSection({
 
                 {/* Refine Dropdown */}
                 {showRefineMenu === menuId && (
-                  <div className="absolute right-0 top-7 z-30 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 max-h-[280px] overflow-y-auto">
+                  <div className="absolute right-0 top-7 z-30 w-48 bg-card rounded-xl shadow-xl border border-border py-1.5 max-h-[280px] overflow-y-auto">
                     {refineModes.map(rm => (
                       <button
                         key={rm.mode}

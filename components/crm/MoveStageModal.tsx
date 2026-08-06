@@ -51,7 +51,7 @@ export function MoveStageModal({ isOpen, lead, onClose, onMoved }: Props) {
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[440px] bg-white rounded-2xl shadow-2xl border border-gray-200"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[440px] bg-card rounded-2xl shadow-2xl border border-gray-200"
           >
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <div>
@@ -122,7 +122,7 @@ export function MoveStageModal({ isOpen, lead, onClose, onMoved }: Props) {
               <Button
                 onClick={handleMove}
                 disabled={isSaving || selectedStage === lead.pipeline_stage}
-                className="flex-1 bg-teal-600 hover:bg-teal-700 text-white"
+                className="flex-1 bg-teal-600 hover:bg-teal-700 text-primary-foreground"
               >
                 {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
                 Move to {PIPELINE_STAGE_LABELS[selectedStage]}

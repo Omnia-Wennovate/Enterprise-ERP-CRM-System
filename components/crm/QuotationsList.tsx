@@ -18,9 +18,9 @@ import { EditQuotationModal } from './EditQuotationModal'
 // ============================================================================
 function StatCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ComponentType<{ className?: string }>; color: string }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+    <div className="bg-card border border-gray-200 rounded-xl p-4 flex items-center gap-3">
       <div className={`p-2.5 rounded-xl ${color}`}>
-        <Icon className="w-4 h-4 text-white" />
+        <Icon className="w-4 h-4 text-primary-foreground" />
       </div>
       <div>
         <p className="text-xs text-gray-500 font-medium">{label}</p>
@@ -138,7 +138,7 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by customer, quote number, destination..."
-              className="w-full pl-9 pr-4 py-2 text-sm bg-white border border-gray-200 rounded-xl outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300"
+              className="w-full pl-9 pr-4 py-2 text-sm bg-card border border-gray-200 rounded-xl outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300"
             />
           </div>
           <div className="relative">
@@ -146,7 +146,7 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-8 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-xl outline-none focus:border-teal-400 appearance-none cursor-pointer">
+              className="pl-8 pr-3 py-2 text-sm bg-card border border-gray-200 rounded-xl outline-none focus:border-teal-400 appearance-none cursor-pointer">
               <option value="all">All Status</option>
               {Object.entries(QUOTATION_STATUS_LABELS).map(([k, v]) => (
                 <option key={k} value={k}>{v}</option>
@@ -156,7 +156,7 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
           <button
             onClick={() => load(true)}
             disabled={isRefreshing}
-            className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:text-teal-600 hover:border-teal-300 transition-colors">
+            className="p-2 rounded-xl border border-gray-200 bg-card text-gray-500 hover:text-teal-600 hover:border-teal-300 transition-colors">
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
           </button>
         </div>
@@ -185,7 +185,7 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.03 }}
                     onClick={() => setSelectedQuotation(isSelected ? null : quote)}
-                    className={`bg-white border-2 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
+                    className={`bg-card border-2 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
                       isSelected ? 'border-teal-400 shadow-md bg-teal-50/30' : 'border-gray-200 hover:border-teal-200'
                     }`}>
                     {/* Top Row */}

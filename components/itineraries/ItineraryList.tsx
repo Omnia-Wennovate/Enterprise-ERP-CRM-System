@@ -116,16 +116,16 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
       {/* Search & Filters Bar */}
       <div className="flex items-center gap-3">
         <div className="flex-1 relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search itineraries, destinations, customers, booking references..."
             value={filters.search}
             onChange={e => setFilters(f => ({ ...f, search: e.target.value }))}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 text-sm transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 text-sm transition-all"
           />
           {filters.search && (
-            <button onClick={() => setFilters(f => ({ ...f, search: '' }))} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <button onClick={() => setFilters(f => ({ ...f, search: '' }))} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-muted-foreground">
               <X className="w-4 h-4" />
             </button>
           )}
@@ -133,12 +133,12 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
-            showFilters ? 'bg-teal-50 border-teal-200 text-teal-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+            showFilters ? 'bg-teal-50 border-teal-200 text-teal-700' : 'bg-card border-border text-muted-foreground hover:bg-muted/50'
           }`}
         >
           <SlidersHorizontal className="w-4 h-4" /> Filters
         </button>
-        <button onClick={onCreate} className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold shadow-sm">
+        <button onClick={onCreate} className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold shadow-sm">
           <Plus className="w-4 h-4" /> New Itinerary
         </button>
       </div>
@@ -151,8 +151,8 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
             onClick={() => setFilters(f => ({ ...f, status: qf.value as any }))}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
               filters.status === qf.value
-                ? 'bg-teal-600 text-white shadow-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                : 'bg-card border border-border text-muted-foreground hover:bg-muted/50'
             }`}
           >
             {qf.label}
@@ -169,13 +169,13 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="bg-white rounded-xl border border-slate-200 p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-card rounded-xl border border-border p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <label className="text-xs font-medium text-slate-500 uppercase mb-1.5 block">Travel Type</label>
+                <label className="text-xs font-medium text-muted-foreground uppercase mb-1.5 block">Travel Type</label>
                 <select
                   value={filters.travelType}
                   onChange={e => setFilters(f => ({ ...f, travelType: e.target.value as any }))}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
                 >
                   <option value="all">All Types</option>
                   {TRAVEL_TYPES.map(tt => (
@@ -184,19 +184,19 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
                 </select>
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-500 uppercase mb-1.5 block">Country</label>
+                <label className="text-xs font-medium text-muted-foreground uppercase mb-1.5 block">Country</label>
                 <input
                   type="text"
                   placeholder="e.g. UAE, France..."
                   value={filters.country}
                   onChange={e => setFilters(f => ({ ...f, country: e.target.value }))}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
                 />
               </div>
               <div className="col-span-2 flex items-end">
                 <button
                   onClick={() => setFilters({ search: '', status: 'all', travelType: 'all', country: '', dateRange: 'all', assignedTo: '' })}
-                  className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium"
+                  className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground font-medium"
                 >
                   Clear All Filters
                 </button>
@@ -212,17 +212,17 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
           <Loader2 className="w-7 h-7 animate-spin text-teal-600" />
         </div>
       ) : filtered.length === 0 ? (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-16 bg-white rounded-xl border border-slate-200/60">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-16 bg-card rounded-xl border border-border/60">
           <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mb-4">
             <Map className="w-8 h-8 text-teal-400" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-800">No Itineraries Found</h3>
-          <p className="text-sm text-slate-500 mt-1 max-w-sm text-center">
+          <h3 className="text-lg font-semibold text-foreground">No Itineraries Found</h3>
+          <p className="text-sm text-muted-foreground mt-1 max-w-sm text-center">
             {filters.search || filters.status !== 'all'
               ? 'Try adjusting your search or filters'
               : 'Create your first itinerary to get started with trip planning'}
           </p>
-          <button onClick={onCreate} className="mt-4 flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold">
+          <button onClick={onCreate} className="mt-4 flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold">
             <Plus className="w-4 h-4" /> Create Itinerary
           </button>
         </motion.div>
@@ -244,7 +244,7 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
 
       {/* Count */}
       {!loading && filtered.length > 0 && (
-        <p className="text-xs text-slate-400 text-center">
+        <p className="text-xs text-muted-foreground text-center">
           Showing {filtered.length} itinerar{filtered.length === 1 ? 'y' : 'ies'}
         </p>
       )}

@@ -49,13 +49,13 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
   return (
     <motion.div
       layout
-      className={`bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition-all duration-200 ${isDragging ? 'opacity-60 shadow-2xl ring-2 ring-teal-400' : ''}`}
+      className={`bg-card rounded-xl border border-border overflow-hidden hover:shadow-md transition-all duration-200 ${isDragging ? 'opacity-60 shadow-2xl ring-2 ring-teal-400' : ''}`}
     >
       {/* Compact View */}
       <div className="flex items-center gap-3 px-4 py-3">
         {/* Drag Handle */}
         {dragHandleProps && (
-          <div {...dragHandleProps} className="cursor-grab active:cursor-grabbing p-1 -ml-1 text-slate-300 hover:text-slate-500">
+          <div {...dragHandleProps} className="cursor-grab active:cursor-grabbing p-1 -ml-1 text-slate-300 hover:text-muted-foreground">
             <GripVertical className="w-4 h-4" />
           </div>
         )}
@@ -68,12 +68,12 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-semibold text-slate-800 truncate">{item.title}</h4>
+            <h4 className="text-sm font-semibold text-foreground truncate">{item.title}</h4>
             <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${statusColors[item.status] || statusColors.pending}`}>
               {item.status}
             </span>
           </div>
-          <div className="flex items-center gap-3 mt-0.5 text-xs text-slate-500">
+          <div className="flex items-center gap-3 mt-0.5 text-xs text-muted-foreground">
             {(item.time || item.start_time) && (
               <span className="flex items-center gap-1">
                 <Clock className="w-3 h-3" /> {item.start_time || item.time}
@@ -96,16 +96,16 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
         {/* Actions */}
         <div className="flex items-center gap-1 flex-shrink-0">
           {onEdit && (
-            <button onClick={(e) => { e.stopPropagation(); onEdit(item) }} className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
+            <button onClick={(e) => { e.stopPropagation(); onEdit(item) }} className="p-1.5 text-muted-foreground hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
               <Pencil className="w-3.5 h-3.5" />
             </button>
           )}
           {onDelete && (
-            <button onClick={(e) => { e.stopPropagation(); onDelete(item.id) }} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+            <button onClick={(e) => { e.stopPropagation(); onDelete(item.id) }} className="p-1.5 text-muted-foreground hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
               <Trash2 className="w-3.5 h-3.5" />
             </button>
           )}
-          <button onClick={() => setExpanded(!expanded)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+          <button onClick={() => setExpanded(!expanded)} className="p-1.5 text-muted-foreground hover:text-slate-700 hover:bg-muted/50 rounded-lg transition-colors">
             {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
         </div>
@@ -123,31 +123,31 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
           >
             <div className="px-4 pb-4 pt-1 border-t border-slate-100 space-y-3">
               {item.description && (
-                <p className="text-sm text-slate-600">{item.description}</p>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
               )}
 
               <div className="grid grid-cols-2 gap-3">
                 {item.supplier_name && (
                   <div>
-                    <p className="text-xs text-slate-400 uppercase">Supplier</p>
+                    <p className="text-xs text-muted-foreground uppercase">Supplier</p>
                     <p className="text-sm font-medium text-slate-700">{item.supplier_name}</p>
                   </div>
                 )}
                 {item.booking_reference && (
                   <div>
-                    <p className="text-xs text-slate-400 uppercase">Booking Ref</p>
+                    <p className="text-xs text-muted-foreground uppercase">Booking Ref</p>
                     <p className="text-sm font-medium text-slate-700">{item.booking_reference}</p>
                   </div>
                 )}
                 {item.voucher_number && (
                   <div>
-                    <p className="text-xs text-slate-400 uppercase">Voucher</p>
+                    <p className="text-xs text-muted-foreground uppercase">Voucher</p>
                     <p className="text-sm font-medium text-slate-700">{item.voucher_number}</p>
                   </div>
                 )}
                 {item.duration_minutes && (
                   <div>
-                    <p className="text-xs text-slate-400 uppercase">Duration</p>
+                    <p className="text-xs text-muted-foreground uppercase">Duration</p>
                     <p className="text-sm font-medium text-slate-700">{item.duration_minutes} min</p>
                   </div>
                 )}
@@ -157,12 +157,12 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
               {(item.contact_phone || item.contact_email) && (
                 <div className="flex items-center gap-4 pt-2 border-t border-slate-50">
                   {item.contact_phone && (
-                    <span className="flex items-center gap-1 text-xs text-slate-500">
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Phone className="w-3 h-3" /> {item.contact_phone}
                     </span>
                   )}
                   {item.contact_email && (
-                    <span className="flex items-center gap-1 text-xs text-slate-500">
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Mail className="w-3 h-3" /> {item.contact_email}
                     </span>
                   )}
@@ -171,18 +171,18 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
 
               {/* Notes */}
               {item.notes && (
-                <div className="bg-slate-50 rounded-lg px-3 py-2">
-                  <p className="text-xs text-slate-600">{item.notes}</p>
+                <div className="bg-muted/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-muted-foreground">{item.notes}</p>
                 </div>
               )}
 
               {/* Multi-currency */}
               {item.cost > 0 && item.cost_local && item.currency_local && (
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <span className="text-xs text-slate-500">Cost ({item.currency})</span>
+                  <span className="text-xs text-muted-foreground">Cost ({item.currency})</span>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-slate-900">{item.currency} {item.cost.toLocaleString()}</p>
-                    <p className="text-xs text-slate-400">{item.currency_local} {item.cost_local.toLocaleString()}</p>
+                    <p className="text-sm font-bold text-foreground">{item.currency} {item.cost.toLocaleString()}</p>
+                    <p className="text-xs text-muted-foreground">{item.currency_local} {item.cost_local.toLocaleString()}</p>
                   </div>
                 </div>
               )}

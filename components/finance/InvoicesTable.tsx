@@ -12,16 +12,16 @@ interface InvoicesTableProps {
 }
 
 const statusColors = {
-  draft: { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-300' },
+  draft: { bg: 'bg-muted', text: 'text-slate-700', border: 'border-border' },
   sent: { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-300' },
   paid: { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-300' },
   partially_paid: { bg: 'bg-amber-100', text: 'text-amber-700', border: 'border-amber-300' },
   overdue: { bg: 'bg-red-100', text: 'text-red-700', border: 'border-red-300' },
-  cancelled: { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-300' },
+  cancelled: { bg: 'bg-muted', text: 'text-slate-700', border: 'border-border' },
 }
 
-const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+const formatCurrency = (value: number, currency: string = 'USD') => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(value)
 }
 
 const formatDate = (dateString: string) => {
@@ -53,7 +53,7 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
-        <thead className="bg-slate-50 border-b border-slate-200">
+        <thead className="bg-muted/50 border-b border-border">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
               Invoice Number
@@ -65,10 +65,10 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
               Amount
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
-              Outstanding
+              Status
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
-              Status
+              Priority
             </th>
             <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wide">
               Due Date
@@ -80,9 +80,9 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
         </thead>
         <tbody className="divide-y divide-slate-200">
           {invoices.map((invoice) => {
-            const statusColor = statusColors[invoice.status]
+            const statusColor = statusColors[invoice.status] || statusColors.draft
             return (
-              <tr key={invoice.id} className="hover:bg-slate-50 transition-colors">
+              <tr key={invoice.id} className="hover:bg-muted/50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Link
                     href={`/finance/invoices/${invoice.id}`}
@@ -91,13 +91,9 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
                     {invoice.invoice_number}
                   </Link>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-slate-600">{invoice.customer_id}</td>
-                <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">
-                  {formatCurrency(invoice.total_amount)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-slate-600">
-                  {/* Outstanding will be calculated in detail view */}
-                  <span className="text-xs">—</span>
+                <td className="px-6 py-4 whitespace-nowrap text-muted-foreground">{invoice.customer_id}</td>
+                <td className="px-6 py-4 whitespace-nowrap font-medium text-foreground">
+                  {formatCurrency(invoice.total_amount, invoice.currency)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
@@ -107,13 +103,23 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
                       invoice.status.replace('_', ' ').slice(1)}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatDate(invoice.due_date)}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span
+                    className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                      invoice.priority === 'high' ? 'bg-red-100 text-red-700' : 
+                      invoice.priority === 'low' ? 'bg-slate-100 text-slate-700' : 'bg-blue-100 text-blue-700'
+                    }`}
+                  >
+                    {(invoice.priority || 'normal').toUpperCase()}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-muted-foreground">{formatDate(invoice.due_date)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right flex justify-end gap-2">
                   <Link
                     href={`/finance/invoices/${invoice.id}`}
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-slate-100 transition-colors"
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted transition-colors"
                   >
-                    <ChevronRight className="w-5 h-5 text-slate-600" />
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
                   </Link>
                   {invoice.status !== 'paid' && invoice.status !== 'cancelled' && (
                     <button
