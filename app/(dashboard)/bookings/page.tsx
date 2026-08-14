@@ -3,12 +3,27 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import Link from 'next/link'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { BookingsTable } from '@/components/bookings/BookingsTable'
 import { BookingDetailView } from '@/components/bookings/BookingDetailView'
 import type { Booking } from '@/types'
 
-export default function BookingsPage() {
+import { Suspense } from 'react'
+
+function BookingsContent() {
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const queryBookingId = searchParams.get('id')
+
+  const handleCloseDetail = () => {
+    setSelectedBooking(null)
+    if (queryBookingId) {
+      router.push('/bookings')
+    }
+  }
+
+  const activeBookingId = selectedBooking?.id || queryBookingId
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,12 +47,20 @@ export default function BookingsPage() {
       </div>
 
       {/* Detail View */}
-      {selectedBooking && (
+      {activeBookingId && (
         <BookingDetailView
-          bookingId={selectedBooking.id}
-          onClose={() => setSelectedBooking(null)}
+          bookingId={activeBookingId}
+          onClose={handleCloseDetail}
         />
       )}
     </div>
   )
-}  
+}
+
+export default function BookingsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Loading bookings...</div>}>
+      <BookingsContent />
+    </Suspense>
+  )
+}

@@ -165,7 +165,6 @@ export async function getPaymentMethodsSummary(): Promise<{ method: string; coun
 
   ;(data || []).forEach((payment) => {
     if (!summary[payment.payment_method]) {
-  const supabase = createClient()
       summary[payment.payment_method] = { count: 0, total: 0 }
     }
     summary[payment.payment_method].count += 1

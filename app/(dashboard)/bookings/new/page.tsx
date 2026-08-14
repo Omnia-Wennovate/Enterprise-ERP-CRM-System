@@ -127,7 +127,7 @@ export default function NewBookingPage() {
       }
 
       // Redirect to booking detail
-      router.push(`/bookings/${booking.id}`)
+      router.push(`/bookings?id=${booking.id}`)
     } catch (err) {
       console.error('[v0] Failed to create booking:', err)
       alert('Failed to create booking. Please try again.')

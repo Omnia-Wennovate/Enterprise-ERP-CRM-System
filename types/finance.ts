@@ -74,6 +74,7 @@ export interface Payment {
   bank_reconciled?: boolean
   recorded_by?: string
   notes?: string
+  status?: string
   created_at: string
 }
 
@@ -482,4 +483,162 @@ export interface ProcessRefundFormData {
   refund_amount: number
   supplier_penalty: number
   notes?: string
+}
+
+// ============================================================================
+// PAYMENTS DASHBOARD — Enterprise 2026
+// ============================================================================
+
+export type PaymentStatus = 'completed' | 'pending' | 'failed' | 'refunded'
+
+export interface PaymentAllocation {
+  id: string
+  payment_id: string
+  invoice_id: string
+  amount: number
+  created_at: string
+  // Joined
+  invoice_number?: string
+  invoice_total?: number
+  invoice_remaining?: number
+}
+
+export interface PaymentWithRelations extends Payment {
+  customer_id?: string
+  customer_name?: string
+  customer_email?: string
+  customer_phone?: string
+  invoice_number?: string
+  invoice_total?: number
+  invoice_currency?: string
+  invoice_due_date?: string
+  invoice_status?: string
+  booking_id?: string
+  booking_reference?: string
+  booking_destination?: string
+  recorded_by_name?: string
+  paid_amount?: number
+  remaining_amount?: number
+  allocations?: PaymentAllocation[]
+}
+
+export interface PaymentKPIs {
+  totalPayments: number
+  totalCollected: number
+  paymentsThisMonth: number
+  paymentsThisWeek: number
+  paymentsToday: number
+  outstandingAmount: number
+  collectionRate: number
+  averagePayment: number
+  largestPayment: number
+  overdueAmount: number
+  overdueInvoiceCount: number
+  pendingPayments: number
+  refundedAmount: number
+  refundCount: number
+  averagePaymentDays: number
+  cashCollectedThisYear: number
+  // Comparison
+  prevTotalCollected: number
+  prevTotalPayments: number
+  prevOutstandingAmount: number
+  prevCollectionRate: number
+  prevAveragePayment: number
+  periodLabel: string
+  compareLabel: string
+}
+
+export interface PaymentChartData {
+  collectionTrend: Array<{ date: string; amount: number; count: number }>
+  byMethod: Array<{ method: string; amount: number; count: number; failureRate: number }>
+  byCurrency: Array<{ currency: string; amount: number; count: number }>
+  byStatus: Array<{ status: string; amount: number; count: number }>
+  outstandingTrend: Array<{ date: string; outstanding: number }>
+  agingBuckets: PaymentAgingBucket[]
+  topCustomers: Array<{ customerId: string; customerName: string; totalPaid: number; paymentCount: number }>
+  topAgents: Array<{ agentId: string; agentName: string; totalCollected: number; paymentCount: number }>
+  monthlyCollection: Array<{ month: string; collected: number; outstanding: number; count: number }>
+}
+
+export interface PaymentAgingBucket {
+  bucket: 'current' | '1-30' | '31-60' | '61-90' | '90+'
+  label: string
+  totalAmount: number
+  invoiceCount: number
+  color: string
+}
+
+export interface CollectionHealthScore {
+  score: number
+  grade: 'A' | 'B' | 'C' | 'D' | 'F'
+  color: string
+  status: string
+  factors: Array<{ label: string; score: number; weight: number; description: string }>
+  recommendations: string[]
+}
+
+export interface PaymentFilter {
+  search?: string
+  status?: string
+  paymentMethod?: string
+  currency?: string
+  customerId?: string
+  agentId?: string
+  invoiceId?: string
+  bookingId?: string
+  startDate?: string
+  endDate?: string
+  amountMin?: number
+  amountMax?: number
+  recordedBy?: string
+  limit?: number
+  offset?: number
+  sortBy?: string
+  sortOrder?: 'asc' | 'desc'
+}
+
+export interface CashFlowProjection {
+  period: string
+  expectedAmount: number
+  confidenceLevel: number
+  customerBreakdown: Array<{
+    customerId: string
+    customerName: string
+    outstandingAmount: number
+    expectedDate: string
+    onTimeRate: number
+  }>
+}
+
+export interface PaymentMethodReliability {
+  method: string
+  totalAttempts: number
+  successCount: number
+  failureCount: number
+  failureRate: number
+  totalAmount: number
+  reliabilityScore: 'excellent' | 'good' | 'fair' | 'poor'
+}
+
+export interface CollectionsIntelligence {
+  largestPayment: { amount: number; customerName: string; date: string; invoiceNumber: string }
+  largestCustomer: { customerName: string; totalPaid: number; paymentCount: number }
+  fastestPayer: { customerName: string; avgDays: number; paymentCount: number }
+  slowestPayer: { customerName: string; avgDays: number; paymentCount: number }
+  mostOutstandingCustomer: { customerName: string; outstandingAmount: number; invoiceCount: number }
+  highestCollectionCustomer: { customerName: string; collectionRate: number; totalInvoiced: number }
+  paymentMethodLeader: { method: string; totalAmount: number; percentage: number }
+}
+
+export interface RecordPaymentFormDataV2 {
+  customer_id?: string
+  invoice_id?: string
+  amount: number
+  payment_method: PaymentMethod
+  payment_date: string
+  reference_number?: string
+  notes?: string
+  currency?: string
+  allocations?: Array<{ invoice_id: string; amount: number }>
 }

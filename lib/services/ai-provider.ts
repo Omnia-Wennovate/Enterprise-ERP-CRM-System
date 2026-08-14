@@ -262,18 +262,36 @@ export async function generateWithFallback(
     )
     if (!provider) continue
 
-    try {
-      const result = await provider.generateJSON(systemPrompt, userPrompt, signal)
-      return { result, provider: provider.name, model: provider.model }
-    } catch (err) {
-      // Don't fallback on user cancellation
-      if (err instanceof DOMException && err.name === 'AbortError') {
-        throw err
+    let lastErr: Error | unknown = null
+    const MAX_RETRIES = 2
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const result = await provider.generateJSON(systemPrompt, userPrompt, signal)
+        return { result, provider: provider.name, model: provider.model }
+      } catch (err) {
+        lastErr = err
+        // Don't fallback or retry on user cancellation
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          throw err
+        }
+        
+        const msg = err instanceof Error ? err.message.toLowerCase() : String(err).toLowerCase()
+        const isRetryable = msg.includes('503') || msg.includes('429') || msg.includes('502') || msg.includes('504') || msg.includes('fetch failed') || msg.includes('timeout')
+        
+        if (isRetryable && attempt < MAX_RETRIES) {
+          const delayMs = 1000 * Math.pow(2, attempt)
+          console.warn(`[AI] Provider ${name} attempt ${attempt + 1} failed (${msg.substring(0, 50)}...). Retrying in ${delayMs}ms...`)
+          await new Promise(r => setTimeout(r, delayMs))
+          continue
+        }
+        break // Not retryable or out of retries, break inner loop to move to next provider
       }
-      const message = err instanceof Error ? err.message : String(err)
-      errors.push(`${name}: ${message}`)
-      console.error(`AI provider ${name} failed, trying next...`, message)
     }
+
+    const message = lastErr instanceof Error ? lastErr.message : String(lastErr)
+    errors.push(`${name}: ${message}`)
+    console.error(`AI provider ${name} failed, trying next...`, message)
   }
 
   throw new Error(

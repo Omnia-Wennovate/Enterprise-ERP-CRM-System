@@ -188,16 +188,133 @@ export interface Applicant {
 // ONBOARDING TYPES
 // ============================================================================
 
+export type OnboardingTaskCategory =
+  | 'orientation' | 'it_systems' | 'documentation' | 'training'
+  | 'compliance' | 'finance' | 'team_introduction' | 'workspace'
+  | 'role_specific' | 'equipment' | 'account' | 'documents'
+
+export type OnboardingTaskStatus = 'not_started' | 'in_progress' | 'completed' | 'blocked' | 'overdue'
+export type OnboardingTaskPriority = 'low' | 'medium' | 'high' | 'critical'
+export type OnboardingTaskPhase = 'pre_boarding' | 'day_one'
+export type OnboardingStatus = 'active' | 'at_risk' | 'overdue' | 'blocked' | 'completed' | 'cancelled'
+
 export interface OnboardingTask {
   id: string
   employee_id: string
+  onboarding_id?: string
   task_label: string
-  category: 'account' | 'documents' | 'equipment' | 'training'
+  description?: string
+  category: OnboardingTaskCategory
+  responsible_person_id?: string
+  due_date?: string
+  priority: OnboardingTaskPriority
+  status: OnboardingTaskStatus
+  phase: OnboardingTaskPhase
+  is_required: boolean
   is_completed: boolean
+  sort_order: number
+  notes?: string
   completed_by?: string
   completed_at?: string
   created_at: string
+  updated_at?: string
+  // Joined fields
+  responsible_person?: { first_name: string; last_name: string; avatar_url?: string }
 }
+
+export interface Onboarding {
+  id: string
+  employee_id: string
+  buddy_id?: string
+  template: string
+  status: OnboardingStatus
+  health_score: number
+  start_date?: string
+  target_end_date?: string
+  completed_at?: string
+  created_by?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface OnboardingWithDetails extends Onboarding {
+  employee: {
+    id: string
+    first_name: string
+    last_name: string
+    email: string
+    department?: string
+    position?: string
+    date_joined?: string
+    manager_id?: string
+    avatar_url?: string
+    employment_status: string
+  }
+  buddy?: {
+    id: string
+    first_name: string
+    last_name: string
+    avatar_url?: string
+  }
+  creator?: {
+    first_name: string
+    last_name: string
+  }
+  tasks: OnboardingTask[]
+}
+
+export interface OnboardingKPIs {
+  activeCount: number
+  completionRate: number
+  dueThisWeek: number
+  overdueTasks: number
+  startingSoon: number
+  completedThisMonth: number
+  avgCompletionDays: number
+  atRiskCount: number
+}
+
+export interface OnboardingHealthBreakdown {
+  score: number
+  taskCompletion: number
+  overdueImpact: number
+  blockedImpact: number
+  deadlineProximity: number
+  requiredCompletion: number
+  recommendations: string[]
+}
+
+export interface CreateOnboardingData {
+  employee_id: string
+  buddy_id?: string
+  template: string
+  start_date: string
+  target_end_date?: string
+  created_by?: string
+  tasks: Omit<OnboardingTask, 'id' | 'employee_id' | 'onboarding_id' | 'created_at' | 'updated_at' | 'is_completed' | 'completed_by' | 'completed_at' | 'responsible_person'>[]
+}
+
+export const ONBOARDING_TEMPLATES = [
+  { value: 'standard', label: 'Standard Employee', icon: 'User' },
+  { value: 'sales', label: 'Sales Agent', icon: 'TrendingUp' },
+  { value: 'operations', label: 'Operations Officer', icon: 'Settings' },
+  { value: 'finance', label: 'Finance Staff', icon: 'DollarSign' },
+  { value: 'manager', label: 'Manager', icon: 'Users' },
+  { value: 'custom', label: 'Custom', icon: 'Wrench' },
+] as const
+
+export const TASK_CATEGORIES: { value: OnboardingTaskCategory; label: string }[] = [
+  { value: 'orientation', label: 'Orientation' },
+  { value: 'it_systems', label: 'IT & Systems' },
+  { value: 'documentation', label: 'Documentation' },
+  { value: 'training', label: 'Training' },
+  { value: 'compliance', label: 'Compliance' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'team_introduction', label: 'Team Introduction' },
+  { value: 'workspace', label: 'Workspace' },
+  { value: 'role_specific', label: 'Role Specific' },
+  { value: 'equipment', label: 'Equipment' },
+]
 
 // ============================================================================
 // ASSET TYPES

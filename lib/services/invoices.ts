@@ -112,11 +112,15 @@ export async function getInvoiceById(id: string): Promise<InvoiceDetail | null> 
     .eq('id', invoice.customer_id)
     .single()
 
-  const { data: booking } = await supabase
-    .from('bookings')
-    .select('booking_reference')
-    .eq('id', invoice.booking_id)
-    .single()
+  let bookingReference: string | undefined
+  if (invoice.booking_id) {
+    const { data: booking } = await supabase
+      .from('bookings')
+      .select('booking_reference')
+      .eq('id', invoice.booking_id)
+      .single()
+    bookingReference = booking?.booking_reference
+  }
 
   return {
     ...invoice,
@@ -124,7 +128,7 @@ export async function getInvoiceById(id: string): Promise<InvoiceDetail | null> 
     payments: payments || [],
     outstanding_balance: outstandingBalance,
     customer_name: customer?.company_name,
-    booking_reference: booking?.booking_reference,
+    booking_reference: bookingReference,
   }
 }
 
@@ -225,7 +229,7 @@ export async function createInvoice(formData: CreateInvoiceFormData): Promise<In
       {
         id: invoiceId,
         invoice_number: invoiceNumber,
-        booking_id: formData.booking_id || null,
+        ...(formData.booking_id ? { booking_id: formData.booking_id } : {}),
         customer_id: customerId,
         amount: formData.amount,
         tax: formData.tax,
