@@ -96,7 +96,7 @@ export default function PaymentReceipt({ payment, open, onClose }: PaymentReceip
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-teal-700 bg-teal-500/10 hover:bg-teal-500/20 rounded-xl transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-omnia-gold-dark bg-omnia-gold/100/10 hover:bg-omnia-gold/100/20 rounded-xl transition-colors"
               >
                 <Printer className="w-4 h-4" />
                 Print
@@ -114,7 +114,7 @@ export default function PaymentReceipt({ payment, open, onClose }: PaymentReceip
               
               <div className="flex justify-between items-start border-b-2 border-slate-100 dark:border-slate-800 pb-8 mb-8">
                 <div>
-                  <div className="flex items-center gap-2 mb-3 text-teal-600 dark:text-teal-500">
+                  <div className="flex items-center gap-2 mb-3 text-omnia-gold dark:text-omnia-gold">
                     <Building2 className="w-8 h-8" />
                     <h1 className="text-2xl font-bold tracking-tight">OMNIA ERP</h1>
                   </div>

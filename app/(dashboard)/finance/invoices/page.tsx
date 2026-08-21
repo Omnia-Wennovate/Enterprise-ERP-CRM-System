@@ -309,19 +309,19 @@ export default function InvoicesPage() {
             Array.from({ length: 12 }).map((_, i) => <InvoiceKPICardSkeleton key={i}/>)
           ) : kpis ? (
             <>
-              <InvoiceKPICard label="Total Revenue" value={kpis.totalRevenue} format="currency" icon={DollarSign} iconColor="text-blue-600" iconBg="bg-blue-100 dark:bg-blue-900/30" change={revChange} compareLabel={ranges.compareLabel} onClick={() => handleKPIClick('paid')}/>
+              <InvoiceKPICard label="Total Revenue" value={kpis.totalRevenue} format="currency" icon={DollarSign} iconColor="text-omnia-gold" iconBg="bg-blue-100 dark:bg-blue-900/30" change={revChange} compareLabel={ranges.compareLabel} onClick={() => handleKPIClick('paid')}/>
               <InvoiceKPICard label="Total Invoices" value={kpis.totalInvoices} format="number" icon={FileText} iconColor="text-slate-600" iconBg="bg-slate-100 dark:bg-slate-800" onClick={() => handleKPIClick('all')}/>
               <InvoiceKPICard label="Paid" value={kpis.paidCount} format="number" icon={CheckCircle} iconColor="text-emerald-600" iconBg="bg-emerald-100 dark:bg-emerald-900/30" change={(kpis.paidCount - kpis.prevPaidCount) / Math.max(1, kpis.prevPaidCount) * 100} compareLabel={ranges.compareLabel} onClick={() => handleKPIClick('paid')}/>
               <InvoiceKPICard label="Overdue" value={kpis.overdueCount} format="number" icon={AlertTriangle} iconColor="text-red-600" iconBg="bg-red-100 dark:bg-red-900/30" onClick={() => handleKPIClick('overdue')}/>
               <InvoiceKPICard label="Outstanding" value={kpis.outstandingBalance} format="currency" icon={Clock} iconColor="text-amber-600" iconBg="bg-amber-100 dark:bg-amber-900/30" change={outstandingChange} compareLabel={ranges.compareLabel} onClick={() => handleKPIClick('overdue')}/>
-              <InvoiceKPICard label="Collection Rate" value={kpis.collectionRate} format="percent" icon={TrendingUp} iconColor="text-teal-600" iconBg="bg-teal-100 dark:bg-teal-900/30" change={collectionChange} compareLabel={ranges.compareLabel}/>
+              <InvoiceKPICard label="Collection Rate" value={kpis.collectionRate} format="percent" icon={TrendingUp} iconColor="text-omnia-gold" iconBg="bg-omnia-gold/15 dark:bg-teal-900/30" change={collectionChange} compareLabel={ranges.compareLabel}/>
               <InvoiceKPICard label="Draft" value={kpis.draftCount} format="number" icon={FileText} iconColor="text-slate-500" iconBg="bg-slate-100 dark:bg-slate-800" onClick={() => handleKPIClick('draft')}/>
               <InvoiceKPICard label="Sent" value={kpis.sentCount} format="number" icon={TrendingUp} iconColor="text-blue-500" iconBg="bg-blue-100 dark:bg-blue-900/30" onClick={() => handleKPIClick('sent')}/>
               <InvoiceKPICard label="Partially Paid" value={kpis.partiallyPaidCount} format="number" icon={CreditCard} iconColor="text-purple-600" iconBg="bg-purple-100 dark:bg-purple-900/30" onClick={() => handleKPIClick('partially_paid')}/>
-              <InvoiceKPICard label="Cancelled" value={kpis.cancelledCount} format="number" icon={XCircle} iconColor="text-gray-500" iconBg="bg-gray-100 dark:bg-gray-800" onClick={() => handleKPIClick('cancelled')}/>
+              <InvoiceKPICard label="Cancelled" value={kpis.cancelledCount} format="number" icon={XCircle} iconColor="text-muted-foreground" iconBg="bg-muted dark:bg-gray-800" onClick={() => handleKPIClick('cancelled')}/>
               <InvoiceKPICard label="Avg. Invoice" value={kpis.avgInvoiceValue} format="currency" icon={BarChart2} iconColor="text-indigo-600" iconBg="bg-indigo-100 dark:bg-indigo-900/30"/>
-              <InvoiceKPICard label="Tax Collected" value={kpis.taxCollected} format="currency" icon={DollarSign} iconColor="text-teal-600" iconBg="bg-teal-100 dark:bg-teal-900/30"/>
-              <InvoiceKPICard label="Expected Revenue" value={kpis.expectedRevenue} format="currency" icon={TrendingUp} iconColor="text-blue-600" iconBg="bg-blue-100 dark:bg-blue-900/30"/>
+              <InvoiceKPICard label="Tax Collected" value={kpis.taxCollected} format="currency" icon={DollarSign} iconColor="text-omnia-gold" iconBg="bg-omnia-gold/15 dark:bg-teal-900/30"/>
+              <InvoiceKPICard label="Expected Revenue" value={kpis.expectedRevenue} format="currency" icon={TrendingUp} iconColor="text-omnia-gold" iconBg="bg-blue-100 dark:bg-blue-900/30"/>
               <InvoiceKPICard label="Avg. Payment Days" value={kpis.avgPaymentDays} format="days" icon={Clock} iconColor="text-amber-600" iconBg="bg-amber-100 dark:bg-amber-900/30" subtitle={kpis.avgPaymentDays > 30 ? 'Slow — follow up' : kpis.avgPaymentDays > 0 ? 'Healthy' : 'No data'}/>
               <InvoiceKPICard label="Refund Amount" value={kpis.refundAmount} format="currency" icon={TrendingDown} iconColor="text-red-500" iconBg="bg-red-100 dark:bg-red-900/30"/>
             </>
@@ -342,7 +342,7 @@ export default function InvoicesPage() {
               key={t.key}
               onClick={() => setTab(t.key)}
               className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-all -mb-px ${
-                tab === t.key ? 'border-blue-500 text-blue-600' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                tab === t.key ? 'border-blue-500 text-omnia-gold' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
               }`}
             >
               <t.icon size={14}/>
@@ -431,7 +431,7 @@ export default function InvoicesPage() {
                             Total outstanding: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(kpis.outstandingBalance)}
                           </div>
                         </div>
-                        <button onClick={() => handleKPIClick('overdue')} className="ml-auto text-xs text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap">View →</button>
+                        <button onClick={() => handleKPIClick('overdue')} className="ml-auto text-xs text-omnia-gold hover:text-blue-700 font-medium whitespace-nowrap">View →</button>
                       </div>
                       {kpis.collectionRate < 75 && (
                         <div className="flex items-start gap-3 p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-800/50 rounded-xl">

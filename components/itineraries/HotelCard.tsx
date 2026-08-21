@@ -63,12 +63,12 @@ export function HotelCard({ item }: HotelCardProps) {
         {/* Amenities */}
         <div className="flex items-center gap-3 flex-wrap">
           {meta.breakfast_included && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-teal-50 text-teal-700 rounded-md text-xs font-medium">
+            <span className="flex items-center gap-1 px-2 py-1 bg-omnia-gold/10 text-omnia-gold-dark rounded-md text-xs font-medium">
               <Coffee className="w-3 h-3" /> Breakfast
             </span>
           )}
           {meta.wifi_included && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-medium">
+            <span className="flex items-center gap-1 px-2 py-1 bg-omnia-gold/5 text-blue-700 rounded-md text-xs font-medium">
               <Wifi className="w-3 h-3" /> WiFi
             </span>
           )}

@@ -87,7 +87,7 @@ export function TransportCard({ item }: TransportCardProps) {
 
         {/* Meeting Point */}
         {meta.meeting_point && (
-          <div className="bg-blue-50 rounded-lg px-3 py-2 border border-blue-100">
+          <div className="bg-omnia-gold/5 rounded-lg px-3 py-2 border border-blue-100">
             <p className="text-xs text-blue-800 flex items-center gap-1">
               <MapPin className="w-3 h-3" /> <strong>Meeting Point:</strong> {meta.meeting_point}
             </p>

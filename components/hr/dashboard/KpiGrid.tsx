@@ -79,7 +79,7 @@ export function KpiGrid({ stats }: { stats: any }) {
     { title: 'Inactive Employees', value: stats.inactiveEmployees, trend: -1.2, icon: XCircle, colorClass: 'from-slate-500 to-slate-700' },
     { title: 'New Hires', value: 3, trend: 15.0, icon: UserPlus, colorClass: 'from-indigo-500 to-indigo-700' },
     { title: 'Turnover Rate', value: '2.1%', trend: -0.5, trendLabel: 'vs last quarter', icon: UserMinus, colorClass: 'from-red-500 to-red-700' },
-    { title: 'Attendance Rate', value: `${stats.attendanceRate}%`, trend: 1.2, icon: Target, colorClass: 'from-teal-500 to-teal-700' },
+    { title: 'Attendance Rate', value: `${stats.attendanceRate}%`, trend: 1.2, icon: Target, colorClass: 'from-omnia-gold/100 to-teal-700' },
     { title: 'Late Today', value: stats.lateEmployees, trend: -5.0, trendLabel: 'vs avg', icon: Clock, colorClass: 'from-yellow-500 to-yellow-700' },
     { title: 'Absent Today', value: stats.absentToday, trend: -2.0, trendLabel: 'vs avg', icon: AlertTriangle, colorClass: 'from-orange-500 to-orange-700' },
     { title: 'On Leave', value: stats.onLeave, trend: 0, trendLabel: 'vs avg', icon: Calendar, colorClass: 'from-purple-500 to-purple-700' },

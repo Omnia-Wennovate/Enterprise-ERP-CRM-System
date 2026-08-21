@@ -56,7 +56,7 @@ export default function AttendancePage() {
       case 'absent':
         return <div className="w-5 h-5 bg-red-600 rounded-full"></div>
       default:
-        return <Calendar className="w-5 h-5 text-blue-600" />
+        return <Calendar className="w-5 h-5 text-omnia-gold" />
     }
   }
 
@@ -88,7 +88,7 @@ export default function AttendancePage() {
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-teal-600"
+            className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-omnia-gold"
           />
         </div>
 
@@ -98,7 +98,7 @@ export default function AttendancePage() {
             { label: 'Present', count: 2, color: 'bg-green-50' },
             { label: 'Late', count: 1, color: 'bg-yellow-50' },
             { label: 'Absent', count: 0, color: 'bg-red-50' },
-            { label: 'On Leave', count: 0, color: 'bg-blue-50' },
+            { label: 'On Leave', count: 0, color: 'bg-omnia-gold/5' },
           ].map((stat) => (
             <div key={stat.label} className={`${stat.color} rounded-lg p-4`}>
               <p className="text-muted-foreground text-sm font-medium">{stat.label}</p>

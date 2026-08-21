@@ -170,7 +170,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
           <div>
             <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Linked Booking</label>
             <select
-              className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm"
+              className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm"
               value={selectedBookingId}
               onChange={(e) => { setSelectedBookingId(e.target.value); setValue('booking_id', e.target.value) }}
             >
@@ -190,7 +190,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
                   <button
                     type="button"
                     onClick={() => setBulkMode(!bulkMode)}
-                    className="flex items-center gap-1.5 text-xs font-medium text-teal-600 hover:text-teal-800"
+                    className="flex items-center gap-1.5 text-xs font-medium text-omnia-gold hover:text-foreground"
                   >
                     <Users className="w-3.5 h-3.5" />
                     {bulkMode ? 'Single Mode' : `Bulk Create (${travelers.length} travelers)`}
@@ -199,7 +199,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
               </div>
               {!bulkMode ? (
                 <select
-                  className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm"
+                  className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm"
                   {...register('traveler_id', { required: 'Select a traveler' })}
                 >
                   <option value="">— Select Traveler —</option>
@@ -210,12 +210,12 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
                   ))}
                 </select>
               ) : (
-                <div className="bg-teal-50 border border-teal-200 rounded-lg p-3 text-sm text-teal-800">
+                <div className="bg-omnia-gold/10 border border-omnia-gold/20 rounded-lg p-3 text-sm text-foreground">
                   <p className="font-medium flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />
                     Bulk mode: Will create visa applications for all {travelers.length} travelers
                   </p>
-                  <p className="text-xs text-teal-600 mt-1">Shared fields below will apply to all. Passport data will be pulled from each traveler individually.</p>
+                  <p className="text-xs text-omnia-gold mt-1">Shared fields below will apply to all. Passport data will be pulled from each traveler individually.</p>
                 </div>
               )}
               {errors.traveler_id && !bulkMode && <p className="text-xs text-red-500 mt-1">{errors.traveler_id.message}</p>}
@@ -228,7 +228,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Destination Country *</label>
               <input
                 type="text"
-                className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm"
+                className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm"
                 placeholder="e.g. United States"
                 {...register('destination_country', { required: 'Required' })}
               />
@@ -236,7 +236,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
             </div>
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Visa Type *</label>
-              <select className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('visa_type', { required: 'Required' })}>
+              <select className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('visa_type', { required: 'Required' })}>
                 {Object.entries(VISA_TYPE_CONFIG).map(([key, cfg]) => (
                   <option key={key} value={key}>{cfg.label}</option>
                 ))}
@@ -248,7 +248,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Priority</label>
-              <select className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('priority')}>
+              <select className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('priority')}>
                 {Object.entries(VISA_PRIORITY_CONFIG).map(([key, cfg]) => (
                   <option key={key} value={key}>{cfg.label}</option>
                 ))}
@@ -258,7 +258,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Purpose of Travel</label>
               <input
                 type="text"
-                className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm"
+                className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm"
                 placeholder="e.g. Tourism, Business Meeting"
                 {...register('purpose_of_travel')}
               />
@@ -269,7 +269,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
           {visa && (
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Status</label>
-              <select className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('status')}>
+              <select className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('status')}>
                 <option value="not_started">Not Started</option>
                 <option value="documents_collecting">Collecting Documents</option>
                 <option value="documents_submitted">Documents Submitted</option>
@@ -295,19 +295,19 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Submission Date</label>
-              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('submission_date')} />
+              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('submission_date')} />
             </div>
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Appointment Date</label>
-              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('appointment_date')} />
+              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('appointment_date')} />
             </div>
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Biometric Date</label>
-              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('biometric_date')} />
+              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('biometric_date')} />
             </div>
             <div>
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Expected Decision</label>
-              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm" {...register('expected_decision_date')} />
+              <input type="date" className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm" {...register('expected_decision_date')} />
             </div>
           </div>
 
@@ -315,7 +315,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
           <div>
             <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Notes</label>
             <textarea
-              className="w-full border-border rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm"
+              className="w-full border-border rounded-lg shadow-sm focus:border-omnia-gold focus:ring-teal-500 text-sm"
               rows={3}
               placeholder="Any additional notes..."
               {...register('notes')}
@@ -332,7 +332,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
                 type="button"
                 onClick={handleBulk}
                 disabled={saving}
-                className="px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-teal-600 rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-omnia-gold rounded-lg hover:bg-omnia-gold-dark transition-colors disabled:opacity-50 flex items-center gap-2"
               >
                 {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                 Create for All {travelers.length} Travelers
@@ -341,7 +341,7 @@ export function VisaForm({ visa, onSave, onClose, onBulkCreate }: VisaFormProps)
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-teal-600 rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-omnia-gold rounded-lg hover:bg-omnia-gold-dark transition-colors disabled:opacity-50 flex items-center gap-2"
               >
                 {saving && <Loader2 className="w-4 h-4 animate-spin" />}
                 {visa ? 'Update Application' : 'Create Application'}

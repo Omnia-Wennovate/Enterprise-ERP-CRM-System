@@ -36,12 +36,12 @@ export default function TestSupabasePage() {
 
         <button
           onClick={testConnection}
-          className="px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 mb-4"
+          className="px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark mb-4"
         >
           Test Connection & Insert Demo Data
         </button>
 
-        <div className="bg-blue-50 p-4 rounded-lg mb-4">
+        <div className="bg-omnia-gold/5 p-4 rounded-lg mb-4">
           <p className="text-sm text-blue-900">{status}</p>
         </div>
 

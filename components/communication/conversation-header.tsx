@@ -42,7 +42,7 @@ export function ConversationHeader({
       <div className="flex items-center gap-3">
         {avatar ? (
           <div className="relative flex-shrink-0">
-            <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center font-semibold text-teal-700">
+            <div className="w-12 h-12 rounded-full bg-omnia-gold/15 flex items-center justify-center font-semibold text-omnia-gold-dark">
               {avatar}
             </div>
             {status !== 'offline' && (

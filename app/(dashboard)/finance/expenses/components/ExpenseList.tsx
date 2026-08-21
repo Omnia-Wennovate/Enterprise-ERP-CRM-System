@@ -91,7 +91,7 @@ export function ExpenseList({
     return (
       <div className="bg-card border border-border rounded-xl overflow-hidden">
         <div className="p-12 text-center text-muted-foreground">
-          <div className="inline-block w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mb-3"/>
+          <div className="inline-block w-8 h-8 border-2 border-omnia-gold border-t-transparent rounded-full animate-spin mb-3"/>
           <p>Loading expenses...</p>
         </div>
       </div>
@@ -137,7 +137,7 @@ export function ExpenseList({
                     className="hover:bg-muted/30 transition-colors"
                   >
                     <td className="px-4 py-3 whitespace-nowrap">
-                      <button onClick={() => onView(exp)} className="text-teal-600 font-semibold hover:text-teal-700">
+                      <button onClick={() => onView(exp)} className="text-omnia-gold font-semibold hover:text-omnia-gold-dark">
                         {exp.expense_number ?? 'EXP-???'}
                       </button>
                     </td>
@@ -178,15 +178,15 @@ export function ExpenseList({
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-center">
                       {(exp.attachment_count ?? 0) > 0 ? (
-                        <span className="flex items-center gap-1 text-teal-600 text-xs font-medium">
+                        <span className="flex items-center gap-1 text-omnia-gold text-xs font-medium">
                           <Paperclip size={12}/>{exp.attachment_count}
                         </span>
                       ) : <span className="text-muted-foreground text-xs">-</span>}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap relative">
                       <div className="flex items-center gap-1">
-                        <button onClick={() => onView(exp)} title="View" className="p-1.5 rounded-lg hover:bg-teal-50 text-teal-600 transition-colors"><Eye size={14}/></button>
-                        <button onClick={() => onEdit(exp)} title="Edit" className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"><Pencil size={14}/></button>
+                        <button onClick={() => onView(exp)} title="View" className="p-1.5 rounded-lg hover:bg-omnia-gold/10 text-omnia-gold transition-colors"><Eye size={14}/></button>
+                        <button onClick={() => onEdit(exp)} title="Edit" className="p-1.5 rounded-lg hover:bg-omnia-gold/5 text-omnia-gold transition-colors"><Pencil size={14}/></button>
                         <button onClick={() => handlePrint(exp)} title="Print" className="p-1.5 rounded-lg hover:bg-slate-50 text-slate-600 transition-colors"><Printer size={14}/></button>
                         <div className="relative">
                           <button

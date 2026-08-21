@@ -100,8 +100,8 @@ export default function PaymentDetailDrawer({ payment, open, onClose }: PaymentD
             {/* Header */}
             <div className="sticky top-0 z-10 bg-card/95 backdrop-blur-sm border-b border-border/30 px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center">
-                  <DollarSign className="w-5 h-5 text-teal-600" />
+                <div className="w-10 h-10 rounded-xl bg-omnia-gold/100/10 flex items-center justify-center">
+                  <DollarSign className="w-5 h-5 text-omnia-gold" />
                 </div>
                 <div>
                   <h2 className="text-base font-bold text-foreground">Payment Details</h2>
@@ -120,7 +120,7 @@ export default function PaymentDetailDrawer({ payment, open, onClose }: PaymentD
                 )}
                 <button
                   onClick={() => setShowReceipt(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-teal-600 bg-teal-500/10 hover:bg-teal-500/20 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-omnia-gold bg-omnia-gold/100/10 hover:bg-omnia-gold/100/20 transition-colors"
                 >
                   <Printer className="w-4 h-4" />
                   Receipt

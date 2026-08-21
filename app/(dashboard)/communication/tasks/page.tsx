@@ -74,7 +74,7 @@ export default function TasksPage() {
               <Filter className="w-5 h-5" />
               Filter
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+            <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
               <Plus className="w-5 h-5" />
               New Task
             </button>

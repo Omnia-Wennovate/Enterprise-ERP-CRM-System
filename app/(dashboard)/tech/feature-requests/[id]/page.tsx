@@ -381,7 +381,7 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                           <div className="space-y-2">
                             <label className="flex items-center gap-2 cursor-pointer">
                               <input type="radio" checked={!createNewProject} onChange={() => setCreateNewProject(false)}
-                                className="accent-[#0A8FA8]" />
+                                className="accent-omnia-gold" />
                               <span className="text-sm text-foreground">Add to existing project</span>
                             </label>
                             {!createNewProject && (
@@ -395,7 +395,7 @@ export default function FeatureRequestDetailPage({ params }: { params: Promise<{
                             )}
                             <label className="flex items-center gap-2 cursor-pointer">
                               <input type="radio" checked={createNewProject} onChange={() => setCreateNewProject(true)}
-                                className="accent-[#0A8FA8]" />
+                                className="accent-omnia-gold" />
                               <span className="text-sm text-foreground">Create new project from this request</span>
                             </label>
                           </div>

@@ -148,7 +148,7 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
       <div className="p-4 space-y-3">
         {/* Title & Booking Ref */}
         <div>
-          <h4 className="font-semibold text-foreground text-sm line-clamp-1 group-hover:text-teal-700 transition-colors">
+          <h4 className="font-semibold text-foreground text-sm line-clamp-1 group-hover:text-omnia-gold-dark transition-colors">
             {itinerary.title}
           </h4>
           {booking && (
@@ -186,7 +186,7 @@ export function ItineraryCard({ itinerary, onOpen, onEdit, onDuplicate, onDelete
           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-muted/50 rounded text-xs text-muted-foreground font-medium">
             <MapPin className="w-3 h-3" /> {travelTypeLabel}
           </span>
-          <span className="flex items-center gap-1 text-xs text-teal-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="flex items-center gap-1 text-xs text-omnia-gold font-medium opacity-0 group-hover:opacity-100 transition-opacity">
             Open <ChevronRight className="w-3.5 h-3.5" />
           </span>
         </div>

@@ -66,7 +66,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             placeholder="Search expense number, employee, vendor, description, reference..."
             value={filters.search}
             onChange={(e) => update('search', e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-foreground placeholder:text-muted-foreground"
+            className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 text-foreground placeholder:text-muted-foreground"
             id="expense-search"
           />
           {filters.search && (
@@ -83,15 +83,15 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
           onClick={() => setShowAdvanced(!showAdvanced)}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
             showAdvanced || activeCount > 0
-              ? 'bg-teal-50 text-teal-700 border-teal-300'
-              : 'bg-muted text-muted-foreground border-border hover:border-teal-300'
+              ? 'bg-omnia-gold/10 text-omnia-gold-dark border-omnia-gold/40'
+              : 'bg-muted text-muted-foreground border-border hover:border-omnia-gold/40'
           }`}
           id="expense-filter-toggle"
         >
           <Filter size={14} />
           Filters
           {activeCount > 0 && (
-            <span className="bg-teal-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            <span className="bg-omnia-gold text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
               {activeCount}
             </span>
           )}
@@ -117,7 +117,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.category}
               onChange={(e) => update('category', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-category"
             >
               <option value="">All categories</option>
@@ -131,7 +131,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.department}
               onChange={(e) => update('department', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-department"
             >
               <option value="">All departments</option>
@@ -145,7 +145,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.status}
               onChange={(e) => update('status', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-status"
             >
               <option value="">All statuses</option>
@@ -159,7 +159,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.approval_status}
               onChange={(e) => update('approval_status', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-approval"
             >
               <option value="">All approvals</option>
@@ -173,7 +173,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.payment_method}
               onChange={(e) => update('payment_method', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-payment-method"
             >
               <option value="">All methods</option>
@@ -187,7 +187,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             <select
               value={filters.currency}
               onChange={(e) => update('currency', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-currency"
             >
               <option value="">All currencies</option>
@@ -202,7 +202,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
               type="date"
               value={filters.date_from}
               onChange={(e) => update('date_from', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-date-from"
             />
           </div>
@@ -214,7 +214,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
               type="date"
               value={filters.date_to}
               onChange={(e) => update('date_to', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-date-to"
             />
           </div>
@@ -227,7 +227,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
               placeholder="0"
               value={filters.amount_min}
               onChange={(e) => update('amount_min', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-amount-min"
             />
           </div>
@@ -238,7 +238,7 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
               placeholder="No limit"
               value={filters.amount_max}
               onChange={(e) => update('amount_max', e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               id="filter-amount-max"
             />
           </div>
@@ -253,10 +253,10 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
             .map(([key, value]) => (
               <span
                 key={key}
-                className="inline-flex items-center gap-1 px-2 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-medium"
+                className="inline-flex items-center gap-1 px-2 py-1 bg-omnia-gold/15 text-omnia-gold-dark rounded-full text-xs font-medium"
               >
                 {key.replace(/_/g, ' ')}: {value}
-                <button onClick={() => update(key as keyof ExpenseFilters, '')} className="hover:text-teal-900">
+                <button onClick={() => update(key as keyof ExpenseFilters, '')} className="hover:text-foreground">
                   <X size={10} />
                 </button>
               </span>

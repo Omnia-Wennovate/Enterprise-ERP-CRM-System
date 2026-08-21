@@ -15,12 +15,12 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
 
   const getIcon = (type: string) => {
     switch (type?.toLowerCase()) {
-      case 'laptop': case 'desktop': return <Laptop className="w-5 h-5 text-teal-600" />
-      case 'phone': case 'tablet': return <Smartphone className="w-5 h-5 text-teal-600" />
-      case 'server': case 'network device': case 'router': return <Server className="w-5 h-5 text-teal-600" />
-      case 'camera': case 'projector': return <Video className="w-5 h-5 text-teal-600" />
-      case 'printer': case 'scanner': return <Printer className="w-5 h-5 text-teal-600" />
-      default: return <Package className="w-5 h-5 text-teal-600" />
+      case 'laptop': case 'desktop': return <Laptop className="w-5 h-5 text-omnia-gold" />
+      case 'phone': case 'tablet': return <Smartphone className="w-5 h-5 text-omnia-gold" />
+      case 'server': case 'network device': case 'router': return <Server className="w-5 h-5 text-omnia-gold" />
+      case 'camera': case 'projector': return <Video className="w-5 h-5 text-omnia-gold" />
+      case 'printer': case 'scanner': return <Printer className="w-5 h-5 text-omnia-gold" />
+      default: return <Package className="w-5 h-5 text-omnia-gold" />
     }
   }
 
@@ -78,11 +78,11 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
             <div key={category} className="flex-shrink-0 min-w-[200px] border border-border rounded-lg p-3 bg-muted/30">
               <div className="font-medium text-foreground flex justify-between">
                 <span>{category}</span>
-                <span className="text-teal-600 font-bold">{counts.total}</span>
+                <span className="text-omnia-gold font-bold">{counts.total}</span>
               </div>
               <div className="text-xs text-muted-foreground mt-2 grid grid-cols-2 gap-1">
                 <div>Available: <span className="text-emerald-600 font-medium">{counts.available}</span></div>
-                <div>Assigned: <span className="text-blue-600 font-medium">{counts.assigned}</span></div>
+                <div>Assigned: <span className="text-omnia-gold font-medium">{counts.assigned}</span></div>
                 <div>Maint: <span className="text-amber-600 font-medium">{counts.maintenance}</span></div>
                 <div>Damaged: <span className="text-red-600 font-medium">{counts.damaged}</span></div>
               </div>
@@ -100,7 +100,7 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
               placeholder="Search by code, name, serial..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-border focus:ring-2 focus:ring-teal-500 outline-none"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-border focus:ring-2 focus:ring-omnia-gold-500 outline-none"
             />
           </div>
           {activeFilter && activeFilter.value && (
@@ -115,7 +115,7 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
         
         <button 
           onClick={onAddAsset}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-omnia-gold text-white rounded-lg hover:bg-omnia-gold-dark"
         >
           <Plus size={18} />
           Add New Asset
@@ -153,7 +153,7 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
                   <tr key={asset.id} className="hover:bg-muted/30">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-teal-50 rounded-lg">
+                        <div className="p-2 bg-omnia-gold/10 rounded-lg">
                           {getIcon(asset.category)}
                         </div>
                         <div>
@@ -174,7 +174,7 @@ export function InventoryOverview({ assets, activeFilter, onClearFilter, onAddAs
                     <td className="px-6 py-4">{asset.department || '—'}</td>
                     <td className="px-6 py-4">{assigneeName}</td>
                     <td className="px-6 py-4">
-                      <button className="text-teal-600 hover:text-teal-800 font-medium text-sm mr-3">
+                      <button className="text-omnia-gold hover:text-foreground font-medium text-sm mr-3">
                         View
                       </button>
                     </td>

@@ -49,7 +49,7 @@ export default function RefundsPage() {
           </div>
           <div className="bg-card rounded-lg shadow p-6">
             <p className="text-muted-foreground text-sm font-medium">Approved</p>
-            <p className="text-2xl font-bold text-blue-600 mt-2">{approvedRefunds.length}</p>
+            <p className="text-2xl font-bold text-omnia-gold mt-2">{approvedRefunds.length}</p>
           </div>
           <div className="bg-card rounded-lg shadow p-6">
             <p className="text-muted-foreground text-sm font-medium">Completed</p>

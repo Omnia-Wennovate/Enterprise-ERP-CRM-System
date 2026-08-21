@@ -84,14 +84,14 @@ export default function AssetsPage() {
           <div className="flex bg-muted/50 p-1 rounded-xl border border-border">
             <button 
               onClick={() => { setViewMode('dashboard'); setFilter(null) }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${viewMode === 'dashboard' ? 'bg-white shadow-sm text-teal-700' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${viewMode === 'dashboard' ? 'bg-white shadow-sm text-omnia-gold-dark' : 'text-slate-600 hover:text-slate-900'}`}
             >
               <LayoutDashboard size={18} />
               <span className="hidden sm:inline">Executive Dashboard</span>
             </button>
             <button 
               onClick={() => setViewMode('inventory')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${viewMode === 'inventory' ? 'bg-white shadow-sm text-teal-700' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${viewMode === 'inventory' ? 'bg-white shadow-sm text-omnia-gold-dark' : 'text-slate-600 hover:text-slate-900'}`}
             >
               <List size={18} />
               <span className="hidden sm:inline">Inventory</span>
@@ -109,7 +109,7 @@ export default function AssetsPage() {
         {/* Content Area */}
         {loading ? (
           <div className="h-64 flex flex-col items-center justify-center text-muted-foreground">
-            <Loader2 className="w-8 h-8 animate-spin mb-4 text-teal-600" />
+            <Loader2 className="w-8 h-8 animate-spin mb-4 text-omnia-gold" />
             <p>Loading enterprise asset data...</p>
           </div>
         ) : (

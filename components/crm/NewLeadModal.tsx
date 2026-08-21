@@ -78,8 +78,8 @@ function FormField({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 uppercase tracking-wider">
-        {Icon && <Icon className="w-3.5 h-3.5 text-gray-400" />}
+      <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+        {Icon && <Icon className="w-3.5 h-3.5 text-muted-foreground" />}
         {label}
         {required && <span className="text-red-500">*</span>}
       </label>
@@ -101,22 +101,22 @@ function FormField({
 function SectionHeader({ icon: Icon, title }: { icon: React.ComponentType<{ className?: string }>; title: string }) {
   return (
     <div className="flex items-center gap-2 pb-2 mb-4 border-b border-gray-100">
-      <div className="p-1.5 rounded-md bg-teal-50">
-        <Icon className="w-4 h-4 text-teal-600" />
+      <div className="p-1.5 rounded-md bg-omnia-gold/10">
+        <Icon className="w-4 h-4 text-omnia-gold" />
       </div>
-      <h3 className="text-sm font-bold text-gray-800">{title}</h3>
+      <h3 className="text-sm font-bold text-foreground">{title}</h3>
     </div>
   )
 }
 
 const inputClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all duration-200 hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
 
 const selectClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all duration-200 hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
 
 const textareaClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all duration-200 hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 resize-none placeholder:text-gray-300'
 
 const inputErrorClass = 'border-red-300 focus:border-red-400 focus:ring-red-400/20'
 
@@ -339,20 +339,20 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
             {/* ============================================================ */}
             {/* HEADER */}
             {/* ============================================================ */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-teal-50 to-cyan-50 flex-shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-omnia-gold/10 to-cyan-50 flex-shrink-0">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-teal-600 rounded-xl shadow-lg shadow-teal-200">
+                <div className="p-2 bg-omnia-gold rounded-xl shadow-lg shadow-teal-200">
                   <Sparkles className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-gray-900">Create New Lead</h2>
-                  <p className="text-xs text-gray-500">Fill in the details to add a new lead to your pipeline</p>
+                  <h2 className="text-lg font-bold text-foreground">Create New Lead</h2>
+                  <p className="text-xs text-muted-foreground">Fill in the details to add a new lead to your pipeline</p>
                 </div>
               </div>
               <button
                 onClick={handleClose}
                 disabled={isSaving}
-                className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-card/60 transition-all disabled:opacity-50"
+                className="p-2 rounded-lg text-muted-foreground hover:text-muted-foreground hover:bg-card/60 transition-all disabled:opacity-50"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -513,10 +513,10 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                             {...register('visa_required')}
                             type="checkbox"
                             id="visa_required"
-                            className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
+                            className="w-4 h-4 rounded border-border text-omnia-gold focus:ring-teal-500 cursor-pointer"
                           />
-                          <label htmlFor="visa_required" className="text-sm text-gray-700 cursor-pointer flex items-center gap-1.5">
-                            <Shield className="w-3.5 h-3.5 text-gray-400" />
+                          <label htmlFor="visa_required" className="text-sm text-foreground cursor-pointer flex items-center gap-1.5">
+                            <Shield className="w-3.5 h-3.5 text-muted-foreground" />
                             Visa Required
                           </label>
                         </div>
@@ -652,13 +652,13 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                       <div className="space-y-3">
                         <div
                           onClick={() => fileInputRef.current?.click()}
-                          className="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center cursor-pointer hover:border-teal-300 hover:bg-teal-50/30 transition-all group"
+                          className="border-2 border-dashed border-border rounded-xl p-4 text-center cursor-pointer hover:border-omnia-gold/40 hover:bg-omnia-gold/10/30 transition-all group"
                         >
                           <Upload className="w-8 h-8 text-gray-300 mx-auto mb-2 group-hover:text-teal-400 transition-colors" />
-                          <p className="text-sm text-gray-500 group-hover:text-teal-600">
+                          <p className="text-sm text-muted-foreground group-hover:text-omnia-gold">
                             Click to upload files
                           </p>
-                          <p className="text-xs text-gray-400 mt-1">
+                          <p className="text-xs text-muted-foreground mt-1">
                             PDF, Images, Documents (max 10MB each)
                           </p>
                           <input
@@ -678,17 +678,17 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                                 key={`${file.name}-${index}`}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg"
+                                className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg"
                               >
-                                <FileText className="w-4 h-4 text-teal-500 flex-shrink-0" />
-                                <span className="text-sm text-gray-700 truncate flex-1">{file.name}</span>
-                                <span className="text-xs text-gray-400 flex-shrink-0">
+                                <FileText className="w-4 h-4 text-omnia-gold flex-shrink-0" />
+                                <span className="text-sm text-foreground truncate flex-1">{file.name}</span>
+                                <span className="text-xs text-muted-foreground flex-shrink-0">
                                   {(file.size / 1024).toFixed(0)} KB
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => removeFile(index)}
-                                  className="p-1 rounded-full hover:bg-gray-200 text-gray-400 hover:text-red-500 transition-colors"
+                                  className="p-1 rounded-full hover:bg-gray-200 text-muted-foreground hover:text-red-500 transition-colors"
                                 >
                                   <X className="w-3.5 h-3.5" />
                                 </button>
@@ -710,8 +710,8 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                             onClick={() => toggleTag(tag)}
                             className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
                               selectedTags.includes(tag)
-                                ? 'bg-teal-600 text-primary-foreground border-teal-600 shadow-sm shadow-teal-200'
-                                : 'bg-card text-gray-600 border-gray-200 hover:border-teal-300 hover:text-teal-700'
+                                ? 'bg-omnia-gold text-primary-foreground border-omnia-gold shadow-sm shadow-teal-200'
+                                : 'bg-card text-muted-foreground border-border hover:border-omnia-gold/40 hover:text-omnia-gold-dark'
                             }`}
                           >
                             {tag}
@@ -723,16 +723,16 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                     {/* --- COMMUNICATION CENTER --- */}
                     <section>
                       <SectionHeader icon={MessageSquare} title="Communication Center" />
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                      <div className="flex items-center gap-3 p-3 bg-muted rounded-xl">
                         <input
                           {...register('create_discussion')}
                           type="checkbox"
                           id="create_discussion"
-                          className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
+                          className="w-4 h-4 rounded border-border text-omnia-gold focus:ring-teal-500 cursor-pointer"
                         />
                         <label htmlFor="create_discussion" className="cursor-pointer flex-1">
-                          <p className="text-sm font-medium text-gray-700">Create Lead Discussion</p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-sm font-medium text-foreground">Create Lead Discussion</p>
+                          <p className="text-xs text-muted-foreground">
                             Automatically create a conversation thread for this lead
                           </p>
                         </label>
@@ -741,7 +741,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                         <motion.p
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="text-xs text-teal-600 mt-2 flex items-center gap-1"
+                          className="text-xs text-omnia-gold mt-2 flex items-center gap-1"
                         >
                           <CheckCircle2 className="w-3 h-3" />
                           Discussion will be created with the assigned sales agent
@@ -755,7 +755,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
               {/* ============================================================ */}
               {/* STICKY FOOTER */}
               {/* ============================================================ */}
-              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex-shrink-0">
+              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-muted/80 flex-shrink-0">
                 <div className="flex items-center gap-2">
                   {saveStatus === 'success' && (
                     <motion.div
@@ -792,7 +792,7 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="bg-teal-600 hover:bg-teal-700 text-primary-foreground px-6 min-w-[120px]"
+                    className="bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground px-6 min-w-[120px]"
                   >
                     {isSaving ? (
                       <span className="flex items-center gap-2">

@@ -140,7 +140,7 @@ export default function NewBookingPage() {
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-6 py-8">
         {/* Header */}
-        <Link href="/bookings" className="flex items-center gap-2 text-teal-600 hover:text-teal-700 mb-8">
+        <Link href="/bookings" className="flex items-center gap-2 text-omnia-gold hover:text-omnia-gold-dark mb-8">
           <ArrowLeft className="w-4 h-4" />
           Back to Bookings
         </Link>
@@ -155,7 +155,7 @@ export default function NewBookingPage() {
           {[1, 2, 3].map(s => (
             <div
               key={s}
-              className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-teal-600' : 'bg-slate-200'
+              className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-omnia-gold' : 'bg-slate-200'
                 }`}
             />
           ))}
@@ -173,7 +173,7 @@ export default function NewBookingPage() {
                   {customers.length === 0 ? (
                     <div className="text-sm text-red-500 py-2">
                       No customers available. Please create a customer first.{' '}
-                      <Link href="/crm/customers" className="text-teal-600 hover:underline">
+                      <Link href="/crm/customers" className="text-omnia-gold hover:underline">
                         Go to CRM
                       </Link>
                     </div>
@@ -188,7 +188,7 @@ export default function NewBookingPage() {
                           customer_name: selected ? selected.company_name : '',
                         }))
                       }}
-                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                       required
                     >
                       <option value="">Choose a customer...</option>
@@ -206,7 +206,7 @@ export default function NewBookingPage() {
                     type="text"
                     value={formData.destination}
                     onChange={(e) => handleInputChange('destination', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     placeholder="e.g., Maldives"
                   />
                 </div>
@@ -218,7 +218,7 @@ export default function NewBookingPage() {
                   type="text"
                   value={formData.package_name}
                   onChange={(e) => handleInputChange('package_name', e.target.value)}
-                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                   placeholder="e.g., Premium Beach Getaway"
                 />
               </div>
@@ -230,7 +230,7 @@ export default function NewBookingPage() {
                     type="date"
                     value={formData.departure_date}
                     onChange={(e) => handleInputChange('departure_date', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                   />
                 </div>
                 <div>
@@ -239,7 +239,7 @@ export default function NewBookingPage() {
                     type="date"
                     value={formData.return_date}
                     onChange={(e) => handleInputChange('return_date', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                   />
                 </div>
               </div>
@@ -251,7 +251,7 @@ export default function NewBookingPage() {
                     type="number"
                     value={formData.total_cost}
                     onChange={(e) => handleInputChange('total_cost', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     placeholder="0.00"
                   />
                 </div>
@@ -261,7 +261,7 @@ export default function NewBookingPage() {
                     type="number"
                     value={formData.total_revenue}
                     onChange={(e) => handleInputChange('total_revenue', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     placeholder="0.00"
                   />
                 </div>
@@ -295,7 +295,7 @@ export default function NewBookingPage() {
                           type="text"
                           value={traveler.full_name}
                           onChange={(e) => handleTravelerChange(index, 'full_name', e.target.value)}
-                          className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                          className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                           placeholder="Enter full name"
                         />
                       </div>
@@ -305,7 +305,7 @@ export default function NewBookingPage() {
                           type="text"
                           value={traveler.passport_number}
                           onChange={(e) => handleTravelerChange(index, 'passport_number', e.target.value)}
-                          className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                          className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                           placeholder="Enter passport number"
                         />
                       </div>
@@ -316,7 +316,7 @@ export default function NewBookingPage() {
 
               <button
                 onClick={addTraveler}
-                className="flex items-center gap-2 px-4 py-2 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 border border-omnia-gold text-omnia-gold rounded-lg hover:bg-omnia-gold/10 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Another Traveler
@@ -381,7 +381,7 @@ export default function NewBookingPage() {
                   }
                   setStep(step + 1)
                 }}
-                className="ml-auto px-6 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium"
+                className="ml-auto px-6 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium"
               >
                 Next
               </button>
@@ -389,7 +389,7 @@ export default function NewBookingPage() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="ml-auto px-6 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 flex items-center gap-2"
+                className="ml-auto px-6 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium disabled:opacity-50 flex items-center gap-2"
               >
                 {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                 Create Booking

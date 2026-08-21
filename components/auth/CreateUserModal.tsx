@@ -147,7 +147,7 @@ export function CreateUserModal({ isOpen, onClose, onUserCreated }: CreateUserMo
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="user@omniatravel.com"
-                  className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A8FA8] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A951] focus:border-transparent"
                   disabled={isLoading}
                 />
               </div>
@@ -162,7 +162,7 @@ export function CreateUserModal({ isOpen, onClose, onUserCreated }: CreateUserMo
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A8FA8] focus:border-transparent"
+                  className="w-full pl-10 pr-10 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A951] focus:border-transparent"
                   disabled={isLoading}
                 />
                 <button

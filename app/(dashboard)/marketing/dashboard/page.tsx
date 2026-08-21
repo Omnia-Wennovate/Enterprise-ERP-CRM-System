@@ -60,9 +60,9 @@ export default function MarketingDashboardPage() {
     { icon: Eye, label: 'Total Reach', value: stats?.totalReach?.toLocaleString() || '0', color: '#10B981', trend: 8 },
     { icon: BarChart3, label: 'Total Impressions', value: stats?.totalImpressions?.toLocaleString() || '0', color: '#8B5CF6', trend: 15 },
     { icon: MousePointerClick, label: 'Engagement Rate', value: `${stats?.engagementRate || 0}%`, color: '#F59E0B', trend: 3 },
-    { icon: Target, label: 'Click Through Rate', value: `${stats?.clickThroughRate || 0}%`, color: '#0A8FA8', trend: 5 },
+    { icon: Target, label: 'Click Through Rate', value: `${stats?.clickThroughRate || 0}%`, color: '#C8A951', trend: 5 },
     { icon: TrendingUp, label: 'Conversion Rate', value: `${stats?.conversionRate || 0}%`, color: '#EF4444', trend: -2 },
-    { icon: UserPlus, label: 'New Leads', value: stats?.newLeads?.toString() || '0', color: '#06B6D4', trend: 18 },
+    { icon: UserPlus, label: 'New Leads', value: stats?.newLeads?.toString() || '0', color: '#E2CC7E', trend: 18 },
     { icon: Award, label: 'Campaign ROI', value: `${stats?.campaignPerformance || 0}%`, color: '#22C55E', trend: 7 },
   ]
 
@@ -214,8 +214,8 @@ export default function MarketingDashboardPage() {
                   {topPosts.length > 0 ? (
                     <div className="space-y-3">
                       {topPosts.map((post: any, i: number) => (
-                        <div key={i} className="flex items-start gap-3 p-3 bg-gradient-to-r from-[#F0F7FA] to-white rounded-lg border border-border">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0A8FA8] to-[#06B6D4] flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0">
+                        <div key={i} className="flex items-start gap-3 p-3 bg-gradient-to-r from-[#FAFAF7] to-white rounded-lg border border-border">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C8A951] to-[#E2CC7E] flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0">
                             #{i + 1}
                           </div>
                           <div className="flex-1 min-w-0">

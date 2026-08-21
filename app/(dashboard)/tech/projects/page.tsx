@@ -131,7 +131,7 @@ export default function ProjectsListPage() {
           {/* Filters */}
           <div className="bg-card rounded-xl border border-border shadow-sm p-4 mb-6">
             <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-background border border-border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
+              <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-background border border-border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#C8A951] focus-within:border-transparent transition-shadow">
                 <Search size={16} className="text-muted-foreground" />
                 <input
                   type="text"
@@ -148,7 +148,7 @@ export default function ProjectsListPage() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
+                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#C8A951] outline-none"
                   >
                     <option value="all">All Statuses</option>
                     {Object.entries(PROJECT_STATUS_LABELS)
@@ -160,7 +160,7 @@ export default function ProjectsListPage() {
                   <select
                     value={priorityFilter}
                     onChange={(e) => setPriorityFilter(e.target.value)}
-                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
+                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#C8A951] outline-none"
                   >
                     <option value="all">All Priorities</option>
                     {Object.entries(PRIORITY_LABELS).map(([key, label]) => (
@@ -266,7 +266,7 @@ export default function ProjectsListPage() {
                                 style={{
                                   width: `${project.progress_percent}%`,
                                   backgroundColor: project.progress_percent >= 100 ? '#10B981' :
-                                    project.progress_percent >= 50 ? '#0A8FA8' : '#F59E0B',
+                                    project.progress_percent >= 50 ? '#C8A951' : '#F59E0B',
                                 }}
                               />
                             </div>

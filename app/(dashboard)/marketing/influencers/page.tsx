@@ -103,7 +103,7 @@ export default function InfluencersPage() {
                         <tr key={inf.id} className="border-b border-border hover:bg-muted">
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0A8FA8] to-[#06B6D4] flex items-center justify-center text-primary-foreground text-sm font-bold">{inf.name[0]}</div>
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C8A951] to-[#E2CC7E] flex items-center justify-center text-primary-foreground text-sm font-bold">{inf.name[0]}</div>
                               <div>
                                 <p className="text-sm font-medium text-foreground">{inf.name}</p>
                                 {inf.handle && <p className="text-xs text-muted-foreground">@{inf.handle}</p>}

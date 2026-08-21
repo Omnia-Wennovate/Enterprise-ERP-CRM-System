@@ -75,7 +75,7 @@ export default function TechDashboardPage() {
     { icon: CheckCircle2, label: 'Completed', value: stats?.completedProjects || 0, color: '#10B981', href: '/tech/projects' },
     { icon: GitBranch, label: 'Total Requests', value: stats?.totalRequests || 0, color: '#8B5CF6', href: '/tech/feature-requests' },
     { icon: Bug, label: 'In Maintenance', value: archiveStats?.maintenanceProjects || 0, color: '#EF4444', href: '/tech/archive' },
-    { icon: Activity, label: 'Repo Health', value: `${archiveStats?.repositoryHealth || 0}%`, color: '#0A8FA8', href: '/tech/archive' },
+    { icon: Activity, label: 'Repo Health', value: `${archiveStats?.repositoryHealth || 0}%`, color: '#C8A951', href: '/tech/archive' },
     { icon: Users, label: 'Team Size', value: stats?.teamSize || 0, color: '#6366F1', href: '/tech/team' },
   ]
 
@@ -214,7 +214,7 @@ export default function TechDashboardPage() {
                       {teamWorkload.map((member) => (
                         <div key={member.profile_id} className="flex items-center justify-between p-3 bg-background rounded-lg border border-transparent hover:border-border transition-colors">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-gradient-to-br from-[#0A8FA8] to-[#088096] rounded-full flex items-center justify-center text-primary-foreground text-xs font-bold shadow-sm">
+                            <div className="w-9 h-9 bg-gradient-to-br from-[#C8A951] to-[#A88B3A] rounded-full flex items-center justify-center text-primary-foreground text-xs font-bold shadow-sm">
                               {member.first_name?.[0]}{member.last_name?.[0]}
                             </div>
                             <div>
@@ -313,7 +313,7 @@ export default function TechDashboardPage() {
                                 <span className={`text-[11px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider shadow-sm border ${
                                   daysLeft <= 1 ? 'bg-destructive/10 text-destructive border-destructive/20' :
                                   daysLeft <= 3 ? 'bg-warning/10 text-warning border-[#FDE68A]' :
-                                  'bg-blue-500/10 text-blue-500 border-border'
+                                  'bg-omnia-gold/50/10 text-blue-500 border-border'
                                 }`}>
                                   {daysLeft} day{daysLeft !== 1 ? 's' : ''} left
                                 </span>
@@ -345,7 +345,7 @@ export default function TechDashboardPage() {
                     { label: 'Credential Vault', href: '/tech/credentials', icon: KeyRound, color: '#F59E0B', bg: '#FFFBEB' },
                     { label: 'All Projects', href: '/tech/projects', icon: Code2, color: '#3B82F6', bg: '#EFF6FF' },
                     { label: 'All Requests', href: '/tech/feature-requests', icon: GitBranch, color: '#8B5CF6', bg: '#F5F3FF' },
-                    { label: 'Tech Team', href: '/tech/team', icon: Users, color: '#0A8FA8', bg: '#F0F7FA' },
+                    { label: 'Tech Team', href: '/tech/team', icon: Users, color: '#C8A951', bg: '#FAFAF7' },
                   ].map((action, i) => {
                     const Icon = action.icon
                     return (

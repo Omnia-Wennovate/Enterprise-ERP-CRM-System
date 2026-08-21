@@ -25,7 +25,7 @@ export function VisaList({ applications, isLoading, onView, onEdit, onDelete }: 
   if (isLoading) {
     return (
       <div className="bg-card rounded-xl shadow-sm border border-border p-8 flex flex-col items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mb-4"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-omnia-gold mb-4"></div>
         <p className="text-muted-foreground">Loading visa applications...</p>
       </div>
     )
@@ -110,7 +110,7 @@ export function VisaList({ applications, isLoading, onView, onEdit, onDelete }: 
                         <span className="w-1 h-1 rounded-full bg-slate-300"></span>
                         {app.traveler_passport_number || 'No Passport'}
                       </div>
-                      <div className="text-xs text-teal-600 font-medium mt-1">
+                      <div className="text-xs text-omnia-gold font-medium mt-1">
                         {app.booking_reference || 'No Booking'}
                       </div>
                     </td>
@@ -164,7 +164,7 @@ export function VisaList({ applications, isLoading, onView, onEdit, onDelete }: 
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => onView(app.id)}
-                          className="p-1.5 text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
+                          className="p-1.5 text-omnia-gold hover:bg-omnia-gold/10 rounded-lg transition-colors"
                           title="View Details"
                         >
                           <FileSearch className="w-4 h-4" />

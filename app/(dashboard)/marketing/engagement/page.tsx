@@ -87,7 +87,7 @@ export default function EngagementPage() {
                 { label: 'Total Messages', value: stats.totalMessages, icon: Mail, color: '#8B5CF6' },
                 { label: 'Unanswered Comments', value: stats.unansweredComments, icon: AlertTriangle, color: '#EF4444' },
                 { label: 'Unanswered Messages', value: stats.unansweredMessages, icon: AlertTriangle, color: '#F59E0B' },
-                { label: 'Avg Response Time', value: `${stats.avgResponseTime}m`, icon: Clock, color: '#0A8FA8' },
+                { label: 'Avg Response Time', value: `${stats.avgResponseTime}m`, icon: Clock, color: '#C8A951' },
               ].map((s, i) => {
                 const Icon = s.icon
                 return (

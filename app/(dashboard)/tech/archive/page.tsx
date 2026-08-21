@@ -23,7 +23,7 @@ import {
 } from 'recharts'
 import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '@/types/tech'
 
-const COLORS = ['#0A8FA8', '#3B82F6', '#6366F1', '#8B5CF6', '#EC4899', '#F43F5E', '#F59E0B', '#10B981']
+const COLORS = ['#C8A951', '#3B82F6', '#6366F1', '#8B5CF6', '#EC4899', '#F43F5E', '#F59E0B', '#10B981']
 
 export default function ArchivePage() {
   const router = useRouter()
@@ -89,7 +89,7 @@ export default function ArchivePage() {
     { label: 'Archived Projects', value: stats?.archivedProjects || 0, icon: Archive, color: '#64748B', bg: '#F1F5F9' },
     { label: 'Projects in Maintenance', value: stats?.maintenanceProjects || 0, icon: Layers, color: '#F59E0B', bg: '#FFFBEB' },
     { label: 'Avg Completion Days', value: stats?.averageCompletionDays || 0, icon: Calendar, color: '#8B5CF6', bg: '#F5F3FF' },
-    { label: 'Deployment Success Rate', value: `${stats?.deploymentSuccessRate || 0}%`, icon: Code2, color: '#0A8FA8', bg: '#F0F7FA' },
+    { label: 'Deployment Success Rate', value: `${stats?.deploymentSuccessRate || 0}%`, icon: Code2, color: '#C8A951', bg: '#FAFAF7' },
     { label: 'Repository Health', value: `${stats?.repositoryHealth || 0}%`, icon: CheckCircle2, color: '#3B82F6', bg: '#EFF6FF' },
     { label: 'Technical Debt Items', value: stats?.technicalDebtScore || 0, icon: Bug, color: '#EF4444', bg: '#FEF2F2' },
   ]
@@ -188,10 +188,10 @@ export default function ArchivePage() {
                             tick={{ fill: '#4B6B7A', fontSize: 12 }}
                           />
                           <Tooltip
-                            cursor={{ fill: '#F0F7FA' }}
+                            cursor={{ fill: '#FAFAF7' }}
                             contentStyle={{ borderRadius: '8px', border: '1px solid #DBEAFE', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                           />
-                          <Bar dataKey="count" fill="#0A8FA8" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                          <Bar dataKey="count" fill="#C8A951" radius={[4, 4, 0, 0]} maxBarSize={50} />
                         </BarChart>
                       </ResponsiveContainer>
                     ) : (
@@ -250,7 +250,7 @@ export default function ArchivePage() {
                       <p className="text-sm text-muted-foreground mt-1">Search through {projects.length} archived projects</p>
                     </div>
 
-                    <div className="flex items-center gap-2 min-w-[300px] bg-background border border-border rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
+                    <div className="flex items-center gap-2 min-w-[300px] bg-background border border-border rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#C8A951] focus-within:border-transparent transition-shadow">
                       <Search size={18} className="text-muted-foreground" />
                       <input
                         type="text"

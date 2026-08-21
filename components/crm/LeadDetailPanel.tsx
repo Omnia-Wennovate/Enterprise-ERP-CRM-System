@@ -69,10 +69,10 @@ function InfoRow({ label, value, icon: Icon }: { label: string; value?: string |
   return (
     <div className="flex items-start gap-2 py-2 border-b border-gray-50 last:border-0">
       <div className="flex items-center gap-1.5 w-36 flex-shrink-0">
-        {Icon && <Icon className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />}
-        <span className="text-xs text-gray-500 font-medium">{label}</span>
+        {Icon && <Icon className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />}
+        <span className="text-xs text-muted-foreground font-medium">{label}</span>
       </div>
-      <span className="text-sm text-gray-800 break-words flex-1">{display}</span>
+      <span className="text-sm text-foreground break-words flex-1">{display}</span>
     </div>
   )
 }
@@ -165,12 +165,12 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 w-[620px] bg-card shadow-2xl z-[110] flex flex-col border-l border-gray-200"
+              className="fixed right-0 top-0 bottom-0 w-[620px] bg-card shadow-2xl z-[110] flex flex-col border-l border-border"
             >
               {isLoading || !lead ? (
                 <div className="flex flex-col items-center justify-center flex-1">
-                  <Loader2 className="w-8 h-8 text-teal-500 animate-spin mb-3" />
-                  <p className="text-sm text-gray-500">Loading lead details...</p>
+                  <Loader2 className="w-8 h-8 text-omnia-gold animate-spin mb-3" />
+                  <p className="text-sm text-muted-foreground">Loading lead details...</p>
                 </div>
               ) : (
                 <>
@@ -212,7 +212,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                     </div>
 
                     {/* Stats row */}
-                    <div className="grid grid-cols-3 divide-x divide-teal-500/40 px-0 border-t border-teal-500/30">
+                    <div className="grid grid-cols-3 divide-x divide-teal-500/40 px-0 border-t border-omnia-gold/30">
                       <div className="px-5 py-3">
                         <p className="text-[11px] text-teal-300 uppercase tracking-wider">Value</p>
                         <p className="text-base font-bold text-primary-foreground">
@@ -232,7 +232,7 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                     </div>
 
                     {/* Quick actions */}
-                    <div className="flex items-center gap-1.5 px-5 py-3 border-t border-teal-500/30 overflow-x-auto">
+                    <div className="flex items-center gap-1.5 px-5 py-3 border-t border-omnia-gold/30 overflow-x-auto">
                       <button
                         onClick={() => setShowEdit(true)}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card/15 hover:bg-card/25 text-primary-foreground text-xs font-medium transition-all whitespace-nowrap"
@@ -280,18 +280,18 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
 
                   {/* ── AGENT BADGE ───────────────────────────────────────── */}
                   {lead.assigned_agent && (
-                    <div className="flex items-center gap-2 px-5 py-2.5 bg-teal-50 border-b border-teal-100">
-                      <div className="w-6 h-6 rounded-full bg-teal-200 flex items-center justify-center text-[11px] font-bold text-teal-800 flex-shrink-0">
+                    <div className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold/10 border-b border-omnia-gold/15">
+                      <div className="w-6 h-6 rounded-full bg-teal-200 flex items-center justify-center text-[11px] font-bold text-foreground flex-shrink-0">
                         {lead.assigned_agent.full_name?.charAt(0) || '?'}
                       </div>
-                      <span className="text-xs text-teal-700 font-medium">
+                      <span className="text-xs text-omnia-gold-dark font-medium">
                         Assigned to {lead.assigned_agent.full_name}
                       </span>
                     </div>
                   )}
 
                   {/* ── TABS ──────────────────────────────────────────────── */}
-                  <div className="flex border-b border-gray-200 overflow-x-auto flex-shrink-0 bg-card">
+                  <div className="flex border-b border-border overflow-x-auto flex-shrink-0 bg-card">
                     {TABS.map((tab) => {
                       const Icon = tab.icon
                       return (
@@ -300,8 +300,8 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                           onClick={() => setActiveTab(tab.id)}
                           className={`flex items-center gap-1.5 px-4 py-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-all ${
                             activeTab === tab.id
-                              ? 'border-teal-500 text-teal-600 bg-teal-50'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                              ? 'border-omnia-gold text-omnia-gold bg-omnia-gold/10'
+                              : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted'
                           }`}
                         >
                           <Icon className="w-3.5 h-3.5" />
@@ -325,10 +325,10 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                         >
                           {/* Contact Info */}
                           <section>
-                            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                               <User className="w-3.5 h-3.5" /> Contact Information
                             </h3>
-                            <div className="bg-gray-50 rounded-xl p-3 space-y-0.5">
+                            <div className="bg-muted rounded-xl p-3 space-y-0.5">
                               <InfoRow label="Lead Name"     value={lead.lead_name}       icon={User} />
                               <InfoRow label="Company"       value={lead.company}          icon={Building2} />
                               <InfoRow label="Contact"       value={lead.contact_person}   icon={User} />
@@ -346,10 +346,10 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
 
                           {/* Sales Info */}
                           <section>
-                            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                               <DollarSign className="w-3.5 h-3.5" /> Sales Information
                             </h3>
-                            <div className="bg-gray-50 rounded-xl p-3 space-y-0.5">
+                            <div className="bg-muted rounded-xl p-3 space-y-0.5">
                               <InfoRow label="Lead Source"   value={LEAD_SOURCE_LABELS[lead.lead_source as LeadSource] || lead.lead_source} />
                               <InfoRow label="Assigned To"   value={lead.assigned_agent?.full_name || lead.assigned_to || 'Unassigned'} icon={User} />
                               <InfoRow label="Estimated Value" value={`${lead.currency} ${Number(lead.estimated_value).toLocaleString()}`} icon={DollarSign} />
@@ -364,10 +364,10 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
 
                           {/* Travel Requirements */}
                           <section>
-                            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                               <Plane className="w-3.5 h-3.5" /> Travel Requirements
                             </h3>
-                            <div className="bg-gray-50 rounded-xl p-3 space-y-0.5">
+                            <div className="bg-muted rounded-xl p-3 space-y-0.5">
                               <InfoRow label="Destination"   value={lead.destination}       icon={MapPin} />
                               <InfoRow label="Travel Date"   value={lead.travel_date ? new Date(lead.travel_date).toLocaleDateString() : undefined} icon={Calendar} />
                               <InfoRow label="Return Date"   value={lead.return_date ? new Date(lead.return_date).toLocaleDateString() : undefined} icon={Calendar} />
@@ -385,12 +385,12 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                           {/* Tags */}
                           {lead.tags && lead.tags.length > 0 && (
                             <section>
-                              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                              <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                                 <Tag className="w-3.5 h-3.5" /> Tags
                               </h3>
                               <div className="flex flex-wrap gap-2">
                                 {lead.tags.map((tag) => (
-                                  <span key={tag} className="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 text-xs font-medium border border-teal-200">
+                                  <span key={tag} className="px-2.5 py-1 rounded-lg bg-omnia-gold/10 text-omnia-gold-dark text-xs font-medium border border-omnia-gold/20">
                                     {tag}
                                   </span>
                                 ))}
@@ -401,21 +401,21 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                           {/* Notes */}
                           {lead.notes && (
                             <section>
-                              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                              <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                                 <FileText className="w-3.5 h-3.5" /> Notes
                               </h3>
                               <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                                <p className="text-sm text-gray-700 whitespace-pre-wrap">{lead.notes}</p>
+                                <p className="text-sm text-foreground whitespace-pre-wrap">{lead.notes}</p>
                               </div>
                             </section>
                           )}
 
                           {/* Metadata */}
                           <section>
-                            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5">
                               <Clock className="w-3.5 h-3.5" /> Metadata
                             </h3>
-                            <div className="bg-gray-50 rounded-xl p-3 space-y-0.5">
+                            <div className="bg-muted rounded-xl p-3 space-y-0.5">
                               <InfoRow label="Created"     value={new Date(lead.created_at).toLocaleString()} icon={Calendar} />
                               <InfoRow label="Updated"     value={new Date(lead.updated_at).toLocaleString()} icon={Calendar} />
                               <InfoRow label="Lead ID"     value={lead.id} />

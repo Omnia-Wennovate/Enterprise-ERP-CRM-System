@@ -168,7 +168,7 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
                   onClick={() => setForm(f => ({ ...f, type: at.value, title: f.title || at.label }))}
                   className={`flex flex-col items-center gap-1 p-2 rounded-xl text-xs font-medium transition-all ${
                     form.type === at.value
-                      ? 'ring-2 ring-teal-500 bg-teal-50 text-teal-700'
+                      ? 'ring-2 ring-teal-500 bg-omnia-gold/10 text-omnia-gold-dark'
                       : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                   }`}
                 >
@@ -213,7 +213,7 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
 
           {/* ── Flight Fields ── */}
           {form.type === 'flight' && (
-            <div className="space-y-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+            <div className="space-y-4 p-4 bg-omnia-gold/5/50 rounded-xl border border-blue-100">
               <p className="text-xs font-bold text-blue-700 uppercase">Flight Details</p>
               <div className="grid grid-cols-2 gap-3">
                 <Input label="Airline" value={form.airline} onChange={v => setForm(f => ({ ...f, airline: v }))} placeholder="Emirates" />
@@ -325,7 +325,7 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
           <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
             <button type="button" onClick={onClose} className="px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground">Cancel</button>
             <button type="submit" disabled={saving || !form.title.trim()}
-              className="px-6 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 flex items-center gap-2">
+              className="px-6 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl text-sm font-semibold hover:bg-omnia-gold-dark disabled:opacity-50 flex items-center gap-2">
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {item ? 'Update' : 'Add'} Activity
             </button>

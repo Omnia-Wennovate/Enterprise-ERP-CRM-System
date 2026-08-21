@@ -72,9 +72,9 @@ export function TrainingDashboard({ onViewCourses }: TrainingDashboardProps) {
   }
 
   const kpiCards = [
-    { label: 'Total Courses', value: kpis.totalCourses, icon: BookOpen, color: 'text-teal-600', bg: 'bg-teal-50' },
+    { label: 'Total Courses', value: kpis.totalCourses, icon: BookOpen, color: 'text-omnia-gold', bg: 'bg-omnia-gold/10' },
     { label: 'Active Courses', value: kpis.activeCourses, icon: TrendingUp, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'Enrolled', value: kpis.totalEnrollments, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'Enrolled', value: kpis.totalEnrollments, icon: Users, color: 'text-omnia-gold', bg: 'bg-omnia-gold/5' },
     { label: 'Completion Rate', value: `${kpis.completionRate}%`, icon: Target, color: 'text-violet-600', bg: 'bg-violet-50' },
     { label: 'Certificates', value: kpis.certificatesIssued, icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
     { label: 'Overdue', value: kpis.overdueTraining, icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50' },

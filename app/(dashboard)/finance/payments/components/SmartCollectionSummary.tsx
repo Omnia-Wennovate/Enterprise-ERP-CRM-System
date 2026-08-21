@@ -31,11 +31,11 @@ export default function SmartCollectionSummary({ summary, loading }: SmartCollec
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
-      className="rounded-xl border border-border/40 bg-gradient-to-r from-teal-500/5 via-card to-card p-5"
+      className="rounded-xl border border-border/40 bg-gradient-to-r from-omnia-gold/100/5 via-card to-card p-5"
     >
       <div className="flex items-start gap-3">
-        <div className="w-9 h-9 rounded-xl bg-teal-500/10 flex items-center justify-center flex-shrink-0">
-          <Lightbulb className="w-4.5 h-4.5 text-teal-600" />
+        <div className="w-9 h-9 rounded-xl bg-omnia-gold/100/10 flex items-center justify-center flex-shrink-0">
+          <Lightbulb className="w-4.5 h-4.5 text-omnia-gold" />
         </div>
         <div>
           <h3 className="text-sm font-semibold text-foreground mb-1">Collection Insights</h3>

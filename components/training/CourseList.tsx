@@ -81,7 +81,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
             placeholder="Search courses by name, description, or instructor..."
             value={filters.search}
             onChange={(e) => setFilters(f => ({ ...f, search: e.target.value }))}
-            className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm"
+            className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold text-sm"
           />
         </div>
 
@@ -103,7 +103,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
           
           <button
             onClick={onNew}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors shadow-sm shadow-teal-600/20"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors shadow-sm shadow-teal-600/20"
           >
             <Plus className="w-4 h-4" /> New Course
           </button>
@@ -125,7 +125,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
                 <select 
                   value={filters.status}
                   onChange={(e) => setFilters(f => ({ ...f, status: e.target.value }))}
-                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold"
                 >
                   <option value="all">All Statuses</option>
                   <option value="active">Active</option>
@@ -139,7 +139,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
                 <select 
                   value={filters.category}
                   onChange={(e) => setFilters(f => ({ ...f, category: e.target.value }))}
-                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold"
                 >
                   <option value="all">All Categories</option>
                   {COURSE_CATEGORIES.map(c => (
@@ -153,7 +153,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
                 <select 
                   value={filters.department}
                   onChange={(e) => setFilters(f => ({ ...f, department: e.target.value }))}
-                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold"
                 >
                   <option value="all">All Departments</option>
                   {DEPARTMENTS.map(d => (
@@ -167,7 +167,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
                 <select 
                   value={filters.difficulty}
                   onChange={(e) => setFilters(f => ({ ...f, difficulty: e.target.value }))}
-                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold"
                 >
                   <option value="all">All Levels</option>
                   <option value="beginner">Beginner</option>
@@ -182,7 +182,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
                 <select 
                   value={filters.mandatory}
                   onChange={(e) => setFilters(f => ({ ...f, mandatory: e.target.value }))}
-                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full px-3 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-omnia-gold"
                 >
                   <option value="all">All</option>
                   <option value="mandatory">Mandatory Only</option>
@@ -227,7 +227,7 @@ export function CourseList({ onNew, onView, onEdit }: CourseListProps) {
             onClick={() => setFilters({
               search: '', status: 'all', category: 'all', department: 'all', difficulty: 'all', mandatory: 'all'
             })}
-            className="text-teal-600 hover:text-teal-700 font-medium text-sm"
+            className="text-omnia-gold hover:text-omnia-gold-dark font-medium text-sm"
           >
             Clear all filters
           </button>

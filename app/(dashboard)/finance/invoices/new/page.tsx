@@ -218,7 +218,7 @@ export default function CreateInvoicePage() {
               <select
                 value={sourceType}
                 onChange={(e) => setSourceType(e.target.value as any)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               >
                 <option value="none">Standalone Invoice</option>
                 <option value="booking">From Booking</option>
@@ -239,7 +239,7 @@ export default function CreateInvoicePage() {
                     onChange={(e) => handleBookingChange(e.target.value)}
                     required
                     disabled={loading}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-muted/50"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 disabled:bg-muted/50"
                   >
                     <option value="">
                       {loading ? 'Loading bookings...' : 'Choose a booking...'}
@@ -267,7 +267,7 @@ export default function CreateInvoicePage() {
                     onChange={(e) => handleQuotationChange(e.target.value)}
                     required
                     disabled={loading}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-muted/50"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 disabled:bg-muted/50"
                   >
                     <option value="">
                       {loading ? 'Loading quotations...' : 'Choose a quotation...'}
@@ -295,7 +295,7 @@ export default function CreateInvoicePage() {
                     onChange={(e) => setCustomerId(e.target.value)}
                     required
                     disabled={loading}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-muted/50"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 disabled:bg-muted/50"
                   >
                     <option value="">
                       {loading ? 'Loading customers...' : 'Choose a customer...'}
@@ -318,12 +318,14 @@ export default function CreateInvoicePage() {
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               >
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
                 <option value="GBP">GBP (£)</option>
                 <option value="AED">AED</option>
+                <option value="SAR">SAR</option>
+                <option value="ETB">ETB (Br)</option>
               </select>
             </div>
             <div>
@@ -331,7 +333,7 @@ export default function CreateInvoicePage() {
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               >
                 <option value="low">Low</option>
                 <option value="normal">Normal</option>
@@ -347,7 +349,7 @@ export default function CreateInvoicePage() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               />
             </div>
             <div>
@@ -361,7 +363,7 @@ export default function CreateInvoicePage() {
                 value={amount}
                 onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
                 required
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               />
             </div>
             <div>
@@ -372,7 +374,7 @@ export default function CreateInvoicePage() {
                 min="0"
                 value={tax}
                 onChange={(e) => setTax(parseFloat(e.target.value) || 0)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               />
             </div>
             <div>
@@ -383,7 +385,7 @@ export default function CreateInvoicePage() {
                 min="0"
                 value={discount}
                 onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
               />
             </div>
           </div>
@@ -395,7 +397,7 @@ export default function CreateInvoicePage() {
               <button
                 type="button"
                 onClick={handleAddLineItem}
-                className="flex items-center gap-2 px-3 py-1 text-sm bg-teal-100 text-teal-700 rounded-lg hover:bg-teal-200 transition-colors"
+                className="flex items-center gap-2 px-3 py-1 text-sm bg-omnia-gold/15 text-omnia-gold-dark rounded-lg hover:bg-teal-200 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Item
@@ -410,7 +412,7 @@ export default function CreateInvoicePage() {
                     placeholder="Description"
                     value={item.description}
                     onChange={(e) => handleLineItemChange(index, 'description', e.target.value)}
-                    className="flex-1 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="flex-1 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 text-sm"
                   />
                   <input
                     type="number"
@@ -420,7 +422,7 @@ export default function CreateInvoicePage() {
                     onChange={(e) =>
                       handleLineItemChange(index, 'quantity', parseInt(e.target.value) || 1)
                     }
-                    className="w-20 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-20 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 text-sm"
                   />
                   <input
                     type="number"
@@ -431,7 +433,7 @@ export default function CreateInvoicePage() {
                     onChange={(e) =>
                       handleLineItemChange(index, 'unit_price', parseFloat(e.target.value) || 0)
                     }
-                    className="w-24 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                    className="w-24 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 text-sm"
                   />
                   <button
                     type="button"
@@ -457,7 +459,7 @@ export default function CreateInvoicePage() {
             </div>
             <div className="border-t border-border pt-2 flex justify-between">
               <span className="font-semibold">Total:</span>
-              <span className="font-bold text-lg text-teal-600">${(amount + tax).toFixed(2)}</span>
+              <span className="font-bold text-lg text-omnia-gold">${(amount + tax).toFixed(2)}</span>
             </div>
           </div>
 
@@ -472,7 +474,7 @@ export default function CreateInvoicePage() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2 bg-teal-600 text-primary-foreground rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-omnia-gold text-primary-foreground rounded-lg font-medium hover:bg-omnia-gold-dark transition-colors disabled:opacity-50"
             >
               {submitting ? 'Creating...' : 'Create Invoice'}
             </button>

@@ -92,7 +92,7 @@ export default function LeavePage() {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${filter === status ? 'bg-teal-600 text-primary-foreground' : 'bg-card text-foreground border border-border'
+              className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${filter === status ? 'bg-omnia-gold text-primary-foreground' : 'bg-card text-foreground border border-border'
                 }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}

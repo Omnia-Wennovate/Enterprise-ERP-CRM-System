@@ -81,9 +81,9 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
           {/* Header */}
           <div className="bg-gradient-to-r from-teal-600 to-teal-700 px-6 py-4 flex items-center justify-between flex-shrink-0">
             <div>
-              <p className="text-teal-100 text-xs font-medium">Expense Detail</p>
+              <p className="text-white/70 text-xs font-medium">Expense Detail</p>
               <h2 className="text-white font-bold text-lg">{expense.expense_number ?? 'EXP-???'}</h2>
-              <p className="text-teal-100 text-sm">{expense.description}</p>
+              <p className="text-white/70 text-sm">{expense.description}</p>
             </div>
             <button onClick={onClose} className="p-2 rounded-full hover:bg-white/20 text-white"><X size={18}/></button>
           </div>
@@ -92,7 +92,7 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
           <div className="flex border-b border-border bg-muted/20 flex-shrink-0">
             {tabs.map(t => (
               <button key={t} onClick={() => setActiveTab(t)}
-                className={`px-5 py-3 text-xs font-semibold capitalize border-b-2 transition-colors ${activeTab === t ? 'border-teal-600 text-teal-600' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
+                className={`px-5 py-3 text-xs font-semibold capitalize border-b-2 transition-colors ${activeTab === t ? 'border-omnia-gold text-omnia-gold' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
                 {t} {t==='attachments' && `(${attachments.length})`} {t==='approvals' && `(${approvals.length})`}
               </button>
             ))}
@@ -103,13 +103,13 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
             {activeTab === 'details' && (
               <div className="p-6 space-y-5">
                 {/* Amount hero */}
-                <div className="bg-gradient-to-br from-teal-50 to-blue-50 rounded-xl p-5 border border-teal-100">
+                <div className="bg-gradient-to-br from-omnia-gold/10 to-omnia-gold/5 rounded-xl p-5 border border-omnia-gold/15">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs text-muted-foreground">Total Amount</p>
-                      <p className="text-3xl font-bold text-teal-700">{fmt(expense.amount, expense.currency ?? 'USD')}</p>
+                      <p className="text-3xl font-bold text-omnia-gold-dark">{fmt(expense.amount, expense.currency ?? 'USD')}</p>
                       {expense.original_currency && expense.original_amount && (
-                        <p className="text-xs text-blue-600 mt-1">Originally {expense.original_amount} {expense.original_currency}</p>
+                        <p className="text-xs text-omnia-gold mt-1">Originally {expense.original_amount} {expense.original_currency}</p>
                       )}
                     </div>
                     <div className="text-right space-y-1">
@@ -175,11 +175,11 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
                     </div>
                     <div className="flex items-center gap-1">
                       <a href={att.file_url} target="_blank" rel="noopener noreferrer"
-                        className="p-1.5 rounded hover:bg-teal-50 text-teal-600 transition-colors" title="Preview">
+                        className="p-1.5 rounded hover:bg-omnia-gold/10 text-omnia-gold transition-colors" title="Preview">
                         <Eye size={14}/>
                       </a>
                       <a href={att.file_url} download={att.file_name}
-                        className="p-1.5 rounded hover:bg-blue-50 text-blue-600 transition-colors" title="Download">
+                        className="p-1.5 rounded hover:bg-omnia-gold/5 text-omnia-gold transition-colors" title="Download">
                         <Download size={14}/>
                       </a>
                       <button onClick={()=>handleDeleteAttachment(att.id)}
@@ -237,7 +237,7 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
                                     {approveId === ap.id ? (
                                       <div className="space-y-2">
                                         <textarea value={comments} onChange={e=>setComments(e.target.value)} placeholder="Comments (optional)" rows={2}
-                                          className="w-full px-3 py-2 border border-border rounded-lg text-xs bg-background text-foreground resize-none outline-none focus:ring-2 focus:ring-teal-500"/>
+                                          className="w-full px-3 py-2 border border-border rounded-lg text-xs bg-background text-foreground resize-none outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
                                         <div className="flex gap-2">
                                           <button onClick={()=>handleApproval(ap.id,'approved')} disabled={submitting}
                                             className="flex-1 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-lg disabled:opacity-50">
@@ -256,7 +256,7 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
                                       </div>
                                     ) : (
                                       <button onClick={()=>setApproveId(ap.id)}
-                                        className="flex items-center gap-1 text-xs font-medium text-teal-600 hover:text-teal-700 mt-1">
+                                        className="flex items-center gap-1 text-xs font-medium text-omnia-gold hover:text-omnia-gold-dark mt-1">
                                         <ChevronDown size={12}/> Take action
                                       </button>
                                     )}

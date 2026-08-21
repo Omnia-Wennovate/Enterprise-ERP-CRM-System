@@ -15,7 +15,7 @@ const STATUS_STYLES: Record<string, string> = {
   paid: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
   partially_paid: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
   overdue: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
-  cancelled: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400',
+  cancelled: 'bg-muted text-muted-foreground dark:bg-gray-800 dark:text-muted-foreground',
 }
 
 const PRIORITY_STYLES: Record<string, string> = {
@@ -228,7 +228,7 @@ export default function InvoiceTable({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="flex items-center gap-3 px-4 py-2.5 bg-blue-50 dark:bg-blue-900/20 border-b border-border text-sm overflow-hidden"
+            className="flex items-center gap-3 px-4 py-2.5 bg-omnia-gold/5 dark:bg-blue-900/20 border-b border-border text-sm overflow-hidden"
           >
             <span className="font-semibold text-blue-700 dark:text-blue-300">{selected.size} selected</span>
             <button className="flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 text-xs hover:bg-blue-200 transition-colors">
@@ -298,7 +298,7 @@ export default function InvoiceTable({
                     key={inv.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className={`group transition-colors hover:bg-muted/30 cursor-pointer ${isSelected ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''} ${isOverdue ? 'bg-red-50/30 dark:bg-red-900/5' : ''}`}
+                    className={`group transition-colors hover:bg-muted/30 cursor-pointer ${isSelected ? 'bg-omnia-gold/5/50 dark:bg-blue-900/10' : ''} ${isOverdue ? 'bg-red-50/30 dark:bg-red-900/5' : ''}`}
                     onContextMenu={e => { e.preventDefault(); setContextMenu({ x: e.clientX, y: e.clientY, inv }) }}
                     onClick={() => onSelectInvoice(inv)}
                   >
@@ -442,7 +442,7 @@ export default function InvoiceTable({
               <button
                 key={p}
                 onClick={() => onPageChange(p)}
-                className={`w-7 h-7 rounded-lg text-xs font-medium transition-colors ${p === page ? 'bg-blue-600 text-white' : 'hover:bg-muted text-muted-foreground'}`}
+                className={`w-7 h-7 rounded-lg text-xs font-medium transition-colors ${p === page ? 'bg-primary text-white' : 'hover:bg-muted text-muted-foreground'}`}
               >
                 {p}
               </button>

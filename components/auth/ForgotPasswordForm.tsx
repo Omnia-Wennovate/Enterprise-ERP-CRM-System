@@ -46,15 +46,15 @@ export function ForgotPasswordForm() {
             We&apos;ve sent a password reset link to <span className="font-medium text-foreground">{email}</span>
           </p>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-[#0B2A3D]">
+          <div className="bg-omnia-gold/5 border border-omnia-gold/20 rounded-lg p-4 mb-6">
+            <p className="text-sm text-foreground">
               Check your email and click the reset link. The link will expire in 24 hours.
             </p>
           </div>
 
           <button
             onClick={handleResend}
-            className="w-full text-center text-sm text-primary hover:text-[#088096] font-medium py-2 transition-colors"
+            className="w-full text-center text-sm text-primary hover:text-[#A88B3A] font-medium py-2 transition-colors"
           >
             Didn&apos;t receive it? <span className="underline">Resend email</span>
           </button>
@@ -62,7 +62,7 @@ export function ForgotPasswordForm() {
           <div className="mt-6 pt-6 border-t border-border">
             <Link
               href="/login"
-              className="flex items-center justify-center gap-2 text-primary hover:text-[#088096] transition-colors text-sm font-medium"
+              className="flex items-center justify-center gap-2 text-primary hover:text-[#A88B3A] transition-colors text-sm font-medium"
             >
               <ArrowLeft size={16} />
               Back to login
@@ -78,7 +78,7 @@ export function ForgotPasswordForm() {
       <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
         <Link
           href="/login"
-          className="flex items-center gap-1 text-primary hover:text-[#088096] transition-colors text-sm font-medium mb-6"
+          className="flex items-center gap-1 text-primary hover:text-[#A88B3A] transition-colors text-sm font-medium mb-6"
         >
           <ArrowLeft size={16} />
           Back to login
@@ -103,7 +103,7 @@ export function ForgotPasswordForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 bg-card text-foreground placeholder-[#94A3B8] transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:border-omnia-gold focus:ring-2 focus:ring-omnia-gold/20 bg-card text-foreground placeholder-muted-foreground transition-all"
                 required
               />
             </div>
@@ -111,9 +111,9 @@ export function ForgotPasswordForm() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
-              <AlertCircle className="text-red-600 flex-shrink-0" size={16} />
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-3 flex items-start gap-2">
+              <AlertCircle className="text-destructive flex-shrink-0" size={16} />
+              <p className="text-destructive text-sm">{error}</p>
             </div>
           )}
 
@@ -121,7 +121,7 @@ export function ForgotPasswordForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-omnia-gold hover:bg-omnia-gold-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>

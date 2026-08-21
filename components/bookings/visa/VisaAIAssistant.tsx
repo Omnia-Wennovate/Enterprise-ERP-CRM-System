@@ -18,7 +18,7 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
 
   const actions = [
     { id: 'probability', label: 'Estimate Approval', icon: CheckCircle, color: 'text-emerald-600', bg: 'hover:bg-emerald-50' },
-    { id: 'checklist', label: 'Embassy Checklist', icon: FileSearch, color: 'text-blue-600', bg: 'hover:bg-blue-50' },
+    { id: 'checklist', label: 'Embassy Checklist', icon: FileSearch, color: 'text-omnia-gold', bg: 'hover:bg-omnia-gold/5' },
   ]
 
   const runAction = async (actionId: string) => {
@@ -67,7 +67,7 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
               className={`flex items-center gap-2 px-4 py-3 border border-border rounded-xl text-sm font-medium text-slate-700 ${action.bg} transition-colors disabled:opacity-50`}
             >
               {loading && activeAction === action.id ? (
-                <Loader2 className="w-4 h-4 animate-spin text-teal-600" />
+                <Loader2 className="w-4 h-4 animate-spin text-omnia-gold" />
               ) : (
                 <Icon className={`w-4 h-4 ${action.color}`} />
               )}
@@ -89,7 +89,7 @@ export function VisaAIAssistant({ visa, nationality, destination }: VisaAIAssist
       {result && (
         <div className="border border-border rounded-xl overflow-hidden">
           {/* AI Badge */}
-          <div className="px-4 py-2 bg-gradient-to-r from-violet-50 to-blue-50 border-b border-border flex items-center gap-2">
+          <div className="px-4 py-2 bg-gradient-to-r from-violet-50 to-omnia-gold/5 border-b border-border flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-violet-500" />
             <span className="text-xs font-bold text-violet-700">AI-Generated Content</span>
             <span className="text-[10px] text-muted-foreground ml-auto">Requires officer review</span>

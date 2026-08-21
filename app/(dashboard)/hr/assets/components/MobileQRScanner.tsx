@@ -103,12 +103,12 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
       <div className="p-6">
         {mode === 'scan' && (
           <div className="flex flex-col items-center space-y-6">
-            <div className="w-48 h-48 border-4 border-dashed border-teal-500/50 rounded-xl flex flex-col items-center justify-center bg-teal-50 text-teal-700 relative overflow-hidden">
+            <div className="w-48 h-48 border-4 border-dashed border-omnia-gold/50 rounded-xl flex flex-col items-center justify-center bg-omnia-gold/10 text-omnia-gold-dark relative overflow-hidden">
               <QrCode size={64} className="mb-2 opacity-50" />
               <span className="font-semibold text-sm">Awaiting Scan...</span>
               
               {/* Scanning laser animation simulation */}
-              <div className="absolute left-0 right-0 h-0.5 bg-teal-500/50 shadow-[0_0_8px_2px_rgba(20,184,166,0.5)] animate-[scan_2s_ease-in-out_infinite]" />
+              <div className="absolute left-0 right-0 h-0.5 bg-omnia-gold/100/50 shadow-[0_0_8px_2px_rgba(20,184,166,0.5)] animate-[scan_2s_ease-in-out_infinite]" />
             </div>
 
             <div className="w-full relative">
@@ -122,7 +122,7 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
                 placeholder="Asset Code (e.g. AST-...)"
                 value={simulatedCode}
                 onChange={e => setSimulatedCode(e.target.value)}
-                className="flex-1 px-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none"
+                className="flex-1 px-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"
               />
               <button 
                 onClick={handleSimulateScan}
@@ -137,14 +137,14 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
 
         {mode === 'checkout' && scannedAsset && (
           <div className="space-y-6 animate-in slide-in-from-right-4">
-            <div className="p-4 bg-teal-50 rounded-xl flex items-start gap-4">
-              <div className="p-3 bg-teal-100 text-teal-700 rounded-lg">
+            <div className="p-4 bg-omnia-gold/10 rounded-xl flex items-start gap-4">
+              <div className="p-3 bg-omnia-gold/15 text-omnia-gold-dark rounded-lg">
                 <Package size={24} />
               </div>
               <div>
-                <h3 className="font-bold text-teal-900">{scannedAsset.asset_name}</h3>
-                <p className="text-sm text-teal-700">{scannedAsset.asset_code}</p>
-                <span className="inline-block mt-1 px-2 py-0.5 bg-teal-200 text-teal-800 text-xs font-semibold rounded-full uppercase tracking-wider">
+                <h3 className="font-bold text-foreground">{scannedAsset.asset_name}</h3>
+                <p className="text-sm text-omnia-gold-dark">{scannedAsset.asset_code}</p>
+                <span className="inline-block mt-1 px-2 py-0.5 bg-teal-200 text-foreground text-xs font-semibold rounded-full uppercase tracking-wider">
                   Available
                 </span>
               </div>
@@ -153,7 +153,7 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
             <div className="space-y-3">
               <label className="block text-sm font-semibold text-slate-700">Assign To:</label>
               <select 
-                className="w-full p-3 border rounded-xl bg-slate-50 focus:bg-white outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full p-3 border rounded-xl bg-slate-50 focus:bg-white outline-none focus:ring-2 focus:ring-omnia-gold-500"
                 value={selectedEmployee}
                 onChange={e => setSelectedEmployee(e.target.value)}
               >
@@ -167,7 +167,7 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
             <button 
               disabled={!selectedEmployee || loading}
               onClick={handleQuickAssign}
-              className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors shadow-lg shadow-teal-500/20"
+              className="w-full py-4 bg-omnia-gold hover:bg-omnia-gold-dark text-white font-bold rounded-xl text-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors shadow-lg shadow-teal-500/20"
             >
               {loading ? 'Processing...' : 'Confirm Checkout'}
               {!loading && <ArrowRight size={20} />}
@@ -177,7 +177,7 @@ export function MobileQRScanner({ assets, profiles, onAssign, onReturn }: QRScan
 
         {mode === 'checkin' && scannedAsset && (
           <div className="space-y-6 animate-in slide-in-from-right-4">
-            <div className="p-4 bg-blue-50 rounded-xl flex items-start gap-4">
+            <div className="p-4 bg-omnia-gold/5 rounded-xl flex items-start gap-4">
               <div className="p-3 bg-blue-100 text-blue-700 rounded-lg">
                 <Package size={24} />
               </div>

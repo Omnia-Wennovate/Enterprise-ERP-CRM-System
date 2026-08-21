@@ -113,7 +113,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-teal-100 selection:text-teal-900">
+    <div className="min-h-screen bg-background text-foreground selection:bg-omnia-gold/15 selection:text-foreground">
       <div className="max-w-[1400px] mx-auto p-6 lg:p-8">
         {/* Header */}
         <OnboardingHeader 
@@ -176,7 +176,7 @@ export default function OnboardingPage() {
                   <p className="text-muted-foreground">No onboardings match your filters.</p>
                   <button 
                     onClick={() => setActiveFilter('all')}
-                    className="text-teal-600 font-medium text-sm mt-2 hover:underline"
+                    className="text-omnia-gold font-medium text-sm mt-2 hover:underline"
                   >
                     Clear Filters
                   </button>

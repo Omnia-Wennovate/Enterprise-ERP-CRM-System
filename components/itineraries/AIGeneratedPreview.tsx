@@ -78,10 +78,10 @@ export function AIGeneratedPreview({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-teal-50 via-white to-sky-50 rounded-xl border border-teal-200/60 p-5"
+        className="bg-gradient-to-br from-omnia-gold/10 via-white to-sky-50 rounded-xl border border-omnia-gold/20/60 p-5"
       >
         <div className="flex items-start gap-3 mb-3">
-          <div className="p-2 bg-gradient-to-br from-teal-500 to-sky-600 rounded-lg">
+          <div className="p-2 bg-gradient-to-br from-omnia-gold/100 to-sky-600 rounded-lg">
             <Sparkles className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
@@ -256,7 +256,7 @@ function DayCard({
         className="flex items-center gap-3 px-4 py-3 cursor-pointer select-none hover:bg-muted/50/50 transition-colors"
         onClick={onToggle}
       >
-        <span className="px-2.5 py-0.5 bg-teal-50 text-teal-700 rounded-lg text-xs font-bold flex-shrink-0">
+        <span className="px-2.5 py-0.5 bg-omnia-gold/10 text-omnia-gold-dark rounded-lg text-xs font-bold flex-shrink-0">
           Day {day.dayNumber}
         </span>
         <div className="flex-1 min-w-0">
@@ -278,7 +278,7 @@ function DayCard({
         <button
           onClick={e => { e.stopPropagation(); onRegenerateDay() }}
           disabled={isRegenerating}
-          className="p-1.5 text-muted-foreground hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors disabled:opacity-50"
+          className="p-1.5 text-muted-foreground hover:text-omnia-gold hover:bg-omnia-gold/10 rounded-lg transition-colors disabled:opacity-50"
           title="Regenerate this day"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -387,7 +387,7 @@ function TimeSlotSection({
         {onRegenerateSlot && (
           <button
             onClick={onRegenerateSlot}
-            className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-teal-600 transition-colors"
+            className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-omnia-gold transition-colors"
           >
             <RotateCcw className="w-2.5 h-2.5" /> Regenerate
           </button>
@@ -414,7 +414,7 @@ function TimeSlotSection({
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-medium text-foreground">{item.title}</span>
                   {item.isAiSuggested && (
-                    <Sparkles className="w-2.5 h-2.5 text-teal-500 flex-shrink-0" />
+                    <Sparkles className="w-2.5 h-2.5 text-omnia-gold flex-shrink-0" />
                   )}
                   {!item.isSupplierConfirmed && item.supplierName && (
                     <span className="px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded text-[8px] font-medium flex-shrink-0">
@@ -441,7 +441,7 @@ function TimeSlotSection({
               <div className="relative flex-shrink-0">
                 <button
                   onClick={() => setShowRefineMenu(showRefineMenu === menuId ? null : menuId)}
-                  className="p-1 text-slate-300 hover:text-teal-600 rounded opacity-0 group-hover:opacity-100 transition-all"
+                  className="p-1 text-slate-300 hover:text-omnia-gold rounded opacity-0 group-hover:opacity-100 transition-all"
                 >
                   <Wand2 className="w-3.5 h-3.5" />
                 </button>
@@ -456,7 +456,7 @@ function TimeSlotSection({
                           onRefineItem(globalIndex, rm.mode)
                           setShowRefineMenu(null)
                         }}
-                        className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition-colors text-left"
+                        className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-700 hover:bg-omnia-gold/10 hover:text-omnia-gold-dark transition-colors text-left"
                       >
                         <span>{rm.icon}</span> {rm.label}
                       </button>

@@ -7,14 +7,14 @@ import { storage } from '@/lib/storage'
 import { Button } from '@/components/ui/button'
 
 const STATUS_CONFIG: Record<TaskStatus, { label: string; color: string; bgColor: string }> = {
-  to_do: { label: 'To Do', color: 'text-gray-700', bgColor: 'bg-gray-100' },
+  to_do: { label: 'To Do', color: 'text-foreground', bgColor: 'bg-muted' },
   in_progress: { label: 'In Progress', color: 'text-blue-700', bgColor: 'bg-blue-100' },
   completed: { label: 'Completed', color: 'text-green-700', bgColor: 'bg-green-100' },
   cancelled: { label: 'Cancelled', color: 'text-red-700', bgColor: 'bg-red-100' },
 }
 
 const PRIORITY_CONFIG: Record<TaskPriority, { label: string; color: string }> = {
-  low: { label: 'Low', color: 'text-blue-600' },
+  low: { label: 'Low', color: 'text-omnia-gold' },
   medium: { label: 'Medium', color: 'text-yellow-600' },
   high: { label: 'High', color: 'text-orange-600' },
   urgent: { label: 'Urgent', color: 'text-red-600' },
@@ -84,7 +84,7 @@ export function TasksKanban() {
                 <h3 className={`font-semibold text-sm ${STATUS_CONFIG[status].color}`}>
                   {STATUS_CONFIG[status].label}
                 </h3>
-                <span className="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">
+                <span className="bg-gray-200 text-foreground text-xs px-2 py-0.5 rounded-full">
                   {tasksByStatus[status].length}
                 </span>
               </div>
@@ -94,7 +94,7 @@ export function TasksKanban() {
             </div>
 
             <div
-              className="flex-1 space-y-3 bg-gray-50 rounded-lg p-3 min-h-96"
+              className="flex-1 space-y-3 bg-muted rounded-lg p-3 min-h-96"
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, status)}
             >
@@ -106,15 +106,15 @@ export function TasksKanban() {
                   className={`p-3 rounded-lg border cursor-move transition-all hover:shadow-md ${
                     isOverdue(task.due_date) && task.status !== 'completed'
                       ? 'border-red-300 bg-red-50 hover:border-red-400'
-                      : 'border-gray-200 bg-card hover:border-teal-300'
+                      : 'border-border bg-card hover:border-omnia-gold/40'
                   }`}
                 >
                   <div className="flex items-start gap-2 mb-2">
-                    <GripVertical className="w-4 h-4 text-gray-400 mt-0.5" />
+                    <GripVertical className="w-4 h-4 text-muted-foreground mt-0.5" />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-sm text-gray-900 truncate">{task.title}</h4>
+                      <h4 className="font-semibold text-sm text-foreground truncate">{task.title}</h4>
                       {task.description && (
-                        <p className="text-xs text-gray-600 truncate mt-1">{task.description}</p>
+                        <p className="text-xs text-muted-foreground truncate mt-1">{task.description}</p>
                       )}
                     </div>
                     <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -142,7 +142,7 @@ export function TasksKanban() {
                     </div>
 
                     {task.is_reminder_set && (
-                      <div className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                      <div className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
                         🔔 Reminder set
                       </div>
                     )}
@@ -151,7 +151,7 @@ export function TasksKanban() {
               ))}
 
               {tasksByStatus[status].length === 0 && (
-                <div className="flex items-center justify-center h-32 text-gray-400">
+                <div className="flex items-center justify-center h-32 text-muted-foreground">
                   <p className="text-sm">No tasks</p>
                 </div>
               )}

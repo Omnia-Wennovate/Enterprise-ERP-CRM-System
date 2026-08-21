@@ -17,7 +17,7 @@ const statusIcons = {
   pending: { icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50', label: 'Pending Review' },
   verified: { icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50', label: 'Verified' },
   rejected: { icon: XCircle, color: 'text-red-500', bg: 'bg-red-50', label: 'Rejected' },
-  expired: { icon: AlertCircle, color: 'text-gray-500', bg: 'bg-gray-50', label: 'Expired' },
+  expired: { icon: AlertCircle, color: 'text-muted-foreground', bg: 'bg-muted', label: 'Expired' },
 }
 
 export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify, onDelete }: VisaDocumentsProps) {
@@ -68,7 +68,7 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
       {/* Upload Area */}
       <div
         className={`border-2 border-dashed rounded-xl p-6 text-center transition-colors ${
-          dragOver ? 'border-teal-400 bg-teal-50' : 'border-border bg-muted/50'
+          dragOver ? 'border-omnia-gold/60 bg-omnia-gold/10' : 'border-border bg-muted/50'
         }`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
         onDragLeave={() => setDragOver(false)}
@@ -77,7 +77,7 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
         <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
         <div className="flex items-center justify-center gap-3 mb-3">
           <select
-            className="border-border rounded-lg text-sm focus:border-teal-500 focus:ring-teal-500"
+            className="border-border rounded-lg text-sm focus:border-omnia-gold focus:ring-teal-500"
             value={selectedType}
             onChange={e => setSelectedType(e.target.value)}
           >
@@ -85,7 +85,7 @@ export function VisaDocuments({ documents, requiredDocTypes, onUpload, onVerify,
               <option key={key} value={key}>{label}</option>
             ))}
           </select>
-          <label className="px-4 py-2 bg-teal-600 text-primary-foreground text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors cursor-pointer">
+          <label className="px-4 py-2 bg-omnia-gold text-primary-foreground text-sm font-medium rounded-lg hover:bg-omnia-gold-dark transition-colors cursor-pointer">
             {uploading ? 'Uploading...' : 'Choose File'}
             <input type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={handleFileSelect} disabled={uploading} />
           </label>

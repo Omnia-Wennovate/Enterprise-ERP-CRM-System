@@ -50,7 +50,7 @@ export default function CommissionRulesPage() {
             <h1 className="text-3xl font-bold text-foreground">Commission Rules</h1>
             <p className="text-muted-foreground mt-1">Configure commission structures and tiers</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             New Rule
           </button>
@@ -84,7 +84,7 @@ export default function CommissionRulesPage() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-muted-foreground">Base Rate</p>
-                    <p className="text-2xl font-bold text-teal-600">{rule.base_percentage}%</p>
+                    <p className="text-2xl font-bold text-omnia-gold">{rule.base_percentage}%</p>
                   </div>
 
                   {rule.bonus_tiers && rule.bonus_tiers.length > 0 && (
@@ -94,7 +94,7 @@ export default function CommissionRulesPage() {
                         {rule.bonus_tiers.map((tier, idx) => (
                           <div key={idx} className="flex justify-between text-muted-foreground">
                             <span>Above ${tier.threshold.toFixed(0)}</span>
-                            <span className="font-medium text-teal-600">{tier.percentage}%</span>
+                            <span className="font-medium text-omnia-gold">{tier.percentage}%</span>
                           </div>
                         ))}
                       </div>

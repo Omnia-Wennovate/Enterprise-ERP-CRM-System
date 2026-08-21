@@ -42,7 +42,7 @@ export default function PaymentHero({
       className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 md:p-8 text-white"
     >
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-teal-500/10 via-transparent to-transparent rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-omnia-gold/100/10 via-transparent to-transparent rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-60 h-60 bg-gradient-to-tr from-emerald-500/8 via-transparent to-transparent rounded-full blur-2xl" />
 
       <div className="relative z-10">
@@ -50,7 +50,7 @@ export default function PaymentHero({
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-teal-500/20 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-omnia-gold/100/20 flex items-center justify-center">
                 <DollarSign className="w-5 h-5 text-teal-400" />
               </div>
               <div>
@@ -72,7 +72,7 @@ export default function PaymentHero({
             </button>
             <button
               onClick={onRecordPayment}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-sm font-semibold text-white hover:from-teal-400 hover:to-emerald-400 transition-all duration-200 shadow-lg shadow-teal-500/25"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-omnia-gold/100 to-emerald-500 text-sm font-semibold text-white hover:from-teal-400 hover:to-emerald-400 transition-all duration-200 shadow-lg shadow-teal-500/25"
             >
               <Plus className="w-4 h-4" />
               Record Payment
@@ -126,7 +126,7 @@ export default function PaymentHero({
             transition={{ delay: 0.5 }}
             className="flex flex-wrap gap-3 mt-5"
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-medium text-teal-300">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-omnia-gold/100/10 border border-omnia-gold/20 text-xs font-medium text-teal-300">
               <TrendingUp className="w-3 h-3" />
               ETB {fmtCurrency(collectedThisMonth)} collected
             </div>

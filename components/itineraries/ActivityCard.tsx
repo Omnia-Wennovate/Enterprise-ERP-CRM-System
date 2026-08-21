@@ -43,7 +43,7 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
     confirmed: 'bg-green-50 text-green-700',
     pending: 'bg-amber-50 text-amber-700',
     cancelled: 'bg-red-50 text-red-700',
-    completed: 'bg-teal-50 text-teal-700',
+    completed: 'bg-omnia-gold/10 text-omnia-gold-dark',
   }
 
   return (
@@ -96,7 +96,7 @@ export function ActivityCard({ item, onEdit, onDelete, dragHandleProps, isDraggi
         {/* Actions */}
         <div className="flex items-center gap-1 flex-shrink-0">
           {onEdit && (
-            <button onClick={(e) => { e.stopPropagation(); onEdit(item) }} className="p-1.5 text-muted-foreground hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors">
+            <button onClick={(e) => { e.stopPropagation(); onEdit(item) }} className="p-1.5 text-muted-foreground hover:text-omnia-gold hover:bg-omnia-gold/10 rounded-lg transition-colors">
               <Pencil className="w-3.5 h-3.5" />
             </button>
           )}

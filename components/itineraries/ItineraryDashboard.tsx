@@ -41,7 +41,7 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-omnia-gold" />
       </div>
     )
   }
@@ -49,7 +49,7 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
   if (!kpis) return null
 
   const cards = [
-    { label: 'Active Itineraries', value: kpis.totalActive, icon: Map, color: 'from-teal-500 to-teal-600', iconBg: 'bg-teal-400/20' },
+    { label: 'Active Itineraries', value: kpis.totalActive, icon: Map, color: 'from-omnia-gold/100 to-teal-600', iconBg: 'bg-teal-400/20' },
     { label: 'Upcoming Trips', value: kpis.upcomingTrips, icon: Plane, color: 'from-blue-500 to-blue-600', iconBg: 'bg-blue-400/20' },
     { label: 'Total Travelers', value: kpis.totalTravelers, icon: Users, color: 'from-violet-500 to-violet-600', iconBg: 'bg-violet-400/20' },
     { label: 'Countries', value: kpis.totalCountries, icon: Globe, color: 'from-amber-500 to-amber-600', iconBg: 'bg-amber-400/20' },
@@ -94,7 +94,7 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
               <p className="text-sm text-muted-foreground mt-0.5">Created vs Completed</p>
             </div>
             <div className="flex items-center gap-1.5 text-xs">
-              <span className="w-3 h-3 rounded-sm bg-teal-500" /> Created
+              <span className="w-3 h-3 rounded-sm bg-omnia-gold/100" /> Created
               <span className="w-3 h-3 rounded-sm bg-emerald-400 ml-2" /> Completed
             </div>
           </div>
@@ -113,7 +113,7 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
                       boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                     }}
                   />
-                  <Bar dataKey="count" fill="#0A8FA8" radius={[4, 4, 0, 0]} name="Created" />
+                  <Bar dataKey="count" fill="#C8A951" radius={[4, 4, 0, 0]} name="Created" />
                   <Bar dataKey="completed" fill="#34d399" radius={[4, 4, 0, 0]} name="Completed" />
                 </BarChart>
               </ResponsiveContainer>
@@ -133,16 +133,16 @@ export function ItineraryDashboard({ onViewAll }: ItineraryDashboardProps) {
         <div className="bg-card rounded-xl border border-border/60 p-6">
           <h3 className="text-lg font-semibold text-foreground mb-6">Trip Overview</h3>
           <div className="space-y-5">
-            <StatRow label="Active Itineraries" value={kpis.totalActive} max={Math.max(kpis.totalActive + kpis.completedTrips, 1)} color="bg-teal-500" />
-            <StatRow label="Upcoming Trips" value={kpis.upcomingTrips} max={Math.max(kpis.totalActive, 1)} color="bg-blue-500" />
+            <StatRow label="Active Itineraries" value={kpis.totalActive} max={Math.max(kpis.totalActive + kpis.completedTrips, 1)} color="bg-omnia-gold/100" />
+            <StatRow label="Upcoming Trips" value={kpis.upcomingTrips} max={Math.max(kpis.totalActive, 1)} color="bg-omnia-gold/50" />
             <StatRow label="Pending Approval" value={kpis.pendingApproval} max={Math.max(kpis.totalActive, 1)} color="bg-amber-500" />
             <StatRow label="Completed" value={kpis.completedTrips} max={Math.max(kpis.totalActive + kpis.completedTrips, 1)} color="bg-green-500" />
           </div>
 
-          <div className="mt-8 p-4 bg-gradient-to-r from-teal-50 to-sky-50 rounded-xl border border-teal-100">
+          <div className="mt-8 p-4 bg-gradient-to-r from-omnia-gold/10 to-sky-50 rounded-xl border border-omnia-gold/15">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-teal-100 rounded-lg">
-                <Globe className="w-5 h-5 text-teal-600" />
+              <div className="p-2 bg-omnia-gold/15 rounded-lg">
+                <Globe className="w-5 h-5 text-omnia-gold" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">

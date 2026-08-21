@@ -18,7 +18,7 @@ const STATUS_STYLES: Record<string, string> = {
   paid: 'bg-emerald-100 text-emerald-700',
   partially_paid: 'bg-purple-100 text-purple-700',
   overdue: 'bg-red-100 text-red-700',
-  cancelled: 'bg-gray-100 text-gray-500',
+  cancelled: 'bg-muted text-muted-foreground',
 }
 
 const fmt = (n: number, cur = 'USD') =>
@@ -134,7 +134,7 @@ export default function InvoiceDetailDrawer({ invoice, onClose }: InvoiceDetailD
                   key={t.key}
                   onClick={() => setTab(t.key)}
                   className={`flex items-center gap-1.5 px-3 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
-                    tab === t.key ? 'border-blue-500 text-blue-600' : 'border-transparent text-muted-foreground hover:text-foreground'
+                    tab === t.key ? 'border-blue-500 text-omnia-gold' : 'border-transparent text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {t.icon}{t.label}
@@ -234,8 +234,8 @@ export default function InvoiceDetailDrawer({ invoice, onClose }: InvoiceDetailD
                         <div className="absolute left-4 top-0 bottom-0 w-px bg-border"/>
                         <div className="space-y-5">
                           {[
-                            { label: 'Invoice Created', date: invoice.created_at, color: 'bg-blue-500' },
-                            { label: 'Status: ' + invoice.status.replace('_', ' '), date: invoice.updated_at, color: 'bg-teal-500' },
+                            { label: 'Invoice Created', date: invoice.created_at, color: 'bg-omnia-gold/50' },
+                            { label: 'Status: ' + invoice.status.replace('_', ' '), date: invoice.updated_at, color: 'bg-omnia-gold/100' },
                             ...payments.map(p => ({ label: `Payment: ${fmt(p.amount, invoice.currency)}`, date: p.payment_date, color: 'bg-emerald-500' })),
                           ]
                           .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())

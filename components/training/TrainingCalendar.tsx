@@ -71,12 +71,12 @@ export function TrainingCalendar() {
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <button onClick={() => setCurrentDate(new Date())} className="text-sm font-medium text-teal-600 hover:text-teal-700">
+          <button onClick={() => setCurrentDate(new Date())} className="text-sm font-medium text-omnia-gold hover:text-omnia-gold-dark">
             Today
           </button>
         </div>
 
-        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
+        <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
           <Plus className="w-4 h-4" /> Schedule Session
         </button>
       </div>
@@ -112,7 +112,7 @@ export function TrainingCalendar() {
                   {day && (
                     <>
                       <div className={`text-xs font-medium w-6 h-6 flex items-center justify-center rounded-full mb-1 ${
-                        isToday ? 'bg-teal-600 text-primary-foreground shadow-sm' : 'text-slate-700'
+                        isToday ? 'bg-omnia-gold text-primary-foreground shadow-sm' : 'text-slate-700'
                       }`}>
                         {day}
                       </div>
@@ -121,7 +121,7 @@ export function TrainingCalendar() {
                         {daySessions.map(session => (
                           <div 
                             key={session.id} 
-                            className="px-2 py-1 bg-teal-50 border border-teal-100 text-teal-700 text-[10px] rounded-md truncate cursor-pointer hover:bg-teal-100 transition-colors"
+                            className="px-2 py-1 bg-omnia-gold/10 border border-omnia-gold/15 text-omnia-gold-dark text-[10px] rounded-md truncate cursor-pointer hover:bg-omnia-gold/15 transition-colors"
                             title={session.title}
                           >
                             {new Date(session.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - {session.title}
@@ -130,7 +130,7 @@ export function TrainingCalendar() {
                       </div>
 
                       {/* Add button on hover */}
-                      <button className="absolute bottom-2 right-2 p-1 bg-card border border-border rounded-md text-muted-foreground hover:text-teal-600 hover:border-teal-200 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button className="absolute bottom-2 right-2 p-1 bg-card border border-border rounded-md text-muted-foreground hover:text-omnia-gold hover:border-omnia-gold/20 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Plus className="w-3 h-3" />
                       </button>
                     </>
@@ -158,8 +158,8 @@ export function TrainingCalendar() {
             ) : sessions.length > 0 ? (
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                 {sessions.map(session => (
-                  <div key={session.id} className="p-3 border border-slate-100 rounded-lg hover:border-teal-200 transition-colors group cursor-pointer">
-                    <h4 className="text-sm font-bold text-foreground group-hover:text-teal-700 transition-colors line-clamp-1">{session.title}</h4>
+                  <div key={session.id} className="p-3 border border-slate-100 rounded-lg hover:border-omnia-gold/20 transition-colors group cursor-pointer">
+                    <h4 className="text-sm font-bold text-foreground group-hover:text-omnia-gold-dark transition-colors line-clamp-1">{session.title}</h4>
                     
                     <div className="mt-2 space-y-1.5">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">

@@ -91,7 +91,7 @@ export default function PerformancePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <button className="text-teal-600 hover:text-teal-700 font-medium text-sm">View</button>
+                      <button className="text-omnia-gold hover:text-omnia-gold-dark font-medium text-sm">View</button>
                     </td>
                   </tr>
                 ))}

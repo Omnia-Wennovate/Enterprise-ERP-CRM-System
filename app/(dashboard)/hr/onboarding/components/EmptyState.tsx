@@ -16,8 +16,8 @@ export function EmptyState({ onStartOnboarding }: Props) {
       animate={{ opacity: 1, y: 0 }}
       className="flex flex-col items-center justify-center py-20 px-6"
     >
-      <div className="w-20 h-20 rounded-2xl bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mb-6">
-        <UserPlus className="w-10 h-10 text-teal-500" />
+      <div className="w-20 h-20 rounded-2xl bg-omnia-gold/15 dark:bg-teal-900/30 flex items-center justify-center mb-6">
+        <UserPlus className="w-10 h-10 text-omnia-gold" />
       </div>
       <h2 className="text-xl font-bold text-foreground mb-2">No Active Onboardings</h2>
       <p className="text-muted-foreground text-center max-w-md mb-6 text-sm leading-relaxed">
@@ -27,7 +27,7 @@ export function EmptyState({ onStartOnboarding }: Props) {
       <div className="flex items-center gap-3">
         <button
           onClick={onStartOnboarding}
-          className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-semibold shadow-lg shadow-teal-600/20"
+          className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold text-white rounded-xl hover:bg-omnia-gold-dark transition-colors font-semibold shadow-lg shadow-teal-600/20"
         >
           <UserPlus className="w-5 h-5" />
           Start Onboarding

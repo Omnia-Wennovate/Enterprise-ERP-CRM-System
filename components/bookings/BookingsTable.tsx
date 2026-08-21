@@ -49,11 +49,11 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
       case 'draft':
         return 'bg-muted/50 text-slate-700 border-border'
       case 'confirmed':
-        return 'bg-blue-50 text-blue-700 border-blue-200'
+        return 'bg-omnia-gold/5 text-blue-700 border-blue-200'
       case 'processing':
         return 'bg-amber-50 text-amber-700 border-amber-200'
       case 'documents_ready':
-        return 'bg-teal-50 text-teal-700 border-teal-200'
+        return 'bg-omnia-gold/10 text-omnia-gold-dark border-omnia-gold/20'
       case 'travelled':
         return 'bg-sky-50 text-sky-700 border-sky-200'
       case 'completed':
@@ -69,7 +69,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="flex flex-col items-center gap-2">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-omnia-gold" />
           <p className="text-sm text-muted-foreground">Loading bookings...</p>
         </div>
       </div>

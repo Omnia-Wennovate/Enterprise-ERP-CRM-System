@@ -31,10 +31,10 @@ interface NewCustomerModalProps {
 type CustomerFormData = Omit<Customer, 'id' | 'created_at' | 'updated_at' | 'last_booking_date'>
 
 const inputClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all duration-200 hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
 
 const selectClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all duration-200 hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all duration-200 hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
 
 function FormField({
   label,
@@ -51,8 +51,8 @@ function FormField({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 uppercase tracking-wider">
-        {Icon && <Icon className="w-3.5 h-3.5 text-gray-400" />}
+      <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+        {Icon && <Icon className="w-3.5 h-3.5 text-muted-foreground" />}
         {label}
         {required && <span className="text-red-500">*</span>}
       </label>
@@ -74,10 +74,10 @@ function FormField({
 function SectionHeader({ icon: Icon, title }: { icon: React.ComponentType<{ className?: string }>; title: string }) {
   return (
     <div className="flex items-center gap-2 pb-2 mb-4 border-b border-gray-100">
-      <div className="p-1.5 rounded-md bg-teal-50">
-        <Icon className="w-4 h-4 text-teal-600" />
+      <div className="p-1.5 rounded-md bg-omnia-gold/10">
+        <Icon className="w-4 h-4 text-omnia-gold" />
       </div>
-      <h3 className="text-sm font-bold text-gray-800">{title}</h3>
+      <h3 className="text-sm font-bold text-foreground">{title}</h3>
     </div>
   )
 }
@@ -196,20 +196,20 @@ export function NewCustomerModal({ isOpen, onClose, onSuccess }: NewCustomerModa
             transition={{ duration: 0.3, type: 'spring', damping: 25, stiffness: 300 }}
             className="relative w-full max-w-2xl mx-4 mt-16 mb-8 bg-card rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-teal-50 to-cyan-50 flex-shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-omnia-gold/10 to-cyan-50 flex-shrink-0">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-teal-600 rounded-xl shadow-lg shadow-teal-200">
+                <div className="p-2 bg-omnia-gold rounded-xl shadow-lg shadow-teal-200">
                   <User className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-gray-900">Create New Customer</h2>
-                  <p className="text-xs text-gray-500">Add a new customer profile to your database</p>
+                  <h2 className="text-lg font-bold text-foreground">Create New Customer</h2>
+                  <p className="text-xs text-muted-foreground">Add a new customer profile to your database</p>
                 </div>
               </div>
               <button
                 onClick={handleClose}
                 disabled={isSaving}
-                className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-card/60 transition-all disabled:opacity-50"
+                className="p-2 rounded-lg text-muted-foreground hover:text-muted-foreground hover:bg-card/60 transition-all disabled:opacity-50"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -299,7 +299,7 @@ export function NewCustomerModal({ isOpen, onClose, onSuccess }: NewCustomerModa
                 </div>
               </div>
 
-              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-gray-50/80 flex-shrink-0">
+              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-muted/80 flex-shrink-0">
                 <div className="flex items-center gap-2">
                   {saveStatus === 'success' && (
                     <motion.div
@@ -336,7 +336,7 @@ export function NewCustomerModal({ isOpen, onClose, onSuccess }: NewCustomerModa
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="bg-teal-600 hover:bg-teal-700 text-primary-foreground px-6 min-w-[120px]"
+                    className="bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground px-6 min-w-[120px]"
                   >
                     {isSaving ? (
                       <span className="flex items-center gap-2">

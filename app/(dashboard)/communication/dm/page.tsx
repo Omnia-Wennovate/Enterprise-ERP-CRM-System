@@ -48,7 +48,7 @@ export default function DirectMessagesPage() {
             <h1 className="text-3xl font-bold text-foreground">Direct Messages</h1>
             <p className="text-muted-foreground mt-1">One-on-one conversations with team members</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             New Message
           </button>
@@ -65,7 +65,7 @@ export default function DirectMessagesPage() {
                   placeholder="Search conversations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                 />
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function DirectMessagesPage() {
                 >
                   <div className="flex items-start gap-3">
                     <div className="relative flex-shrink-0">
-                      <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center font-semibold text-teal-700">
+                      <div className="w-10 h-10 rounded-full bg-omnia-gold/15 flex items-center justify-center font-semibold text-omnia-gold-dark">
                         {conv.avatar}
                       </div>
                       <div
@@ -98,7 +98,7 @@ export default function DirectMessagesPage() {
                           {conv.participantName}
                         </p>
                         {conv.unread && (
-                          <div className="w-2 h-2 rounded-full bg-teal-600" />
+                          <div className="w-2 h-2 rounded-full bg-omnia-gold" />
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>

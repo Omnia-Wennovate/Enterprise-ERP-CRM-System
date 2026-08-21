@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, Loader2, AlertCircle } from 'lucide-react'
 import { authenticateUser, getAllDemoCredentials } from '@/lib/auth'
+import { OmniaLogo } from '@/components/ui/OmniaLogo'
+import { motion } from 'framer-motion'
 
 export function LoginForm() {
   const router = useRouter()
@@ -12,6 +14,7 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showDemoCredentials, setShowDemoCredentials] = useState(false)
 
   const demoCredentials = getAllDemoCredentials()
 
@@ -63,114 +66,170 @@ export function LoginForm() {
   }
 
   return (
-    <div className="w-full max-w-md">
-      <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
-        <h1 className="text-2xl font-semibold text-foreground mb-2">Welcome back</h1>
-        <p className="text-muted-foreground text-sm mb-6">Sign in to your Omnia Travel account</p>
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full max-w-md mx-auto"
+    >
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-[0_8px_40px_rgb(0,0,0,0.08)] border border-[#E8E4DC]/60 p-8 lg:p-10 relative overflow-hidden">
+        {/* Subtle luxury corner accent */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#C8A951]/[0.04] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[#C8A951]/[0.03] to-transparent pointer-events-none" />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Logo for desktop (hidden on mobile since it's in the page header) */}
+        <div className="hidden lg:flex justify-center mb-6">
+          <div className="relative">
+            <OmniaLogo variant="icon" theme="dark" size={120} />
+          </div>
+        </div>
+
+        {/* Gold accent line */}
+        <div className="w-10 h-[2px] bg-gradient-to-r from-[#C8A951] to-[#E8D48B] mx-auto mb-6" />
+
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold text-[#0A1221] mb-1.5 tracking-tight">Welcome back</h1>
+          <p className="text-[#5A6475] text-sm">Sign in to your Omnia Travel account</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email Input */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-              Email
+          <div className="space-y-1.5">
+            <label htmlFor="email" className="block text-xs font-semibold text-[#0A1221]/70 uppercase tracking-widest">
+              Email Address
             </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-3 text-muted-foreground" size={18} />
+            <div className="relative group">
+              <Mail className="absolute left-3.5 top-3 text-[#8A94A5] transition-colors group-focus-within:text-[#C8A951]" size={18} />
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 bg-card text-foreground placeholder-[#94A3B8] transition-all"
+                placeholder="Enter your email or username"
+                className="w-full pl-11 pr-4 py-3 border border-[#E5E2DC] rounded-xl focus:border-[#C8A951] focus:ring-2 focus:ring-[#C8A951]/20 bg-white/90 text-[#0A1221] placeholder-[#8A94A5] transition-all text-sm shadow-sm"
                 required
               />
             </div>
           </div>
 
           {/* Password Input */}
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
+          <div className="space-y-1.5">
+            <label htmlFor="password" className="block text-xs font-semibold text-[#0A1221]/70 uppercase tracking-widest">
               Password
             </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 text-muted-foreground" size={18} />
+            <div className="relative group">
+              <Lock className="absolute left-3.5 top-3 text-[#8A94A5] transition-colors group-focus-within:text-[#C8A951]" size={18} />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 bg-card text-foreground placeholder-[#94A3B8] transition-all"
+                placeholder="Enter your password"
+                className="w-full pl-11 pr-11 py-3 border border-[#E5E2DC] rounded-xl focus:border-[#C8A951] focus:ring-2 focus:ring-[#C8A951]/20 bg-white/90 text-[#0A1221] placeholder-[#8A94A5] transition-all text-sm shadow-sm"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute right-3.5 top-3 text-[#8A94A5] hover:text-[#C8A951] transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="text-right">
-            <a href="/forgot-password" className="text-sm text-primary hover:text-[#088096] transition-colors">
-              Forgot password?
+          <div className="flex items-center justify-between pt-1">
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <div className="relative flex items-center justify-center">
+                <input type="checkbox" className="peer sr-only" />
+                <div className="w-4 h-4 rounded border border-[#E5E2DC] bg-white peer-checked:bg-[#C8A951] peer-checked:border-[#C8A951] transition-all"></div>
+                <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 6.5L5 9L9.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <span className="text-xs font-medium text-[#5A6475] group-hover:text-[#0A1221] transition-colors">Remember me</span>
+            </label>
+            
+            <a href="/forgot-password" className="text-xs font-medium text-[#5A6475] hover:text-[#C8A951] transition-colors">
+              Forgot Password?
             </a>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
-              <AlertCircle className="text-red-600 flex-shrink-0" size={16} />
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2.5"
+            >
+              <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={16} />
+              <p className="text-red-600 text-sm font-medium">{error}</p>
+            </motion.div>
           )}
 
-          {/* Sign In Button */}
-          <button
+          {/* Sign In Button — premium gold gradient */}
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-[#C8A951] via-[#D4B85C] to-[#C8A951] hover:from-[#B39540] hover:via-[#C8A951] hover:to-[#B39540] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-[0_4px_20px_rgba(200,169,81,0.3)] hover:shadow-[0_6px_30px_rgba(200,169,81,0.4)] mt-2"
           >
             {isLoading ? (
               <>
-                <Loader2 className="animate-spin" size={16} />
+                <Loader2 className="animate-spin" size={18} />
                 Signing in...
               </>
             ) : (
-              'Sign In'
+              <>
+                Sign In
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="ml-1 opacity-70">
+                  <path d="M3.3335 8H12.6668M12.6668 8L8.66683 4M12.6668 8L8.66683 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </>
             )}
-          </button>
+          </motion.button>
         </form>
 
-        <div className="mt-6 border-t border-border pt-6">
-          <p className="text-xs text-muted-foreground font-medium mb-3">Demo Credentials:</p>
-          <div className="space-y-2">
-            {demoCredentials.map((cred) => (
-              <button
-                key={cred.email}
-                onClick={() => handleDemoLogin(cred.email)}
-                disabled={isLoading}
-                className="w-full text-left px-3 py-2 text-xs bg-background hover:bg-primary/10 border border-border rounded-lg transition-colors disabled:opacity-50 text-foreground"
-              >
-                <span className="font-medium">
-                  {cred.role === 'marketing' 
-                    ? 'SOCIAL MEDIA TEAM' 
-                    : cred.role.replace(/_/g, ' ').toUpperCase()}
-                </span>
-                <div className="text-muted-foreground truncate">{cred.email}</div>
-              </button>
-            ))}
-          </div>
+        {/* Demo Credentials — collapsible */}
+        <div className="mt-8 border-t border-[#E5E2DC]/60 pt-5">
+          <button
+            type="button"
+            onClick={() => setShowDemoCredentials(!showDemoCredentials)}
+            className="text-xs text-[#8A94A5] hover:text-[#C8A951] font-medium transition-colors flex items-center justify-center gap-1.5 w-full"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={`transition-transform duration-200 ${showDemoCredentials ? 'rotate-90' : ''}`}>
+              <path d="M4 3L8 6L4 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Demo Credentials
+          </button>
+          
+          {showDemoCredentials && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="space-y-2 mt-4"
+            >
+              {demoCredentials.map((cred) => (
+                <button
+                  key={cred.email}
+                  onClick={() => handleDemoLogin(cred.email)}
+                  disabled={isLoading}
+                  className="w-full text-left px-4 py-2.5 text-xs bg-white/70 hover:bg-[#F5F3ED] border border-[#E5E2DC]/60 rounded-lg transition-all hover:border-[#C8A951]/30 disabled:opacity-50 text-[#0A1221] shadow-sm flex flex-col gap-1"
+                >
+                  <span className="font-bold text-[10px] uppercase tracking-widest text-[#C8A951]">
+                    {cred.role === 'marketing' 
+                      ? 'Social Media Team' 
+                      : cred.role.replace(/_/g, ' ')}
+                  </span>
+                  <div className="text-[#5A6475] truncate font-medium">{cred.email}</div>
+                </button>
+              ))}
+            </motion.div>
+          )}
         </div>
-
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          Don&apos;t have an account? <span className="text-primary font-medium">Contact your admin</span>
-        </p>
       </div>
-    </div>
+    </motion.div>
   )
 }
+

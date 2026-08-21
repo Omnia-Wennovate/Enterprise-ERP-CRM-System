@@ -30,8 +30,8 @@ const TYPE_ICONS: Record<FollowUpType, React.ComponentType<{ className?: string 
 }
 
 const PRIORITY_COLORS: Record<string, string> = {
-  low:      'bg-gray-100 text-gray-600',
-  medium:   'bg-blue-100 text-blue-600',
+  low:      'bg-muted text-muted-foreground',
+  medium:   'bg-blue-100 text-omnia-gold',
   high:     'bg-orange-100 text-orange-600',
   critical: 'bg-red-100 text-red-600',
 }
@@ -127,7 +127,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
         variant="outline"
         size="sm"
         onClick={() => setShowForm((v) => !v)}
-        className="w-full text-teal-700 border-teal-200 hover:bg-teal-50"
+        className="w-full text-omnia-gold-dark border-omnia-gold/20 hover:bg-omnia-gold/10"
       >
         <Plus className="w-4 h-4 mr-1.5" />
         {showForm ? 'Cancel' : 'Schedule Follow-up'}
@@ -141,7 +141,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             onSubmit={handleSubmit}
-            className="bg-teal-50 border border-teal-200 rounded-xl p-4 space-y-3 overflow-hidden"
+            className="bg-omnia-gold/10 border border-omnia-gold/20 rounded-xl p-4 space-y-3 overflow-hidden"
           >
             <div>
               <input
@@ -149,7 +149,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
                 placeholder="Follow-up title *"
                 value={form.title}
                 onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none"
+                className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 outline-none"
                 required
               />
             </div>
@@ -157,7 +157,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               <select
                 value={form.follow_up_type}
                 onChange={(e) => setForm((p) => ({ ...p, follow_up_type: e.target.value as FollowUpType }))}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
+                className="text-xs border border-border rounded-lg px-2 py-2 bg-card outline-none focus:border-omnia-gold/60"
               >
                 {FOLLOW_UP_TYPES.map((t) => (
                   <option key={t} value={t}>{FOLLOW_UP_TYPE_LABELS[t]}</option>
@@ -166,7 +166,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               <select
                 value={form.priority}
                 onChange={(e) => setForm((p) => ({ ...p, priority: e.target.value as LeadPriority }))}
-                className="text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
+                className="text-xs border border-border rounded-lg px-2 py-2 bg-card outline-none focus:border-omnia-gold/60"
               >
                 {PRIORITIES.map((p) => (
                   <option key={p} value={p}>{PRIORITY_LABELS[p]}</option>
@@ -177,13 +177,13 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               type="datetime-local"
               value={form.due_date}
               onChange={(e) => setForm((p) => ({ ...p, due_date: e.target.value }))}
-              className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
+              className="w-full text-xs border border-border rounded-lg px-2 py-2 bg-card outline-none focus:border-omnia-gold/60"
             />
             {agents.length > 0 && (
               <select
                 value={form.assigned_to}
                 onChange={(e) => setForm((p) => ({ ...p, assigned_to: e.target.value }))}
-                className="w-full text-xs border border-gray-200 rounded-lg px-2 py-2 bg-card outline-none focus:border-teal-400"
+                className="w-full text-xs border border-border rounded-lg px-2 py-2 bg-card outline-none focus:border-omnia-gold/60"
               >
                 <option value="">— Assign to agent —</option>
                 {agents.map((a) => <option key={a.id} value={a.id}>{a.full_name}</option>)}
@@ -194,9 +194,9 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
               value={form.description}
               onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
               rows={2}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 outline-none resize-none"
+              className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:border-omnia-gold/60 outline-none resize-none"
             />
-            <Button type="submit" size="sm" disabled={isSaving} className="w-full bg-teal-600 hover:bg-teal-700 text-primary-foreground">
+            <Button type="submit" size="sm" disabled={isSaving} className="w-full bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground">
               {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
               Save Follow-up
             </Button>
@@ -207,10 +207,10 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
       {/* Follow-ups list */}
       {isLoading ? (
         <div className="flex justify-center py-8">
-          <Loader2 className="w-5 h-5 text-teal-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-omnia-gold animate-spin" />
         </div>
       ) : followUps.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+        <div className="flex flex-col items-center justify-center py-10 text-muted-foreground">
           <Clock className="w-10 h-10 mb-2 opacity-40" />
           <p className="text-sm">No follow-ups scheduled</p>
         </div>
@@ -225,47 +225,47 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
                 layout
                 className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
                   fu.status === 'completed'
-                    ? 'bg-gray-50 border-gray-100 opacity-60'
+                    ? 'bg-muted border-gray-100 opacity-60'
                     : overdue
                     ? 'bg-red-50 border-red-200'
-                    : 'bg-card border-gray-200 hover:border-teal-200'
+                    : 'bg-card border-border hover:border-omnia-gold/20'
                 }`}
               >
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  fu.status === 'completed' ? 'bg-green-100' : 'bg-teal-100'
+                  fu.status === 'completed' ? 'bg-green-100' : 'bg-omnia-gold/15'
                 }`}>
                   {fu.status === 'completed'
                     ? <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    : <TypeIcon className="w-4 h-4 text-teal-600" />
+                    : <TypeIcon className="w-4 h-4 text-omnia-gold" />
                   }
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`text-sm font-medium ${fu.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                  <p className={`text-sm font-medium ${fu.status === 'completed' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                     {fu.title}
                   </p>
                   <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                     <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${PRIORITY_COLORS[fu.priority]}`}>
                       {fu.priority}
                     </span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 capitalize">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground capitalize">
                       {FOLLOW_UP_TYPE_LABELS[fu.follow_up_type]}
                     </span>
                     {fu.due_date && (
-                      <span className={`text-[11px] flex items-center gap-0.5 ${overdue ? 'text-red-500 font-semibold' : 'text-gray-400'}`}>
+                      <span className={`text-[11px] flex items-center gap-0.5 ${overdue ? 'text-red-500 font-semibold' : 'text-muted-foreground'}`}>
                         <Calendar className="w-3 h-3" />
                         {new Date(fu.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </span>
                     )}
                   </div>
                   {fu.description && (
-                    <p className="text-xs text-gray-500 mt-1">{fu.description}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{fu.description}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
                   {fu.status === 'pending' && (
                     <button
                       onClick={() => handleComplete(fu.id)}
-                      className="p-1.5 rounded-lg hover:bg-green-50 text-gray-400 hover:text-green-600 transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-green-50 text-muted-foreground hover:text-green-600 transition-colors"
                       title="Mark complete"
                     >
                       <CheckCircle2 className="w-4 h-4" />
@@ -273,7 +273,7 @@ export function FollowUpForm({ leadId, agents = [], currentUserId, refreshTrigge
                   )}
                   <button
                     onClick={() => handleDelete(fu.id)}
-                    className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />

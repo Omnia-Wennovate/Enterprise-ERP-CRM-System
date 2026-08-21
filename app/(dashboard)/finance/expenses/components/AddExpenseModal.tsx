@@ -288,7 +288,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
         <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-gradient-to-r from-teal-600 to-teal-700 rounded-t-2xl">
           <div>
             <h2 className="text-lg font-bold text-white">Add Expense</h2>
-            <p className="text-teal-100 text-sm">{expenseNumber}</p>
+            <p className="text-white/70 text-sm">{expenseNumber}</p>
           </div>
           <button onClick={onClose} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors"><X size={18}/></button>
         </div>
@@ -300,7 +300,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               key={s}
               onClick={() => setStep(i + 1)}
               className={`pb-3 px-3 text-xs font-semibold border-b-2 transition-colors ${
-                step === i + 1 ? 'border-teal-600 text-teal-600' : 'border-transparent text-muted-foreground hover:text-foreground'
+                step === i + 1 ? 'border-omnia-gold text-omnia-gold' : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
               {i + 1}. {s}
@@ -317,18 +317,18 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Expense Date *</label>
                   <input type="date" value={form.expense_date} onChange={e=>set('expense_date',e.target.value)}
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none" required/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none" required/>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Category *</label>
                   <select value={form.category} onChange={e=>{set('category',e.target.value);checkPolicy(form.amount,e.target.value)}}
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none" required>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none" required>
                     <option value="">Select category</option>
                     {categories.map(c=><option key={c.id} value={c.name}>{c.name}</option>)}
                   </select>
                   {suggestedCategory && !form.category && (
                     <button onClick={()=>{set('category',suggestedCategory);setSuggestedCategory(null)}}
-                      className="text-xs text-teal-600 mt-1 flex items-center gap-1 hover:underline">
+                      className="text-xs text-omnia-gold mt-1 flex items-center gap-1 hover:underline">
                       <Sparkles size={11}/> Use suggested: {suggestedCategory}
                     </button>
                   )}
@@ -339,16 +339,16 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                     onChange={e=>set('description',e.target.value)}
                     onBlur={handleDescriptionBlur}
                     placeholder="What was this expense for?"
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Amount *</label>
                   <input type="number" step="0.01" value={form.amount}
                     onChange={e=>{set('amount',e.target.value);checkPolicy(e.target.value,form.category)}}
                     placeholder="0.00"
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                   {form.original_currency && form.original_amount && (
-                    <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
+                    <p className="text-xs text-omnia-gold mt-1 flex items-center gap-1">
                       <DollarSign size={11}/> Originally {form.original_amount} {form.original_currency} → converted to {form.currency}
                     </p>
                   )}
@@ -356,19 +356,19 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Currency</label>
                   <select value={form.currency} onChange={e=>handleCurrencyChange(e.target.value)}
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                     {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Tax</label>
                   <input type="number" step="0.01" value={form.tax} onChange={e=>set('tax',e.target.value)} placeholder="0.00"
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Discount</label>
                   <input type="number" step="0.01" value={form.discount} onChange={e=>set('discount',e.target.value)} placeholder="0.00"
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                 </div>
               </div>
 
@@ -383,7 +383,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Notes</label>
                 <textarea value={form.notes} onChange={e=>set('notes',e.target.value)} rows={2} placeholder="Any additional notes..."
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none resize-none"/>
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none resize-none"/>
               </div>
             </div>
           )}
@@ -395,7 +395,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                 <div className="col-span-2">
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Vendor</label>
                   <select value={form.vendor_id} onChange={e=>set('vendor_id',e.target.value)}
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                     <option value="">No vendor selected</option>
                     {vendors.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}
                   </select>
@@ -403,7 +403,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Department</label>
                   <select value={form.department} onChange={e=>set('department',e.target.value)}
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                     <option value="">No department</option>
                     {DEPARTMENTS.map(d=><option key={d} value={d}>{d}</option>)}
                   </select>
@@ -411,7 +411,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                 <div>
                   <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Project</label>
                   <input type="text" value={form.project} onChange={e=>set('project',e.target.value)} placeholder="Project name or code"
-                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                    className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                 </div>
               </div>
 
@@ -419,7 +419,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <label className="text-xs font-semibold text-muted-foreground uppercase">Split Across Cost Centers</label>
-                  <button onClick={addSplit} className="flex items-center gap-1 text-xs font-medium text-teal-600 hover:text-teal-700">
+                  <button onClick={addSplit} className="flex items-center gap-1 text-xs font-medium text-omnia-gold hover:text-omnia-gold-dark">
                     <Plus size={12}/> Add Split
                   </button>
                 </div>
@@ -430,16 +430,16 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                         <GripVertical size={14} className="text-muted-foreground flex-shrink-0"/>
                         <input placeholder="Department" value={split.department}
                           onChange={e=>updateSplit(split.id,'department',e.target.value)}
-                          className="flex-1 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-teal-500"/>
+                          className="flex-1 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
                         <input placeholder="Project" value={split.project}
                           onChange={e=>updateSplit(split.id,'project',e.target.value)}
-                          className="flex-1 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-teal-500"/>
+                          className="flex-1 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
                         <input type="number" placeholder="Amount" value={split.split_amount}
                           onChange={e=>updateSplit(split.id,'split_amount',e.target.value)}
-                          className="w-24 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-teal-500"/>
+                          className="w-24 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
                         <input type="number" placeholder="%" value={split.split_percent}
                           onChange={e=>updateSplit(split.id,'split_percent',e.target.value)}
-                          className="w-16 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-teal-500"/>
+                          className="w-16 px-2 py-1.5 border border-border rounded bg-background text-xs text-foreground outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
                         <button onClick={()=>removeSplit(split.id)} className="text-red-500 hover:text-red-700 flex-shrink-0"><Trash2 size={13}/></button>
                       </div>
                     ))}
@@ -463,7 +463,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Payment Method</label>
                 <select value={form.payment_method} onChange={e=>set('payment_method',e.target.value)}
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                   <option value="">Select method</option>
                   {PAYMENT_METHODS.map(m=><option key={m} value={m}>{m.replace('_',' ').replace(/\b\w/g,c=>c.toUpperCase())}</option>)}
                 </select>
@@ -471,26 +471,26 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Payment Reference</label>
                 <input type="text" value={form.payment_reference} onChange={e=>set('payment_reference',e.target.value)} placeholder="Ref / Receipt number"
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Status</label>
                 <select value={form.status} onChange={e=>set('status',e.target.value)}
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                   {['unpaid','paid','reimbursed','cancelled'].map(s=><option key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Approval Status</label>
                 <select value={form.approval_status} onChange={e=>set('approval_status',e.target.value)}
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none">
                   {['pending','approved','rejected','not_required'].map(s=><option key={s} value={s}>{s.replace('_',' ').replace(/\b\w/g,c=>c.toUpperCase())}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1">Exchange Rate</label>
                 <input type="number" step="0.0001" value={form.exchange_rate} onChange={e=>set('exchange_rate',e.target.value)}
-                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none"/>
+                  className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none"/>
                 <p className="text-xs text-muted-foreground mt-1">1 USD = {form.exchange_rate} {form.currency}</p>
               </div>
             </div>
@@ -501,13 +501,13 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
             <div className="space-y-4">
               {/* OCR banner */}
               {ocrLoading && (
-                <div className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
+                <div className="flex items-center gap-2 p-3 bg-omnia-gold/5 border border-blue-200 rounded-lg text-blue-700 text-sm">
                   <Loader2 size={14} className="animate-spin"/> Extracting data from receipt...
                 </div>
               )}
               {ocrData && ocrData.confidence >= 0.5 && (
-                <div className="p-3 bg-teal-50 border border-teal-200 rounded-lg">
-                  <div className="flex items-center gap-2 text-teal-700 font-medium text-sm mb-2">
+                <div className="p-3 bg-omnia-gold/10 border border-omnia-gold/20 rounded-lg">
+                  <div className="flex items-center gap-2 text-omnia-gold-dark font-medium text-sm mb-2">
                     <Sparkles size={14}/> Detected from receipt — please confirm
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-xs">
@@ -516,7 +516,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
                     {ocrData.tax && <span className="bg-white px-2 py-1 rounded border">Tax: {ocrData.tax}</span>}
                     {ocrData.currency && <span className="bg-white px-2 py-1 rounded border">Currency: {ocrData.currency}</span>}
                   </div>
-                  <p className="text-xs text-teal-600 mt-2">Fields have been pre-filled in Step 1. Review and edit them before submitting.</p>
+                  <p className="text-xs text-omnia-gold mt-2">Fields have been pre-filled in Step 1. Review and edit them before submitting.</p>
                 </div>
               )}
 
@@ -535,7 +535,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               {/* Upload area */}
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer hover:border-teal-400 hover:bg-teal-50/30 transition-all"
+                className="border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer hover:border-omnia-gold/60 hover:bg-omnia-gold/10/30 transition-all"
               >
                 <Upload size={32} className="mx-auto text-muted-foreground mb-2"/>
                 <p className="font-medium text-foreground text-sm">Click to upload documents</p>
@@ -613,7 +613,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
             {step < 5 ? (
               <button
                 onClick={() => setStep(s => Math.min(5, s+1))}
-                className="px-6 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-semibold transition-colors"
+                className="px-6 py-2 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-lg text-sm font-semibold transition-colors"
               >
                 Next →
               </button>
@@ -621,7 +621,7 @@ export function AddExpenseModal({ isOpen, onClose, onSuccess }: AddExpenseModalP
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="flex items-center gap-2 px-6 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
+                className="flex items-center gap-2 px-6 py-2 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
                 id="submit-expense-btn"
               >
                 {loading && <Loader2 size={14} className="animate-spin"/>}

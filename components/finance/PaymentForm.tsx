@@ -143,7 +143,7 @@ export function PaymentForm({ maxAmount, onSubmit, onCancel }: PaymentFormProps)
         <button
           type="submit"
           disabled={submitting}
-          className="px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg font-medium hover:bg-teal-700 transition-colors disabled:opacity-50"
+          className="px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg font-medium hover:bg-omnia-gold-dark transition-colors disabled:opacity-50"
         >
           {submitting ? 'Recording...' : 'Record Payment'}
         </button>

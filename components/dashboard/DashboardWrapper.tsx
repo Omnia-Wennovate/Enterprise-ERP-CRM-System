@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Topbar } from '@/components/layout/Topbar'
+import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import type { Profile } from '@/types'
-import { Loader2 } from 'lucide-react'
 
 interface DashboardWrapperProps {
   children: React.ReactNode
@@ -44,8 +44,12 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="animate-spin text-primary" size={48} />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
+        <OmniaLogo variant="full" theme="dark" size={72} />
+        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+          <div className="w-1.5 h-1.5 rounded-full bg-omnia-gold animate-pulse" />
+          <span>Loading your workspace</span>
+        </div>
       </div>
     )
   }

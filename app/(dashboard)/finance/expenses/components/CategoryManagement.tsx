@@ -68,7 +68,7 @@ export function CategoryManagement({ categories, onRefresh }: CategoryManagement
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">{categories.filter(c=>c.is_active).length} active categories</p>
-        <button onClick={openNew} className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-semibold transition-colors" id="add-category-btn">
+        <button onClick={openNew} className="flex items-center gap-2 px-4 py-2 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-lg text-sm font-semibold transition-colors" id="add-category-btn">
           <Plus size={16}/> Add Category
         </button>
       </div>
@@ -87,7 +87,7 @@ export function CategoryManagement({ categories, onRefresh }: CategoryManagement
               <tr key={cat.id} className={`hover:bg-muted/20 transition-colors ${!cat.is_active ? 'opacity-50' : ''}`}>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700"><Tag size={12}/></div>
+                    <div className="w-7 h-7 rounded-lg bg-omnia-gold/15 flex items-center justify-center text-omnia-gold-dark"><Tag size={12}/></div>
                     <span className="font-medium text-foreground">{cat.name}</span>
                   </div>
                 </td>
@@ -101,7 +101,7 @@ export function CategoryManagement({ categories, onRefresh }: CategoryManagement
                 </td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-1">
-                    <button onClick={()=>openEdit(cat)} className="p-1.5 rounded hover:bg-blue-50 text-blue-600 transition-colors"><Pencil size={13}/></button>
+                    <button onClick={()=>openEdit(cat)} className="p-1.5 rounded hover:bg-omnia-gold/5 text-omnia-gold transition-colors"><Pencil size={13}/></button>
                     {cat.is_active && <button onClick={()=>handleDelete(cat.id)} className="p-1.5 rounded hover:bg-red-50 text-red-500 transition-colors"><Trash2 size={13}/></button>}
                   </div>
                 </td>
@@ -129,7 +129,7 @@ export function CategoryManagement({ categories, onRefresh }: CategoryManagement
               <form onSubmit={handleSubmit} className="p-6 space-y-4">
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground uppercase mb-1 block">Category Name *</label>
-                  <input required value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none" placeholder="e.g. Meals"/>
+                  <input required value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} className="w-full px-3 py-2.5 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none" placeholder="e.g. Meals"/>
                 </div>
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
                   <AlertTriangle size={14} className="text-amber-600 flex-shrink-0 mt-0.5"/>
@@ -139,12 +139,12 @@ export function CategoryManagement({ categories, onRefresh }: CategoryManagement
                   <div key={k}>
                     <label className="text-xs font-semibold text-muted-foreground uppercase mb-1 block">{l}</label>
                     <input type="number" step="0.01" value={form[k as keyof CatForm]??''} onChange={e=>setForm(f=>({...f,[k]:e.target.value}))}
-                      className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-teal-500 outline-none" placeholder="No limit"/>
+                      className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm focus:ring-2 focus:ring-omnia-gold-500 outline-none" placeholder="No limit"/>
                   </div>
                 ))}
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={()=>setModalOpen(false)} className="flex-1 py-2.5 border border-border rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted">Cancel</button>
-                  <button type="submit" disabled={loading} className="flex-1 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-semibold disabled:opacity-60 flex items-center justify-center gap-2">
+                  <button type="submit" disabled={loading} className="flex-1 py-2.5 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-lg text-sm font-semibold disabled:opacity-60 flex items-center justify-center gap-2">
                     {loading && <Loader2 size={14} className="animate-spin"/>}
                     {loading ? 'Saving...' : editing ? 'Update' : 'Add'}
                   </button>

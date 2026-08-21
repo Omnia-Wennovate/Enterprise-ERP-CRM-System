@@ -35,7 +35,7 @@ export function AIQualityCheckPanel({ qualityCheck, onDismiss }: AIQualityCheckP
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <Shield className="w-5 h-5 text-teal-600" />
+          <Shield className="w-5 h-5 text-omnia-gold" />
           <div>
             <h4 className="text-sm font-bold text-foreground">AI Quality Check</h4>
             <p className="text-[10px] text-muted-foreground">
@@ -76,7 +76,7 @@ export function AIQualityCheckPanel({ qualityCheck, onDismiss }: AIQualityCheckP
           </span>
         )}
         {infoCount > 0 && (
-          <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-semibold border border-blue-200">
+          <span className="flex items-center gap-1 px-2 py-1 bg-omnia-gold/5 text-blue-700 rounded-lg text-[10px] font-semibold border border-blue-200">
             <Info className="w-3 h-3" /> {infoCount} Info
           </span>
         )}
@@ -117,7 +117,7 @@ function IssueRow({ issue }: { issue: AIQualityIssue }) {
     },
     info: {
       icon: Info,
-      bg: 'bg-blue-50',
+      bg: 'bg-omnia-gold/5',
       border: 'border-blue-200',
       text: 'text-blue-700',
       iconColor: 'text-blue-500',

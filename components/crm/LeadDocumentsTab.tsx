@@ -22,9 +22,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   quotation: 'bg-purple-100 text-purple-700',
   contract:  'bg-green-100 text-green-700',
   invoice:   'bg-orange-100 text-orange-700',
-  visa:      'bg-teal-100 text-teal-700',
+  visa:      'bg-omnia-gold/15 text-omnia-gold-dark',
   itinerary: 'bg-indigo-100 text-indigo-700',
-  other:     'bg-gray-100 text-gray-700',
+  other:     'bg-muted text-foreground',
 }
 
 function formatFileSize(kb: number | null) {
@@ -110,12 +110,12 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
   return (
     <div className="space-y-4">
       {/* Upload area */}
-      <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 bg-gray-50 hover:border-teal-300 transition-colors">
+      <div className="border-2 border-dashed border-border rounded-xl p-4 bg-muted hover:border-omnia-gold/40 transition-colors">
         <div className="flex items-center gap-3">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-card outline-none focus:border-teal-400"
+            className="text-xs border border-border rounded-lg px-2 py-1.5 bg-card outline-none focus:border-omnia-gold/60"
           >
             {['passport', 'quotation', 'contract', 'invoice', 'visa', 'itinerary', 'other'].map((cat) => (
               <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
@@ -147,10 +147,10 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
       {/* Document list */}
       {isLoading ? (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-5 h-5 text-teal-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-omnia-gold animate-spin" />
         </div>
       ) : documents.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+        <div className="flex flex-col items-center justify-center py-10 text-muted-foreground">
           <FileBadge className="w-10 h-10 mb-2 opacity-40" />
           <p className="text-sm">No documents uploaded yet</p>
         </div>
@@ -163,17 +163,17 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
-                className="flex items-center gap-3 p-3 bg-card border border-gray-200 rounded-xl hover:border-teal-200 hover:shadow-sm transition-all"
+                className="flex items-center gap-3 p-3 bg-card border border-border rounded-xl hover:border-omnia-gold/20 hover:shadow-sm transition-all"
               >
                 <div className="text-xl flex-shrink-0">{getFileIcon(doc.file_type)}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-800 truncate">{doc.file_name}</p>
+                  <p className="text-sm font-medium text-foreground truncate">{doc.file_name}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${CATEGORY_COLORS[doc.document_category] || CATEGORY_COLORS.other}`}>
                       {doc.document_category}
                     </span>
-                    <span className="text-[11px] text-gray-400">{formatFileSize(doc.file_size_kb)}</span>
-                    <span className="text-[11px] text-gray-400">
+                    <span className="text-[11px] text-muted-foreground">{formatFileSize(doc.file_size_kb)}</span>
+                    <span className="text-[11px] text-muted-foreground">
                       {new Date(doc.created_at).toLocaleDateString()}
                     </span>
                   </div>
@@ -183,7 +183,7 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
                     href={doc.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-400 hover:text-blue-600 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-omnia-gold/5 text-muted-foreground hover:text-omnia-gold transition-colors"
                     title="Preview"
                   >
                     <Eye className="w-4 h-4" />
@@ -191,7 +191,7 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
                   <a
                     href={doc.file_url}
                     download={doc.file_name}
-                    className="p-1.5 rounded-lg hover:bg-teal-50 text-gray-400 hover:text-teal-600 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-omnia-gold/10 text-muted-foreground hover:text-omnia-gold transition-colors"
                     title="Download"
                   >
                     <Download className="w-4 h-4" />
@@ -199,7 +199,7 @@ export function LeadDocumentsTab({ leadId, currentUserId, refreshTrigger, onDocu
                   <button
                     onClick={() => handleDelete(doc)}
                     disabled={deletingId === doc.id}
-                    className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
+                    className="p-1.5 rounded-lg hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors disabled:opacity-50"
                     title="Delete"
                   >
                     {deletingId === doc.id ? (

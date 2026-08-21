@@ -49,7 +49,7 @@ export function DeadlineIntelligence({ onboardings, onSelectOnboarding }: Props)
   return (
     <div className="bg-card rounded-xl border border-border p-5 mb-6">
       <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
-        <CalendarCheck className="w-4 h-4 text-teal-500" />
+        <CalendarCheck className="w-4 h-4 text-omnia-gold" />
         Deadline Intelligence
       </h3>
 
@@ -61,7 +61,7 @@ export function DeadlineIntelligence({ onboardings, onSelectOnboarding }: Props)
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               activeTab === tab.key
-                ? 'bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300'
+                ? 'bg-omnia-gold/15 dark:bg-teal-900/40 text-omnia-gold-dark dark:text-teal-300'
                 : 'bg-muted/50 text-muted-foreground hover:bg-muted'
             }`}
           >

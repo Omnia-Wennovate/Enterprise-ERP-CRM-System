@@ -24,11 +24,11 @@ const CONFIG = {
     dot: 'bg-amber-500',
   },
   info: {
-    bg: 'bg-blue-500/10',
+    bg: 'bg-omnia-gold/50/10',
     border: 'border-blue-500/20',
     icon: Info,
     iconColor: 'text-blue-500',
-    dot: 'bg-blue-500',
+    dot: 'bg-omnia-gold/50',
   },
 }
 

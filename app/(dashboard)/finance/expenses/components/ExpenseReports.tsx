@@ -95,12 +95,12 @@ export function ExpenseReports() {
               key={rt.type}
               onClick={() => setSelected(rt.type)}
               className={`p-4 rounded-xl border text-left transition-all hover:shadow-md ${
-                selected === rt.type ? 'border-teal-400 bg-teal-50 shadow-sm' : 'border-border bg-card hover:border-teal-300'
+                selected === rt.type ? 'border-omnia-gold/60 bg-omnia-gold/10 shadow-sm' : 'border-border bg-card hover:border-omnia-gold/40'
               }`}
               id={`report-type-${rt.type}`}
             >
               <div className="text-2xl mb-1">{rt.icon}</div>
-              <p className={`text-xs font-semibold ${selected === rt.type ? 'text-teal-700' : 'text-foreground'}`}>{rt.label}</p>
+              <p className={`text-xs font-semibold ${selected === rt.type ? 'text-omnia-gold-dark' : 'text-foreground'}`}>{rt.label}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{rt.desc}</p>
             </button>
           ))}
@@ -114,17 +114,17 @@ export function ExpenseReports() {
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1 block">Date From</label>
             <input type="date" value={dateFrom} onChange={e=>setDateFrom(e.target.value)}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-teal-500"/>
+              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
           </div>
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1 block">Date To</label>
             <input type="date" value={dateTo} onChange={e=>setDateTo(e.target.value)}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-teal-500"/>
+              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-omnia-gold-500"/>
           </div>
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1 block">Department</label>
             <select value={department} onChange={e=>setDepartment(e.target.value)}
-              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-teal-500">
+              className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground text-sm outline-none focus:ring-2 focus:ring-omnia-gold-500">
               {DEPARTMENTS.map(d=><option key={d} value={d}>{d||'All Departments'}</option>)}
             </select>
           </div>
@@ -134,13 +134,13 @@ export function ExpenseReports() {
       {/* Export buttons */}
       <div className="flex flex-wrap gap-3">
         <button onClick={()=>handleGenerate('pdf')} disabled={generating}
-          className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
+          className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
           id="export-pdf-btn">
           {generating ? <Loader2 size={14} className="animate-spin"/> : <FileText size={14}/>}
           Export PDF (with cover page)
         </button>
         <button onClick={()=>handleGenerate('csv')} disabled={generating}
-          className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
+          className="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-60"
           id="export-csv-btn">
           {generating ? <Loader2 size={14} className="animate-spin"/> : <Download size={14}/>}
           Export CSV / Excel
@@ -155,22 +155,22 @@ export function ExpenseReports() {
 
       {/* Last generated report preview */}
       {lastReport && (
-        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} className="bg-gradient-to-br from-teal-50 to-blue-50 border border-teal-200 rounded-xl p-5">
+        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} className="bg-gradient-to-br from-omnia-gold/10 to-omnia-gold/5 border border-omnia-gold/20 rounded-xl p-5">
           <div className="flex items-start gap-4">
             <div className="text-4xl">📊</div>
             <div className="flex-1">
-              <h3 className="font-bold text-teal-800 text-sm">{lastReport.title}</h3>
+              <h3 className="font-bold text-foreground text-sm">{lastReport.title}</h3>
               <div className="flex gap-4 mt-2">
                 <div>
-                  <p className="text-xs text-teal-600">Total Amount</p>
-                  <p className="font-bold text-teal-700">${lastReport.totalAmount.toFixed(2)}</p>
+                  <p className="text-xs text-omnia-gold">Total Amount</p>
+                  <p className="font-bold text-omnia-gold-dark">${lastReport.totalAmount.toFixed(2)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-teal-600">Records</p>
-                  <p className="font-bold text-teal-700">{lastReport.totalRecords}</p>
+                  <p className="text-xs text-omnia-gold">Records</p>
+                  <p className="font-bold text-omnia-gold-dark">{lastReport.totalRecords}</p>
                 </div>
               </div>
-              <p className="text-xs text-teal-700 mt-2 leading-relaxed">{lastReport.summary}</p>
+              <p className="text-xs text-omnia-gold-dark mt-2 leading-relaxed">{lastReport.summary}</p>
             </div>
           </div>
         </motion.div>

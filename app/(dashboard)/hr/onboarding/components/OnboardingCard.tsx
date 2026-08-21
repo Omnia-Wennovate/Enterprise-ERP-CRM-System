@@ -13,7 +13,7 @@ interface Props {
 }
 
 const statusColors: Record<string, { bg: string; text: string; label: string }> = {
-  active: { bg: 'bg-teal-100 dark:bg-teal-900/40', text: 'text-teal-700 dark:text-teal-300', label: 'Active' },
+  active: { bg: 'bg-omnia-gold/15 dark:bg-teal-900/40', text: 'text-omnia-gold-dark dark:text-teal-300', label: 'Active' },
   at_risk: { bg: 'bg-amber-100 dark:bg-amber-900/40', text: 'text-amber-700 dark:text-amber-300', label: 'At Risk' },
   overdue: { bg: 'bg-red-100 dark:bg-red-900/40', text: 'text-red-700 dark:text-red-300', label: 'Overdue' },
   blocked: { bg: 'bg-orange-100 dark:bg-orange-900/40', text: 'text-orange-700 dark:text-orange-300', label: 'Blocked' },
@@ -52,11 +52,11 @@ export function OnboardingCard({ onboarding, onClick, index = 0 }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
       onClick={onClick}
-      className="bg-card rounded-xl border border-border p-5 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-teal-200 dark:hover:border-teal-800 hover:-translate-y-0.5 group"
+      className="bg-card rounded-xl border border-border p-5 cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-omnia-gold/20 dark:hover:border-teal-800 hover:-translate-y-0.5 group"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-3">
-          <div className="w-11 h-11 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-sm flex-shrink-0 group-hover:ring-2 ring-teal-400/30 transition-all">
+          <div className="w-11 h-11 rounded-full bg-omnia-gold/15 dark:bg-teal-900/50 flex items-center justify-center text-omnia-gold-dark dark:text-teal-300 font-semibold text-sm flex-shrink-0 group-hover:ring-2 ring-omnia-gold-400/30 transition-all">
             {employee.avatar_url ? (
               <img src={employee.avatar_url} alt="" className="w-full h-full rounded-full object-cover" />
             ) : (
@@ -94,7 +94,7 @@ export function OnboardingCard({ onboarding, onClick, index = 0 }: Props) {
         </div>
         <div className="h-2 bg-muted rounded-full overflow-hidden">
           <motion.div
-            className={`h-full rounded-full ${progress === 100 ? 'bg-emerald-500' : 'bg-teal-500'}`}
+            className={`h-full rounded-full ${progress === 100 ? 'bg-emerald-500' : 'bg-omnia-gold/100'}`}
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.8, ease: 'easeOut', delay: index * 0.05 }}

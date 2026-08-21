@@ -185,7 +185,7 @@ export function ProjectArchiveTabs({ projectId, activeTab, profile }: ProjectArc
           <div className="space-y-4">
             {rels.map((rel: any) => (
               <div key={rel.id} className="bg-card rounded-lg p-5 border border-border shadow-sm">
-                <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#F0F7FA]">
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#FAFAF7]">
                   <div className="flex items-center gap-3">
                     <GitMerge size={20} className="text-[#8B5CF6]" />
                     <h4 className="text-lg font-bold text-foreground">{rel.version}</h4>
@@ -258,7 +258,7 @@ export function ProjectArchiveTabs({ projectId, activeTab, profile }: ProjectArc
                 <div className="p-4 bg-muted border-b border-border flex items-center gap-3">
                   <BookOpen size={18} className="text-blue-500" />
                   <h4 className="font-bold text-foreground flex-1">{kb.title}</h4>
-                  <span className="text-[10px] bg-blue-500/10 text-blue-500 border border-border px-2 py-0.5 rounded font-bold uppercase">{kb.category}</span>
+                  <span className="text-[10px] bg-omnia-gold/50/10 text-blue-500 border border-border px-2 py-0.5 rounded font-bold uppercase">{kb.category}</span>
                 </div>
                 <div className="p-4">
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap">{kb.content}</p>

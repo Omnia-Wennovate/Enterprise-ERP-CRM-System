@@ -59,7 +59,7 @@ export default function DirectMessageDetailPage({ params }: { params: { id: stri
       {/* Header */}
       <div className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center font-semibold text-teal-700">
+          <div className="w-12 h-12 rounded-full bg-omnia-gold/15 flex items-center justify-center font-semibold text-omnia-gold-dark">
             JS
           </div>
           <div>
@@ -88,12 +88,12 @@ export default function DirectMessageDetailPage({ params }: { params: { id: stri
             <div
               className={`max-w-xs px-4 py-2 rounded-lg ${
                 msg.isOwn
-                  ? 'bg-teal-600 text-primary-foreground rounded-br-none'
+                  ? 'bg-omnia-gold text-primary-foreground rounded-br-none'
                   : 'bg-card text-foreground rounded-bl-none shadow'
               }`}
             >
               <p>{msg.content}</p>
-              <p className={`text-xs mt-1 ${msg.isOwn ? 'text-teal-100' : 'text-muted-foreground'}`}>
+              <p className={`text-xs mt-1 ${msg.isOwn ? 'text-white/70' : 'text-muted-foreground'}`}>
                 {msg.timestamp}
               </p>
             </div>
@@ -129,7 +129,7 @@ export default function DirectMessageDetailPage({ params }: { params: { id: stri
           <button
             onClick={handleSendMessage}
             disabled={!messageInput.trim()}
-            className="p-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="w-5 h-5" />
           </button>

@@ -146,7 +146,7 @@ export default function ExpensesPage() {
         </div>
         <button
           onClick={() => setAddModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-semibold shadow-sm transition-all hover:shadow hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-4 py-2.5 bg-omnia-gold hover:bg-omnia-gold-dark text-white rounded-xl font-semibold shadow-sm transition-all hover:shadow hover:-translate-y-0.5"
           id="global-add-expense-btn"
         >
           <Plus size={18} /> New Expense
@@ -161,7 +161,7 @@ export default function ExpensesPage() {
             onClick={() => setActiveTab(tab.id)}
             className={`px-6 py-3 text-sm font-semibold border-b-2 transition-all ${
               activeTab === tab.id
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-omnia-gold text-omnia-gold'
                 : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-t-lg'
             }`}
           >
@@ -173,7 +173,7 @@ export default function ExpensesPage() {
       {/* Main Content Area */}
       <div className="min-h-[500px]">
         {loading && !kpis ? (
-          <div className="flex items-center justify-center h-[400px] text-teal-600">
+          <div className="flex items-center justify-center h-[400px] text-omnia-gold">
             <Loader2 size={32} className="animate-spin" />
           </div>
         ) : (

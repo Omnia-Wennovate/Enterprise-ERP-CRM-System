@@ -187,7 +187,7 @@ export default function CredentialVaultPage() {
               {/* Filters */}
               <div className="bg-card rounded-xl border border-border shadow-sm p-4">
                 <div className="flex flex-wrap items-center gap-4">
-                  <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-background border border-border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#0A8FA8] focus-within:border-transparent transition-shadow">
+                  <div className="flex items-center gap-2 flex-1 min-w-[200px] bg-background border border-border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-[#C8A951] focus-within:border-transparent transition-shadow">
                     <Search size={16} className="text-muted-foreground" />
                     <input
                       type="text"
@@ -201,7 +201,7 @@ export default function CredentialVaultPage() {
                   <select
                     value={typeFilter}
                     onChange={(e) => setTypeFilter(e.target.value)}
-                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#0A8FA8] outline-none"
+                    className="px-3 py-2 border border-border rounded-lg text-sm text-foreground bg-card hover:border-primary transition-colors focus:ring-2 focus:ring-[#C8A951] outline-none"
                   >
                     <option value="all">All Types</option>
                     {Object.entries(CREDENTIAL_TYPE_LABELS).map(([key, label]) => (
@@ -225,13 +225,13 @@ export default function CredentialVaultPage() {
                       const isExpired = cred.expiry_date && new Date(cred.expiry_date) < new Date()
                       
                       return (
-                        <div key={cred.id} className={`p-5 transition-colors ${!cred.is_active ? 'bg-gray-50 opacity-75' : isExpired ? 'bg-destructive/10' : 'hover:bg-background'}`}>
+                        <div key={cred.id} className={`p-5 transition-colors ${!cred.is_active ? 'bg-muted opacity-75' : isExpired ? 'bg-destructive/10' : 'hover:bg-background'}`}>
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-2">
                                 <h3 className="text-base font-bold text-foreground flex items-center gap-2">
                                   {cred.credential_name}
-                                  {!cred.is_active && <span className="text-[10px] bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full uppercase tracking-wider">Inactive</span>}
+                                  {!cred.is_active && <span className="text-[10px] bg-secondary text-foreground px-2 py-0.5 rounded-full uppercase tracking-wider">Inactive</span>}
                                   {isExpired && <span className="text-[10px] bg-[#FECACA] text-[#DC2626] px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Expired</span>}
                                 </h3>
                                 <span
@@ -333,7 +333,7 @@ export default function CredentialVaultPage() {
                           </div>
                           <div className="flex items-center gap-1.5 mt-1">
                             <span className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider ${
-                              log.action === 'reveal' ? 'bg-blue-500/10 text-blue-500' :
+                              log.action === 'reveal' ? 'bg-omnia-gold/50/10 text-blue-500' :
                               log.action === 'create' ? 'bg-success/10 text-success' :
                               log.action === 'rotate' ? 'bg-warning/10 text-warning' :
                               'bg-muted text-muted-foreground'
@@ -380,7 +380,7 @@ export default function CredentialVaultPage() {
                     value={masterKey}
                     onChange={(e) => setMasterKey(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && submitMasterKey()}
-                    className="w-full pl-9 pr-4 py-2.5 bg-muted border border-[#CBD5E1] rounded-lg text-sm text-[#0F172A] focus:ring-2 focus:ring-[#0A8FA8] focus:border-transparent outline-none transition-shadow"
+                    className="w-full pl-9 pr-4 py-2.5 bg-muted border border-[#CBD5E1] rounded-lg text-sm text-[#0F172A] focus:ring-2 focus:ring-[#C8A951] focus:border-transparent outline-none transition-shadow"
                     placeholder="Enter master key..."
                     autoFocus
                   />

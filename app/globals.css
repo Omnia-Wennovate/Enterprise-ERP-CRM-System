@@ -46,128 +46,175 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Omnia Brand Tokens */
+  --color-omnia-gold: var(--omnia-gold);
+  --color-omnia-gold-light: var(--omnia-gold-light);
+  --color-omnia-gold-dark: var(--omnia-gold-dark);
+  --color-omnia-navy: var(--omnia-navy);
+  --color-omnia-navy-light: var(--omnia-navy-light);
+  --color-omnia-navy-dark: var(--omnia-navy-dark);
 }
 
 :root {
   color-scheme: light;
-  --background: #F0F7FA;
-  --foreground: #0B1F33;
-  --card: #ffffff;
-  --card-foreground: #0B1F33;
-  --popover: #ffffff;
-  --popover-foreground: #0B1F33;
-  --primary: #0A8FA8;
-  --primary-foreground: #ffffff;
-  --secondary: #E0F2F7;
-  --secondary-foreground: #0B1F33;
-  --muted: #F8FAFC;
-  --muted-foreground: #94A3B8;
-  --accent: #E0EEF5;
-  --accent-foreground: #0A8FA8;
-  --destructive: #EF4444;
-  --destructive-foreground: #ffffff;
-  --border: #BFDBFE;
-  --input: #BFDBFE;
-  --ring: #0A8FA8;
-  --chart-1: #0A8FA8;
-  --chart-2: #10B981;
-  --chart-3: #F59E0B;
+
+  /* ─── Omnia Brand Core ─── */
+  --omnia-gold: #C8A951;
+  --omnia-gold-light: #E2CC7E;
+  --omnia-gold-dark: #A88B3A;
+  --omnia-navy: #0F1B2D;
+  --omnia-navy-light: #1A2A42;
+  --omnia-navy-dark: #0A1221;
+
+  /* ─── Semantic Tokens (Light) ─── */
+  --background: #FAFAF7;
+  --foreground: #0F1B2D;
+  --card: #FFFFFF;
+  --card-foreground: #0F1B2D;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F1B2D;
+  --primary: #0F1B2D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0EDE6;
+  --secondary-foreground: #0F1B2D;
+  --muted: #F5F3EE;
+  --muted-foreground: #6B7280;
+  --accent: #F0EDE6;
+  --accent-foreground: #0F1B2D;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E2DA;
+  --input: #E5E2DA;
+  --ring: #C8A951;
+
+  /* ─── Chart Palette ─── */
+  --chart-1: #0F1B2D;
+  --chart-2: #C8A951;
+  --chart-3: #1A2A42;
   --chart-4: #3B82F6;
-  --chart-5: #8B5CF6;
+  --chart-5: #6366F1;
+
   --radius: 0.625rem;
-  --sidebar: #0B2A3D;
+
+  /* ─── Sidebar (Deep Navy) ─── */
+  --sidebar: #0A1221;
   --sidebar-foreground: #94A3B8;
-  --sidebar-primary: #0A8FA8;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #0D3A52;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #0D3A52;
-  --sidebar-ring: #0A8FA8;
-  --success: #10B981;
-  --success-foreground: #ffffff;
-  --warning: #F59E0B;
-  --warning-foreground: #ffffff;
+  --sidebar-primary: #C8A951;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #132033;
+  --sidebar-accent-foreground: #E2E8F0;
+  --sidebar-border: #1A2A42;
+  --sidebar-ring: #C8A951;
+
+  /* ─── Status Colors ─── */
+  --success: #16A34A;
+  --success-foreground: #FFFFFF;
+  --warning: #D97706;
+  --warning-foreground: #FFFFFF;
 }
 
 .dark {
   color-scheme: dark;
-  --background: #0B1220;
-  --foreground: #F8FAFC;
-  --card: #111827;
-  --card-foreground: #F8FAFC;
-  --popover: #111827;
-  --popover-foreground: #F8FAFC;
-  --primary: #06B6D4;
-  --primary-foreground: #ffffff;
-  --secondary: #1E293B;
+
+  /* ─── Omnia Brand Core (Dark) ─── */
+  --omnia-gold: #C8A951;
+  --omnia-gold-light: #E2CC7E;
+  --omnia-gold-dark: #A88B3A;
+  --omnia-navy: #0F1B2D;
+  --omnia-navy-light: #1A2A42;
+  --omnia-navy-dark: #0A1221;
+
+  /* ─── Semantic Tokens (Dark) ─── */
+  --background: #0A1221;
+  --foreground: #F1F5F9;
+  --card: #0F1B2D;
+  --card-foreground: #F1F5F9;
+  --popover: #0F1B2D;
+  --popover-foreground: #F1F5F9;
+  --primary: #C8A951;
+  --primary-foreground: #0A1221;
+  --secondary: #1A2A42;
   --secondary-foreground: #CBD5E1;
-  --muted: #1E293B;
+  --muted: #1A2A42;
   --muted-foreground: #94A3B8;
-  --accent: #1E293B;
-  --accent-foreground: #F8FAFC;
+  --accent: #1A2A42;
+  --accent-foreground: #F1F5F9;
   --destructive: #EF4444;
-  --destructive-foreground: #ffffff;
-  --border: #1F2937;
-  --input: #1F2937;
-  --ring: #06B6D4;
-  --chart-1: #06B6D4;
-  --chart-2: #10B981;
-  --chart-3: #F59E0B;
-  --chart-4: #3B82F6;
-  --chart-5: #8B5CF6;
-  --sidebar: #0F172A;
+  --destructive-foreground: #FFFFFF;
+  --border: #1E3350;
+  --input: #1E3350;
+  --ring: #C8A951;
+
+  /* ─── Chart Palette (Dark) ─── */
+  --chart-1: #C8A951;
+  --chart-2: #60A5FA;
+  --chart-3: #34D399;
+  --chart-4: #A78BFA;
+  --chart-5: #FB923C;
+
+  /* ─── Sidebar (Dark) ─── */
+  --sidebar: #070D17;
   --sidebar-foreground: #CBD5E1;
-  --sidebar-primary: #06B6D4;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1E293B;
-  --sidebar-accent-foreground: #F8FAFC;
-  --sidebar-border: #1F2937;
-  --sidebar-ring: #06B6D4;
-  --success: #10B981;
-  --success-foreground: #ffffff;
+  --sidebar-primary: #C8A951;
+  --sidebar-primary-foreground: #0A1221;
+  --sidebar-accent: #0F1B2D;
+  --sidebar-accent-foreground: #F1F5F9;
+  --sidebar-border: #1A2A42;
+  --sidebar-ring: #C8A951;
+
+  /* ─── Status Colors (Dark) ─── */
+  --success: #22C55E;
+  --success-foreground: #FFFFFF;
   --warning: #F59E0B;
-  --warning-foreground: #ffffff;
+  --warning-foreground: #FFFFFF;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     color-scheme: dark;
-    --background: #0B1220;
-    --foreground: #F8FAFC;
-    --card: #111827;
-    --card-foreground: #F8FAFC;
-    --popover: #111827;
-    --popover-foreground: #F8FAFC;
-    --primary: #06B6D4;
-    --primary-foreground: #ffffff;
-    --secondary: #1E293B;
+    --omnia-gold: #C8A951;
+    --omnia-gold-light: #E2CC7E;
+    --omnia-gold-dark: #A88B3A;
+    --omnia-navy: #0F1B2D;
+    --omnia-navy-light: #1A2A42;
+    --omnia-navy-dark: #0A1221;
+    --background: #0A1221;
+    --foreground: #F1F5F9;
+    --card: #0F1B2D;
+    --card-foreground: #F1F5F9;
+    --popover: #0F1B2D;
+    --popover-foreground: #F1F5F9;
+    --primary: #C8A951;
+    --primary-foreground: #0A1221;
+    --secondary: #1A2A42;
     --secondary-foreground: #CBD5E1;
-    --muted: #1E293B;
+    --muted: #1A2A42;
     --muted-foreground: #94A3B8;
-    --accent: #1E293B;
-    --accent-foreground: #F8FAFC;
+    --accent: #1A2A42;
+    --accent-foreground: #F1F5F9;
     --destructive: #EF4444;
-    --destructive-foreground: #ffffff;
-    --border: #1F2937;
-    --input: #1F2937;
-    --ring: #06B6D4;
-    --chart-1: #06B6D4;
-    --chart-2: #10B981;
-    --chart-3: #F59E0B;
-    --chart-4: #3B82F6;
-    --chart-5: #8B5CF6;
-    --sidebar: #0F172A;
+    --destructive-foreground: #FFFFFF;
+    --border: #1E3350;
+    --input: #1E3350;
+    --ring: #C8A951;
+    --chart-1: #C8A951;
+    --chart-2: #60A5FA;
+    --chart-3: #34D399;
+    --chart-4: #A78BFA;
+    --chart-5: #FB923C;
+    --sidebar: #070D17;
     --sidebar-foreground: #CBD5E1;
-    --sidebar-primary: #06B6D4;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #1E293B;
-    --sidebar-accent-foreground: #F8FAFC;
-    --sidebar-border: #1F2937;
-    --sidebar-ring: #06B6D4;
-    --success: #10B981;
-    --success-foreground: #ffffff;
+    --sidebar-primary: #C8A951;
+    --sidebar-primary-foreground: #0A1221;
+    --sidebar-accent: #0F1B2D;
+    --sidebar-accent-foreground: #F1F5F9;
+    --sidebar-border: #1A2A42;
+    --sidebar-ring: #C8A951;
+    --success: #22C55E;
+    --success-foreground: #FFFFFF;
     --warning: #F59E0B;
-    --warning-foreground: #ffffff;
+    --warning-foreground: #FFFFFF;
   }
 }
 

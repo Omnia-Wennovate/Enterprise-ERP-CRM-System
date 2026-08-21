@@ -10,7 +10,7 @@ export function DocumentsDashboard({ kpis, chartData }: { kpis: DocumentDashboar
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPICard title="Total Documents" value={kpis.totalDocuments} subtitle="All time" icon={FileText} color="bg-blue-50 text-blue-600" />
+        <KPICard title="Total Documents" value={kpis.totalDocuments} subtitle="All time" icon={FileText} color="bg-omnia-gold/5 text-omnia-gold" />
         <KPICard title="Pending Review" value={kpis.pendingDocuments} subtitle="Needs attention" icon={Clock} color="bg-amber-50 text-amber-600" />
         <KPICard title="Approved" value={kpis.approvedDocuments} subtitle="Ready for travel" icon={CheckCircle} color="bg-emerald-50 text-emerald-600" />
         <KPICard title="Expiring Soon" value={kpis.expiringSoon} subtitle="Within 30 days" icon={AlertTriangle} color="bg-rose-50 text-rose-600" />

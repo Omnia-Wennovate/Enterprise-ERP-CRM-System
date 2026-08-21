@@ -30,7 +30,7 @@ const dummyData = {
   ]
 }
 
-const COLORS = ['#0A8FA8', '#10B981', '#F59E0B', '#3B82F6', '#8B5CF6', '#EC4899', '#F43F5E']
+const COLORS = ['#C8A951', '#10B981', '#F59E0B', '#3B82F6', '#8B5CF6', '#EC4899', '#F43F5E']
 
 function ChartCard({ title, children, fullWidth = false }: { title: string, children: React.ReactNode, fullWidth?: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -87,15 +87,15 @@ export function InteractiveAnalytics({ analyticsData }: { analyticsData: any }) 
             <AreaChart data={analyticsData?.growthData || []} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0A8FA8" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#0A8FA8" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#C8A951" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#C8A951" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10" />
               <XAxis dataKey="month" stroke="currentColor" className="text-muted-foreground text-xs" />
               <YAxis stroke="currentColor" className="text-muted-foreground text-xs" />
               <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-              <Area type="monotone" dataKey="employees" stroke="#0A8FA8" strokeWidth={3} fillOpacity={1} fill="url(#colorGrowth)" animationDuration={1500} />
+              <Area type="monotone" dataKey="employees" stroke="#C8A951" strokeWidth={3} fillOpacity={1} fill="url(#colorGrowth)" animationDuration={1500} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -171,7 +171,7 @@ export function InteractiveAnalytics({ analyticsData }: { analyticsData: any }) 
                 dataKey="value"
                 animationDuration={1500}
               >
-                <Cell fill="#0A8FA8" />
+                <Cell fill="#C8A951" />
                 <Cell fill="#EC4899" />
                 <Cell fill="#94A3B8" />
               </Pie>

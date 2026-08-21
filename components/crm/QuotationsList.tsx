@@ -18,13 +18,13 @@ import { EditQuotationModal } from './EditQuotationModal'
 // ============================================================================
 function StatCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ComponentType<{ className?: string }>; color: string }) {
   return (
-    <div className="bg-card border border-gray-200 rounded-xl p-4 flex items-center gap-3">
+    <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3">
       <div className={`p-2.5 rounded-xl ${color}`}>
         <Icon className="w-4 h-4 text-primary-foreground" />
       </div>
       <div>
-        <p className="text-xs text-gray-500 font-medium">{label}</p>
-        <p className="text-sm font-bold text-gray-900">{value}</p>
+        <p className="text-xs text-muted-foreground font-medium">{label}</p>
+        <p className="text-sm font-bold text-foreground">{value}</p>
       </div>
     </div>
   )
@@ -111,8 +111,8 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600 mx-auto mb-3" />
-          <p className="text-sm text-gray-500">Loading quotations...</p>
+          <Loader2 className="w-8 h-8 animate-spin text-omnia-gold mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">Loading quotations...</p>
         </div>
       </div>
     )
@@ -124,29 +124,29 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Stats */}
         <div className="px-6 pt-5 pb-4 grid grid-cols-4 gap-3 flex-shrink-0">
-          <StatCard label="Total Value"   value={formatCurrency(totalValue, 'USD')} icon={DollarSign}    color="bg-teal-500" />
+          <StatCard label="Total Value"   value={formatCurrency(totalValue, 'USD')} icon={DollarSign}    color="bg-omnia-gold/100" />
           <StatCard label="Accepted"      value={accepted}                          icon={CheckCircle2}   color="bg-green-500" />
-          <StatCard label="In Progress"   value={pending}                           icon={TrendingUp}     color="bg-blue-500" />
+          <StatCard label="In Progress"   value={pending}                           icon={TrendingUp}     color="bg-omnia-gold/50" />
           <StatCard label="Drafts"        value={drafts}                            icon={Clock}          color="bg-gray-400" />
         </div>
 
         {/* Search & Filter */}
         <div className="px-6 pb-4 flex items-center gap-3 flex-shrink-0">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by customer, quote number, destination..."
-              className="w-full pl-9 pr-4 py-2 text-sm bg-card border border-gray-200 rounded-xl outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300"
+              className="w-full pl-9 pr-4 py-2 text-sm bg-card border border-border rounded-xl outline-none focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300"
             />
           </div>
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-8 pr-3 py-2 text-sm bg-card border border-gray-200 rounded-xl outline-none focus:border-teal-400 appearance-none cursor-pointer">
+              className="pl-8 pr-3 py-2 text-sm bg-card border border-border rounded-xl outline-none focus:border-omnia-gold/60 appearance-none cursor-pointer">
               <option value="all">All Status</option>
               {Object.entries(QUOTATION_STATUS_LABELS).map(([k, v]) => (
                 <option key={k} value={k}>{v}</option>
@@ -156,7 +156,7 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
           <button
             onClick={() => load(true)}
             disabled={isRefreshing}
-            className="p-2 rounded-xl border border-gray-200 bg-card text-gray-500 hover:text-teal-600 hover:border-teal-300 transition-colors">
+            className="p-2 rounded-xl border border-border bg-card text-muted-foreground hover:text-omnia-gold hover:border-omnia-gold/40 transition-colors">
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
           </button>
         </div>
@@ -167,8 +167,8 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
             {filtered.length === 0 ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
                 <FileText className="w-12 h-12 text-gray-200 mx-auto mb-3" />
-                <p className="text-sm font-semibold text-gray-500">No quotations found</p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-sm font-semibold text-muted-foreground">No quotations found</p>
+                <p className="text-xs text-muted-foreground mt-1">
                   {search || statusFilter !== 'all' ? 'Try adjusting your filters' : 'Click "New Quote" to create your first quotation'}
                 </p>
               </motion.div>
@@ -186,36 +186,36 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
                     transition={{ delay: idx * 0.03 }}
                     onClick={() => setSelectedQuotation(isSelected ? null : quote)}
                     className={`bg-card border-2 rounded-xl p-4 cursor-pointer transition-all hover:shadow-md ${
-                      isSelected ? 'border-teal-400 shadow-md bg-teal-50/30' : 'border-gray-200 hover:border-teal-200'
+                      isSelected ? 'border-omnia-gold/60 shadow-md bg-omnia-gold/10/30' : 'border-border hover:border-omnia-gold/20'
                     }`}>
                     {/* Top Row */}
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <FileText className="w-3.5 h-3.5 text-teal-600 flex-shrink-0" />
-                          <span className="text-xs font-bold font-mono text-teal-600">{quote.quote_number}</span>
+                          <FileText className="w-3.5 h-3.5 text-omnia-gold flex-shrink-0" />
+                          <span className="text-xs font-bold font-mono text-omnia-gold">{quote.quote_number}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${statusCfg.bg} ${statusCfg.text}`}>
                             {QUOTATION_STATUS_LABELS[quote.status]}
                           </span>
                         </div>
-                        <h3 className="text-sm font-bold text-gray-900 truncate">{quote.quote_title}</h3>
-                        <p className="text-xs text-gray-500 truncate mt-0.5">{quote.customer_name}{quote.company ? ` · ${quote.company}` : ''}</p>
+                        <h3 className="text-sm font-bold text-foreground truncate">{quote.quote_title}</h3>
+                        <p className="text-xs text-muted-foreground truncate mt-0.5">{quote.customer_name}{quote.company ? ` · ${quote.company}` : ''}</p>
                       </div>
-                      <ChevronRight className={`w-4 h-4 text-gray-400 flex-shrink-0 ml-2 transition-transform ${isSelected ? 'rotate-90 text-teal-500' : ''}`} />
+                      <ChevronRight className={`w-4 h-4 text-muted-foreground flex-shrink-0 ml-2 transition-transform ${isSelected ? 'rotate-90 text-omnia-gold' : ''}`} />
                     </div>
 
                     {/* Info Row */}
-                    <div className="grid grid-cols-3 gap-2 text-xs text-gray-600">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1.5">
-                        <MapPin className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <MapPin className="w-3 h-3 text-muted-foreground flex-shrink-0" />
                         <span className="truncate">{quote.destination}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Calendar className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <Calendar className="w-3 h-3 text-muted-foreground flex-shrink-0" />
                         <span>{formatDate(quote.departure_date)}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Users className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <Users className="w-3 h-3 text-muted-foreground flex-shrink-0" />
                         <span>{travelers} traveler{travelers !== 1 ? 's' : ''}</span>
                       </div>
                     </div>
@@ -223,12 +223,12 @@ export function QuotationsList({ refreshKey }: QuotationsListProps) {
                     {/* Bottom Row */}
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
                       <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-teal-700">
+                        <span className="text-sm font-bold text-omnia-gold-dark">
                           {formatCurrency(quote.grand_total, quote.currency)}
                         </span>
-                        <span className="text-xs text-gray-400">{quote.currency} · {quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
+                        <span className="text-xs text-muted-foreground">{quote.currency} · {quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
                       </div>
-                      <span className="text-xs text-gray-400">Valid to {formatDate(quote.valid_until)}</span>
+                      <span className="text-xs text-muted-foreground">Valid to {formatDate(quote.valid_until)}</span>
                     </div>
                   </motion.div>
                 )

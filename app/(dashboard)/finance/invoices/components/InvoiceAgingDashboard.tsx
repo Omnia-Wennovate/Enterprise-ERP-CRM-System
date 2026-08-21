@@ -52,7 +52,7 @@ export default function InvoiceAgingDashboard({ buckets, loading, onBucketClick 
               </span>
             </div>
 
-            <div className="text-xl font-bold text-foreground mb-2 tabular-nums group-hover:text-blue-600 transition-colors">
+            <div className="text-xl font-bold text-foreground mb-2 tabular-nums group-hover:text-omnia-gold transition-colors">
               {fmt(bucket.totalAmount)}
             </div>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { getHourGreeting } from '@/lib/utils'
-import * as LucideIcons from 'lucide-react'
+import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import type { UserRole } from '@/types'
 
 interface WelcomeBannerProps {
@@ -13,46 +13,39 @@ function getRoleMessage(role: UserRole): string {
   const messages: Record<UserRole, string> = {
     super_admin: 'Welcome to your command center',
     admin: 'You have full system access',
-    sales_agent: 'You have 12 leads in your pipeline',
-    operations: '24 active bookings need attention',
-    accountant: '8 invoices are outstanding',
-    hr_manager: '3 leave requests need approval',
+    sales_agent: 'Your sales pipeline awaits',
+    operations: 'Active bookings need attention',
+    accountant: 'Financial overview at a glance',
+    hr_manager: 'People management dashboard',
     customer: "Welcome to your travel portal",
+    marketing: 'Marketing command center',
   }
   return messages[role] || 'Welcome back'
 }
 
-function getRoleIcon(role: UserRole) {
-  const icons: Record<UserRole, any> = {
-    super_admin: LucideIcons.Settings,
-    admin: LucideIcons.LayoutDashboard,
-    sales_agent: LucideIcons.TrendingUp,
-    operations: LucideIcons.Plane,
-    accountant: LucideIcons.DollarSign,
-    hr_manager: LucideIcons.Users,
-    customer: LucideIcons.MapPin,
-  }
-  return icons[role] || LucideIcons.BarChart2
-}
-
 export function WelcomeBanner({ firstName, role }: WelcomeBannerProps) {
-  const Icon = getRoleIcon(role)
   const greeting = getHourGreeting()
   const message = getRoleMessage(role)
 
   return (
-    <div className="bg-gradient-to-r from-[#0B2A3D] to-[#0A8FA8] rounded-2xl p-8 mb-8 text-primary-foreground shadow-lg">
-      <div className="flex items-start justify-between">
+    <div
+      className="rounded-2xl p-8 mb-8 text-white shadow-lg relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0A1221 0%, #0F1B2D 60%, #1A2A42 100%)' }}
+    >
+      {/* Gold decorative accent */}
+      <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, transparent, #C8A951, transparent)' }} />
+
+      <div className="flex items-start justify-between relative z-10">
         <div className="flex-1">
-          <h1 className="text-3xl font-bold mb-2">
-            {greeting}, {firstName} 👋
+          <h1 className="text-2xl font-bold mb-1.5">
+            {greeting}, {firstName}
           </h1>
-          <p className="text-[#E0F2F7] text-lg">{message}</p>
+          <p className="text-white/50 text-sm">{message}</p>
         </div>
 
-        {/* Decorative icon */}
-        <div className="flex-shrink-0 opacity-20">
-          <Icon size={80} />
+        {/* Omnia logo watermark */}
+        <div className="flex-shrink-0 opacity-[0.08]">
+          <OmniaLogo variant="icon" theme="light" size={120} />
         </div>
       </div>
     </div>

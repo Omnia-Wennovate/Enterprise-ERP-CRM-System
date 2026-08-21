@@ -44,7 +44,7 @@ export default function CommissionsPage() {
         <div className="grid grid-cols-4 gap-6 mt-8 mb-8">
           <div className="bg-card rounded-lg shadow p-6">
             <p className="text-muted-foreground text-sm font-medium">Total Commission</p>
-            <p className="text-2xl font-bold text-teal-600 mt-2">${totalCommission.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-omnia-gold mt-2">${totalCommission.toFixed(2)}</p>
           </div>
           <div className="bg-card rounded-lg shadow p-6">
             <p className="text-muted-foreground text-sm font-medium">Pending</p>
@@ -93,7 +93,7 @@ export default function CommissionsPage() {
                       <td className="px-6 py-4 text-muted-foreground">
                         ${commission.base_amount.toFixed(2)}
                       </td>
-                      <td className="px-6 py-4 font-semibold text-teal-600">
+                      <td className="px-6 py-4 font-semibold text-omnia-gold">
                         ${commission.commission_amount.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 text-muted-foreground">

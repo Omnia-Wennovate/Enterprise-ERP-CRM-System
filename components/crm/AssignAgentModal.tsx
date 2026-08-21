@@ -65,22 +65,22 @@ export function AssignAgentModal({ isOpen, lead, onClose, onAssigned }: Props) {
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[420px] bg-card rounded-2xl shadow-2xl border border-gray-200"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[420px] bg-card rounded-2xl shadow-2xl border border-border"
           >
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <div>
-                <h2 className="font-bold text-gray-900">Assign Sales Agent</h2>
-                <p className="text-xs text-gray-500 mt-0.5">{lead.lead_name}</p>
+                <h2 className="font-bold text-foreground">Assign Sales Agent</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">{lead.lead_name}</p>
               </div>
-              <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <X className="w-4 h-4 text-gray-500" />
+              <button onClick={onClose} className="p-2 rounded-lg hover:bg-muted transition-colors">
+                <X className="w-4 h-4 text-muted-foreground" />
               </button>
             </div>
 
             <div className="p-5">
               {isLoading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 text-teal-500 animate-spin" />
+                  <Loader2 className="w-6 h-6 text-omnia-gold animate-spin" />
                 </div>
               ) : (
                 <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -88,14 +88,14 @@ export function AssignAgentModal({ isOpen, lead, onClose, onAssigned }: Props) {
                   <button
                     onClick={() => setSelectedId('')}
                     className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left ${
-                      selectedId === '' ? 'border-teal-400 bg-teal-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      selectedId === '' ? 'border-omnia-gold/60 bg-omnia-gold/10' : 'border-border hover:border-border hover:bg-muted'
                     }`}
                   >
-                    <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4 text-gray-400" />
+                    <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                      <User className="w-4 h-4 text-muted-foreground" />
                     </div>
-                    <span className="text-sm text-gray-500 italic">Unassigned</span>
-                    {selectedId === '' && <Check className="w-4 h-4 text-teal-600 ml-auto" />}
+                    <span className="text-sm text-muted-foreground italic">Unassigned</span>
+                    {selectedId === '' && <Check className="w-4 h-4 text-omnia-gold ml-auto" />}
                   </button>
 
                   {agents.map((agent) => (
@@ -103,17 +103,17 @@ export function AssignAgentModal({ isOpen, lead, onClose, onAssigned }: Props) {
                       key={agent.id}
                       onClick={() => setSelectedId(agent.id)}
                       className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left ${
-                        selectedId === agent.id ? 'border-teal-400 bg-teal-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                        selectedId === agent.id ? 'border-omnia-gold/60 bg-omnia-gold/10' : 'border-border hover:border-border hover:bg-muted'
                       }`}
                     >
-                      <div className="w-9 h-9 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 font-bold text-teal-700 text-sm">
+                      <div className="w-9 h-9 rounded-full bg-omnia-gold/15 flex items-center justify-center flex-shrink-0 font-bold text-omnia-gold-dark text-sm">
                         {agent.full_name?.charAt(0) || '?'}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-800">{agent.full_name}</p>
-                        <p className="text-xs text-gray-500 capitalize">{agent.role?.replace('_', ' ')}</p>
+                        <p className="text-sm font-medium text-foreground">{agent.full_name}</p>
+                        <p className="text-xs text-muted-foreground capitalize">{agent.role?.replace('_', ' ')}</p>
                       </div>
-                      {selectedId === agent.id && <Check className="w-4 h-4 text-teal-600 ml-auto flex-shrink-0" />}
+                      {selectedId === agent.id && <Check className="w-4 h-4 text-omnia-gold ml-auto flex-shrink-0" />}
                     </button>
                   ))}
                 </div>
@@ -125,7 +125,7 @@ export function AssignAgentModal({ isOpen, lead, onClose, onAssigned }: Props) {
               <Button
                 onClick={handleAssign}
                 disabled={isSaving}
-                className="flex-1 bg-teal-600 hover:bg-teal-700 text-primary-foreground"
+                className="flex-1 bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground"
               >
                 {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
                 Assign

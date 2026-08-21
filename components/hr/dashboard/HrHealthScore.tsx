@@ -30,7 +30,7 @@ export function HrHealthScore({ score }: { score: number }) {
   return (
     <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm flex flex-col h-full">
       <div className="flex items-center gap-2 mb-6">
-        <Activity className="w-5 h-5 text-teal-500" />
+        <Activity className="w-5 h-5 text-omnia-gold" />
         <h3 className="text-lg font-bold text-foreground">HR Health Score</h3>
       </div>
       

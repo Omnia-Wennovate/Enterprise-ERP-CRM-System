@@ -148,12 +148,12 @@ export function ExecutiveDashboard({ assets, assignments, onFilterClick }: Dashb
   return (
     <div className="space-y-6">
       {/* Executive Summary */}
-      <div className="bg-teal-50 border border-teal-100 rounded-xl p-6">
-        <h3 className="text-teal-900 font-semibold mb-2 flex items-center gap-2">
+      <div className="bg-omnia-gold/10 border border-omnia-gold/15 rounded-xl p-6">
+        <h3 className="text-foreground font-semibold mb-2 flex items-center gap-2">
           <Activity size={20} />
           Executive Auto-Summary
         </h3>
-        <p className="text-teal-800 text-lg leading-relaxed">
+        <p className="text-foreground text-lg leading-relaxed">
           {summarySentences.join(' ')}
         </p>
       </div>

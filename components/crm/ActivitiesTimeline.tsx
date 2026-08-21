@@ -21,7 +21,7 @@ const ACTIVITY_COLORS = {
   meeting: 'bg-purple-100 text-purple-700',
   note: 'bg-yellow-100 text-yellow-700',
   task: 'bg-orange-100 text-orange-700',
-  quotation: 'bg-teal-100 text-teal-700',
+  quotation: 'bg-omnia-gold/15 text-omnia-gold-dark',
   proposal: 'bg-indigo-100 text-indigo-700',
 }
 
@@ -70,19 +70,19 @@ export function ActivitiesTimeline() {
 
           {/* Activity content */}
           <div className="flex-1 pt-1">
-            <div className="bg-card border border-gray-200 rounded-lg p-4 hover:border-teal-300 transition-colors">
+            <div className="bg-card border border-border rounded-lg p-4 hover:border-omnia-gold/40 transition-colors">
               <div className="flex items-start justify-between mb-2">
-                <h4 className="font-semibold text-gray-900">{activity.title}</h4>
+                <h4 className="font-semibold text-foreground">{activity.title}</h4>
                 <span className={`text-xs px-2 py-1 rounded-full font-medium capitalize ${ACTIVITY_COLORS[activity.type]}`}>
                   {activity.type}
                 </span>
               </div>
 
               {activity.description && (
-                <p className="text-sm text-gray-600 mb-2">{activity.description}</p>
+                <p className="text-sm text-muted-foreground mb-2">{activity.description}</p>
               )}
 
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Clock className="w-3 h-3" />
                   <span>{formatDate(activity.created_at)}</span>
@@ -112,7 +112,7 @@ export function ActivitiesTimeline() {
       {activities.length === 0 && (
         <div className="text-center py-12">
           <Clock className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-          <p className="text-gray-500">No activities yet</p>
+          <p className="text-muted-foreground">No activities yet</p>
         </div>
       )}
     </div>

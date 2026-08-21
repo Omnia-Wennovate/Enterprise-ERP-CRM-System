@@ -102,7 +102,7 @@ export default function CommunicationHub() {
                 className="bg-card rounded-lg shadow p-6 hover:shadow-lg transition-shadow relative group"
               >
                 <div className="flex flex-col items-center text-center">
-                  <Icon className="w-8 h-8 text-teal-600 mb-3" />
+                  <Icon className="w-8 h-8 text-omnia-gold mb-3" />
                   <span className="text-sm font-medium text-foreground">{action.label}</span>
                   {action.badge && (
                     <span className="absolute top-2 right-2 bg-red-500 text-primary-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -141,11 +141,11 @@ export default function CommunicationHub() {
           <div className="space-y-4">
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex items-start gap-4 pb-4 border-b last:border-b-0">
-                <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                  {activity.type === 'message' && <MessageSquare className="w-5 h-5 text-teal-600" />}
-                  {activity.type === 'announcement' && <Bell className="w-5 h-5 text-teal-600" />}
-                  {activity.type === 'meeting' && <Calendar className="w-5 h-5 text-teal-600" />}
-                  {activity.type === 'task' && <CheckSquare className="w-5 h-5 text-teal-600" />}
+                <div className="w-10 h-10 rounded-full bg-omnia-gold/15 flex items-center justify-center flex-shrink-0">
+                  {activity.type === 'message' && <MessageSquare className="w-5 h-5 text-omnia-gold" />}
+                  {activity.type === 'announcement' && <Bell className="w-5 h-5 text-omnia-gold" />}
+                  {activity.type === 'meeting' && <Calendar className="w-5 h-5 text-omnia-gold" />}
+                  {activity.type === 'task' && <CheckSquare className="w-5 h-5 text-omnia-gold" />}
                 </div>
                 <div className="flex-1">
                   <p className="text-foreground font-medium">{activity.actor}</p>

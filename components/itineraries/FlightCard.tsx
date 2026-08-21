@@ -14,7 +14,7 @@ export function FlightCard({ item }: FlightCardProps) {
     confirmed: 'bg-green-50 text-green-700 border-green-200',
     pending: 'bg-amber-50 text-amber-700 border-amber-200',
     cancelled: 'bg-red-50 text-red-700 border-red-200',
-    completed: 'bg-teal-50 text-teal-700 border-teal-200',
+    completed: 'bg-omnia-gold/10 text-omnia-gold-dark border-omnia-gold/20',
   }
 
   /* Flight status badge — scaffold for future live API integration.

@@ -52,12 +52,12 @@ export function ExecutiveSummary({ onboardings, kpis }: Props) {
   }
 
   return (
-    <div className="bg-teal-50/50 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/50 rounded-xl p-5 mb-6 backdrop-blur-sm">
-      <h3 className="text-teal-900 dark:text-teal-100 font-semibold mb-2 flex items-center gap-2 text-sm">
-        <Activity size={16} className="text-teal-600" />
+    <div className="bg-omnia-gold/10/50 dark:bg-teal-950/20 border border-omnia-gold/15 dark:border-teal-900/50 rounded-xl p-5 mb-6 backdrop-blur-sm">
+      <h3 className="text-foreground dark:text-white/70 font-semibold mb-2 flex items-center gap-2 text-sm">
+        <Activity size={16} className="text-omnia-gold" />
         Executive Summary
       </h3>
-      <p className="text-teal-800 dark:text-teal-200 text-[15px] leading-relaxed">
+      <p className="text-foreground dark:text-teal-200 text-[15px] leading-relaxed">
         {sentences.join(' ')}
       </p>
     </div>

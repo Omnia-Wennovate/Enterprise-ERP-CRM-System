@@ -70,7 +70,7 @@ export default function ReportsPage() {
 
   if (!profile) return null
 
-  const PIE_COLORS = ['#0A8FA8', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#06B6D4', '#22C55E']
+  const PIE_COLORS = ['#C8A951', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#E2CC7E', '#22C55E']
   const totalBudget = budgetData.adBudget + budgetData.influencerSpend
   const totalSpend = budgetData.adSpend + budgetData.influencerSpend
 
@@ -79,10 +79,10 @@ export default function ReportsPage() {
     { icon: Eye, label: 'Total Reach', value: stats?.totalReach?.toLocaleString() || '0', color: '#10B981', sub: 'Unique accounts reached' },
     { icon: BarChart3, label: 'Engagement Rate', value: `${stats?.engagementRate || 0}%`, color: '#8B5CF6', sub: 'Engagement / Impressions' },
     { icon: MousePointerClick, label: 'CTR', value: `${stats?.clickThroughRate || 0}%`, color: '#F59E0B', sub: 'Clicks / Impressions' },
-    { icon: Users, label: 'Leads Generated', value: stats?.newLeads?.toString() || '0', color: '#06B6D4', sub: 'From social platforms' },
+    { icon: Users, label: 'Leads Generated', value: stats?.newLeads?.toString() || '0', color: '#E2CC7E', sub: 'From social platforms' },
     { icon: TrendingUp, label: 'Conversion Rate', value: `${stats?.conversionRate || 0}%`, color: '#22C55E', sub: 'Leads converted' },
     { icon: DollarSign, label: 'Total Ad Spend', value: `$${budgetData.adSpend.toLocaleString()}`, color: '#EF4444', sub: `of $${budgetData.adBudget.toLocaleString()} budget` },
-    { icon: Target, label: 'Avg Campaign ROI', value: `${stats?.campaignPerformance || 0}%`, color: '#0A8FA8', sub: 'Active campaigns' },
+    { icon: Target, label: 'Avg Campaign ROI', value: `${stats?.campaignPerformance || 0}%`, color: '#C8A951', sub: 'Active campaigns' },
   ]
 
   return (
@@ -145,11 +145,11 @@ export default function ReportsPage() {
                   {monthlyPosts.length > 0 ? (
                     <ResponsiveContainer width="100%" height={220}>
                       <BarChart data={monthlyPosts} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#F0F7FA" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#FAFAF7" />
                         <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#4B6B7A' }} />
                         <YAxis tick={{ fontSize: 11, fill: '#4B6B7A' }} />
                         <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #DBEAFE' }} />
-                        <Bar dataKey="value" name="Posts" fill="#0A8FA8" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="value" name="Posts" fill="#C8A951" radius={[4, 4, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (
@@ -207,12 +207,12 @@ export default function ReportsPage() {
                   {campaignROI.length > 0 ? (
                     <ResponsiveContainer width="100%" height={220}>
                       <BarChart data={campaignROI} margin={{ top: 5, right: 5, bottom: 20, left: -20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#F0F7FA" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#FAFAF7" />
                         <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#4B6B7A' }} angle={-20} textAnchor="end" interval={0} />
                         <YAxis tick={{ fontSize: 11, fill: '#4B6B7A' }} />
                         <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #DBEAFE' }} />
                         <Legend wrapperStyle={{ fontSize: 11 }} />
-                        <Bar dataKey="leads" name="Leads" fill="#0A8FA8" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="leads" name="Leads" fill="#C8A951" radius={[4, 4, 0, 0]} />
                         <Bar dataKey="roi" name="ROI %" fill="#10B981" radius={[4, 4, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
@@ -284,7 +284,7 @@ export default function ReportsPage() {
                   </div>
                   <div className="w-full h-4 bg-background rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all duration-700 ${totalBudget > 0 && (totalSpend / totalBudget) > 0.9 ? 'bg-destructive' : totalBudget > 0 && (totalSpend / totalBudget) > 0.7 ? 'bg-[#F59E0B]' : 'bg-gradient-to-r from-[#0A8FA8] to-[#06B6D4]'}`}
+                      className={`h-full rounded-full transition-all duration-700 ${totalBudget > 0 && (totalSpend / totalBudget) > 0.9 ? 'bg-destructive' : totalBudget > 0 && (totalSpend / totalBudget) > 0.7 ? 'bg-[#F59E0B]' : 'bg-gradient-to-r from-[#C8A951] to-[#E2CC7E]'}`}
                       style={{ width: `${totalBudget > 0 ? Math.min(100, (totalSpend / totalBudget) * 100) : 0}%` }}
                     />
                   </div>

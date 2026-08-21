@@ -54,12 +54,12 @@ export function ExternalTrainingForm() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-card p-6 rounded-xl border border-border/80 shadow-sm">
         <div>
           <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-            <Plane className="w-5 h-5 text-teal-600" />
+            <Plane className="w-5 h-5 text-omnia-gold" />
             External Training Requests
           </h2>
           <p className="text-muted-foreground text-sm mt-1">Request approval for external courses, conferences, and certifications.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
+        <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
           <Plus className="w-4 h-4" /> New Request
         </button>
       </div>
@@ -77,7 +77,7 @@ export function ExternalTrainingForm() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="bg-card rounded-xl border border-border/80 p-5 hover:border-teal-200 transition-colors flex flex-col md:flex-row gap-6"
+              className="bg-card rounded-xl border border-border/80 p-5 hover:border-omnia-gold/20 transition-colors flex flex-col md:flex-row gap-6"
             >
               {/* Info */}
               <div className="flex-1">
@@ -109,7 +109,7 @@ export function ExternalTrainingForm() {
                     <span className="flex items-center gap-1.5 text-emerald-600"><DollarSign className="w-3.5 h-3.5" /> ${req.cost.toLocaleString()}</span>
                   )}
                   {req.reference_link && (
-                    <a href={req.reference_link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-teal-600 hover:underline">
+                    <a href={req.reference_link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-omnia-gold hover:underline">
                       <LinkIcon className="w-3.5 h-3.5" /> View Details
                     </a>
                   )}
@@ -121,7 +121,7 @@ export function ExternalTrainingForm() {
                 <div className="flex md:flex-col justify-end gap-2 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6 min-w-[140px]">
                   <button 
                     onClick={() => handleApprove(req.id)}
-                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium"
+                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors text-sm font-medium"
                   >
                     <CheckCircle className="w-4 h-4" /> Approve
                   </button>

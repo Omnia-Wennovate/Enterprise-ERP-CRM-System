@@ -27,7 +27,7 @@ export default function EmptyState({ filtered, onClearFilters }: EmptyStateProps
         {onClearFilters && (
           <button
             onClick={onClearFilters}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/80 transition-colors"
           >
             Clear all filters
           </button>
@@ -60,7 +60,7 @@ export default function EmptyState({ filtered, onClearFilters }: EmptyStateProps
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <Link
           href="/finance/invoices/new"
-          className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all hover:shadow-lg hover:shadow-blue-500/25 text-sm"
+          className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/80 transition-all hover:shadow-lg hover:shadow-blue-500/25 text-sm"
         >
           <Plus size={16}/>
           Create Invoice
@@ -83,7 +83,7 @@ export default function EmptyState({ filtered, onClearFilters }: EmptyStateProps
           { step: '3', title: 'Track Payments', desc: 'Record payments and manage overdue' },
         ].map(s => (
           <div key={s.step} className="bg-muted/40 rounded-xl p-4 border border-border/50">
-            <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 text-xs font-bold flex items-center justify-center mb-2">{s.step}</div>
+            <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/40 text-omnia-gold text-xs font-bold flex items-center justify-center mb-2">{s.step}</div>
             <div className="text-sm font-semibold text-foreground mb-1">{s.title}</div>
             <div className="text-xs text-muted-foreground">{s.desc}</div>
           </div>

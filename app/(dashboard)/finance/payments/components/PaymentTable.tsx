@@ -98,7 +98,7 @@ export default function PaymentTable({
     >
       {label}
       <ArrowUpDown className={`w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity ${
-        sortCol === col ? 'opacity-100 text-teal-600' : ''
+        sortCol === col ? 'opacity-100 text-omnia-gold' : ''
       }`} />
     </button>
   )
@@ -116,7 +116,7 @@ export default function PaymentTable({
               value={searchInput}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search payments, customers, invoices, references..."
-              className="w-full pl-9 pr-4 py-2.5 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500/50 transition-all"
+              className="w-full pl-9 pr-4 py-2.5 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30 focus:border-omnia-gold/50 transition-all"
             />
             {searchInput && (
               <button
@@ -134,14 +134,14 @@ export default function PaymentTable({
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium border transition-colors ${
                 showFilters || hasActiveFilters
-                  ? 'bg-teal-500/10 border-teal-500/30 text-teal-700'
+                  ? 'bg-omnia-gold/100/10 border-omnia-gold/30 text-omnia-gold-dark'
                   : 'bg-muted/30 border-border/40 text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }`}
             >
               <Filter className="w-4 h-4" />
               Filters
               {hasActiveFilters && (
-                <span className="w-2 h-2 rounded-full bg-teal-500" />
+                <span className="w-2 h-2 rounded-full bg-omnia-gold/100" />
               )}
             </button>
 
@@ -187,7 +187,7 @@ export default function PaymentTable({
                 <select
                   value={filters.status || ''}
                   onChange={(e) => onFilterChange({ status: e.target.value || undefined })}
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 >
                   <option value="">All Statuses</option>
                   <option value="completed">Completed</option>
@@ -199,7 +199,7 @@ export default function PaymentTable({
                 <select
                   value={filters.paymentMethod || ''}
                   onChange={(e) => onFilterChange({ paymentMethod: e.target.value || undefined })}
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 >
                   <option value="">All Methods</option>
                   <option value="bank_transfer">Bank Transfer</option>
@@ -213,7 +213,7 @@ export default function PaymentTable({
                   value={filters.startDate || ''}
                   onChange={(e) => onFilterChange({ startDate: e.target.value || undefined })}
                   placeholder="From Date"
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 />
 
                 <input
@@ -221,7 +221,7 @@ export default function PaymentTable({
                   value={filters.endDate || ''}
                   onChange={(e) => onFilterChange({ endDate: e.target.value || undefined })}
                   placeholder="To Date"
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 />
 
                 <input
@@ -229,7 +229,7 @@ export default function PaymentTable({
                   value={filters.amountMin || ''}
                   onChange={(e) => onFilterChange({ amountMin: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="Min Amount"
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 />
 
                 <input
@@ -237,7 +237,7 @@ export default function PaymentTable({
                   value={filters.amountMax || ''}
                   onChange={(e) => onFilterChange({ amountMax: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="Max Amount"
-                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="px-3 py-2 rounded-lg bg-muted/30 border border-border/40 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-omnia-gold-500/30"
                 />
               </div>
 
@@ -245,7 +245,7 @@ export default function PaymentTable({
                 <div className="flex justify-end mt-2">
                   <button
                     onClick={handleClearFilters}
-                    className="flex items-center gap-1.5 text-xs font-medium text-teal-600 hover:text-teal-700 transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-medium text-omnia-gold hover:text-omnia-gold-dark transition-colors"
                   >
                     <RotateCcw className="w-3 h-3" />
                     Clear Filters
@@ -336,7 +336,7 @@ export default function PaymentTable({
                   <td className={`${densityPadding} text-sm text-muted-foreground font-mono`}>
                     {payment.invoice_number || payment.invoice_id?.slice(0, 8) + '...'}
                   </td>
-                  <td className={`${densityPadding} whitespace-nowrap text-sm font-semibold text-teal-600`}>
+                  <td className={`${densityPadding} whitespace-nowrap text-sm font-semibold text-omnia-gold`}>
                     {fmtCurrency(payment.amount, payment.invoice_currency)}
                   </td>
                   <td className={`${densityPadding} text-sm text-muted-foreground`}>
@@ -385,7 +385,7 @@ export default function PaymentTable({
           <p className="text-xs text-muted-foreground">
             Showing {((page - 1) * pageSize) + 1}–{Math.min(page * pageSize, total)} of {total} payments
             {selectedIds.size > 0 && (
-              <span className="text-teal-600 font-medium"> • {selectedIds.size} selected</span>
+              <span className="text-omnia-gold font-medium"> • {selectedIds.size} selected</span>
             )}
           </p>
           <div className="flex items-center gap-1">
@@ -405,7 +405,7 @@ export default function PaymentTable({
                   onClick={() => onPageChange(pageNum)}
                   className={`w-8 h-8 rounded-lg text-xs font-semibold transition-colors ${
                     pageNum === page
-                      ? 'bg-teal-500/10 text-teal-700 border border-teal-500/30'
+                      ? 'bg-omnia-gold/100/10 text-omnia-gold-dark border border-omnia-gold/30'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }`}
                 >

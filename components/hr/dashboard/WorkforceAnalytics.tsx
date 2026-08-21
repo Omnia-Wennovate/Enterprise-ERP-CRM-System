@@ -13,7 +13,7 @@ export function WorkforceAnalytics({ analyticsData, equityData }: { analyticsDat
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <motion.div whileHover={{ y: -4 }} className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg"><Users className="w-5 h-5" /></div>
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-omnia-gold rounded-lg"><Users className="w-5 h-5" /></div>
             <h3 className="font-semibold text-muted-foreground">Average Tenure</h3>
           </div>
           <p className="text-3xl font-bold">2.4 <span className="text-lg text-muted-foreground font-normal">years</span></p>

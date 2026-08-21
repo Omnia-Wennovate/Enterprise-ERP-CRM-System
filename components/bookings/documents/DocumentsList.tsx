@@ -60,7 +60,7 @@ function DocumentCard({ document, onClick }: { document: Document, onClick: () =
       <div className="flex items-start gap-3 mb-3">
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
           document.file_type === 'pdf' ? 'bg-red-50 text-red-600' :
-          document.file_type === 'image' ? 'bg-blue-50 text-blue-600' :
+          document.file_type === 'image' ? 'bg-omnia-gold/5 text-omnia-gold' :
           'bg-muted text-muted-foreground'
         }`}>
           <FileText className="w-5 h-5" />

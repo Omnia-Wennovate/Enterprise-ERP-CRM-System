@@ -101,12 +101,12 @@ export function SmartFilters({ onboardings, onFilter, activeFilter, onFilterChan
               onClick={() => onFilterChange(tab.key)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 activeFilter === tab.key
-                  ? 'bg-teal-600 text-white shadow-sm'
+                  ? 'bg-omnia-gold text-white shadow-sm'
                   : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
               }`}
             >
               {tab.label}
-              <span className={`ml-1.5 text-[10px] ${activeFilter === tab.key ? 'text-teal-100' : ''}`}>
+              <span className={`ml-1.5 text-[10px] ${activeFilter === tab.key ? 'text-white/70' : ''}`}>
                 {count}
               </span>
             </button>
@@ -123,7 +123,7 @@ export function SmartFilters({ onboardings, onFilter, activeFilter, onFilterChan
             placeholder="Search employee, position, department, or task..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-muted/30 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 bg-muted/30 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500 focus:border-transparent"
           />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -134,7 +134,7 @@ export function SmartFilters({ onboardings, onFilter, activeFilter, onFilterChan
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-colors ${
-            showAdvanced || deptFilter ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30 text-teal-700' : 'border-border text-muted-foreground hover:bg-muted'
+            showAdvanced || deptFilter ? 'border-omnia-gold bg-omnia-gold/10 dark:bg-teal-950/30 text-omnia-gold-dark' : 'border-border text-muted-foreground hover:bg-muted'
           }`}
         >
           <Filter className="w-3.5 h-3.5" /> Filters
@@ -147,13 +147,13 @@ export function SmartFilters({ onboardings, onFilter, activeFilter, onFilterChan
           <select
             value={deptFilter}
             onChange={e => setDeptFilter(e.target.value)}
-            className="px-3 py-1.5 text-xs bg-background border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
+            className="px-3 py-1.5 text-xs bg-background border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-omnia-gold-500"
           >
             <option value="">All Departments</option>
             {departments.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
           {deptFilter && (
-            <button onClick={() => setDeptFilter('')} className="text-xs text-teal-600 hover:text-teal-700 font-medium">
+            <button onClick={() => setDeptFilter('')} className="text-xs text-omnia-gold hover:text-omnia-gold-dark font-medium">
               Clear
             </button>
           )}

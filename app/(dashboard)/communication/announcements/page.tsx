@@ -55,7 +55,7 @@ export default function AnnouncementsPage() {
       case 'high':
         return <AlertTriangle className="w-5 h-5 text-amber-600" />
       default:
-        return <Info className="w-5 h-5 text-blue-600" />
+        return <Info className="w-5 h-5 text-omnia-gold" />
     }
   }
 
@@ -79,16 +79,16 @@ export default function AnnouncementsPage() {
             <h1 className="text-3xl font-bold text-foreground">Announcements</h1>
             <p className="text-muted-foreground mt-1">Company-wide announcements and important updates</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             New Announcement
           </button>
         </div>
 
         {/* Unread count */}
-        <div className="mb-6 p-4 bg-teal-50 border border-teal-200 rounded-lg flex items-center gap-3">
-          <Bell className="w-5 h-5 text-teal-600" />
-          <p className="text-teal-900">You have 2 unread announcements</p>
+        <div className="mb-6 p-4 bg-omnia-gold/10 border border-omnia-gold/20 rounded-lg flex items-center gap-3">
+          <Bell className="w-5 h-5 text-omnia-gold" />
+          <p className="text-foreground">You have 2 unread announcements</p>
         </div>
 
         {/* Announcements List */}
@@ -97,7 +97,7 @@ export default function AnnouncementsPage() {
             <div
               key={announcement.id}
               className={`rounded-lg p-6 transition-colors ${
-                announcement.read ? 'bg-card' : 'bg-teal-50'
+                announcement.read ? 'bg-card' : 'bg-omnia-gold/10'
               } shadow hover:shadow-lg cursor-pointer`}
             >
               <div className="flex items-start gap-4">
@@ -122,7 +122,7 @@ export default function AnnouncementsPage() {
                       </div>
                     </div>
                     {!announcement.read && (
-                      <div className="w-2 h-2 rounded-full bg-teal-600 flex-shrink-0 mt-2" />
+                      <div className="w-2 h-2 rounded-full bg-omnia-gold flex-shrink-0 mt-2" />
                     )}
                   </div>
                 </div>

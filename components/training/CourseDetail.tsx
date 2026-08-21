@@ -63,7 +63,7 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
     return (
       <div className="text-center py-20 bg-card rounded-xl">
         <h3 className="text-lg font-bold text-foreground">Course not found</h3>
-        <button onClick={onBack} className="text-teal-600 mt-2">Go back</button>
+        <button onClick={onBack} className="text-omnia-gold mt-2">Go back</button>
       </div>
     )
   }
@@ -121,7 +121,7 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
               <button className="flex items-center gap-2 px-4 py-2 bg-card text-slate-700 border border-border rounded-lg hover:bg-muted/50 font-medium">
                 <Edit className="w-4 h-4" /> Edit Course
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium shadow-lg shadow-teal-600/20">
+              <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium shadow-lg shadow-teal-600/20">
                 <Users className="w-4 h-4" /> Assign Staff
               </button>
             </div>
@@ -141,7 +141,7 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
                   onClick={() => setActiveTab(tab as any)}
                   className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors capitalize ${
                     activeTab === tab 
-                      ? 'border-teal-600 text-teal-700' 
+                      ? 'border-omnia-gold text-omnia-gold-dark' 
                       : 'border-transparent text-muted-foreground hover:text-slate-700'
                   }`}
                 >
@@ -161,13 +161,13 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
                   {modules.length > 0 ? (
                     <div className="space-y-3">
                       {modules.map((mod, i) => (
-                        <div key={mod.id} className="flex items-center justify-between p-4 bg-muted/50 border border-border rounded-lg hover:border-teal-300 transition-colors cursor-pointer group">
+                        <div key={mod.id} className="flex items-center justify-between p-4 bg-muted/50 border border-border rounded-lg hover:border-omnia-gold/40 transition-colors cursor-pointer group">
                           <div className="flex items-center gap-4">
-                            <div className="w-8 h-8 rounded-full bg-card flex items-center justify-center text-teal-600 font-bold border border-teal-100 shadow-sm">
+                            <div className="w-8 h-8 rounded-full bg-card flex items-center justify-center text-omnia-gold font-bold border border-omnia-gold/15 shadow-sm">
                               {i + 1}
                             </div>
                             <div>
-                              <p className="font-semibold text-foreground group-hover:text-teal-700 transition-colors">{mod.title}</p>
+                              <p className="font-semibold text-foreground group-hover:text-omnia-gold-dark transition-colors">{mod.title}</p>
                               <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1">
                                   {mod.content_type === 'video' ? <PlayCircle className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
@@ -188,7 +188,7 @@ export function CourseDetail({ courseId, onBack }: CourseDetailProps) {
                   ) : (
                     <div className="text-center py-10 border-2 border-dashed border-border rounded-lg">
                       <p className="text-muted-foreground text-sm">No modules added to this course yet.</p>
-                      <button className="mt-2 text-teal-600 font-medium text-sm">Add Module</button>
+                      <button className="mt-2 text-omnia-gold font-medium text-sm">Add Module</button>
                     </div>
                   )}
                 </div>

@@ -53,7 +53,7 @@ export function PayrollKPIGrid({ kpis }: Props) {
       icon: Users,
       sub: 'Active on payroll',
       accent: 'text-blue-400',
-      bg: 'bg-blue-500/10 border-blue-500/20',
+      bg: 'bg-omnia-gold/50/10 border-blue-500/20',
     },
     {
       label: 'Employees Paid',
@@ -85,7 +85,7 @@ export function PayrollKPIGrid({ kpis }: Props) {
       icon: ThumbsUp,
       sub: 'Ready for payment',
       accent: 'text-teal-400',
-      bg: 'bg-teal-500/10 border-teal-500/20',
+      bg: 'bg-omnia-gold/100/10 border-omnia-gold/20',
     },
     {
       label: 'Total Bonuses',
@@ -165,7 +165,7 @@ export function PayrollKPIGrid({ kpis }: Props) {
       icon: DollarSign,
       sub: 'Before deductions',
       accent: 'text-blue-400',
-      bg: 'bg-blue-500/10 border-blue-500/20',
+      bg: 'bg-omnia-gold/50/10 border-blue-500/20',
     },
     {
       label: 'Payroll Growth',

@@ -5,7 +5,7 @@ import { Bell, Activity, UserPlus, CheckCircle, FileText, Monitor, Target } from
 
 export function ActivityAndNotifications() {
   const activities = [
-    { id: 1, type: 'join', text: 'Sarah Jenkins joined the Sales department', time: '10 mins ago', icon: UserPlus, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+    { id: 1, type: 'join', text: 'Sarah Jenkins joined the Sales department', time: '10 mins ago', icon: UserPlus, color: 'text-blue-500', bg: 'bg-omnia-gold/5 dark:bg-blue-900/20' },
     { id: 2, type: 'leave', text: 'Mark D. leave request approved', time: '1 hour ago', icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
     { id: 3, type: 'payroll', text: 'July payroll generated successfully', time: '3 hours ago', icon: FileText, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
     { id: 4, type: 'asset', text: 'MacBook Pro assigned to New Hire', time: '5 hours ago', icon: Monitor, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },

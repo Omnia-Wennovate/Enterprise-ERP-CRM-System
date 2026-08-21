@@ -27,7 +27,7 @@ export function CustomersTable() {
       case 'leisure':
         return 'bg-amber-100 text-amber-700'
       default:
-        return 'bg-gray-100 text-gray-700'
+        return 'bg-muted text-foreground'
     }
   }
 
@@ -38,14 +38,14 @@ export function CustomersTable() {
       {/* Table */}
       <div className="flex-1 overflow-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 sticky top-0">
+          <thead className="bg-muted sticky top-0">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Company</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Type</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Contact</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Annual Value</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600"></th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Company</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Type</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Contact</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Annual Value</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground"></th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -53,12 +53,12 @@ export function CustomersTable() {
               <tr
                 key={customer.id}
                 onClick={() => setSelectedCustomer(customer)}
-                className="hover:bg-gray-50 cursor-pointer transition-colors"
+                className="hover:bg-muted cursor-pointer transition-colors"
               >
                 <td className="px-4 py-3">
                   <div>
-                    <p className="font-semibold text-sm text-gray-900">{customer.company_name}</p>
-                    <p className="text-xs text-gray-600">{customer.city}, {customer.country}</p>
+                    <p className="font-semibold text-sm text-foreground">{customer.company_name}</p>
+                    <p className="text-xs text-muted-foreground">{customer.city}, {customer.country}</p>
                   </div>
                 </td>
                 <td className="px-4 py-3">
@@ -68,20 +68,20 @@ export function CustomersTable() {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-col gap-1">
-                    <span className="text-sm text-gray-700">{customer.contact_name}</span>
-                    <span className="text-xs text-gray-600">{customer.email}</span>
+                    <span className="text-sm text-foreground">{customer.contact_name}</span>
+                    <span className="text-xs text-muted-foreground">{customer.email}</span>
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <p className="font-semibold text-sm text-teal-700">${(customer.annual_value / 1000).toFixed(0)}K</p>
+                  <p className="font-semibold text-sm text-omnia-gold-dark">${(customer.annual_value / 1000).toFixed(0)}K</p>
                 </td>
                 <td className="px-4 py-3">
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${customer.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${customer.is_active ? 'bg-green-100 text-green-700' : 'bg-muted text-foreground'}`}>
                     {customer.is_active ? 'Active' : 'Inactive'}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
                 </td>
               </tr>
             ))}
@@ -91,9 +91,9 @@ export function CustomersTable() {
 
       {/* Detail Panel */}
       {selectedCustomer && (
-        <div className="w-80 bg-card border-l border-gray-200 p-4 overflow-y-auto">
+        <div className="w-80 bg-card border-l border-border p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-900">Customer Details</h3>
+            <h3 className="font-semibold text-foreground">Customer Details</h3>
             <Button variant="ghost" size="icon" onClick={() => setSelectedCustomer(null)}>
               ×
             </Button>
@@ -101,59 +101,59 @@ export function CustomersTable() {
 
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-gray-600 mb-1">Company Name</p>
-              <p className="font-semibold text-gray-900">{selectedCustomer.company_name}</p>
+              <p className="text-xs text-muted-foreground mb-1">Company Name</p>
+              <p className="font-semibold text-foreground">{selectedCustomer.company_name}</p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-600 mb-1">Contact Person</p>
-              <p className="text-gray-900">{selectedCustomer.contact_name}</p>
+              <p className="text-xs text-muted-foreground mb-1">Contact Person</p>
+              <p className="text-foreground">{selectedCustomer.contact_name}</p>
             </div>
 
             <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-gray-400" />
-              <a href={`mailto:${selectedCustomer.email}`} className="text-sm text-teal-600 hover:underline">
+              <Mail className="w-4 h-4 text-muted-foreground" />
+              <a href={`mailto:${selectedCustomer.email}`} className="text-sm text-omnia-gold hover:underline">
                 {selectedCustomer.email}
               </a>
             </div>
 
             <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-gray-400" />
-              <p className="text-sm text-gray-700">{selectedCustomer.phone}</p>
+              <Phone className="w-4 h-4 text-muted-foreground" />
+              <p className="text-sm text-foreground">{selectedCustomer.phone}</p>
             </div>
 
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-gray-400" />
-              <p className="text-sm text-gray-700">
+              <MapPin className="w-4 h-4 text-muted-foreground" />
+              <p className="text-sm text-foreground">
                 {selectedCustomer.city}, {selectedCustomer.country}
               </p>
             </div>
 
             <div className="pt-4 border-t">
-              <p className="text-xs text-gray-600 mb-2">Customer Type</p>
+              <p className="text-xs text-muted-foreground mb-2">Customer Type</p>
               <span className={`text-xs px-2 py-1 rounded-full font-medium ${getCustomerTypeColor(selectedCustomer.customer_type)}`}>
                 {selectedCustomer.customer_type.replace('_', ' ')}
               </span>
             </div>
 
             <div>
-              <p className="text-xs text-gray-600 mb-1">Annual Value</p>
-              <p className="font-semibold text-teal-700 text-lg">
+              <p className="text-xs text-muted-foreground mb-1">Annual Value</p>
+              <p className="font-semibold text-omnia-gold-dark text-lg">
                 ${(selectedCustomer.annual_value / 1000).toFixed(0)}K
               </p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-600 mb-1">Status</p>
-              <span className={`text-xs px-2 py-1 rounded-full font-medium ${selectedCustomer.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+              <p className="text-xs text-muted-foreground mb-1">Status</p>
+              <span className={`text-xs px-2 py-1 rounded-full font-medium ${selectedCustomer.is_active ? 'bg-green-100 text-green-700' : 'bg-muted text-foreground'}`}>
                 {selectedCustomer.is_active ? 'Active' : 'Inactive'}
               </span>
             </div>
 
             {selectedCustomer.last_booking_date && (
               <div>
-                <p className="text-xs text-gray-600 mb-1">Last Booking</p>
-                <p className="text-gray-700">{new Date(selectedCustomer.last_booking_date).toLocaleDateString()}</p>
+                <p className="text-xs text-muted-foreground mb-1">Last Booking</p>
+                <p className="text-foreground">{new Date(selectedCustomer.last_booking_date).toLocaleDateString()}</p>
               </div>
             )}
           </div>

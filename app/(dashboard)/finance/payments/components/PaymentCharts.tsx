@@ -9,7 +9,7 @@ import {
 import { Maximize2, Minimize2 } from 'lucide-react'
 import type { PaymentChartData, PaymentMethodReliability, CashFlowProjection } from '@/types/finance'
 
-const COLORS = ['#0d9488', '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ef4444', '#ec4899', '#06b6d4']
+const COLORS = ['#0d9488', '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ef4444', '#ec4899', '#E2CC7E']
 const STATUS_COLORS: Record<string, string> = {
   completed: '#0d9488',
   pending: '#f59e0b',
@@ -157,7 +157,7 @@ export default function PaymentCharts({ chartData, reliability, forecast, loadin
                       {rel && rel.failureRate > 0 && (
                         <span className={`text-[10px] px-1 py-0.5 rounded-full font-medium ${
                           rel.reliabilityScore === 'excellent' ? 'bg-emerald-500/10 text-emerald-600' :
-                          rel.reliabilityScore === 'good' ? 'bg-blue-500/10 text-blue-600' :
+                          rel.reliabilityScore === 'good' ? 'bg-omnia-gold/50/10 text-omnia-gold' :
                           rel.reliabilityScore === 'fair' ? 'bg-amber-500/10 text-amber-600' :
                           'bg-red-500/10 text-red-600'
                         }`}>
@@ -272,7 +272,7 @@ export default function PaymentCharts({ chartData, reliability, forecast, loadin
                   <div className="bg-card/95 backdrop-blur-sm border border-border/60 rounded-lg shadow-xl px-3 py-2">
                     <p className="text-xs font-semibold text-foreground mb-1">{label}</p>
                     <p className="text-xs text-muted-foreground">
-                      Expected: <span className="font-medium text-teal-600">{fmtCurrency(payload[0].value)}</span>
+                      Expected: <span className="font-medium text-omnia-gold">{fmtCurrency(payload[0].value)}</span>
                     </p>
                     {proj && (
                       <p className="text-xs text-muted-foreground">

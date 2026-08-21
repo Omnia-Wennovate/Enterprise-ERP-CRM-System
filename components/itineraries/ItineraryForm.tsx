@@ -128,7 +128,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
     'Asia/Tokyo', 'Asia/Singapore', 'Asia/Kolkata', 'Africa/Cairo', 'Pacific/Auckland'
   ]
 
-  const CURRENCIES = ['USD', 'EUR', 'GBP', 'AED', 'SAR', 'TRY', 'JPY', 'INR', 'EGP', 'THB', 'SGD', 'AUD', 'CHF']
+  const CURRENCIES = ['USD', 'EUR', 'GBP', 'AED', 'SAR', 'ETB', 'TRY', 'JPY', 'INR', 'EGP', 'THB', 'SGD', 'AUD', 'CHF']
 
   const isCreating = !itinerary
 
@@ -160,7 +160,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
             <select
               value={form.booking_id}
               onChange={e => handleBookingSelect(e.target.value)}
-              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-omnia-gold/60"
             >
               <option value="">— No Booking (Standalone) —</option>
               {bookings.map(b => (
@@ -182,7 +182,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               placeholder="e.g. Classic Dubai 5-Day Adventure"
-              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400"
+              className="w-full px-3 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-omnia-gold/60"
             />
           </div>
 
@@ -296,14 +296,14 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
                 onClick={() => setShowAIPanel(!showAIPanel)}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                   showAIPanel
-                    ? 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-700 border border-teal-200'
-                    : 'bg-gradient-to-r from-slate-50 to-slate-100 text-muted-foreground border border-border hover:from-teal-50 hover:to-emerald-50 hover:text-teal-700 hover:border-teal-200'
+                    ? 'bg-gradient-to-r from-omnia-gold/10 to-emerald-50 text-omnia-gold-dark border border-omnia-gold/20'
+                    : 'bg-gradient-to-r from-slate-50 to-slate-100 text-muted-foreground border border-border hover:from-omnia-gold/10 hover:to-emerald-50 hover:text-omnia-gold-dark hover:border-omnia-gold/20'
                 }`}
               >
                 <span className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
                   AI Itinerary Builder
-                  <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 rounded text-[10px] font-bold uppercase">
+                  <span className="px-1.5 py-0.5 bg-omnia-gold/15 text-omnia-gold-dark rounded text-[10px] font-bold uppercase">
                     AI
                   </span>
                 </span>
@@ -347,7 +347,7 @@ export function ItineraryForm({ itinerary, onSave, onClose, onCreatedWithAI }: I
             <button
               type="submit"
               disabled={saving || !form.title.trim()}
-              className="px-6 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl text-sm font-semibold hover:bg-omnia-gold-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {itinerary ? 'Update' : 'Create'} Itinerary

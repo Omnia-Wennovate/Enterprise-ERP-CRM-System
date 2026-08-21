@@ -35,7 +35,7 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-        <Globe className="w-4 h-4 text-teal-600" />
+        <Globe className="w-4 h-4 text-omnia-gold" />
         Travel Intelligence
       </h3>
 
@@ -66,7 +66,7 @@ export function TravelIntelligence({ itinerary }: TravelIntelligenceProps) {
                 if (i === 0 || !day.timezone || !itinerary.days?.[i-1]?.timezone) return null
                 if (day.timezone === itinerary.days[i-1].timezone) return null
                 return (
-                  <p key={day.id} className="text-xs text-blue-600 flex items-center gap-1">
+                  <p key={day.id} className="text-xs text-omnia-gold flex items-center gap-1">
                     <ArrowRightLeft className="w-3 h-3" />
                     Day {day.day_number}: Timezone changes to {day.timezone}
                   </p>

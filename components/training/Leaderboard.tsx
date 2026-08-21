@@ -107,7 +107,7 @@ export function Leaderboard() {
             </div>
             <h3 className="font-bold text-foreground text-center line-clamp-1 mt-6">{entries[1].employee_name}</h3>
             <p className="text-xs text-muted-foreground text-center line-clamp-1 mb-2">{entries[1].department}</p>
-            <div className="flex items-center gap-1.5 font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full">
+            <div className="flex items-center gap-1.5 font-bold text-omnia-gold bg-omnia-gold/10 px-3 py-1 rounded-full">
               <Clock className="w-3.5 h-3.5" /> {entries[1].learning_hours}h
             </div>
           </motion.div>
@@ -115,7 +115,7 @@ export function Leaderboard() {
           {/* 1st Place */}
           <motion.div 
             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="bg-gradient-to-t from-teal-50 to-white rounded-t-2xl border-t border-x border-teal-200/80 p-6 flex flex-col items-center relative shadow-[0_-15px_30px_-15px_rgba(13,148,136,0.3)] h-56 justify-end z-10"
+            className="bg-gradient-to-t from-omnia-gold/10 to-white rounded-t-2xl border-t border-x border-omnia-gold/20/80 p-6 flex flex-col items-center relative shadow-[0_-15px_30px_-15px_rgba(13,148,136,0.3)] h-56 justify-end z-10"
           >
             <div className="absolute -top-12 flex flex-col items-center">
               <Trophy className="w-8 h-8 text-amber-500 mb-2 drop-shadow-md" />
@@ -126,7 +126,7 @@ export function Leaderboard() {
             </div>
             <h3 className="font-bold text-foreground text-center line-clamp-1 mt-6">{entries[0].employee_name}</h3>
             <p className="text-xs text-muted-foreground text-center line-clamp-1 mb-2">{entries[0].department}</p>
-            <div className="flex items-center gap-1.5 font-bold text-teal-700 bg-teal-100 px-3 py-1 rounded-full">
+            <div className="flex items-center gap-1.5 font-bold text-omnia-gold-dark bg-omnia-gold/15 px-3 py-1 rounded-full">
               <Clock className="w-4 h-4" /> {entries[0].learning_hours}h
             </div>
           </motion.div>
@@ -144,7 +144,7 @@ export function Leaderboard() {
             </div>
             <h3 className="font-bold text-foreground text-center line-clamp-1 mt-6 text-sm">{entries[2].employee_name}</h3>
             <p className="text-[10px] text-muted-foreground text-center line-clamp-1 mb-2">{entries[2].department}</p>
-            <div className="flex items-center gap-1.5 font-bold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-full text-sm">
+            <div className="flex items-center gap-1.5 font-bold text-omnia-gold bg-omnia-gold/10 px-2.5 py-1 rounded-full text-sm">
               <Clock className="w-3 h-3" /> {entries[2].learning_hours}h
             </div>
           </motion.div>
@@ -192,7 +192,7 @@ export function Leaderboard() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs overflow-hidden">
+                      <div className="w-8 h-8 rounded-full bg-omnia-gold/15 text-omnia-gold-dark flex items-center justify-center font-bold text-xs overflow-hidden">
                         {entry.avatar_url ? <img src={entry.avatar_url} alt="" className="w-full h-full object-cover" /> : entry.employee_name.charAt(0)}
                       </div>
                       <div>

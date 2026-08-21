@@ -84,7 +84,7 @@ export default function ItinerariesPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-br from-teal-500 to-sky-600 rounded-xl">
+                <div className="p-2 bg-gradient-to-br from-omnia-gold/100 to-sky-600 rounded-xl">
                   <Map className="w-6 h-6 text-primary-foreground" />
                 </div>
                 Itineraries
@@ -99,7 +99,7 @@ export default function ItinerariesPage() {
                   onClick={() => setView('dashboard')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
                     view === 'dashboard'
-                      ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                      ? 'bg-omnia-gold text-primary-foreground shadow-sm'
                       : 'text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
@@ -109,7 +109,7 @@ export default function ItinerariesPage() {
                   onClick={() => setView('list')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
                     view === 'list'
-                      ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                      ? 'bg-omnia-gold text-primary-foreground shadow-sm'
                       : 'text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
@@ -119,7 +119,7 @@ export default function ItinerariesPage() {
 
               <button
                 onClick={() => setShowCreateForm(true)}
-                className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors font-semibold text-sm shadow-sm"
+                className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl hover:bg-omnia-gold-dark transition-colors font-semibold text-sm shadow-sm"
               >
                 <Plus className="w-4 h-4" /> New Itinerary
               </button>

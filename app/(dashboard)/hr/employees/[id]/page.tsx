@@ -88,7 +88,7 @@ export default function EmployeeDetailPage() {
                 onClick={() => setActiveTab(tab)}
                 className={`px-6 py-4 font-medium transition ${
                   activeTab === tab
-                    ? 'border-b-2 border-teal-600 text-teal-600'
+                    ? 'border-b-2 border-omnia-gold text-omnia-gold'
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -104,14 +104,14 @@ export default function EmployeeDetailPage() {
                   <h3 className="font-semibold text-foreground mb-4">Contact Information</h3>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="flex items-start gap-3">
-                      <Mail className="w-5 h-5 text-teal-600 mt-1" />
+                      <Mail className="w-5 h-5 text-omnia-gold mt-1" />
                       <div>
                         <p className="text-muted-foreground text-sm">Email</p>
                         <p className="text-foreground font-medium">{employee.email}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Phone className="w-5 h-5 text-teal-600 mt-1" />
+                      <Phone className="w-5 h-5 text-omnia-gold mt-1" />
                       <div>
                         <p className="text-muted-foreground text-sm">Phone</p>
                         <p className="text-foreground font-medium">{employee.phone}</p>
@@ -124,14 +124,14 @@ export default function EmployeeDetailPage() {
                   <h3 className="font-semibold text-foreground mb-4">Employment Details</h3>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="flex items-start gap-3">
-                      <Calendar className="w-5 h-5 text-teal-600 mt-1" />
+                      <Calendar className="w-5 h-5 text-omnia-gold mt-1" />
                       <div>
                         <p className="text-muted-foreground text-sm">Date Joined</p>
                         <p className="text-foreground font-medium">{new Date(employee.date_joined).toLocaleDateString()}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Briefcase className="w-5 h-5 text-teal-600 mt-1" />
+                      <Briefcase className="w-5 h-5 text-omnia-gold mt-1" />
                       <div>
                         <p className="text-muted-foreground text-sm">Position</p>
                         <p className="text-foreground font-medium">{employee.position}</p>
@@ -153,13 +153,13 @@ export default function EmployeeDetailPage() {
                     <p className="text-muted-foreground text-sm mb-1">Allowances</p>
                     <p className="text-2xl font-bold text-foreground">${employee.allowances}</p>
                   </div>
-                  <div className="bg-teal-50 rounded-lg p-4">
+                  <div className="bg-omnia-gold/10 rounded-lg p-4">
                     <p className="text-muted-foreground text-sm mb-1">Total</p>
-                    <p className="text-2xl font-bold text-teal-600">${employee.basic_salary + employee.allowances}</p>
+                    <p className="text-2xl font-bold text-omnia-gold">${employee.basic_salary + employee.allowances}</p>
                   </div>
                 </div>
                 <div className="pt-4">
-                  <button className="px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700">
+                  <button className="px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark">
                     View Payslips
                   </button>
                 </div>
@@ -170,23 +170,23 @@ export default function EmployeeDetailPage() {
               <div className="space-y-4">
                 <div className="border rounded-lg p-4 flex items-start justify-between hover:bg-muted/50">
                   <div className="flex items-start gap-3">
-                    <FileText className="w-5 h-5 text-teal-600 mt-1" />
+                    <FileText className="w-5 h-5 text-omnia-gold mt-1" />
                     <div>
                       <p className="font-medium text-foreground">Employment Contract</p>
                       <p className="text-muted-foreground text-sm">Uploaded 6 months ago</p>
                     </div>
                   </div>
-                  <button className="text-teal-600 hover:underline">Download</button>
+                  <button className="text-omnia-gold hover:underline">Download</button>
                 </div>
                 <div className="border rounded-lg p-4 flex items-start justify-between hover:bg-muted/50">
                   <div className="flex items-start gap-3">
-                    <Award className="w-5 h-5 text-teal-600 mt-1" />
+                    <Award className="w-5 h-5 text-omnia-gold mt-1" />
                     <div>
                       <p className="font-medium text-foreground">Certification</p>
                       <p className="text-muted-foreground text-sm">Uploaded 3 months ago</p>
                     </div>
                   </div>
-                  <button className="text-teal-600 hover:underline">Download</button>
+                  <button className="text-omnia-gold hover:underline">Download</button>
                 </div>
               </div>
             )}

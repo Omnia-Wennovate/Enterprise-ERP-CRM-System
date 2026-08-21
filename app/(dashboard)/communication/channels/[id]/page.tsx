@@ -38,7 +38,7 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
       {/* Channel Header */}
       <div className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center gap-3">
-          <Hash className="w-6 h-6 text-teal-600" />
+          <Hash className="w-6 h-6 text-omnia-gold" />
           <div>
             <h2 className="font-semibold text-foreground">general</h2>
             <p className="text-sm text-muted-foreground">24 members</p>
@@ -50,7 +50,7 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
         {messages.map((msg) => (
           <div key={msg.id} className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 font-semibold text-teal-700 text-sm">
+            <div className="w-10 h-10 rounded-full bg-omnia-gold/15 flex items-center justify-center flex-shrink-0 font-semibold text-omnia-gold-dark text-sm">
               {msg.avatar}
             </div>
             <div className="flex-1">
@@ -92,7 +92,7 @@ export default function ChannelDetailPage({ params }: { params: { id: string } }
           <button
             onClick={handleSendMessage}
             disabled={!messageInput.trim()}
-            className="p-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
+            className="p-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors disabled:opacity-50"
           >
             <Send className="w-5 h-5" />
           </button>

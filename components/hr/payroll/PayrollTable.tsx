@@ -19,7 +19,7 @@ type SortKey = 'name' | 'department' | 'basic_salary' | 'allowances' | 'bonuses'
 
 const STATUS_CONFIG = {
   draft: { label: 'Draft', color: 'bg-slate-500/20 text-slate-400 border-slate-500/30', icon: FileText },
-  approved: { label: 'Approved', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', icon: CheckCircle2 },
+  approved: { label: 'Approved', color: 'bg-omnia-gold/50/20 text-blue-400 border-blue-500/30', icon: CheckCircle2 },
   paid: { label: 'Paid', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30', icon: Check },
 }
 
@@ -240,7 +240,7 @@ export function PayrollTable({ records, onRefresh, onSelectRecord }: Props) {
                           <button
                             onClick={() => handleUpdateStatus(rec, 'approved')}
                             disabled={updating === rec.employee_id}
-                            className="px-2 py-1 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-lg hover:bg-blue-500/20 transition-colors disabled:opacity-50"
+                            className="px-2 py-1 text-xs bg-omnia-gold/50/10 text-blue-400 border border-blue-500/20 rounded-lg hover:bg-omnia-gold/50/20 transition-colors disabled:opacity-50"
                           >
                             Approve
                           </button>

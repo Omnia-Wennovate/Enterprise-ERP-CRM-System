@@ -181,8 +181,8 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
         >
           <div className="px-6 py-4 border-b border-border/30 flex items-center justify-between bg-muted/20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-teal-600" />
+              <div className="w-10 h-10 rounded-xl bg-omnia-gold/100/10 flex items-center justify-center">
+                <DollarSign className="w-5 h-5 text-omnia-gold" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-foreground">Record Payment</h2>
@@ -230,7 +230,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                   required
                   value={customerId}
                   onChange={(e) => setCustomerId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm"
+                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm"
                 >
                   <option value="">Select a customer...</option>
                   {customers.map(c => (
@@ -250,7 +250,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                   disabled={!customerId || invoices.length === 0}
                   value={invoiceId}
                   onChange={(e) => setInvoiceId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm disabled:bg-muted/50 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm disabled:bg-muted/50 disabled:cursor-not-allowed"
                 >
                   <option value="">
                     {!customerId ? 'Select customer first' : invoices.length === 0 ? 'No outstanding invoices' : 'Select an invoice...'}
@@ -276,7 +276,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                       step="0.01"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm"
                       placeholder="0.00"
                     />
                   </div>
@@ -292,7 +292,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                       required
                       value={paymentDate}
                       onChange={(e) => setPaymentDate(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm"
                     />
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                       required
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
-                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm"
                     >
                       {PAYMENT_METHODS.map(m => (
                         <option key={m.value} value={m.value}>{m.label}</option>
@@ -326,7 +326,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                       type="text"
                       value={referenceNumber}
                       onChange={(e) => setReferenceNumber(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm"
                       placeholder="Txn ID or Cheque No."
                     />
                   </div>
@@ -340,7 +340,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={2}
-                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-teal-500/30 outline-none text-sm resize-none"
+                  className="w-full px-3 py-2 rounded-lg bg-background border border-border focus:ring-2 focus:ring-omnia-gold-500/30 outline-none text-sm resize-none"
                   placeholder="Internal notes about this payment..."
                 />
               </div>
@@ -357,7 +357,7 @@ export default function RecordPaymentDialog({ open, onClose, onSuccess }: Record
                 <button
                   type="submit"
                   disabled={loading || !!duplicateWarning || !invoiceId || !amount}
-                  className="flex items-center gap-2 px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 rounded-xl transition-colors shadow-lg shadow-teal-500/25 disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-omnia-gold/100 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 rounded-xl transition-colors shadow-lg shadow-teal-500/25 disabled:opacity-50"
                 >
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   Record Payment

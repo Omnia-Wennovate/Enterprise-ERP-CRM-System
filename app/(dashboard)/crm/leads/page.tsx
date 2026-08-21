@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { LeadsKanban, type LeadsKanbanRef } from '@/components/crm/LeadsKanban'
 import { NewLeadModal } from '@/components/crm/NewLeadModal'
 import { LeadToast, useToast } from '@/components/crm/LeadToast'
+import { PageHeader } from '@/components/ui/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
@@ -21,20 +22,21 @@ export default function LeadsPage() {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-card px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Sales Leads</h1>
-            <p className="text-sm text-gray-600">Manage and track your sales pipeline</p>
-          </div>
-          <Button
-            className="bg-teal-600 hover:bg-teal-700"
-            onClick={() => setIsNewLeadOpen(true)}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            New Lead
-          </Button>
-        </div>
+      <div className="border-b border-border bg-card px-6 py-4">
+        <PageHeader
+          kicker="CRM"
+          title="Sales Leads"
+          subtitle="Manage and track your sales pipeline"
+          actions={
+            <Button
+              variant="gold"
+              onClick={() => setIsNewLeadOpen(true)}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              New Lead
+            </Button>
+          }
+        />
       </div>
 
       {/* Content */}

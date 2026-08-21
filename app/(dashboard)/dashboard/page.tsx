@@ -64,7 +64,7 @@ export default function DashboardPage() {
             label: 'My Bookings',
             value: '8',
             trend: 5,
-            accentColor: '#0A8FA8',
+            accentColor: '#C8A951',
           },
           {
             icon: 'Users',
@@ -88,7 +88,7 @@ export default function DashboardPage() {
             label: 'Active Bookings',
             value: '24',
             trend: 4,
-            accentColor: '#0A8FA8',
+            accentColor: '#C8A951',
           },
           {
             icon: 'AlertCircle',
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             label: 'Profit',
             value: '$16,800',
             trend: 12,
-            accentColor: '#0A8FA8',
+            accentColor: '#C8A951',
           },
           {
             icon: 'AlertCircle',
@@ -150,7 +150,7 @@ export default function DashboardPage() {
             label: 'Total Staff',
             value: '8',
             trend: 0,
-            accentColor: '#0A8FA8',
+            accentColor: '#C8A951',
           },
           {
             icon: 'Calendar',
@@ -190,7 +190,7 @@ export default function DashboardPage() {
             label: 'Bookings',
             value: '124',
             trend: 12,
-            accentColor: '#0A8FA8',
+            accentColor: '#C8A951',
           },
           {
             icon: 'Users',
@@ -261,7 +261,7 @@ export default function DashboardPage() {
                       {/* SVG-like area chart simulation */}
                       <svg className="w-full h-full" style={{position: 'absolute', inset: 0}} preserveAspectRatio="none" viewBox="0 0 100 100">
                         {/* Blue line (Revenue) */}
-                        <polyline points="0,60 8,50 16,55 24,35 32,40 40,25 48,30 56,20 64,25 72,15 80,20 88,10 96,15" fill="none" stroke="#0A8FA8" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                        <polyline points="0,60 8,50 16,55 24,35 32,40 40,25 48,30 56,20 64,25 72,15 80,20 88,10 96,15" fill="none" stroke="#C8A951" strokeWidth="2" vectorEffect="non-scaling-stroke" />
                         {/* Blue fill under line */}
                         <polygon points="0,60 8,50 16,55 24,35 32,40 40,25 48,30 56,20 64,25 72,15 80,20 88,10 96,15 96,100 0,100" fill="url(#blueGradient)" opacity="0.1" />
 
@@ -273,8 +273,8 @@ export default function DashboardPage() {
                         {/* Gradient definitions */}
                         <defs>
                           <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style={{stopColor: '#0A8FA8', stopOpacity: 0.3}} />
-                            <stop offset="100%" style={{stopColor: '#0A8FA8', stopOpacity: 0}} />
+                            <stop offset="0%" style={{stopColor: '#C8A951', stopOpacity: 0.3}} />
+                            <stop offset="100%" style={{stopColor: '#C8A951', stopOpacity: 0}} />
                           </linearGradient>
                           <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%" style={{stopColor: '#EF4444', stopOpacity: 0.2}} />
@@ -340,7 +340,7 @@ export default function DashboardPage() {
                       {blue: 75, pink: 15},
                     ].map((bar, i) => (
                       <div key={i} className="flex flex-col gap-0 flex-1">
-                        <div className="w-full bg-gradient-to-b from-[#0A8FA8] to-[#0A8FA8] rounded-t" style={{height: `${bar.blue * 1.2}px`}}></div>
+                        <div className="w-full bg-gradient-to-b from-[#C8A951] to-[#C8A951] rounded-t" style={{height: `${bar.blue * 1.2}px`}}></div>
                         <div className="w-full bg-gradient-to-b from-[#F5A3CE] to-[#F5A3CE] rounded-b" style={{height: `${bar.pink * 1.2}px`}}></div>
                       </div>
                     ))}
@@ -359,8 +359,8 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-foreground mb-4">Data Performance Company</h3>
                   <div className="flex justify-center mb-4">
                     <svg width="140" height="140" viewBox="0 0 140 140" className="mx-auto">
-                      <circle cx="70" cy="70" r="60" fill="none" stroke="#F0F7FA" strokeWidth="20" />
-                      <circle cx="70" cy="70" r="60" fill="none" stroke="#0A8FA8" strokeWidth="20" strokeDasharray="94.2 282.6" strokeDashoffset="0" transform="rotate(-90 70 70)" />
+                      <circle cx="70" cy="70" r="60" fill="none" stroke="#FAFAF7" strokeWidth="20" />
+                      <circle cx="70" cy="70" r="60" fill="none" stroke="#C8A951" strokeWidth="20" strokeDasharray="94.2 282.6" strokeDashoffset="0" transform="rotate(-90 70 70)" />
                       <circle cx="70" cy="70" r="40" fill="white" />
                     </svg>
                   </div>
@@ -385,8 +385,8 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-foreground mb-6">Ads Promotion</h3>
                   <div className="flex justify-center">
                     <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
-                      <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F7FA" strokeWidth="15" />
-                      <circle cx="60" cy="60" r="50" fill="none" stroke="#0A8FA8" strokeWidth="15" strokeDasharray="78.5 314" strokeDashoffset="0" transform="rotate(-90 60 60)" />
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#FAFAF7" strokeWidth="15" />
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#C8A951" strokeWidth="15" strokeDasharray="78.5 314" strokeDashoffset="0" transform="rotate(-90 60 60)" />
                       <text x="60" y="65" textAnchor="middle" className="text-xl font-bold" fill="#0B1F33">5</text>
                     </svg>
                   </div>
@@ -398,7 +398,7 @@ export default function DashboardPage() {
                   <h3 className="font-semibold text-foreground mb-6">Seo Performance</h3>
                   <div className="flex justify-center">
                     <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
-                      <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F7FA" strokeWidth="15" />
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#FAFAF7" strokeWidth="15" />
                       <circle cx="60" cy="60" r="50" fill="none" stroke="#EF4444" strokeWidth="15" strokeDasharray="235.5 314" strokeDashoffset="0" transform="rotate(-90 60 60)" />
                       <text x="60" y="70" textAnchor="middle" className="text-3xl font-bold" fill="#0B1F33">90%</text>
                     </svg>
@@ -475,7 +475,7 @@ export default function DashboardPage() {
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-3">
                               <div className="w-24 h-2 bg-background rounded-full overflow-hidden">
-                                <div className="h-full bg-gradient-to-r from-[#0A8FA8] to-[#0A8FA8] rounded-full" style={{width: `${row.progress}%`}}></div>
+                                <div className="h-full bg-gradient-to-r from-[#C8A951] to-[#C8A951] rounded-full" style={{width: `${row.progress}%`}}></div>
                               </div>
                               <span className="text-xs font-medium text-muted-foreground">{row.progress}%</span>
                             </div>
@@ -545,7 +545,7 @@ export default function DashboardPage() {
                   <div className="absolute inset-0 flex items-end justify-between px-2">
                     {[35, 42, 38, 48, 45, 52, 48, 55, 50, 58, 55, 60].map((h, i) => (
                       <div key={i} className="flex-1 mx-1 flex flex-col items-center gap-1">
-                        <div className="w-full bg-gradient-to-t from-[#0A8FA8] to-[#0A8FA8] rounded" style={{height: `${h * 2}px`}}></div>
+                        <div className="w-full bg-gradient-to-t from-[#C8A951] to-[#C8A951] rounded" style={{height: `${h * 2}px`}}></div>
                       </div>
                     ))}
                   </div>
@@ -574,7 +574,7 @@ export default function DashboardPage() {
               <div className="bg-card rounded-lg border border-border shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-foreground">Recent Activity</h3>
-                  <button className="text-xs text-primary hover:text-[#088096] font-medium">View all</button>
+                  <button className="text-xs text-primary hover:text-[#A88B3A] font-medium">View all</button>
                 </div>
                 <div className="space-y-4">
                   <div className="flex gap-3 pb-4 border-b border-border">
@@ -630,7 +630,7 @@ export default function DashboardPage() {
               <div className="lg:col-span-1 bg-card rounded-lg border border-border shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-foreground">Upcoming Departures</h3>
-                  <button className="text-xs text-primary hover:text-[#088096] font-medium">View all</button>
+                  <button className="text-xs text-primary hover:text-[#A88B3A] font-medium">View all</button>
                 </div>
                 <div className="space-y-3">
                   <div className="border border-border rounded-lg p-3 hover:border-primary transition-colors">
@@ -678,11 +678,11 @@ export default function DashboardPage() {
               {/* KPI Cards */}
               <div className="lg:col-span-2 grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
-                  { icon: '👤', label: 'New Leads', value: '7', trend: 16, color: 'bg-blue-50' },
+                  { icon: '👤', label: 'New Leads', value: '7', trend: 16, color: 'bg-omnia-gold/5' },
                   { icon: '👥', label: 'New Customers', value: '5', trend: 25, color: 'bg-purple-50' },
                   { icon: '🎯', label: 'Conversion Rate', value: '28.6%', trend: 3, color: 'bg-yellow-50' },
                   { icon: '💰', label: 'Avg. Booking Value', value: '$2,450', trend: 6, color: 'bg-green-50' },
-                  { icon: '💳', label: 'Payments Received', value: '$32,100', trend: 9, color: 'bg-blue-50' },
+                  { icon: '💳', label: 'Payments Received', value: '$32,100', trend: 9, color: 'bg-omnia-gold/5' },
                   { icon: '✓', label: 'Tasks Pending', value: '12', trend: -3, color: 'bg-red-50', trendColor: 'text-red-600' },
                 ].map((card, i) => (
                   <div key={i} className={`${card.color} rounded-lg p-4 border border-opacity-0 hover:border hover:border-border`}>
@@ -721,7 +721,7 @@ export default function DashboardPage() {
                       </div>
                     ))}
                   </div>
-                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#088096] font-medium transition-colors">
+                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#A88B3A] font-medium transition-colors">
                     View all activity →
                   </button>
                 </div>
@@ -742,7 +742,7 @@ export default function DashboardPage() {
                       </div>
                     ))}
                   </div>
-                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#088096] font-medium transition-colors">
+                  <button className="w-full mt-4 py-2 text-sm text-primary hover:text-[#A88B3A] font-medium transition-colors">
                     View all bookings →
                   </button>
                 </div>

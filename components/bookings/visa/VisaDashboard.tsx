@@ -103,9 +103,9 @@ export function VisaDashboard({ kpis, chartData }: VisaDashboardProps) {
         <div className="bg-card border border-border rounded-lg p-4 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs text-muted-foreground font-medium">Submitted Today</p>
-            <p className="text-xl font-bold text-teal-600">{kpis.submittedToday}</p>
+            <p className="text-xl font-bold text-omnia-gold">{kpis.submittedToday}</p>
           </div>
-          <Send className="w-8 h-8 text-teal-100" />
+          <Send className="w-8 h-8 text-white/70" />
         </div>
         <div className="bg-card border border-border rounded-lg p-4 shadow-sm flex items-center justify-between">
           <div>

@@ -10,13 +10,13 @@ interface ActivityFeedProps {
 }
 
 const TYPE_CONFIG: Record<string, { icon: typeof FileText; color: string; bg: string }> = {
-  created:  { icon: FileText,     color: 'text-blue-600',    bg: 'bg-blue-100 dark:bg-blue-900/30' },
+  created:  { icon: FileText,     color: 'text-omnia-gold',    bg: 'bg-blue-100 dark:bg-blue-900/30' },
   sent:     { icon: Send,         color: 'text-indigo-600',  bg: 'bg-indigo-100 dark:bg-indigo-900/30' },
   paid:     { icon: CheckCircle,  color: 'text-emerald-600', bg: 'bg-emerald-100 dark:bg-emerald-900/30' },
   payment:  { icon: DollarSign,   color: 'text-emerald-600', bg: 'bg-emerald-100 dark:bg-emerald-900/30' },
   overdue:  { icon: AlertTriangle,color: 'text-red-600',     bg: 'bg-red-100 dark:bg-red-900/30' },
   refund:   { icon: RefreshCw,    color: 'text-amber-600',   bg: 'bg-amber-100 dark:bg-amber-900/30' },
-  cancelled:{ icon: XCircle,      color: 'text-gray-500',    bg: 'bg-gray-100 dark:bg-gray-800' },
+  cancelled:{ icon: XCircle,      color: 'text-muted-foreground',    bg: 'bg-muted dark:bg-gray-800' },
   default:  { icon: Bell,         color: 'text-slate-600',   bg: 'bg-slate-100 dark:bg-slate-800' },
 }
 

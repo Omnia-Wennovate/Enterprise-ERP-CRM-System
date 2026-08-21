@@ -74,11 +74,11 @@ export default function CustomerLeaderboard({ customers, loading, onCustomerClic
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/30 flex items-center justify-center flex-shrink-0 text-xs font-bold text-blue-600">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/30 flex items-center justify-center flex-shrink-0 text-xs font-bold text-omnia-gold">
                           {c.customerName[0]?.toUpperCase() || '?'}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-foreground group-hover:text-blue-600 transition-colors">{c.customerName || c.customerId}</div>
+                          <div className="text-sm font-medium text-foreground group-hover:text-omnia-gold transition-colors">{c.customerName || c.customerId}</div>
                           <div className="text-xs text-muted-foreground">{c.invoiceCount} invoices</div>
                         </div>
                       </div>
@@ -90,7 +90,7 @@ export default function CustomerLeaderboard({ customers, loading, onCustomerClic
                           initial={{ width: 0 }}
                           animate={{ width: `${revPct}%` }}
                           transition={{ duration: 0.6, delay: i * 0.04 + 0.2 }}
-                          className="h-full bg-blue-500 rounded-full"
+                          className="h-full bg-omnia-gold/50 rounded-full"
                         />
                       </div>
                     </td>

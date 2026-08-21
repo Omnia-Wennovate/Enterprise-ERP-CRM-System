@@ -13,7 +13,7 @@ export function PerformanceCorrelation({ correlationData }: { correlationData: a
         <div className="bg-card border border-border p-3 rounded-lg shadow-lg">
           <p className="font-semibold text-foreground mb-1">{data.name}</p>
           <p className="text-sm text-emerald-600 dark:text-emerald-400">Revenue: $${data.revenue.toLocaleString()}</p>
-          <p className="text-sm text-blue-600 dark:text-blue-400">Review Score: {data.reviewScore}%</p>
+          <p className="text-sm text-omnia-gold dark:text-blue-400">Review Score: {data.reviewScore}%</p>
         </div>
       )
     }

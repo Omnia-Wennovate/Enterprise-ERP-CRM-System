@@ -292,8 +292,8 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
     return (
       <div className="flex items-center justify-center h-64">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
-          <p className="text-sm text-gray-500">Loading pipeline...</p>
+          <Loader2 className="w-8 h-8 text-omnia-gold animate-spin" />
+          <p className="text-sm text-muted-foreground">Loading pipeline...</p>
         </div>
       </div>
     )
@@ -315,11 +315,11 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                     <h3 className={`font-semibold text-sm ${config.text}`}>
                       {PIPELINE_STAGE_LABELS[stage]}
                     </h3>
-                    <span className="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">
+                    <span className="bg-gray-200 text-foreground text-xs px-2 py-0.5 rounded-full">
                       {stageleads.length}
                     </span>
                     {stageValues[stage] > 0 && (
-                      <span className="text-xs text-gray-400 font-medium">
+                      <span className="text-xs text-muted-foreground font-medium">
                         ${stageValues[stage].toLocaleString()}
                       </span>
                     )}
@@ -332,7 +332,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                 {/* Drop zone */}
                 <div
                   className={`flex-1 space-y-3 rounded-lg p-3 min-h-96 transition-colors ${
-                    draggedLeadId ? 'bg-teal-50/60 border-2 border-dashed border-teal-200' : 'bg-gray-50'
+                    draggedLeadId ? 'bg-omnia-gold/10/60 border-2 border-dashed border-omnia-gold/20' : 'bg-muted'
                   }`}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, stage)}
@@ -344,42 +344,42 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                       onDragStart={(e) => handleDragStart(e, lead)}
                       onDragEnd={handleDragEnd}
                       onClick={() => setSelectedLeadId(lead.id)}
-                      className={`bg-card p-3 rounded-lg border hover:border-teal-300 hover:shadow-md cursor-pointer transition-all select-none ${
-                        draggedLeadId === lead.id ? 'opacity-40 border-teal-400 shadow-lg scale-95' : 'border-gray-200'
+                      className={`bg-card p-3 rounded-lg border hover:border-omnia-gold/40 hover:shadow-md cursor-pointer transition-all select-none ${
+                        draggedLeadId === lead.id ? 'opacity-40 border-omnia-gold/60 shadow-lg scale-95' : 'border-border'
                       }`}
                     >
                       <div className="flex items-start gap-2 mb-2">
-                        <GripVertical className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                        <GripVertical className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-sm text-gray-900 truncate">
+                          <h4 className="font-semibold text-sm text-foreground truncate">
                             {lead.lead_name}
                           </h4>
-                          <p className="text-xs text-gray-600 truncate">
+                          <p className="text-xs text-muted-foreground truncate">
                             {lead.company || lead.contact_person || lead.email}
                           </p>
                         </div>
                         <button
                           onClick={(e) => openMenu(e, lead)}
-                          className="p-1 rounded-md hover:bg-gray-100 transition-colors flex-shrink-0"
+                          className="p-1 rounded-md hover:bg-muted transition-colors flex-shrink-0"
                         >
-                          <MoreVertical className="w-4 h-4 text-gray-400" />
+                          <MoreVertical className="w-4 h-4 text-muted-foreground" />
                         </button>
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <DollarSign className="w-3 h-3" /> Value:
                           </span>
-                          <span className="font-semibold text-xs text-teal-700">
+                          <span className="font-semibold text-xs text-omnia-gold-dark">
                             {lead.currency} {Number(lead.estimated_value).toLocaleString()}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <Calendar className="w-3 h-3" /> Close Date:
                           </span>
-                          <span className="text-xs text-gray-700">
+                          <span className="text-xs text-foreground">
                             {new Date(lead.expected_close_date).toLocaleDateString()}
                           </span>
                         </div>
@@ -395,12 +395,12 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                         </div>
                         {lead.assigned_agent && (
                           <div className="flex items-center gap-1.5 pt-1 border-t border-gray-100">
-                            <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center">
-                              <span className="text-[10px] font-bold text-teal-700">
+                            <div className="w-5 h-5 rounded-full bg-omnia-gold/15 flex items-center justify-center">
+                              <span className="text-[10px] font-bold text-omnia-gold-dark">
                                 {lead.assigned_agent.full_name?.charAt(0) || '?'}
                               </span>
                             </div>
-                            <span className="text-xs text-gray-500 truncate">
+                            <span className="text-xs text-muted-foreground truncate">
                               {lead.assigned_agent.full_name}
                             </span>
                           </div>
@@ -410,7 +410,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                   ))}
 
                   {stageleads.length === 0 && (
-                    <div className="flex items-center justify-center h-32 text-gray-400">
+                    <div className="flex items-center justify-center h-32 text-muted-foreground">
                       <p className="text-sm">No leads</p>
                     </div>
                   )}
@@ -425,23 +425,23 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
       {contextMenu && (
         <div
           ref={menuRef}
-          className="fixed z-[150] bg-card rounded-xl shadow-2xl border border-gray-200 py-1.5 w-52 overflow-hidden"
+          className="fixed z-[150] bg-card rounded-xl shadow-2xl border border-border py-1.5 w-52 overflow-hidden"
           style={{ left: Math.min(contextMenu.x, window.innerWidth - 220), top: Math.min(contextMenu.y, window.innerHeight - 400) }}
         >
           <div className="px-3 py-2 border-b border-gray-100 mb-1">
-            <p className="text-xs font-semibold text-gray-700 truncate">{contextMenu.lead.lead_name}</p>
+            <p className="text-xs font-semibold text-foreground truncate">{contextMenu.lead.lead_name}</p>
           </div>
           {MENU_ITEMS.map((item) => {
             const Icon = item.icon
             return (
               <div key={item.action}>
-                {item.divider && <div className="h-px bg-gray-100 my-1" />}
+                {item.divider && <div className="h-px bg-muted my-1" />}
                 <button
                   onClick={() => handleMenuAction(item.action, contextMenu.lead)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm transition-colors text-left ${
                     item.danger
                       ? 'text-red-600 hover:bg-red-50'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-foreground hover:bg-muted'
                   }`}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />

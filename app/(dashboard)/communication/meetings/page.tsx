@@ -68,7 +68,7 @@ export default function MeetingsPage() {
             <h1 className="text-3xl font-bold text-foreground">Meetings</h1>
             <p className="text-muted-foreground mt-1">Schedule and manage team meetings</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             Schedule Meeting
           </button>
@@ -76,7 +76,7 @@ export default function MeetingsPage() {
 
         {/* Tabs */}
         <div className="flex gap-4 mb-6 border-b border-border">
-          <button className="px-4 py-3 border-b-2 border-teal-600 text-teal-600 font-medium">
+          <button className="px-4 py-3 border-b-2 border-omnia-gold text-omnia-gold font-medium">
             Upcoming
           </button>
           <button className="px-4 py-3 text-muted-foreground font-medium hover:text-foreground">
@@ -125,7 +125,7 @@ export default function MeetingsPage() {
               </div>
 
               <div className="mt-4 flex gap-2">
-                <button className="flex-1 px-3 py-2 bg-teal-600 text-primary-foreground rounded hover:bg-teal-700 transition-colors font-medium text-sm">
+                <button className="flex-1 px-3 py-2 bg-omnia-gold text-primary-foreground rounded hover:bg-omnia-gold-dark transition-colors font-medium text-sm">
                   Join
                 </button>
                 <button className="flex-1 px-3 py-2 border border-border text-slate-700 rounded hover:bg-muted/50 transition-colors font-medium text-sm">

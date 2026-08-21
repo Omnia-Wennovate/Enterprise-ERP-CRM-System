@@ -56,7 +56,7 @@ export default function CommunicationSearchPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search conversations, channels, meetings..."
-            className="w-full pl-12 pr-4 py-3 bg-card border-2 border-border rounded-lg focus:outline-none focus:border-teal-500 text-lg"
+            className="w-full pl-12 pr-4 py-3 bg-card border-2 border-border rounded-lg focus:outline-none focus:border-omnia-gold text-lg"
             autoFocus
           />
         </div>
@@ -73,8 +73,8 @@ export default function CommunicationSearchPage() {
                     key={result.id}
                     className="bg-card rounded-lg shadow p-4 hover:shadow-lg transition-shadow cursor-pointer flex items-start gap-4"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-teal-600" />
+                    <div className="w-10 h-10 rounded-lg bg-omnia-gold/15 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-5 h-5 text-omnia-gold" />
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-foreground">{result.title}</p>

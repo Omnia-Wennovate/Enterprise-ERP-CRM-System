@@ -25,7 +25,7 @@ export function PayrollHistory({ history, onSelectPeriod, currentMonth, currentY
     <div className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
       <div className="p-5 border-b border-border flex items-center justify-between">
         <h3 className="font-bold text-foreground flex items-center gap-2">
-          <span className="w-1 h-5 bg-teal-500 rounded-full" />
+          <span className="w-1 h-5 bg-omnia-gold/100 rounded-full" />
           Payroll History
         </h3>
         <History className="w-4 h-4 text-muted-foreground" />
@@ -36,7 +36,7 @@ export function PayrollHistory({ history, onSelectPeriod, currentMonth, currentY
           const isCurrent = record.month === currentMonth && record.year === currentYear
           const statusColors = {
             paid: 'text-emerald-500 bg-emerald-500/10',
-            approved: 'text-blue-500 bg-blue-500/10',
+            approved: 'text-blue-500 bg-omnia-gold/50/10',
             draft: 'text-slate-500 bg-slate-500/10',
           }[record.status] || 'text-slate-500 bg-slate-500/10'
 

@@ -9,7 +9,7 @@ import { TrendingUp, TrendingDown, DollarSign, FileText, Clock, CheckCircle, XCi
 import { ExpenseKPICard } from '@/components/finance/expenses/ExpenseKPICard'
 import type { ExpenseKPIs, ExpenseChartData } from '@/types/finance'
 
-const CHART_COLORS = ['#0d9488','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#10b981','#f97316','#06b6d4','#84cc16','#ec4899','#6366f1','#14b8a6']
+const CHART_COLORS = ['#0d9488','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#10b981','#f97316','#E2CC7E','#84cc16','#ec4899','#6366f1','#14b8a6']
 
 const fmt = (n: number, currency = 'USD') =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency, maximumFractionDigits: 0 }).format(n)
@@ -99,7 +99,7 @@ export function ExpenseDashboard({ kpis, chartData, onFilterChange }: ExpenseDas
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Trend */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><BarChart2 size={16} className="text-teal-600"/>Monthly Trend</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><BarChart2 size={16} className="text-omnia-gold"/>Monthly Trend</h3>
           <ResponsiveContainer width="100%" height={220}>
             <AreaChart data={chartData.monthly}>
               <defs>
@@ -119,7 +119,7 @@ export function ExpenseDashboard({ kpis, chartData, onFilterChange }: ExpenseDas
 
         {/* By Category */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><PieChartIcon size={16} className="text-blue-600"/>By Category</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><PieChartIcon size={16} className="text-omnia-gold"/>By Category</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={chartData.by_category} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={80}
@@ -182,7 +182,7 @@ export function ExpenseDashboard({ kpis, chartData, onFilterChange }: ExpenseDas
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* By Vendor Top 10 */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><BarChart2 size={16} className="text-teal-600"/>Top 10 Vendors</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><BarChart2 size={16} className="text-omnia-gold"/>Top 10 Vendors</h3>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={chartData.by_vendor.slice(0,10)} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)"/>
@@ -196,7 +196,7 @@ export function ExpenseDashboard({ kpis, chartData, onFilterChange }: ExpenseDas
 
         {/* By Payment Method */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><CreditCard size={16} className="text-blue-600"/>By Payment Method</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2"><CreditCard size={16} className="text-omnia-gold"/>By Payment Method</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={chartData.by_payment_method} dataKey="amount" nameKey="method" cx="50%" cy="50%" outerRadius={80}>

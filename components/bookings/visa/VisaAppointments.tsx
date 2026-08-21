@@ -79,7 +79,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
   }
 
   const statusColors: Record<string, { bg: string; text: string }> = {
-    scheduled: { bg: 'bg-blue-50', text: 'text-blue-700' },
+    scheduled: { bg: 'bg-omnia-gold/5', text: 'text-blue-700' },
     completed: { bg: 'bg-emerald-50', text: 'text-emerald-700' },
     cancelled: { bg: 'bg-muted', text: 'text-muted-foreground' },
     rescheduled: { bg: 'bg-amber-50', text: 'text-amber-700' },
@@ -93,7 +93,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
         <h4 className="text-sm font-bold text-foreground">Appointments</h4>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors"
         >
           <Plus className="w-3.5 h-3.5" /> Schedule
         </button>
@@ -141,7 +141,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
           </div>
           <div className="flex justify-end gap-2">
             <button onClick={() => setShowForm(false)} className="px-3 py-1.5 text-xs border border-border rounded-lg hover:bg-muted">Cancel</button>
-            <button onClick={handleCreate} disabled={saving || !formData.scheduled_datetime} className="px-3 py-1.5 text-xs bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
+            <button onClick={handleCreate} disabled={saving || !formData.scheduled_datetime} className="px-3 py-1.5 text-xs bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark disabled:opacity-50 flex items-center gap-1">
               {saving && <Loader2 className="w-3 h-3 animate-spin" />} Save
             </button>
           </div>
@@ -198,7 +198,7 @@ export function VisaAppointments({ appointments, visaApplicationId, onCreate, on
                         </button>
                       </>
                     )}
-                    <button onClick={() => exportIcal(apt)} className="p-1 text-muted-foreground hover:text-teal-600 rounded" title="Export to Calendar">
+                    <button onClick={() => exportIcal(apt)} className="p-1 text-muted-foreground hover:text-omnia-gold rounded" title="Export to Calendar">
                       <Calendar className="w-4 h-4" />
                     </button>
                   </div>

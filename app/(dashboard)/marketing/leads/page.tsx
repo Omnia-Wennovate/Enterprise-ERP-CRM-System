@@ -96,7 +96,7 @@ export default function LeadsPage() {
               { key: 'converted', label: 'Converted' },
             ].map(s => {
               const count = s.key === 'all' ? leads.length : leads.filter(l => l.status === s.key).length
-              const color = statusColors[s.key] || '#0A8FA8'
+              const color = statusColors[s.key] || '#C8A951'
               return (
                 <button key={s.key} onClick={() => setFilterStatus(s.key)} className={`p-4 rounded-xl border text-left transition-all ${filterStatus === s.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-card border-border hover:border-primary'}`}>
                   <p className={`text-xs font-medium ${filterStatus === s.key ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>{s.label}</p>

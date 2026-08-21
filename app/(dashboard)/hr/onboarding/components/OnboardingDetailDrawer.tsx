@@ -140,11 +140,11 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
                 className="mt-0.5 flex-shrink-0"
               >
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-teal-500/30 border-t-teal-500 rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-omnia-gold/30 border-t-teal-500 rounded-full animate-spin" />
                 ) : task.is_completed ? (
                   <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                 ) : (
-                  <Circle className={`w-5 h-5 ${isOverdue ? 'text-red-400' : 'text-muted-foreground'} hover:text-teal-500 transition-colors`} />
+                  <Circle className={`w-5 h-5 ${isOverdue ? 'text-red-400' : 'text-muted-foreground'} hover:text-omnia-gold transition-colors`} />
                 )}
               </button>
 
@@ -202,7 +202,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
                         onClick={() => handleStatusChange(task.id, sa.value)}
                         disabled={isLoading}
                         className={`text-[11px] px-2 py-1 rounded-lg border transition-colors flex items-center gap-1 ${
-                          task.status === sa.value ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300' : 'border-border hover:bg-muted'
+                          task.status === sa.value ? 'border-omnia-gold bg-omnia-gold/10 dark:bg-teal-950/30 text-omnia-gold-dark dark:text-teal-300' : 'border-border hover:bg-muted'
                         }`}
                       >
                         <sa.icon className={`w-3 h-3 ${sa.color}`} />
@@ -220,7 +220,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
                       defaultValue={task.notes || ''}
                       onBlur={e => handleUpdateNote(task.id, e.target.value)}
                       placeholder="Add a note..."
-                      className="w-full text-xs px-3 py-2 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500 resize-none"
+                      className="w-full text-xs px-3 py-2 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-omnia-gold-500 resize-none"
                       rows={2}
                     />
                   </div>
@@ -255,7 +255,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900/50 flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-sm">
+            <div className="w-10 h-10 rounded-full bg-omnia-gold/15 dark:bg-teal-900/50 flex items-center justify-center text-omnia-gold-dark dark:text-teal-300 font-semibold text-sm">
               {(employee?.first_name ?? '?').charAt(0)}{(employee?.last_name ?? '?').charAt(0)}
             </div>
             <div>
@@ -276,7 +276,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
               onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === tab.key
-                  ? 'border-teal-500 text-teal-700 dark:text-teal-300'
+                  ? 'border-omnia-gold text-omnia-gold-dark dark:text-teal-300'
                   : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -312,7 +312,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
                 </div>
                 <div className="h-2.5 bg-muted rounded-full overflow-hidden">
                   <motion.div
-                    className={`h-full rounded-full ${progress === 100 ? 'bg-emerald-500' : 'bg-teal-500'}`}
+                    className={`h-full rounded-full ${progress === 100 ? 'bg-emerald-500' : 'bg-omnia-gold/100'}`}
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 1 }}
@@ -382,7 +382,7 @@ export function OnboardingDetailDrawer({ onboarding, isOpen, onClose, onUpdate, 
                 <div key={i} className="flex gap-3 pb-4">
                   <div className="flex flex-col items-center">
                     <div className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                      event.type === 'done' ? 'bg-emerald-500' : event.type === 'completed' ? 'bg-teal-500' : 'bg-blue-500'
+                      event.type === 'done' ? 'bg-emerald-500' : event.type === 'completed' ? 'bg-omnia-gold/100' : 'bg-omnia-gold/50'
                     }`} />
                     {i < timeline.length - 1 && <div className="w-0.5 flex-1 bg-border mt-1" />}
                   </div>

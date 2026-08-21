@@ -331,14 +331,14 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
               rows={3}
               disabled={isGenerating}
               placeholder="e.g. Luxury honeymoon in Dubai for 5 days with spa treatments and desert safari. Budget around $5000..."
-              className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 resize-none disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-omnia-gold/60 resize-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
 
           {/* Advanced Parameters Toggle */}
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-teal-600 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-omnia-gold transition-colors"
           >
             {showAdvanced ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             Advanced Parameters
@@ -623,7 +623,7 @@ export function AIItineraryPanel({ formData, onAcceptPlan }: AIItineraryPanelPro
           {isGenerating && (
             <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
+                className="h-full bg-gradient-to-r from-omnia-gold/100 to-emerald-500 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${state.progress}%` }}
                 transition={{ duration: 0.5 }}

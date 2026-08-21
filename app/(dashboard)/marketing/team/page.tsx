@@ -85,7 +85,7 @@ export default function TeamPage() {
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
                           <div className="relative">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0A8FA8] to-[#06B6D4] flex items-center justify-center text-primary-foreground font-bold">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C8A951] to-[#E2CC7E] flex items-center justify-center text-primary-foreground font-bold">
                               {getInitials(`${member.first_name} ${member.last_name}`)}
                             </div>
                             <div className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white" style={{ backgroundColor: statusColors[currentStatus] || '#9CA3AF' }} />

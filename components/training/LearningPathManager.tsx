@@ -38,12 +38,12 @@ export function LearningPathManager() {
         <div className="flex-1 bg-card p-6 rounded-xl border border-border/80 shadow-sm flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <Target className="w-5 h-5 text-teal-600" />
+              <Target className="w-5 h-5 text-omnia-gold" />
               Role-Based Learning Paths
             </h2>
             <p className="text-muted-foreground text-sm mt-1">Manage mandatory course sequences for onboarding and roles.</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors text-sm font-medium shadow-sm shadow-teal-600/20">
             <Plus className="w-4 h-4" /> Create Path
           </button>
         </div>
@@ -70,7 +70,7 @@ export function LearningPathManager() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-card rounded-xl border border-border/80 p-6 hover:border-teal-300 transition-colors"
+              className="bg-card rounded-xl border border-border/80 p-6 hover:border-omnia-gold/40 transition-colors"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -89,7 +89,7 @@ export function LearningPathManager() {
                     <p className="text-sm text-muted-foreground mt-1">{path.description}</p>
                   )}
                 </div>
-                <button className="text-teal-600 text-sm font-medium hover:text-teal-700">Edit</button>
+                <button className="text-omnia-gold text-sm font-medium hover:text-omnia-gold-dark">Edit</button>
               </div>
 
               {/* Course Sequence */}
@@ -101,7 +101,7 @@ export function LearningPathManager() {
                     path.courses.sort((a, b) => a.sort_order - b.sort_order).map((pc, i) => (
                       <div key={pc.id} className="flex items-center gap-3">
                         <div className="flex flex-col items-center">
-                          <div className="w-6 h-6 rounded-full bg-card border-2 border-teal-600 text-teal-600 flex items-center justify-center text-xs font-bold z-10 relative">
+                          <div className="w-6 h-6 rounded-full bg-card border-2 border-omnia-gold text-omnia-gold flex items-center justify-center text-xs font-bold z-10 relative">
                             {i + 1}
                           </div>
                           {i < path.courses!.length - 1 && (
@@ -137,7 +137,7 @@ export function LearningPathManager() {
           <p className="text-muted-foreground text-sm max-w-sm mx-auto mb-6">
             Create structured sequences of courses that employees must complete for onboarding or role compliance.
           </p>
-          <button className="text-teal-600 hover:text-teal-700 font-medium text-sm">
+          <button className="text-omnia-gold hover:text-omnia-gold-dark font-medium text-sm">
             Create your first path
           </button>
         </div>

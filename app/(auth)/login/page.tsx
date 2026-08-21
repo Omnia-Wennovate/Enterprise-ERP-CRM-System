@@ -1,5 +1,6 @@
-import { Plane, Check } from 'lucide-react'
+import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import { LoginForm } from '@/components/auth/LoginForm'
+import { LoginLeftPanel } from '@/components/auth/LoginLeftPanel'
 
 export const metadata = {
   title: 'Sign In - Omnia Travel CRM',
@@ -8,87 +9,27 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex bg-background">
-      {/* Left Panel */}
-      <div className="hidden lg:flex lg:w-5/12 bg-sidebar flex-col justify-between p-8 relative overflow-hidden">
-        {/* Wave decoration */}
-        <div className="absolute inset-0 opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0A8FA8" />
-                <stop offset="100%" stopColor="#38BDF8" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M0,200 Q100,150 200,200 T400,200 L400,400 L0,400 Z"
-              fill="url(#waveGradient)"
-            />
-          </svg>
-        </div>
+    <div className="min-h-screen flex bg-[#0A1221]">
+      {/* Left Panel — Premium Brand Hero (Client Component with Framer Motion) */}
+      <LoginLeftPanel />
 
-        {/* Content */}
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-12">
-            <div className="bg-primary p-2 rounded-lg">
-              <Plane className="text-primary-foreground" size={28} />
-            </div>
-            <h1 className="text-primary-foreground font-bold text-2xl">Omnia Travel</h1>
-          </div>
-
-          <p className="text-accent-foreground text-lg font-semibold mb-8">
-            The Operating System for Your Travel Business
-          </p>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-primary-foreground" size={16} />
-              </div>
-              <div>
-                <p className="text-primary-foreground font-medium">Manage leads and customers</p>
-                <p className="text-muted-foreground text-sm">Track every interaction and conversion</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-primary-foreground" size={16} />
-              </div>
-              <div>
-                <p className="text-primary-foreground font-medium">Automate invoices and payments</p>
-                <p className="text-muted-foreground text-sm">Streamline your financial workflows</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="bg-primary rounded-full p-1 mt-1 flex-shrink-0">
-                <Check className="text-primary-foreground" size={16} />
-              </div>
-              <div>
-                <p className="text-primary-foreground font-medium">Real-time team collaboration</p>
-                <p className="text-muted-foreground text-sm">Keep everyone in sync across departments</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom branding */}
-        <div className="relative z-10">
-          <p className="text-muted-foreground text-xs">© 2024 Omnia Travel. All rights reserved.</p>
-        </div>
-      </div>
-
-      {/* Right Panel */}
-      <div className="w-full lg:w-7/12 bg-background flex items-center justify-center p-6">
-        <div className="w-full">
-          <div className="lg:hidden mb-8 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="bg-primary p-2 rounded-lg">
-                <Plane className="text-primary-foreground" size={24} />
-              </div>
-              <h1 className="text-foreground font-bold text-2xl">Omnia Travel</h1>
-            </div>
+      {/* Right Panel — Login Form with luxury background */}
+      <div className="w-full lg:w-7/12 bg-gradient-to-br from-[#F8F6F0] via-[#F5F3ED] to-[#EDE9DF] flex items-center justify-center p-6 lg:p-12 relative overflow-hidden">
+        {/* Subtle luxury background pattern */}
+        <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, #C8A951 1px, transparent 1px), radial-gradient(circle at 75% 75%, #C8A951 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+        {/* Warm corner glows */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#C8A951]/[0.03] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#C8A951]/[0.02] to-transparent pointer-events-none" />
+        
+        <div className="w-full max-w-lg relative z-10">
+          <div className="lg:hidden mb-8 text-center flex flex-col items-center">
+            <OmniaLogo variant="full" theme="dark" size={120} className="mb-4" />
+            <div className="w-8 h-[2px] bg-gradient-to-r from-[#C8A951] to-[#E8D48B]" />
           </div>
 
           <LoginForm />
@@ -97,3 +38,4 @@ export default function LoginPage() {
     </div>
   )
 }
+

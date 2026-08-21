@@ -268,7 +268,7 @@ export function AITravelAssistant({
                 <Bot className="w-5 h-5 text-primary-foreground" />
                 <div>
                   <h3 className="text-sm font-bold text-primary-foreground">AI Travel Assistant</h3>
-                  <p className="text-[10px] text-teal-100">
+                  <p className="text-[10px] text-white/70">
                     {itinerary.destination_city || 'Travel'} itinerary editor
                   </p>
                 </div>
@@ -297,7 +297,7 @@ export function AITravelAssistant({
                       <button
                         key={i}
                         onClick={() => setMessage(ex)}
-                        className="block w-full text-left px-3 py-1.5 text-xs text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
+                        className="block w-full text-left px-3 py-1.5 text-xs text-omnia-gold-dark bg-omnia-gold/10 rounded-lg hover:bg-omnia-gold/15 transition-colors"
                       >
                         &ldquo;{ex}&rdquo;
                       </button>
@@ -314,7 +314,7 @@ export function AITravelAssistant({
                   <div
                     className={`max-w-[85%] px-3 py-2 rounded-xl text-xs leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-teal-600 text-primary-foreground rounded-br-sm'
+                        ? 'bg-omnia-gold text-primary-foreground rounded-br-sm'
                         : 'bg-muted text-slate-700 rounded-bl-sm'
                     }`}
                   >
@@ -337,13 +337,13 @@ export function AITravelAssistant({
 
               {/* Pending Actions */}
               {pendingActions.length > 0 && (
-                <div className="bg-teal-50 rounded-xl border border-teal-200 p-3 space-y-2">
-                  <p className="text-[10px] font-bold text-teal-700 uppercase tracking-wider">
+                <div className="bg-omnia-gold/10 rounded-xl border border-omnia-gold/20 p-3 space-y-2">
+                  <p className="text-[10px] font-bold text-omnia-gold-dark uppercase tracking-wider">
                     Proposed Changes
                   </p>
                   {pendingActions.map((action, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-teal-800">
-                      <AlertCircle className="w-3 h-3 text-teal-500 flex-shrink-0 mt-0.5" />
+                    <div key={i} className="flex items-start gap-2 text-xs text-foreground">
+                      <AlertCircle className="w-3 h-3 text-omnia-gold flex-shrink-0 mt-0.5" />
                       <span>{action.description}</span>
                     </div>
                   ))}
@@ -351,7 +351,7 @@ export function AITravelAssistant({
                     <button
                       onClick={handleApplyActions}
                       disabled={applyingActions}
-                      className="flex items-center gap-1 px-3 py-1.5 bg-teal-600 text-primary-foreground rounded-lg text-[10px] font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors"
+                      className="flex items-center gap-1 px-3 py-1.5 bg-omnia-gold text-primary-foreground rounded-lg text-[10px] font-semibold hover:bg-omnia-gold-dark disabled:opacity-50 transition-colors"
                     >
                       {applyingActions ? (
                         <Loader2 className="w-3 h-3 animate-spin" />
@@ -388,7 +388,7 @@ export function AITravelAssistant({
                 <button
                   onClick={handleSend}
                   disabled={sending || !message.trim()}
-                  className="p-2 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 bg-omnia-gold text-primary-foreground rounded-xl hover:bg-omnia-gold-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <Send className="w-4 h-4" />
                 </button>

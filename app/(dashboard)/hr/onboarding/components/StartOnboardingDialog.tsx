@@ -290,7 +290,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
             {[1, 2, 3, 4].map(s => (
               <React.Fragment key={s}>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
-                  s === step ? 'bg-teal-600 text-white' : s < step ? 'bg-teal-100 text-teal-700' : 'bg-muted text-muted-foreground'
+                  s === step ? 'bg-omnia-gold text-white' : s < step ? 'bg-omnia-gold/15 text-omnia-gold-dark' : 'bg-muted text-muted-foreground'
                 }`}>
                   {s < step ? <CheckCircle2 className="w-4 h-4" /> : s}
                 </div>
@@ -318,12 +318,12 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                     <input
                       type="text" placeholder="Search employees..."
                       value={search} onChange={e => setSearch(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full pl-10 pr-4 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     />
                   </div>
                   <select
                     value={deptFilter} onChange={e => setDeptFilter(e.target.value)}
-                    className="px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                   >
                     <option value="">All Departments</option>
                     {departments.map(d => <option key={d} value={d}>{d}</option>)}
@@ -342,11 +342,11 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                         onClick={() => handleSelectEmployee(emp)}
                         className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${
                           selectedEmployee?.id === emp.id
-                            ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30'
+                            ? 'border-omnia-gold bg-omnia-gold/10 dark:bg-teal-950/30'
                             : 'border-transparent hover:bg-muted/50'
                         }`}
                       >
-                        <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-sm flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-omnia-gold/15 dark:bg-teal-900 flex items-center justify-center text-omnia-gold-dark dark:text-teal-300 font-semibold text-sm flex-shrink-0">
                           {(emp.first_name || '?')[0]}{(emp.last_name || '?')[0]}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -371,7 +371,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800"
+                    className="mt-4 p-4 bg-omnia-gold/10 dark:bg-teal-950/30 rounded-xl border border-omnia-gold/20 dark:border-teal-800"
                   >
                     {duplicateId ? (
                       <div className="flex items-center gap-3">
@@ -407,10 +407,10 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                         key={t.value}
                         onClick={() => { setTemplate(t.value); setTasks([]) }}
                         className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all ${
-                          template === t.value ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30' : 'border-border hover:bg-muted/50'
+                          template === t.value ? 'border-omnia-gold bg-omnia-gold/10 dark:bg-teal-950/30' : 'border-border hover:bg-muted/50'
                         }`}
                       >
-                        <t.icon className={`w-5 h-5 ${template === t.value ? 'text-teal-600' : 'text-muted-foreground'}`} />
+                        <t.icon className={`w-5 h-5 ${template === t.value ? 'text-omnia-gold' : 'text-muted-foreground'}`} />
                         <span className="text-sm font-medium">{t.label}</span>
                       </div>
                     ))}
@@ -423,14 +423,14 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                     <input
                       type="date" value={startDate}
                       onChange={e => { setStartDate(e.target.value); setTasks([]) }}
-                      className="w-full px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     />
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-foreground block mb-1.5">Onboarding Buddy (Optional)</label>
                     <select
                       value={buddyId} onChange={e => setBuddyId(e.target.value)}
-                      className="w-full px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-2.5 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
                     >
                       <option value="">No buddy assigned</option>
                       {buddyCandidates.map(b => (
@@ -451,7 +451,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                     <p className="text-sm font-semibold text-foreground">{tasks.length} Tasks</p>
                     <p className="text-xs text-muted-foreground">{preBoardingTasks.length} pre-boarding · {dayOneTasks.length} day-one</p>
                   </div>
-                  <button onClick={addTask} className="flex items-center gap-1.5 text-sm text-teal-600 hover:text-teal-700 font-medium">
+                  <button onClick={addTask} className="flex items-center gap-1.5 text-sm text-omnia-gold hover:text-omnia-gold-dark font-medium">
                     <Plus className="w-4 h-4" /> Add Task
                   </button>
                 </div>
@@ -467,7 +467,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                                 ref={prov.innerRef}
                                 {...prov.draggableProps}
                                 className={`rounded-xl border p-3 transition-shadow ${
-                                  snap.isDragging ? 'shadow-lg border-teal-400' : 'border-border'
+                                  snap.isDragging ? 'shadow-lg border-omnia-gold/60' : 'border-border'
                                 } ${editingTask === task.id ? 'bg-muted/30' : 'bg-card'}`}
                               >
                                 <div className="flex items-center gap-2">
@@ -482,7 +482,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                                       onChange={e => updateTask(task.id, { task_label: e.target.value })}
                                       onBlur={() => setEditingTask(null)}
                                       onKeyDown={e => { if (e.key === 'Enter') setEditingTask(null) }}
-                                      className="flex-1 px-2 py-1 text-sm bg-background border border-border rounded focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                      className="flex-1 px-2 py-1 text-sm bg-background border border-border rounded focus:outline-none focus:ring-1 focus:ring-omnia-gold-500"
                                     />
                                   ) : (
                                     <span
@@ -566,7 +566,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
                 {success ? (
                   <div className="text-center py-12">
                     <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }}>
-                      <Sparkles className="w-16 h-16 text-teal-500 mx-auto mb-4" />
+                      <Sparkles className="w-16 h-16 text-omnia-gold mx-auto mb-4" />
                     </motion.div>
                     <h3 className="text-xl font-bold text-foreground mb-2">Onboarding Created!</h3>
                     <p className="text-muted-foreground">
@@ -638,7 +638,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
               <button
                 onClick={() => setStep(Math.min(4, step + 1) as WizardStep)}
                 disabled={step === 1 && (!selectedEmployee || !!duplicateId)}
-                className="flex items-center gap-1.5 px-5 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center gap-1.5 px-5 py-2 bg-omnia-gold text-white rounded-lg text-sm font-semibold hover:bg-omnia-gold-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Continue <ChevronRight className="w-4 h-4" />
               </button>
@@ -646,7 +646,7 @@ export function StartOnboardingDialog({ isOpen, onClose, onSuccess }: Props) {
               <button
                 onClick={handleSubmit}
                 disabled={submitting || tasks.length === 0}
-                className="flex items-center gap-2 px-6 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center gap-2 px-6 py-2 bg-omnia-gold text-white rounded-lg text-sm font-semibold hover:bg-omnia-gold-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {submitting ? (
                   <>

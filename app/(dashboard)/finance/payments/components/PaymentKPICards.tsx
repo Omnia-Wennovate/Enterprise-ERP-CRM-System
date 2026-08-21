@@ -97,7 +97,7 @@ function KPICard({ title, value, format, icon, color, bgColor, prevValue, compar
 
       {/* Subtle gradient line at bottom */}
       <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${
-        color.includes('teal') ? 'from-teal-500/50 to-transparent' :
+        color.includes('teal') ? 'from-omnia-gold/100/50 to-transparent' :
         color.includes('emerald') ? 'from-emerald-500/50 to-transparent' :
         color.includes('amber') ? 'from-amber-500/50 to-transparent' :
         color.includes('red') ? 'from-red-500/50 to-transparent' :
@@ -145,8 +145,8 @@ export default function PaymentKPICards({ kpis, loading, onFilterByKPI }: Paymen
       value: kpis.totalPayments,
       format: 'number',
       icon: <Receipt className="w-5 h-5" />,
-      color: 'text-teal-600',
-      bgColor: 'bg-teal-500/10',
+      color: 'text-omnia-gold',
+      bgColor: 'bg-omnia-gold/100/10',
       prevValue: kpis.prevTotalPayments,
       compareLabel: kpis.compareLabel,
     },
@@ -176,16 +176,16 @@ export default function PaymentKPICards({ kpis, loading, onFilterByKPI }: Paymen
       value: kpis.collectionRate,
       format: 'percent',
       icon: <Target className="w-5 h-5" />,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-500/10',
+      color: 'text-omnia-gold',
+      bgColor: 'bg-omnia-gold/50/10',
     },
     {
       title: 'This Month',
       value: kpis.paymentsThisMonth,
       format: 'number',
       icon: <Calendar className="w-5 h-5" />,
-      color: 'text-teal-600',
-      bgColor: 'bg-teal-500/10',
+      color: 'text-omnia-gold',
+      bgColor: 'bg-omnia-gold/100/10',
     },
     {
       title: 'Average Payment',

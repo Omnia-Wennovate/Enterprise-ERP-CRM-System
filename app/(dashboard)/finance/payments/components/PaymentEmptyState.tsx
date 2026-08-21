@@ -17,8 +17,8 @@ export default function PaymentEmptyState({ onRecordPayment }: PaymentEmptyState
     >
       {/* Illustration */}
       <div className="relative mb-8">
-        <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-teal-500/10 to-emerald-500/10 flex items-center justify-center">
-          <Receipt className="w-12 h-12 text-teal-500/60" />
+        <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-omnia-gold/100/10 to-emerald-500/10 flex items-center justify-center">
+          <Receipt className="w-12 h-12 text-omnia-gold/60" />
         </div>
         <motion.div
           initial={{ scale: 0 }}
@@ -38,7 +38,7 @@ export default function PaymentEmptyState({ onRecordPayment }: PaymentEmptyState
 
       <button
         onClick={onRecordPayment}
-        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-sm font-semibold text-white hover:from-teal-400 hover:to-emerald-400 transition-all duration-200 shadow-lg shadow-teal-500/25"
+        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-omnia-gold/100 to-emerald-500 text-sm font-semibold text-white hover:from-teal-400 hover:to-emerald-400 transition-all duration-200 shadow-lg shadow-teal-500/25"
       >
         <DollarSign className="w-4 h-4" />
         Record Payment

@@ -78,7 +78,7 @@ export default function EmployeesPage() {
             <h1 className="text-3xl font-bold text-foreground">Employees</h1>
             <p className="text-muted-foreground mt-1">Manage all employees and their information</p>
           </div>
-          <Link href="/hr/employees/new" className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <Link href="/hr/employees/new" className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             Add Employee
           </Link>
@@ -93,7 +93,7 @@ export default function EmployeesPage() {
               placeholder="Search by name or email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:border-teal-600"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:border-omnia-gold"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export default function EmployeesPage() {
             <select
               value={filterStatus || ''}
               onChange={(e) => setFilterStatus(e.target.value || null)}
-              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-teal-600"
+              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:border-omnia-gold"
             >
               <option value="">All Status</option>
               <option value="active">Active</option>
@@ -140,7 +140,7 @@ export default function EmployeesPage() {
                     </td>
                     <td className="px-6 py-4 text-muted-foreground">{new Date(emp.joinDate).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
-                      <Link href={`/hr/employees/${emp.id}`} className="text-teal-600 hover:text-teal-700 font-medium">
+                      <Link href={`/hr/employees/${emp.id}`} className="text-omnia-gold hover:text-omnia-gold-dark font-medium">
                         View
                       </Link>
                     </td>

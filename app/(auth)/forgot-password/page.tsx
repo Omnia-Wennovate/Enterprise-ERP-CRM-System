@@ -16,7 +16,7 @@ export default function ForgotPasswordPage() {
           <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="none">
             <defs>
               <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0A8FA8" />
+                <stop offset="0%" stopColor="#C8A951" />
                 <stop offset="100%" stopColor="#38BDF8" />
               </linearGradient>
             </defs>

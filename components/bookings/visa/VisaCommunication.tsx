@@ -67,7 +67,7 @@ export function VisaCommunicationPanel({ messages, visaApplicationId, onSend }: 
         <div className="flex items-center gap-2 mb-2">
           <button
             onClick={() => setIsInternal(false)}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${!isInternal ? 'bg-teal-100 text-teal-700' : 'bg-muted text-muted-foreground'}`}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${!isInternal ? 'bg-omnia-gold/15 text-omnia-gold-dark' : 'bg-muted text-muted-foreground'}`}
           >
             Comment
           </button>
@@ -81,7 +81,7 @@ export function VisaCommunicationPanel({ messages, visaApplicationId, onSend }: 
         <div className="flex gap-2">
           <input
             type="text"
-            className="flex-1 border-border rounded-lg text-sm focus:border-teal-500 focus:ring-teal-500"
+            className="flex-1 border-border rounded-lg text-sm focus:border-omnia-gold focus:ring-teal-500"
             placeholder={isInternal ? 'Add internal note (hidden from customer)...' : 'Add a comment...'}
             value={content}
             onChange={e => setContent(e.target.value)}
@@ -90,7 +90,7 @@ export function VisaCommunicationPanel({ messages, visaApplicationId, onSend }: 
           <button
             onClick={handleSend}
             disabled={sending || !content.trim()}
-            className="px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 flex items-center gap-1"
+            className="px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors disabled:opacity-50 flex items-center gap-1"
           >
             {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </button>

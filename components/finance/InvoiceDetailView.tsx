@@ -22,7 +22,7 @@ export function InvoiceDetailView({ invoice }: InvoiceDetailViewProps) {
   return (
     <div className="bg-card rounded-lg shadow overflow-hidden">
       {/* Invoice Header */}
-      <div className="bg-gradient-to-r from-teal-50 to-teal-100 p-8 border-b border-teal-200">
+      <div className="bg-gradient-to-r from-omnia-gold/10 to-teal-100 p-8 border-b border-omnia-gold/20">
         <div className="flex justify-between items-start mb-6">
           <div>
             <h2 className="text-2xl font-bold text-foreground">{invoice.invoice_number}</h2>
@@ -109,7 +109,7 @@ export function InvoiceDetailView({ invoice }: InvoiceDetailViewProps) {
           </div>
           <div className="flex justify-between w-full border-t border-border pt-2">
             <span className="font-bold text-foreground">Total:</span>
-            <span className="text-lg font-bold text-teal-600">
+            <span className="text-lg font-bold text-omnia-gold">
               {formatCurrency(invoice.total_amount)}
             </span>
           </div>
@@ -117,7 +117,7 @@ export function InvoiceDetailView({ invoice }: InvoiceDetailViewProps) {
       </div>
 
       {/* Payments Info */}
-      <div className="p-8 bg-blue-50 border-t border-blue-200">
+      <div className="p-8 bg-omnia-gold/5 border-t border-blue-200">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-blue-700 font-semibold">Amount Paid</p>

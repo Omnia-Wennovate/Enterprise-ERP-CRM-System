@@ -81,7 +81,7 @@ export default function InvoiceDetailPage({ params }: PageProps) {
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="bg-card rounded-lg shadow p-8 text-center">
             <p className="text-muted-foreground mb-4">Invoice not found</p>
-            <Link href="/finance/invoices" className="text-teal-600 hover:text-teal-700">
+            <Link href="/finance/invoices" className="text-omnia-gold hover:text-omnia-gold-dark">
               Back to Invoices
             </Link>
           </div>
@@ -128,11 +128,11 @@ export default function InvoiceDetailPage({ params }: PageProps) {
               </div>
               <div className="border-t border-border pt-3 flex justify-between">
                 <span className="font-semibold">Total</span>
-                <span className="text-lg font-bold text-teal-600">
+                <span className="text-lg font-bold text-omnia-gold">
                   ${invoice.total_amount.toFixed(2)}
                 </span>
               </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="bg-omnia-gold/5 border border-blue-200 rounded-lg p-3">
                 <div className="text-sm text-blue-700 font-semibold">Outstanding</div>
                 <div className="text-2xl font-bold text-blue-900">
                   ${invoice.outstanding_balance.toFixed(2)}
@@ -140,7 +140,7 @@ export default function InvoiceDetailPage({ params }: PageProps) {
               </div>
               <button
                 onClick={() => setShowPaymentForm(!showPaymentForm)}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 transition-colors font-medium"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Record Payment

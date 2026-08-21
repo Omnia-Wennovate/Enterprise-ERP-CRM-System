@@ -6,6 +6,8 @@ import { QuotationsList } from '@/components/crm/QuotationsList'
 import { NewQuotationModal } from '@/components/crm/NewQuotationModal'
 import { Button } from '@/components/ui/button'
 
+import { PageHeader } from '@/components/ui/PageHeader'
+
 export default function QuotationsPage() {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
   const [refreshKey, setRefreshKey]         = useState(0)
@@ -18,25 +20,21 @@ export default function QuotationsPage() {
   return (
     <div className="flex flex-col h-full bg-background">
       {/* ── HEADER ── */}
-      <div className="border-b border-gray-200 bg-card px-6 py-4 flex-shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-teal-50">
-              <FileText className="w-5 h-5 text-teal-600" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Quotations</h1>
-              <p className="text-xs text-gray-500">Create and track professional travel quotations</p>
-            </div>
-          </div>
-          <Button
-            onClick={() => setIsNewModalOpen(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-primary-foreground gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            New Quote
-          </Button>
-        </div>
+      <div className="border-b border-border bg-card px-6 py-4 flex-shrink-0">
+        <PageHeader
+          kicker="CRM"
+          title="Quotations"
+          subtitle="Create and track professional travel quotations"
+          actions={
+            <Button
+              onClick={() => setIsNewModalOpen(true)}
+              variant="gold"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              New Quote
+            </Button>
+          }
+        />
       </div>
 
       {/* ── CONTENT ── */}

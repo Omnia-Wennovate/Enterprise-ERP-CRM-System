@@ -47,7 +47,7 @@ export function UserMenu({ profile }: UserMenuProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 hover:bg-background rounded-lg transition-colors text-sm"
       >
-        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs font-medium">
+        <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold bg-omnia-gold/20 text-omnia-gold border border-omnia-gold/30">
           {getInitials(profile.full_name)}
         </div>
         <div className="hidden sm:block text-left">
@@ -86,7 +86,7 @@ export function UserMenu({ profile }: UserMenuProps) {
           <div className="p-1 border-t border-border">
             <button
               onClick={handleSignOut}
-              className="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm"
+              className="w-full flex items-center gap-2 px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-colors text-sm"
             >
               <LogOut size={16} />
               Sign Out

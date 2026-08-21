@@ -17,8 +17,8 @@ interface KPICardProps {
 }
 
 const colorMap = {
-  teal:   { bg: 'from-teal-500/10 to-teal-600/5',   text: 'text-teal-600',   border: 'border-teal-200',   icon: 'bg-teal-100 text-teal-600' },
-  blue:   { bg: 'from-blue-500/10 to-blue-600/5',   text: 'text-blue-600',   border: 'border-blue-200',   icon: 'bg-blue-100 text-blue-600' },
+  teal:   { bg: 'from-omnia-gold/100/10 to-teal-600/5',   text: 'text-omnia-gold',   border: 'border-omnia-gold/20',   icon: 'bg-omnia-gold/15 text-omnia-gold' },
+  blue:   { bg: 'from-blue-500/10 to-blue-600/5',   text: 'text-omnia-gold',   border: 'border-blue-200',   icon: 'bg-blue-100 text-omnia-gold' },
   amber:  { bg: 'from-amber-500/10 to-amber-600/5', text: 'text-amber-600',  border: 'border-amber-200',  icon: 'bg-amber-100 text-amber-600' },
   red:    { bg: 'from-red-500/10 to-red-600/5',     text: 'text-red-600',    border: 'border-red-200',    icon: 'bg-red-100 text-red-600' },
   green:  { bg: 'from-green-500/10 to-green-600/5', text: 'text-green-600',  border: 'border-green-200',  icon: 'bg-green-100 text-green-600' },

@@ -47,7 +47,7 @@ export function VisaDetail({ visaId, onBack, onEdit }: VisaDetailProps) {
   })
 
   if (loading) {
-    return <div className="flex justify-center items-center py-24"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>
+    return <div className="flex justify-center items-center py-24"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-omnia-gold"></div></div>
   }
 
   if (!visa) {
@@ -103,7 +103,7 @@ export function VisaDetail({ visaId, onBack, onEdit }: VisaDetailProps) {
         </div>
         <button
           onClick={() => onEdit(visa.id)}
-          className="px-4 py-2 bg-teal-50 text-teal-700 font-medium rounded-lg hover:bg-teal-100 transition-colors"
+          className="px-4 py-2 bg-omnia-gold/10 text-omnia-gold-dark font-medium rounded-lg hover:bg-omnia-gold/15 transition-colors"
         >
           Edit Details
         </button>
@@ -123,16 +123,16 @@ export function VisaDetail({ visaId, onBack, onEdit }: VisaDetailProps) {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
                     className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ? 'bg-teal-50 text-teal-700' : 'text-muted-foreground hover:bg-muted/50'
+                      isActive ? 'bg-omnia-gold/10 text-omnia-gold-dark' : 'text-muted-foreground hover:bg-muted/50'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-teal-600' : 'text-muted-foreground'}`} />
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-omnia-gold' : 'text-muted-foreground'}`} />
                       {tab.label}
                     </div>
                     {tab.count !== undefined && tab.count > 0 && (
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        isActive ? 'bg-teal-100 text-teal-700' : 'bg-muted text-muted-foreground'
+                        isActive ? 'bg-omnia-gold/15 text-omnia-gold-dark' : 'bg-muted text-muted-foreground'
                       }`}>
                         {tab.count}
                       </span>
@@ -209,7 +209,7 @@ export function VisaDetail({ visaId, onBack, onEdit }: VisaDetailProps) {
                     <h3 className="text-sm font-bold text-foreground uppercase tracking-wide border-b border-slate-100 pb-2 mb-4">Linked Booking</h3>
                     <div className="bg-muted/50 border border-border rounded-xl p-4 flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-bold text-teal-700">{visa.booking_reference}</p>
+                        <p className="text-sm font-bold text-omnia-gold-dark">{visa.booking_reference}</p>
                         <p className="text-xs text-muted-foreground mt-1">{visa.booking_customer_name} • {visa.booking_destination}</p>
                         <p className="text-[10px] text-muted-foreground mt-1">
                           {visa.booking_trip_start_date ? new Date(visa.booking_trip_start_date).toLocaleDateString() : ''} - 

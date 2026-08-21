@@ -16,7 +16,7 @@ interface CourseCardProps {
 
 const DIFFICULTY_CONFIG: Record<string, { label: string; color: string }> = {
   beginner: { label: 'Beginner', color: 'bg-green-50 text-green-700 border-green-200' },
-  intermediate: { label: 'Intermediate', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+  intermediate: { label: 'Intermediate', color: 'bg-omnia-gold/5 text-blue-700 border-blue-200' },
   advanced: { label: 'Advanced', color: 'bg-orange-50 text-orange-700 border-orange-200' },
   expert: { label: 'Expert', color: 'bg-red-50 text-red-700 border-red-200' },
 }
@@ -39,10 +39,10 @@ export function CourseCard({ course, onView, onEdit, onAssign, onDuplicate, onAr
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03 }}
-      className="group bg-card rounded-xl border border-border/80 overflow-hidden hover:shadow-lg hover:border-teal-200 transition-all"
+      className="group bg-card rounded-xl border border-border/80 overflow-hidden hover:shadow-lg hover:border-omnia-gold/20 transition-all"
     >
       {/* Cover / Header */}
-      <div className="relative h-2 bg-gradient-to-r from-teal-500 via-sky-500 to-blue-500">
+      <div className="relative h-2 bg-gradient-to-r from-omnia-gold/100 via-sky-500 to-omnia-gold/50">
         {course.is_mandatory && (
           <div className="absolute top-2 left-3 px-2 py-0.5 bg-red-500 text-primary-foreground text-[10px] font-bold rounded uppercase">
             Mandatory
@@ -128,7 +128,7 @@ export function CourseCard({ course, onView, onEdit, onAssign, onDuplicate, onAr
               initial={{ width: 0 }}
               animate={{ width: `${completionPercent}%` }}
               transition={{ duration: 0.8, delay: index * 0.05 }}
-              className="h-full rounded-full bg-gradient-to-r from-teal-500 to-sky-500"
+              className="h-full rounded-full bg-gradient-to-r from-omnia-gold/100 to-sky-500"
             />
           </div>
         </div>
@@ -153,13 +153,13 @@ export function CourseCard({ course, onView, onEdit, onAssign, onDuplicate, onAr
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => onView(course.id)}
-              className="px-3 py-1.5 text-xs font-semibold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
+              className="px-3 py-1.5 text-xs font-semibold text-omnia-gold-dark bg-omnia-gold/10 rounded-lg hover:bg-omnia-gold/15 transition-colors"
             >
               Details
             </button>
             <button
               onClick={() => onAssign(course.id)}
-              className="px-3 py-1.5 text-xs font-semibold text-primary-foreground bg-teal-600 rounded-lg hover:bg-teal-700 transition-colors"
+              className="px-3 py-1.5 text-xs font-semibold text-primary-foreground bg-omnia-gold rounded-lg hover:bg-omnia-gold-dark transition-colors"
             >
               Assign
             </button>

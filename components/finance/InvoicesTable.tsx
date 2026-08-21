@@ -86,7 +86,7 @@ export function InvoicesTable({ invoices, onRefresh }: InvoicesTableProps) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Link
                     href={`/finance/invoices/${invoice.id}`}
-                    className="font-semibold text-teal-600 hover:text-teal-700"
+                    className="font-semibold text-omnia-gold hover:text-omnia-gold-dark"
                   >
                     {invoice.invoice_number}
                   </Link>

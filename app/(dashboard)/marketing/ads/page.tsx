@@ -142,7 +142,7 @@ export default function AdsPage() {
                           <span className="font-medium text-foreground">${ad.spend.toLocaleString()} spent</span>
                         </div>
                         <div className="w-full h-2 bg-background rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-[#0A8FA8] to-[#06B6D4] rounded-full" style={{ width: `${Math.min(100, spendPercent)}%` }} />
+                          <div className="h-full bg-gradient-to-r from-[#C8A951] to-[#E2CC7E] rounded-full" style={{ width: `${Math.min(100, spendPercent)}%` }} />
                         </div>
                       </div>
                       <div className="flex items-center gap-2 pt-3 border-t border-border">

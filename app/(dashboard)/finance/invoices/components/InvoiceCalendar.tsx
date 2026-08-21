@@ -12,7 +12,7 @@ interface InvoiceCalendarProps {
 
 const STATUS_DOT: Record<string, string> = {
   paid: 'bg-emerald-500',
-  sent: 'bg-blue-500',
+  sent: 'bg-omnia-gold/50',
   partially_paid: 'bg-purple-500',
   overdue: 'bg-red-500',
   draft: 'bg-slate-400',
@@ -104,10 +104,10 @@ export default function InvoiceCalendar({ invoices, onDayClick }: InvoiceCalenda
               onClick={() => dayInvoices.length > 0 && onDayClick?.(dateStr)}
               className={`h-16 p-1.5 text-left transition-colors relative ${
                 dayInvoices.length > 0 ? 'cursor-pointer' : 'cursor-default'
-              } ${isToday ? 'bg-blue-50/60 dark:bg-blue-900/20' : ''}`}
+              } ${isToday ? 'bg-omnia-gold/5/60 dark:bg-blue-900/20' : ''}`}
             >
               <div className={`text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full ${
-                isToday ? 'bg-blue-600 text-white' : isPast ? 'text-muted-foreground/60' : 'text-foreground'
+                isToday ? 'bg-primary text-white' : isPast ? 'text-muted-foreground/60' : 'text-foreground'
               }`}>
                 {day}
               </div>
@@ -140,7 +140,7 @@ export default function InvoiceCalendar({ invoices, onDayClick }: InvoiceCalenda
       <div className="flex items-center gap-4 px-5 py-3 border-t border-border bg-muted/20">
         {[
           { color: 'bg-emerald-500', label: 'Paid' },
-          { color: 'bg-blue-500', label: 'Sent' },
+          { color: 'bg-omnia-gold/50', label: 'Sent' },
           { color: 'bg-red-500', label: 'Overdue' },
           { color: 'bg-purple-500', label: 'Partial' },
         ].map(item => (

@@ -279,8 +279,8 @@ export default function FinancePaymentsPage() {
         {/* Header / Controls */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-teal-500/10 rounded-xl">
-              <TrendingUp className="w-5 h-5 text-teal-600" />
+            <div className="p-2 bg-omnia-gold/100/10 rounded-xl">
+              <TrendingUp className="w-5 h-5 text-omnia-gold" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-foreground">Analytics Overview</h2>
@@ -319,11 +319,11 @@ export default function FinancePaymentsPage() {
                   onClick={() => setActiveTab(t.key)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     isActive
-                      ? 'border-teal-500 text-teal-600'
+                      ? 'border-omnia-gold text-omnia-gold'
                       : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-teal-600' : 'text-muted-foreground'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-omnia-gold' : 'text-muted-foreground'}`} />
                   {t.label}
                 </button>
               )

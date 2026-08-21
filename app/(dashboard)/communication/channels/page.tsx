@@ -22,7 +22,7 @@ export default function ChannelsPage() {
             <h1 className="text-3xl font-bold text-foreground">Channels</h1>
             <p className="text-muted-foreground mt-1">Team collaboration channels</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             Create Channel
           </button>
@@ -38,11 +38,11 @@ export default function ChannelsPage() {
                 className="bg-card rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 rounded-lg bg-omnia-gold/15 flex items-center justify-center flex-shrink-0">
                     {channel.isPrivate ? (
-                      <Lock className="w-6 h-6 text-teal-600" />
+                      <Lock className="w-6 h-6 text-omnia-gold" />
                     ) : (
-                      <IconComponent className="w-6 h-6 text-teal-600" />
+                      <IconComponent className="w-6 h-6 text-omnia-gold" />
                     )}
                   </div>
                   <div className="flex-1">

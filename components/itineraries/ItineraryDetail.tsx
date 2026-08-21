@@ -239,7 +239,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-omnia-gold" />
       </div>
     )
   }
@@ -248,7 +248,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
     return (
       <div className="text-center py-16">
         <p className="text-muted-foreground">Itinerary not found</p>
-        <button onClick={onBack} className="mt-4 text-teal-600 font-semibold">← Back to list</button>
+        <button onClick={onBack} className="mt-4 text-omnia-gold font-semibold">← Back to list</button>
       </div>
     )
   }
@@ -273,7 +273,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       {/* Back Button */}
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-teal-700 font-medium transition-colors">
+      <button onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-omnia-gold-dark font-medium transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Itineraries
       </button>
 
@@ -352,7 +352,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id
-                  ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                  ? 'bg-omnia-gold text-primary-foreground shadow-sm'
                   : 'text-muted-foreground hover:bg-muted/50'
               }`}
             >
@@ -378,7 +378,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
           {itinerary.share_token && (
             <button
               onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/itinerary/${itinerary.share_token}`); alert('Share link copied!') }}
-              className="flex items-center gap-1.5 px-3 py-2 bg-teal-600 text-primary-foreground rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors">
+              className="flex items-center gap-1.5 px-3 py-2 bg-omnia-gold text-primary-foreground rounded-lg text-sm font-semibold hover:bg-omnia-gold-dark transition-colors">
               <Share2 className="w-3.5 h-3.5" /> Share
             </button>
           )}
@@ -392,7 +392,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
           <div className="flex flex-wrap gap-3">
             {itinerary.travelers.map(t => (
               <div key={t.id} className="flex items-center gap-2 px-3 py-2 bg-muted/50 rounded-lg">
-                <div className="w-7 h-7 bg-teal-100 rounded-full flex items-center justify-center text-xs font-bold text-teal-700">
+                <div className="w-7 h-7 bg-omnia-gold/15 rounded-full flex items-center justify-center text-xs font-bold text-omnia-gold-dark">
                   {t.first_name[0]}{t.last_name[0]}
                 </div>
                 <div>
@@ -426,7 +426,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
       {activeTab === 'comments' && (
         <div className="bg-card rounded-xl border border-border p-6">
           <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
-            <MessageSquare className="w-4 h-4 text-teal-600" />
+            <MessageSquare className="w-4 h-4 text-omnia-gold" />
             Discussion ({comments.length})
           </h3>
 
@@ -436,14 +436,14 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
             ) : (
               comments.map(c => (
                 <div key={c.id} className="flex gap-3 p-3 bg-muted/50 rounded-lg">
-                  <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-xs font-bold text-teal-700 flex-shrink-0">
+                  <div className="w-8 h-8 bg-omnia-gold/15 rounded-full flex items-center justify-center text-xs font-bold text-omnia-gold-dark flex-shrink-0">
                     {(c.author_name || 'U')[0]}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-semibold text-foreground">{c.author_name || 'User'}</span>
                       {c.department && (
-                        <span className="px-1.5 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-medium rounded">{c.department}</span>
+                        <span className="px-1.5 py-0.5 bg-omnia-gold/5 text-blue-700 text-[10px] font-medium rounded">{c.department}</span>
                       )}
                       <span className="text-xs text-muted-foreground">{new Date(c.created_at).toLocaleString()}</span>
                     </div>
@@ -464,7 +464,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
               className="flex-1 px-4 py-2.5 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40"
             />
             <button onClick={handleAddComment} disabled={savingComment || !newComment.trim()}
-              className="px-4 py-2.5 bg-teal-600 text-primary-foreground rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 transition-colors">
+              className="px-4 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl text-sm font-semibold hover:bg-omnia-gold-dark disabled:opacity-50 transition-colors">
               {savingComment ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Send'}
             </button>
           </div>
@@ -475,7 +475,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
         <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-              <History className="w-4 h-4 text-teal-600" />
+              <History className="w-4 h-4 text-omnia-gold" />
               Version History
             </h3>
             <span className="text-xs text-muted-foreground">Current: v{itinerary.version}</span>

@@ -9,7 +9,7 @@ export function VisaReports() {
   const [dateTo, setDateTo] = useState('')
 
   const reports = [
-    { id: 'master', title: 'Master Visa Report', desc: 'All applications with full details and processing times', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { id: 'master', title: 'Master Visa Report', desc: 'All applications with full details and processing times', icon: FileText, color: 'text-omnia-gold', bg: 'bg-omnia-gold/5' },
     { id: 'revenue', title: 'Revenue & Fees', desc: 'Financial breakdown of all visa processing fees', icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
     { id: 'processing', title: 'Processing Times', desc: 'Average processing time by destination country', icon: Clock, color: 'text-purple-600', bg: 'bg-purple-50' },
     { id: 'expiring', title: 'Expiring Visas', desc: 'Visas expiring within the next 90 days', icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50' },

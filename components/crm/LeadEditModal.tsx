@@ -53,27 +53,27 @@ interface Props {
 }
 
 const inputClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 placeholder:text-gray-300'
 const selectClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 appearance-none cursor-pointer'
 const textareaClass =
-  'w-full px-3 py-2 text-sm bg-card border border-gray-200 rounded-lg outline-none transition-all hover:border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 resize-none'
+  'w-full px-3 py-2 text-sm bg-card border border-border rounded-lg outline-none transition-all hover:border-border focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 resize-none'
 
 function SectionHeader({ icon: Icon, title }: { icon: React.ComponentType<{ className?: string }>; title: string }) {
   return (
     <div className="flex items-center gap-2 pb-2 mb-4 border-b border-gray-100">
-      <div className="p-1.5 rounded-md bg-teal-50">
-        <Icon className="w-4 h-4 text-teal-600" />
+      <div className="p-1.5 rounded-md bg-omnia-gold/10">
+        <Icon className="w-4 h-4 text-omnia-gold" />
       </div>
-      <h3 className="text-sm font-bold text-gray-800">{title}</h3>
+      <h3 className="text-sm font-bold text-foreground">{title}</h3>
     </div>
   )
 }
 
 function FieldLabel({ label, required, icon: Icon }: { label: string; required?: boolean; icon?: React.ComponentType<{ className?: string }> }) {
   return (
-    <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
-      {Icon && <Icon className="w-3.5 h-3.5 text-gray-400" />}
+    <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+      {Icon && <Icon className="w-3.5 h-3.5 text-muted-foreground" />}
       {label}
       {required && <span className="text-red-500">*</span>}
     </label>
@@ -227,16 +227,16 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[700px] max-h-[90vh] bg-card rounded-2xl shadow-2xl border border-gray-200 flex flex-col"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[210] w-[700px] max-h-[90vh] bg-card rounded-2xl shadow-2xl border border-border flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <div>
-                <h2 className="font-bold text-gray-900 text-lg">Edit Lead</h2>
-                <p className="text-xs text-gray-500">{lead.lead_name}</p>
+                <h2 className="font-bold text-foreground text-lg">Edit Lead</h2>
+                <p className="text-xs text-muted-foreground">{lead.lead_name}</p>
               </div>
-              <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <X className="w-5 h-5 text-gray-500" />
+              <button onClick={onClose} className="p-2 rounded-lg hover:bg-muted transition-colors">
+                <X className="w-5 h-5 text-muted-foreground" />
               </button>
             </div>
 
@@ -402,8 +402,8 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                     </div>
                     <div className="flex items-center gap-2 pt-2">
                       <input {...register('visa_required')} type="checkbox" id="edit_visa" className="w-4 h-4 accent-teal-600" />
-                      <label htmlFor="edit_visa" className="text-sm text-gray-700 flex items-center gap-1.5">
-                        <Shield className="w-3.5 h-3.5 text-gray-400" /> Visa required
+                      <label htmlFor="edit_visa" className="text-sm text-foreground flex items-center gap-1.5">
+                        <Shield className="w-3.5 h-3.5 text-muted-foreground" /> Visa required
                       </label>
                     </div>
                     <div className="col-span-2">
@@ -428,8 +428,8 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                         onClick={() => toggleTag(tag)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
                           selectedTags.includes(tag)
-                            ? 'bg-teal-100 text-teal-700 border-teal-300'
-                            : 'bg-card text-gray-600 border-gray-200 hover:border-teal-300'
+                            ? 'bg-omnia-gold/15 text-omnia-gold-dark border-omnia-gold/40'
+                            : 'bg-card text-muted-foreground border-border hover:border-omnia-gold/40'
                         }`}
                       >
                         {tag}
@@ -459,7 +459,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   disabled={isSaving}
-                  className="bg-teal-600 hover:bg-teal-700 text-primary-foreground px-6"
+                  className="bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground px-6"
                 >
                   {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
                   Save Changes

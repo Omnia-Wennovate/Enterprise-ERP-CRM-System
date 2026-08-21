@@ -61,7 +61,7 @@ export default function RecruitmentPage() {
             <h1 className="text-3xl font-bold text-foreground">Recruitment</h1>
             <p className="text-muted-foreground mt-1">Manage job positions and applicants</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark font-medium">
             <Plus className="w-5 h-5" />
             Post Job
           </button>
@@ -95,7 +95,7 @@ export default function RecruitmentPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button className="text-teal-600 hover:text-teal-700 font-medium text-sm">View</button>
+                        <button className="text-omnia-gold hover:text-omnia-gold-dark font-medium text-sm">View</button>
                         <button className="text-red-600 hover:text-red-700">
                           <Trash2 className="w-4 h-4" />
                         </button>

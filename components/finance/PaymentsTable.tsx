@@ -49,7 +49,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
               <td className="px-6 py-4 whitespace-nowrap text-foreground">
                 {formatDate(payment.payment_date)}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap font-semibold text-teal-600">
+              <td className="px-6 py-4 whitespace-nowrap font-semibold text-omnia-gold">
                 {formatCurrency(payment.amount)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-muted-foreground">
@@ -69,7 +69,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
         <div className="flex justify-end">
           <div className="text-right">
             <p className="text-sm text-muted-foreground">Total Paid</p>
-            <p className="text-2xl font-bold text-teal-600">{formatCurrency(totalPaid)}</p>
+            <p className="text-2xl font-bold text-omnia-gold">{formatCurrency(totalPaid)}</p>
           </div>
         </div>
       </div>

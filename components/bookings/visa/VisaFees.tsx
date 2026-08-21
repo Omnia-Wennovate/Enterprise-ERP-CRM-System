@@ -40,7 +40,7 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
   const paymentStatusColors: Record<string, { icon: any; color: string; bg: string }> = {
     pending: { icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
     paid: { icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    partial: { icon: AlertCircle, color: 'text-blue-600', bg: 'bg-blue-50' },
+    partial: { icon: AlertCircle, color: 'text-omnia-gold', bg: 'bg-omnia-gold/5' },
     overdue: { icon: AlertCircle, color: 'text-red-600', bg: 'bg-red-50' },
     refunded: { icon: DollarSign, color: 'text-muted-foreground', bg: 'bg-muted/50' },
   }
@@ -57,7 +57,7 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-bold text-foreground">Fee Summary</h4>
-          <button onClick={() => setEditing(true)} className="text-xs font-medium text-teal-600 hover:text-teal-800">Edit</button>
+          <button onClick={() => setEditing(true)} className="text-xs font-medium text-omnia-gold hover:text-foreground">Edit</button>
         </div>
         <div className="bg-card border border-border rounded-xl overflow-hidden">
           <div className="divide-y divide-slate-100">
@@ -137,7 +137,7 @@ export function VisaFees({ fee, visaApplicationId, onSave }: VisaFeesProps) {
         <p className="text-sm font-bold text-foreground">Total: <span className="text-lg">${total.toFixed(2)}</span></p>
         <div className="flex gap-2">
           {fee && <button onClick={() => setEditing(false)} className="px-3 py-1.5 text-xs border border-border rounded-lg">Cancel</button>}
-          <button onClick={handleSave} disabled={saving} className="px-4 py-1.5 text-xs bg-teal-600 text-primary-foreground rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center gap-1">
+          <button onClick={handleSave} disabled={saving} className="px-4 py-1.5 text-xs bg-omnia-gold text-primary-foreground rounded-lg hover:bg-omnia-gold-dark disabled:opacity-50 flex items-center gap-1">
             {saving && <Loader2 className="w-3 h-3 animate-spin" />} Save
           </button>
         </div>

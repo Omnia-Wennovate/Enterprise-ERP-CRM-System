@@ -88,7 +88,7 @@ export function NotificationBell() {
       >
         <Bell size={20} />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="absolute top-1 right-1 w-2 h-2 bg-omnia-gold rounded-full"></span>
         )}
       </button>
 
@@ -113,23 +113,23 @@ export function NotificationBell() {
               </div>
             ) : notifications.length === 0 ? (
               <div className="px-4 py-8 text-center">
-                <Bell className="mx-auto text-[#DBEAFE] mb-2" size={32} />
+                <Bell className="mx-auto text-muted-foreground/30 mb-2" size={32} />
                 <p className="text-muted-foreground text-sm">All caught up!</p>
               </div>
             ) : (
-              <div className="divide-y divide-[#DBEAFE]">
+              <div className="divide-y divide-border">
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}
                     className={`px-4 py-3 hover:bg-background transition-colors cursor-pointer ${
-                      !notification.is_read ? 'bg-blue-50' : ''
+                      !notification.is_read ? 'bg-omnia-gold/5' : ''
                     }`}
                     onClick={() => handleMarkAsRead(notification.id)}
                   >
                     <div className="flex gap-3">
                       <div
                         className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                          notification.is_read ? 'bg-[#DBEAFE]' : 'bg-primary'
+                          notification.is_read ? 'bg-border' : 'bg-omnia-gold'
                         }`}
                       />
                       <div className="flex-1 min-w-0">
@@ -151,7 +151,7 @@ export function NotificationBell() {
             <div className="border-t border-border px-4 py-3">
               <button
                 onClick={handleMarkAllRead}
-                className="w-full text-center text-xs font-medium text-primary hover:text-[#088096] transition-colors"
+                className="w-full text-center text-xs font-medium text-omnia-gold hover:text-omnia-gold-dark transition-colors"
               >
                 Mark all as read
               </button>

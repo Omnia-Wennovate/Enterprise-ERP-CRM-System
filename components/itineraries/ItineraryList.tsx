@@ -122,7 +122,7 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
             placeholder="Search itineraries, destinations, customers, booking references..."
             value={filters.search}
             onChange={e => setFilters(f => ({ ...f, search: e.target.value }))}
-            className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-400 text-sm transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-omnia-gold/60 text-sm transition-all"
           />
           {filters.search && (
             <button onClick={() => setFilters(f => ({ ...f, search: '' }))} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-muted-foreground">
@@ -133,12 +133,12 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
-            showFilters ? 'bg-teal-50 border-teal-200 text-teal-700' : 'bg-card border-border text-muted-foreground hover:bg-muted/50'
+            showFilters ? 'bg-omnia-gold/10 border-omnia-gold/20 text-omnia-gold-dark' : 'bg-card border-border text-muted-foreground hover:bg-muted/50'
           }`}
         >
           <SlidersHorizontal className="w-4 h-4" /> Filters
         </button>
-        <button onClick={onCreate} className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold shadow-sm">
+        <button onClick={onCreate} className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl hover:bg-omnia-gold-dark transition-colors text-sm font-semibold shadow-sm">
           <Plus className="w-4 h-4" /> New Itinerary
         </button>
       </div>
@@ -151,7 +151,7 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
             onClick={() => setFilters(f => ({ ...f, status: qf.value as any }))}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
               filters.status === qf.value
-                ? 'bg-teal-600 text-primary-foreground shadow-sm'
+                ? 'bg-omnia-gold text-primary-foreground shadow-sm'
                 : 'bg-card border border-border text-muted-foreground hover:bg-muted/50'
             }`}
           >
@@ -209,11 +209,11 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
       {/* Results */}
       {loading ? (
         <div className="flex items-center justify-center h-48">
-          <Loader2 className="w-7 h-7 animate-spin text-teal-600" />
+          <Loader2 className="w-7 h-7 animate-spin text-omnia-gold" />
         </div>
       ) : filtered.length === 0 ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-16 bg-card rounded-xl border border-border/60">
-          <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mb-4">
+          <div className="w-16 h-16 bg-omnia-gold/10 rounded-2xl flex items-center justify-center mb-4">
             <Map className="w-8 h-8 text-teal-400" />
           </div>
           <h3 className="text-lg font-semibold text-foreground">No Itineraries Found</h3>
@@ -222,7 +222,7 @@ export function ItineraryList({ onOpen, onEdit, onCreate, onDelete }: ItineraryL
               ? 'Try adjusting your search or filters'
               : 'Create your first itinerary to get started with trip planning'}
           </p>
-          <button onClick={onCreate} className="mt-4 flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-primary-foreground rounded-xl hover:bg-teal-700 transition-colors text-sm font-semibold">
+          <button onClick={onCreate} className="mt-4 flex items-center gap-2 px-5 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl hover:bg-omnia-gold-dark transition-colors text-sm font-semibold">
             <Plus className="w-4 h-4" /> Create Itinerary
           </button>
         </motion.div>

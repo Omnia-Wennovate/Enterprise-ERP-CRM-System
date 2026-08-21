@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { Plane, Settings, LogOut, Lock, X, Menu } from 'lucide-react'
+import { Settings, LogOut, Lock, X, Menu } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import { getNavForRole } from '@/lib/navigation'
+import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import type { Profile } from '@/types'
 
 interface MobileSidebarProps {
@@ -102,37 +103,32 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/50 z-40"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
             onClick={() => setIsOpen(false)}
           />
 
           {/* Sidebar */}
-          <div className="fixed left-0 top-0 h-screen w-56 bg-sidebar border-r border-sidebar-border z-50 overflow-y-auto flex flex-col">
+          <div className="fixed left-0 top-0 h-screen w-[260px] bg-sidebar border-r border-sidebar-border z-50 overflow-y-auto flex flex-col">
             {/* Header */}
-            <div className="h-16 border-b border-sidebar-border bg-sidebar-accent flex items-center justify-between gap-2 px-4 flex-shrink-0">
-              <div className="flex items-center gap-2 flex-1">
-                <div className="bg-primary p-1.5 rounded-lg">
-                  <Plane className="text-primary-foreground" size={20} />
-                </div>
-                <span className="text-primary-foreground font-bold text-lg">Omnia Travel</span>
-              </div>
+            <div className="h-16 border-b border-sidebar-border flex items-center justify-between px-5 flex-shrink-0">
+              <OmniaLogo variant="full" theme="light" size={52} />
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-primary-foreground hover:text-muted-foreground"
+                className="text-sidebar-foreground hover:text-sidebar-accent-foreground transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
 
             {/* User Profile */}
-            <div className="px-4 py-3 border-b border-sidebar-border">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs font-medium flex-shrink-0">
+            <div className="px-4 py-3.5 border-b border-sidebar-border">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 bg-omnia-gold/20 text-omnia-gold border border-omnia-gold/30">
                   {getInitials(profile.full_name)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-primary-foreground text-sm font-medium truncate">{profile.full_name}</p>
-                  <p className="text-xs px-2 py-0.5 rounded-full bg-sidebar-accent text-accent-foreground capitalize inline-block mt-1">
+                  <p className="text-sidebar-accent-foreground text-sm font-medium truncate">{profile.full_name}</p>
+                  <p className="text-[10px] px-2 py-0.5 rounded-full bg-omnia-gold/15 text-omnia-gold-light capitalize inline-block mt-0.5 font-medium">
                     {profile.role.replace(/_/g, ' ')}
                   </p>
                 </div>
@@ -140,13 +136,13 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-6">
+            <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
               {nav.map((section) => (
                 <div key={section.title}>
-                  <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground px-3 pb-2">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.15em] text-sidebar-foreground/50 px-3 pb-2">
                     {section.title}
                   </h3>
-                  <div className="space-y-1">
+                  <div className="space-y-0.5">
                     {section.items.map((item) => {
                       const Icon = getIconComponent(item.icon)
                       const active = isActive(item.href)
@@ -161,20 +157,23 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
                             }
                           }}
                           disabled={item.locked}
-                          className={`w-full flex items-center gap-2.5 px-3 py-2 mx-1 rounded-lg text-sm font-medium transition-all duration-150 ${
+                          className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 relative ${
                             item.locked
-                              ? 'opacity-50 cursor-not-allowed text-muted-foreground'
+                              ? 'opacity-40 cursor-not-allowed text-sidebar-foreground'
                               : active
-                                ? 'bg-primary text-primary-foreground'
-                                : 'text-muted-foreground hover:bg-sidebar-accent hover:text-primary-foreground'
+                                ? 'bg-sidebar-accent text-omnia-gold'
+                                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                           }`}
                         >
+                          {active && (
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-omnia-gold rounded-r-full" />
+                          )}
                           <Icon size={16} className="flex-shrink-0" />
                           <span className="flex-1 text-left truncate">{item.label}</span>
                           {item.locked ? (
-                            <Lock size={12} className="flex-shrink-0" />
+                            <Lock size={12} className="flex-shrink-0 opacity-50" />
                           ) : item.badge ? (
-                            <span className="text-xs px-1.5 py-0.5 rounded-full bg-destructive text-primary-foreground flex-shrink-0">
+                            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-omnia-gold/20 text-omnia-gold font-semibold flex-shrink-0">
                               {item.badge}
                             </span>
                           ) : null}
@@ -187,14 +186,14 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
             </nav>
 
             {/* Bottom Section */}
-            <div className="border-t border-sidebar-border p-2 flex-shrink-0 space-y-1">
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-primary-foreground transition-all duration-150">
+            <div className="border-t border-sidebar-border p-3 flex-shrink-0 space-y-0.5">
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150">
                 <Settings size={16} />
                 <span>Settings</span>
               </button>
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-950/30 transition-all duration-150"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150"
               >
                 <LogOut size={16} />
                 <span>Sign Out</span>

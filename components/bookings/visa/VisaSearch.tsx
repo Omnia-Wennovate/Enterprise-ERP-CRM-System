@@ -48,7 +48,7 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
           </div>
           <input
             type="text"
-            className="block w-full pl-10 pr-3 py-2.5 border border-border rounded-lg focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="block w-full pl-10 pr-3 py-2.5 border border-border rounded-lg focus:ring-teal-500 focus:border-omnia-gold text-sm"
             placeholder="Search by applicant name, passport, booking ref, or destination..."
             value={params.query || ''}
             onChange={(e) => handleParamChange('query', e.target.value)}
@@ -67,7 +67,7 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
             <Filter className="w-4 h-4" />
             Filters
             {Object.keys(params).filter(k => k !== 'query').length > 0 && (
-              <span className="ml-1 flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-teal-600 text-primary-foreground rounded-full">
+              <span className="ml-1 flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-omnia-gold text-primary-foreground rounded-full">
                 {Object.keys(params).filter(k => k !== 'query').length}
               </span>
             )}
@@ -85,7 +85,7 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
                 Status
               </label>
               <select
-                className="w-full border-border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                className="w-full border-border rounded-md shadow-sm focus:border-omnia-gold focus:ring-teal-500 sm:text-sm"
                 value={params.status || ''}
                 onChange={(e) => handleParamChange('status', e.target.value)}
               >
@@ -102,7 +102,7 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
                 Priority
               </label>
               <select
-                className="w-full border-border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                className="w-full border-border rounded-md shadow-sm focus:border-omnia-gold focus:ring-teal-500 sm:text-sm"
                 value={params.priority || ''}
                 onChange={(e) => handleParamChange('priority', e.target.value)}
               >
@@ -119,7 +119,7 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
                 Visa Type
               </label>
               <select
-                className="w-full border-border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                className="w-full border-border rounded-md shadow-sm focus:border-omnia-gold focus:ring-teal-500 sm:text-sm"
                 value={params.visaType || ''}
                 onChange={(e) => handleParamChange('visaType', e.target.value)}
               >
@@ -138,14 +138,14 @@ export function VisaSearch({ onSearch, initialParams = {} }: VisaSearchProps) {
               <div className="flex items-center gap-2">
                 <input
                   type="date"
-                  className="w-full border-border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                  className="w-full border-border rounded-md shadow-sm focus:border-omnia-gold focus:ring-teal-500 sm:text-sm"
                   value={params.dateFrom || ''}
                   onChange={(e) => handleParamChange('dateFrom', e.target.value)}
                 />
                 <span className="text-muted-foreground">-</span>
                 <input
                   type="date"
-                  className="w-full border-border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                  className="w-full border-border rounded-md shadow-sm focus:border-omnia-gold focus:ring-teal-500 sm:text-sm"
                   value={params.dateTo || ''}
                   onChange={(e) => handleParamChange('dateTo', e.target.value)}
                 />

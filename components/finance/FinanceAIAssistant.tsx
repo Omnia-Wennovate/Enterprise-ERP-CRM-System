@@ -26,7 +26,7 @@ export function FinanceAIAssistant({ invoice }: FinanceAIAssistantProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-teal-600 text-white p-4 rounded-full shadow-lg hover:bg-teal-700 transition-colors flex items-center justify-center"
+        className="fixed bottom-6 right-6 bg-omnia-gold text-white p-4 rounded-full shadow-lg hover:bg-omnia-gold-dark transition-colors flex items-center justify-center"
       >
         <Sparkles className="w-6 h-6" />
       </button>
@@ -35,12 +35,12 @@ export function FinanceAIAssistant({ invoice }: FinanceAIAssistantProps) {
 
   return (
     <div className="fixed bottom-6 right-6 w-96 bg-card border border-border shadow-2xl rounded-xl overflow-hidden flex flex-col max-h-[600px] z-50">
-      <div className="bg-teal-600 text-white p-4 flex justify-between items-center">
+      <div className="bg-omnia-gold text-white p-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Sparkles className="w-5 h-5" />
           <h3 className="font-semibold">Finance AI Assistant</h3>
         </div>
-        <button onClick={() => setIsOpen(false)} className="hover:bg-teal-700 p-1 rounded">
+        <button onClick={() => setIsOpen(false)} className="hover:bg-omnia-gold-dark p-1 rounded">
           <X className="w-5 h-5" />
         </button>
       </div>
@@ -48,7 +48,7 @@ export function FinanceAIAssistant({ invoice }: FinanceAIAssistantProps) {
       <div className="flex-1 p-4 overflow-y-auto bg-muted/20 space-y-4">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] rounded-lg p-3 text-sm ${msg.role === 'user' ? 'bg-teal-600 text-white' : 'bg-card border border-border text-foreground'}`}>
+            <div className={`max-w-[80%] rounded-lg p-3 text-sm ${msg.role === 'user' ? 'bg-omnia-gold text-white' : 'bg-card border border-border text-foreground'}`}>
               {msg.content}
             </div>
           </div>
@@ -66,7 +66,7 @@ export function FinanceAIAssistant({ invoice }: FinanceAIAssistantProps) {
         />
         <button
           onClick={handleSend}
-          className="bg-teal-600 text-white p-2 rounded-lg hover:bg-teal-700 transition-colors"
+          className="bg-omnia-gold text-white p-2 rounded-lg hover:bg-omnia-gold-dark transition-colors"
         >
           <Send className="w-4 h-4" />
         </button>

@@ -57,7 +57,7 @@ export function AICostEstimatePanel({ costEstimate }: AICostEstimatePanelProps) 
         {costEstimate.destinationCurrency && costEstimate.destinationCurrency !== costEstimate.baseCurrency && (
           <button
             onClick={() => setShowDestCurrency(!showDestCurrency)}
-            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-muted-foreground hover:text-teal-600 bg-card border border-border rounded-lg transition-colors"
+            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-muted-foreground hover:text-omnia-gold bg-card border border-border rounded-lg transition-colors"
           >
             <ArrowRightLeft className="w-3 h-3" />
             {showDestCurrency ? costEstimate.baseCurrency : costEstimate.destinationCurrency}

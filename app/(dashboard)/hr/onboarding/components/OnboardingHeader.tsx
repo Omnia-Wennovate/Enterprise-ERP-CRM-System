@@ -15,7 +15,7 @@ export function OnboardingHeader({ kpis, onStartOnboarding }: Props) {
   const formattedDate = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
   const pills = [
-    { label: 'Active', value: kpis.activeCount, icon: Users, color: 'text-teal-600' },
+    { label: 'Active', value: kpis.activeCount, icon: Users, color: 'text-omnia-gold' },
     { label: 'Completion', value: `${kpis.completionRate}%`, icon: TrendingUp, color: 'text-emerald-600' },
     { label: 'Overdue', value: kpis.overdueTasks, icon: AlertTriangle, color: kpis.overdueTasks > 0 ? 'text-red-500' : 'text-muted-foreground' },
     { label: 'Starting Soon', value: kpis.startingSoon, icon: Clock, color: 'text-blue-500' },
@@ -31,7 +31,7 @@ export function OnboardingHeader({ kpis, onStartOnboarding }: Props) {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl font-bold text-foreground flex items-center gap-3"
           >
-            <Sparkles className="w-7 h-7 text-teal-500" />
+            <Sparkles className="w-7 h-7 text-omnia-gold" />
             Onboarding
           </motion.h1>
           <motion.p
@@ -54,7 +54,7 @@ export function OnboardingHeader({ kpis, onStartOnboarding }: Props) {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           onClick={onStartOnboarding}
-          className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors font-semibold shadow-lg shadow-teal-600/20"
+          className="flex items-center gap-2 px-5 py-2.5 bg-omnia-gold text-white rounded-xl hover:bg-omnia-gold-dark transition-colors font-semibold shadow-lg shadow-teal-600/20"
         >
           <Plus className="w-5 h-5" />
           Start Onboarding

@@ -96,24 +96,24 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
   return (
     <div className="space-y-4">
       {/* New note editor */}
-      <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-2">
+      <div className="bg-muted border border-border rounded-xl p-3 space-y-2">
         <textarea
           value={newContent}
           onChange={(e) => setNewContent(e.target.value)}
           placeholder="Add an internal note... Use @name to mention someone."
           rows={3}
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-card focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 outline-none resize-none"
+          className="w-full px-3 py-2 text-sm border border-border rounded-lg bg-card focus:border-omnia-gold/60 focus:ring-2 focus:ring-teal-400/20 outline-none resize-none"
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleAdd()
           }}
         />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] text-gray-400">Ctrl+Enter to save</span>
+          <span className="text-[11px] text-muted-foreground">Ctrl+Enter to save</span>
           <Button
             size="sm"
             onClick={handleAdd}
             disabled={!newContent.trim() || isSaving}
-            className="bg-teal-600 hover:bg-teal-700 text-primary-foreground h-7 px-3 text-xs"
+            className="bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground h-7 px-3 text-xs"
           >
             {isSaving ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : <Send className="w-3 h-3 mr-1" />}
             Post Note
@@ -124,10 +124,10 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
       {/* Notes list */}
       {isLoading ? (
         <div className="flex justify-center py-8">
-          <Loader2 className="w-5 h-5 text-teal-500 animate-spin" />
+          <Loader2 className="w-5 h-5 text-omnia-gold animate-spin" />
         </div>
       ) : notes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+        <div className="flex flex-col items-center justify-center py-10 text-muted-foreground">
           <MessageSquare className="w-10 h-10 mb-2 opacity-40" />
           <p className="text-sm">No notes yet</p>
         </div>
@@ -145,28 +145,28 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
                   exit={{ opacity: 0, y: -4 }}
                   className="flex gap-3 group"
                 >
-                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                    <span className="text-[11px] font-bold text-teal-700">{initials}</span>
+                  <div className="w-8 h-8 rounded-full bg-omnia-gold/15 flex items-center justify-center flex-shrink-0">
+                    <span className="text-[11px] font-bold text-omnia-gold-dark">{initials}</span>
                   </div>
-                  <div className="flex-1 bg-card border border-gray-200 rounded-xl p-3 hover:border-teal-200 transition-colors">
+                  <div className="flex-1 bg-card border border-border rounded-xl p-3 hover:border-omnia-gold/20 transition-colors">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-gray-800">
+                        <span className="text-sm font-semibold text-foreground">
                           {note.author_name || 'Team Member'}
                         </span>
-                        <span className="text-[11px] text-gray-400">{timeAgo(note.created_at)}</span>
+                        <span className="text-[11px] text-muted-foreground">{timeAgo(note.created_at)}</span>
                       </div>
                       {isOwn && editingId !== note.id && (
                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => { setEditingId(note.id); setEditContent(note.content) }}
-                            className="p-1 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-500 transition-colors"
+                            className="p-1 rounded hover:bg-omnia-gold/5 text-muted-foreground hover:text-blue-500 transition-colors"
                           >
                             <Pencil className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDelete(note.id)}
-                            className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                            className="p-1 rounded hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -180,11 +180,11 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
                           value={editContent}
                           onChange={(e) => setEditContent(e.target.value)}
                           rows={2}
-                          className="w-full px-2 py-1.5 text-sm border border-teal-300 rounded-lg outline-none resize-none"
+                          className="w-full px-2 py-1.5 text-sm border border-omnia-gold/40 rounded-lg outline-none resize-none"
                           autoFocus
                         />
                         <div className="flex gap-2">
-                          <Button size="sm" onClick={() => handleEdit(note.id)} className="h-6 px-2 text-xs bg-teal-600 hover:bg-teal-700 text-primary-foreground">
+                          <Button size="sm" onClick={() => handleEdit(note.id)} className="h-6 px-2 text-xs bg-omnia-gold hover:bg-omnia-gold-dark text-primary-foreground">
                             Save
                           </Button>
                           <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="h-6 px-2 text-xs">
@@ -193,11 +193,11 @@ export function LeadNoteEditor({ leadId, currentUserId, currentUserName, refresh
                         </div>
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-700 whitespace-pre-wrap">{note.content}</p>
+                      <p className="text-sm text-foreground whitespace-pre-wrap">{note.content}</p>
                     )}
 
                     {note.updated_at !== note.created_at && editingId !== note.id && (
-                      <p className="text-[10px] text-gray-400 mt-1">edited</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">edited</p>
                     )}
                   </div>
                 </motion.div>

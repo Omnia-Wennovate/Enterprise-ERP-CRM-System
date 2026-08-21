@@ -20,7 +20,7 @@ export function LegacyHRDashboard({ stats }: LegacyHRDashboardProps) {
       title: 'Total Employees',
       value: stats.totalEmployees,
       icon: Users,
-      color: 'bg-blue-50 dark:bg-blue-950/30',
+      color: 'bg-omnia-gold/5 dark:bg-blue-950/30',
       href: '/hr/employees',
     },
     {
@@ -138,8 +138,8 @@ export function LegacyHRDashboard({ stats }: LegacyHRDashboardProps) {
               <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">{stats.absentToday}</p>
               <p className="text-xs text-muted-foreground mt-1">Absent</p>
             </div>
-            <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.onLeave}</p>
+            <div className="text-center p-3 bg-omnia-gold/5 dark:bg-blue-950/30 rounded-lg">
+              <p className="text-2xl font-bold text-omnia-gold dark:text-blue-400">{stats.onLeave}</p>
               <p className="text-xs text-muted-foreground mt-1">On Leave</p>
             </div>
           </div>

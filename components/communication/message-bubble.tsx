@@ -41,7 +41,7 @@ export function MessageBubble({
         <div
           className={`px-4 py-2 rounded-lg ${
             isOwn
-              ? 'bg-teal-600 text-primary-foreground rounded-br-none'
+              ? 'bg-omnia-gold text-primary-foreground rounded-br-none'
               : 'bg-card text-foreground rounded-bl-none shadow'
           }`}
         >
@@ -49,7 +49,7 @@ export function MessageBubble({
           <p className="break-words">{message}</p>
 
           <div className="flex items-center justify-between gap-2 mt-1">
-            <p className={`text-xs ${isOwn ? 'text-teal-100' : 'text-muted-foreground'}`}>
+            <p className={`text-xs ${isOwn ? 'text-white/70' : 'text-muted-foreground'}`}>
               {timestamp}
             </p>
             {isOwn && (
@@ -73,9 +73,9 @@ export function MessageBubble({
                 onClick={() => onReact?.(reaction.emoji)}
                 className={`px-2 py-1 rounded-full text-xs flex items-center gap-1 transition-colors ${
                   reaction.userReacted
-                    ? 'bg-teal-100 text-teal-700'
+                    ? 'bg-omnia-gold/15 text-omnia-gold-dark'
                     : isOwn
-                    ? 'bg-teal-500/20 text-teal-100 hover:bg-teal-500/30'
+                    ? 'bg-omnia-gold/100/20 text-white/70 hover:bg-omnia-gold/100/30'
                     : 'bg-muted text-slate-700 hover:bg-slate-200'
                 }`}
               >
