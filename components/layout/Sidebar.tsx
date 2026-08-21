@@ -60,6 +60,12 @@ function getIconComponent(iconName: string) {
     Code2: LucideIcons.Code2,
     GitBranch: LucideIcons.GitBranch,
     Bug: LucideIcons.Bug,
+    RefreshCw: LucideIcons.RefreshCw,
+    KeyRound: LucideIcons.KeyRound,
+    Archive: LucideIcons.Archive,
+    Inbox: LucideIcons.Inbox,
+    PiggyBank: LucideIcons.PiggyBank,
+    Wallet: LucideIcons.Wallet,
   }
   return icons[iconName] || LucideIcons.Circle
 }

@@ -57,6 +57,15 @@ function getIconComponent(iconName: string) {
     CheckCircle: LucideIcons.CheckCircle,
     Briefcase: LucideIcons.Briefcase,
     Package: LucideIcons.Package,
+    Cpu: LucideIcons.Cpu,
+    Code2: LucideIcons.Code2,
+    GitBranch: LucideIcons.GitBranch,
+    RefreshCw: LucideIcons.RefreshCw,
+    KeyRound: LucideIcons.KeyRound,
+    Archive: LucideIcons.Archive,
+    Inbox: LucideIcons.Inbox,
+    PiggyBank: LucideIcons.PiggyBank,
+    Wallet: LucideIcons.Wallet,
   }
   return icons[iconName] || LucideIcons.Circle
 }

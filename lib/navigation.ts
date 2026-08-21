@@ -36,12 +36,14 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Finance',
         items: [
+          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 0 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
           { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
+          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
@@ -132,11 +134,14 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Finance',
         items: [
+          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 0 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
+          { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
+          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
@@ -274,12 +279,14 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Finance',
         items: [
+          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 3 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
           { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
+          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
