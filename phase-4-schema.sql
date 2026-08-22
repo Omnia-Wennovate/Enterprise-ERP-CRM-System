@@ -176,18 +176,21 @@ ALTER TABLE refunds ENABLE ROW LEVEL SECURITY;
 -- ============================================================================
 
 -- Super Admin & Admin: full access
+DROP POLICY IF EXISTS "admin_invoices_full" ON invoices;
 CREATE POLICY "admin_invoices_full" ON invoices
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
 -- Accountant: full access to all invoices
+DROP POLICY IF EXISTS "accountant_invoices_full" ON invoices;
 CREATE POLICY "accountant_invoices_full" ON invoices
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
   ));
 
 -- Sales Agent: read-only on invoices for their bookings
+DROP POLICY IF EXISTS "sales_agent_invoices_read" ON invoices;
 CREATE POLICY "sales_agent_invoices_read" ON invoices
   FOR SELECT USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'sales_agent'
@@ -201,16 +204,19 @@ CREATE POLICY "sales_agent_invoices_read" ON invoices
 -- RLS POLICIES - PAYMENTS
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_payments_full" ON payments;
 CREATE POLICY "admin_payments_full" ON payments
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_payments_full" ON payments;
 CREATE POLICY "accountant_payments_full" ON payments
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
   ));
 
+DROP POLICY IF EXISTS "sales_agent_payments_read" ON payments;
 CREATE POLICY "sales_agent_payments_read" ON payments
   FOR SELECT USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'sales_agent'
@@ -226,11 +232,13 @@ CREATE POLICY "sales_agent_payments_read" ON payments
 -- RLS POLICIES - EXPENSES
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_expenses_full" ON expenses;
 CREATE POLICY "admin_expenses_full" ON expenses
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_expenses_full" ON expenses;
 CREATE POLICY "accountant_expenses_full" ON expenses
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
@@ -240,16 +248,19 @@ CREATE POLICY "accountant_expenses_full" ON expenses
 -- RLS POLICIES - SUPPLIER PAYMENTS
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_supplier_payments_full" ON supplier_payments;
 CREATE POLICY "admin_supplier_payments_full" ON supplier_payments
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_supplier_payments_full" ON supplier_payments;
 CREATE POLICY "accountant_supplier_payments_full" ON supplier_payments
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
   ));
 
+DROP POLICY IF EXISTS "operations_supplier_payments_read" ON supplier_payments;
 CREATE POLICY "operations_supplier_payments_read" ON supplier_payments
   FOR SELECT USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'operations'
@@ -259,21 +270,25 @@ CREATE POLICY "operations_supplier_payments_read" ON supplier_payments
 -- RLS POLICIES - COMMISSIONS
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_commissions_full" ON commissions;
 CREATE POLICY "admin_commissions_full" ON commissions
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_commissions_full" ON commissions;
 CREATE POLICY "accountant_commissions_full" ON commissions
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
   ));
 
+DROP POLICY IF EXISTS "sales_agent_commissions_read" ON commissions;
 CREATE POLICY "sales_agent_commissions_read" ON commissions
   FOR SELECT USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'sales_agent'
   ) AND agent_id = auth.uid());
 
+DROP POLICY IF EXISTS "hr_commissions_read" ON commissions;
 CREATE POLICY "hr_commissions_read" ON commissions
   FOR SELECT USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'hr_manager'
@@ -283,16 +298,19 @@ CREATE POLICY "hr_commissions_read" ON commissions
 -- RLS POLICIES - CANCELLATION REQUESTS
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_cancellations_full" ON cancellation_requests;
 CREATE POLICY "admin_cancellations_full" ON cancellation_requests
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "operations_cancellations_full" ON cancellation_requests;
 CREATE POLICY "operations_cancellations_full" ON cancellation_requests
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'operations'
   ));
 
+DROP POLICY IF EXISTS "sales_agent_cancellations_own" ON cancellation_requests;
 CREATE POLICY "sales_agent_cancellations_own" ON cancellation_requests
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'sales_agent'
@@ -302,11 +320,13 @@ CREATE POLICY "sales_agent_cancellations_own" ON cancellation_requests
 -- RLS POLICIES - REFUNDS
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_refunds_full" ON refunds;
 CREATE POLICY "admin_refunds_full" ON refunds
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_refunds_full" ON refunds;
 CREATE POLICY "accountant_refunds_full" ON refunds
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
@@ -316,21 +336,25 @@ CREATE POLICY "accountant_refunds_full" ON refunds
 -- RLS POLICIES - INVOICE LINE ITEMS & COMMISSION RULES
 -- ============================================================================
 
+DROP POLICY IF EXISTS "admin_invoice_items_full" ON invoice_line_items;
 CREATE POLICY "admin_invoice_items_full" ON invoice_line_items
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_invoice_items_full" ON invoice_line_items;
 CREATE POLICY "accountant_invoice_items_full" ON invoice_line_items
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'
   ));
 
+DROP POLICY IF EXISTS "admin_commission_rules_full" ON commission_rules;
 CREATE POLICY "admin_commission_rules_full" ON commission_rules
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role IN ('super_admin', 'admin')
   ));
 
+DROP POLICY IF EXISTS "accountant_commission_rules_full" ON commission_rules;
 CREATE POLICY "accountant_commission_rules_full" ON commission_rules
   FOR ALL USING (auth.uid() IN (
     SELECT id FROM profiles WHERE role = 'accountant'

@@ -2,18 +2,33 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { FileText, Download, CheckCircle, XCircle, Search, AlertTriangle, Calendar, Clock } from 'lucide-react'
+import { FileText, Download, CheckCircle, XCircle, Search, AlertTriangle, Calendar, Clock, BookOpen, Shield } from 'lucide-react'
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts'
 import type { DocumentDashboardKPIs, DocumentChartData } from '@/types/documents'
 
 export function DocumentsDashboard({ kpis, chartData }: { kpis: DocumentDashboardKPIs, chartData: DocumentChartData }) {
   return (
     <div className="space-y-6">
+      {/* General KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard title="Total Documents" value={kpis.totalDocuments} subtitle="All time" icon={FileText} color="bg-omnia-gold/5 text-omnia-gold" />
         <KPICard title="Pending Review" value={kpis.pendingDocuments} subtitle="Needs attention" icon={Clock} color="bg-amber-50 text-amber-600" />
         <KPICard title="Approved" value={kpis.approvedDocuments} subtitle="Ready for travel" icon={CheckCircle} color="bg-emerald-50 text-emerald-600" />
-        <KPICard title="Expiring Soon" value={kpis.expiringSoon} subtitle="Within 30 days" icon={AlertTriangle} color="bg-rose-50 text-rose-600" />
+        <KPICard title="Expiring (30 days)" value={kpis.expiringSoon} subtitle="All document types" icon={AlertTriangle} color="bg-rose-50 text-rose-600" />
+      </div>
+
+      {/* Passport Health Strip */}
+      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="px-5 py-3 border-b border-border bg-gradient-to-r from-[#0A1221] to-[#1a2744] flex items-center gap-2">
+          <Shield className="w-4 h-4 text-white" />
+          <span className="text-sm font-semibold text-white">Passport Health</span>
+          <span className="ml-auto text-xs text-white/60">{kpis.passportCount} total passport{kpis.passportCount !== 1 ? 's' : ''}</span>
+        </div>
+        <div className="grid grid-cols-3 divide-x divide-border">
+          <PassportKPICell label="Valid" value={kpis.passportValid} color="text-emerald-700" bg="bg-emerald-50" />
+          <PassportKPICell label="Expiring Soon" value={kpis.passportExpiringSoon} color="text-amber-700" bg="bg-amber-50" subtitle="within 8 months" />
+          <PassportKPICell label="Expired" value={kpis.passportExpired} color="text-red-700" bg="bg-red-50" />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -77,3 +92,14 @@ function KPICard({ title, value, subtitle, icon: Icon, color }: any) {
     </div>
   )
 }
+
+function PassportKPICell({ label, value, color, bg, subtitle }: { label: string; value: number; color: string; bg: string; subtitle?: string }) {
+  return (
+    <div className={`p-5 flex flex-col items-center justify-center text-center`}>
+      <p className={`text-2xl font-bold ${color}`}>{value}</p>
+      <p className={`text-xs font-semibold mt-1 ${color}`}>{label}</p>
+      {subtitle && <p className="text-[10px] text-muted-foreground mt-0.5">{subtitle}</p>}
+    </div>
+  )
+}
+

@@ -93,7 +93,7 @@ export async function getMissingDocuments(visaApplicationId: string, nationality
   if (!rule || !rule.required_documents) return { required: [], uploaded: docs, missing: [] }
 
   const uploadedTypes = new Set(docs.map(d => d.document_type))
-  const missing = rule.required_documents.filter(req => !uploadedTypes.has(req as any))
+  const missing = rule.required_documents.filter((req: string) => !uploadedTypes.has(req as any))
 
   return {
     required: rule.required_documents,

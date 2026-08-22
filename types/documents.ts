@@ -53,6 +53,9 @@ export type DocumentAccessAction =
 
 export type ExpirationSeverity = 'expired' | 'critical' | 'warning' | 'caution' | 'ok'
 
+// Passport-specific validity status (8-calendar-month threshold)
+export type PassportStatus = 'valid' | 'expiring_soon' | 'expired'
+
 // ── Document Labels ───────────────────────────────────────────────────────────
 
 export const DOCUMENT_TYPE_LABELS: Record<DocumentType, string> = {
@@ -270,6 +273,17 @@ export interface DocumentDashboardKPIs {
   flightTickets: number
   hotelVouchers: number
   legalHoldCount: number
+  // Passport-specific counts (8-month calendar threshold)
+  passportValid: number
+  passportExpiringSoon: number
+  passportExpired: number
+}
+
+export interface PassportKPIs {
+  total: number
+  valid: number
+  expiringSoon: number   // within 8 calendar months
+  expired: number
 }
 
 export interface DocumentChartData {

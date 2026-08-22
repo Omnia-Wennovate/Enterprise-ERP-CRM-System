@@ -9,7 +9,83 @@ import type {
   ValidationBadge,
   ExpirationWarning,
   ExpirationSeverity,
+  PassportStatus,
 } from '@/types/documents'
+
+// ── Passport Status (8 calendar-month rule) ───────────────────────────────────
+
+/**
+ * Returns the passport validity status using proper calendar-month comparison.
+ * Rule: if expiry <= today + 8 months → 'expiring_soon'; if < today → 'expired'; else 'valid'
+ */
+export function getPassportStatus(expiryDate: string): PassportStatus {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const expiry = new Date(expiryDate)
+  expiry.setHours(0, 0, 0, 0)
+
+  if (expiry < today) return 'expired'
+
+  // Calendar-month threshold: today + 8 months
+  const threshold = new Date(today)
+  threshold.setMonth(threshold.getMonth() + 8)
+
+  if (expiry <= threshold) return 'expiring_soon'
+  return 'valid'
+}
+
+/**
+ * Returns a human-readable remaining time string for a passport expiry.
+ * Examples: "Expired", "Expired 3 months ago", "7 months remaining", "1 year 3 months remaining"
+ */
+export function formatPassportRemaining(expiryDate: string): string {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const expiry = new Date(expiryDate)
+  expiry.setHours(0, 0, 0, 0)
+
+  const diffMs = expiry.getTime() - today.getTime()
+  const diffDays = Math.ceil(diffMs / 86400000)
+
+  if (diffDays < 0) {
+    // Expired
+    const absDays = Math.abs(diffDays)
+    if (absDays < 31) return `Expired ${absDays} day${absDays !== 1 ? 's' : ''} ago`
+    const absMonths = Math.round(absDays / 30.44)
+    if (absMonths < 13) return `Expired ${absMonths} month${absMonths !== 1 ? 's' : ''} ago`
+    const absYears = Math.floor(absMonths / 12)
+    const remMonths = absMonths % 12
+    return remMonths > 0
+      ? `Expired ${absYears}y ${remMonths}m ago`
+      : `Expired ${absYears} year${absYears !== 1 ? 's' : ''} ago`
+  }
+
+  if (diffDays === 0) return 'Expires today'
+
+  // Future
+  const totalMonths =
+    (expiry.getFullYear() - today.getFullYear()) * 12 +
+    (expiry.getMonth() - today.getMonth())
+
+  if (totalMonths === 0) return `${diffDays} day${diffDays !== 1 ? 's' : ''} remaining`
+  if (totalMonths < 12) return `${totalMonths} month${totalMonths !== 1 ? 's' : ''} remaining`
+
+  const years = Math.floor(totalMonths / 12)
+  const months = totalMonths % 12
+  if (months === 0) return `${years} year${years !== 1 ? 's' : ''} remaining`
+  return `${years} year${years !== 1 ? 's' : ''} ${months} month${months !== 1 ? 's' : ''} remaining`
+}
+
+/**
+ * Masks a passport number, showing only the last 4 characters.
+ * e.g. "AB1234567" → "***234567" (last 4 shown after masking prefix)
+ */
+export function maskPassportNumber(num: string): string {
+  if (!num || num.length <= 4) return '****'
+  const visible = num.slice(-4)
+  const masked = '*'.repeat(num.length - 4)
+  return masked + visible
+}
 
 // ── Expiration Severity Calculator ────────────────────────────────────────────
 

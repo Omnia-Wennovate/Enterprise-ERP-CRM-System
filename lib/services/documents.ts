@@ -13,7 +13,9 @@ import type {
   DocumentChartData,
   DocumentApprovalStatus,
   DocumentType,
+  PassportKPIs,
 } from '@/types/documents'
+import { getPassportStatus } from './document-validation'
 
 // ── Helper: map raw row to Document ──────────────────────────────────────────
 
@@ -224,14 +226,14 @@ export async function bulkApproveDocuments(ids: string[], userId?: string): Prom
 
 export async function incrementDownloadCount(id: string, userId?: string): Promise<void> {
   const supabase = await createClient()
-  await supabase.rpc('increment', { table: 'documents', column: 'download_count', row_id: id }).catch(() => {
+  const { error } = await supabase.rpc('increment', { table: 'documents', column: 'download_count', row_id: id })
+  if (error) {
     // Fallback if RPC not available
-    supabase.from('documents').select('download_count').eq('id', id).single().then(({ data }) => {
-      if (data) {
-        supabase.from('documents').update({ download_count: (data.download_count || 0) + 1 }).eq('id', id)
-      }
-    })
-  })
+    const { data } = await supabase.from('documents').select('download_count').eq('id', id).single()
+    if (data) {
+      await supabase.from('documents').update({ download_count: (data.download_count || 0) + 1 }).eq('id', id)
+    }
+  }
 
   if (userId) {
     await supabase.from('document_access_log').insert([{
@@ -284,7 +286,58 @@ export async function getDocumentDashboardKPIs(): Promise<DocumentDashboardKPIs>
     flightTickets: typeCounts['flight_ticket'] || 0,
     hotelVouchers: typeCounts['hotel_voucher'] || 0,
     legalHoldCount: legalHold.count || 0,
+    passportValid: 0,
+    passportExpiringSoon: 0,
+    passportExpired: 0,
   }
+}
+
+// ── Passport Documents ──────────────────────────────────────────────────
+
+export async function getPassportDocuments(): Promise<Document[]> {
+  return getDocuments({ document_type: 'passport' })
+}
+
+export async function getPassportKPIs(): Promise<PassportKPIs> {
+  const passports = await getPassportDocuments()
+  const active = passports.filter(p => p.approval_status !== 'archived')
+
+  let valid = 0, expiringSoon = 0, expired = 0
+
+  for (const p of active) {
+    if (!p.expiry_date) { valid++; continue }
+    const status = getPassportStatus(p.expiry_date)
+    if (status === 'valid') valid++
+    else if (status === 'expiring_soon') expiringSoon++
+    else expired++
+  }
+
+  return { total: active.length, valid, expiringSoon, expired }
+}
+
+// ── Supabase Storage Upload ────────────────────────────────────────────
+
+/**
+ * Upload a file to Supabase Storage (bucket: 'documents').
+ * Returns the public URL of the uploaded file.
+ */
+export async function uploadDocumentToStorage(
+  file: File,
+  folder: string = 'general'
+): Promise<string> {
+  const supabase = await createClient()
+  const timestamp = Date.now()
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+  const filePath = `${folder}/${timestamp}_${safeName}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('documents')
+    .upload(filePath, file, { cacheControl: '3600', upsert: false })
+
+  if (uploadError) throw new Error(`Storage upload failed: ${uploadError.message}`)
+
+  const { data: urlData } = supabase.storage.from('documents').getPublicUrl(filePath)
+  return urlData.publicUrl
 }
 
 // ── Chart Data ────────────────────────────────────────────────────────────────
@@ -366,7 +419,7 @@ export async function getDocumentChartData(): Promise<DocumentChartData> {
     monthlyUploads,
     byStatus,
     byCountry,
-    approvalFlow: byStatus, // reuse
+    approvalFlow: byStatus.map(s => ({ status: s.name, count: s.value })),
   }
 }
 

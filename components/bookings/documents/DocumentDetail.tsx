@@ -2,15 +2,16 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, FileText, Download, Share2, AlertTriangle, Eye, Shield, Trash2, Calendar, User } from 'lucide-react'
+import { X, FileText, Download, Share2, AlertTriangle, Eye, EyeOff, Shield, Trash2, Calendar, User, Globe, Hash, Plane } from 'lucide-react'
 import type { Document } from '@/types/documents'
 import { DOCUMENT_TYPE_LABELS, DOCUMENT_STATUS_LABELS } from '@/types/documents'
 import { DocumentApprovalFlow } from './DocumentApprovalFlow'
 import { DocumentComments } from './DocumentComments'
 import { DocumentVersionHistory } from './DocumentVersionHistory'
 import { DocumentPreview } from './DocumentPreview'
-import { getExpirationSeverity } from '@/lib/services/document-validation'
+import { getExpirationSeverity, getPassportStatus, formatPassportRemaining, maskPassportNumber } from '@/lib/services/document-validation'
 import { DocumentExpirationBadge } from './DocumentExpirationBadge'
+import { PassportStatusBadge } from './PassportStatusBadge'
 
 export function DocumentDetail({ 
   document, 
@@ -22,11 +23,12 @@ export function DocumentDetail({
   onUpdate?: () => void
 }) {
   const [showPreview, setShowPreview] = useState(false)
+  const [showPassportNum, setShowPassportNum] = useState(false)
   
-  let severityObj
-  if (document.expiry_date) {
-    severityObj = getExpirationSeverity(document.expiry_date)
-  }
+  const isPassport = document.document_type === 'passport'
+  const passportNumber = document.ai_extracted_data?.passportNumber || document.traveler_passport || null
+  const passportStatus = isPassport && document.expiry_date ? getPassportStatus(document.expiry_date) : null
+  const passportRemaining = isPassport && document.expiry_date ? formatPassportRemaining(document.expiry_date) : null
 
   const handleStatusChange = async (status: any, reason?: string) => {
     try {
@@ -128,10 +130,124 @@ export function DocumentDetail({
                 <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Expiry Date</span>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-foreground font-medium">{document.expiry_date || 'N/A'}</span>
-                  {severityObj && <DocumentExpirationBadge severity={severityObj.severity} label={severityObj.label} />}
+                  {document.expiry_date && <DocumentExpirationBadge severity={getExpirationSeverity(document.expiry_date).severity} label={getExpirationSeverity(document.expiry_date).label} />}
                 </div>
               </div>
             </div>
+
+            {/* ── Passport Information Section ── */}
+            {isPassport && (
+              <div className="bg-gradient-to-br from-[#0A1221]/5 to-[#0A1221]/10 border border-[#0A1221]/20 rounded-xl overflow-hidden">
+                {/* Section Header */}
+                <div className="px-5 py-3 bg-[#0A1221] flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-white" />
+                  <span className="text-sm font-semibold text-white">Passport Information</span>
+                  {passportStatus && (
+                    <div className="ml-auto">
+                      <PassportStatusBadge status={passportStatus} size="sm" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-5 grid grid-cols-2 gap-y-4 gap-x-6">
+                  {/* Holder */}
+                  <div className="col-span-2">
+                    <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5" /> Passport Holder
+                    </span>
+                    <span className="text-sm text-foreground font-semibold">
+                      {document.ai_extracted_data?.fullName ||
+                        (document.traveler_first_name
+                          ? `${document.traveler_first_name} ${document.traveler_last_name}`
+                          : document.customer_name || '—')}
+                    </span>
+                  </div>
+
+                  {/* Passport Number (masked / reveal) */}
+                  {passportNumber && (
+                    <div>
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <Hash className="w-3.5 h-3.5" /> Passport Number
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-foreground font-mono font-medium">
+                          {showPassportNum ? passportNumber : maskPassportNumber(passportNumber)}
+                        </span>
+                        <button
+                          onClick={() => setShowPassportNum(v => !v)}
+                          className="p-1 text-muted-foreground hover:text-indigo-600 rounded transition-colors"
+                          title={showPassportNum ? 'Hide' : 'Reveal'}
+                        >
+                          {showPassportNum ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Issuing Country */}
+                  {(document.ai_extracted_data?.issuingCountry || document.country) && (
+                    <div>
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <Globe className="w-3.5 h-3.5" /> Issuing Country
+                      </span>
+                      <span className="text-sm text-foreground font-medium">
+                        {document.ai_extracted_data?.issuingCountry || document.country}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Issue Date */}
+                  {document.ai_extracted_data?.issueDate && (
+                    <div>
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Issue Date</span>
+                      <span className="text-sm text-foreground font-medium">
+                        {new Date(document.ai_extracted_data.issueDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Expiry Date */}
+                  {document.expiry_date && (
+                    <div>
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Expiry Date</span>
+                      <span className="text-sm text-foreground font-medium">
+                        {new Date(document.expiry_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Remaining */}
+                  {passportRemaining && (
+                    <div className="col-span-2">
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Validity</span>
+                      <span className={`text-sm font-semibold ${
+                        passportStatus === 'expired' ? 'text-red-700' :
+                        passportStatus === 'expiring_soon' ? 'text-amber-700' :
+                        'text-emerald-700'
+                      }`}>
+                        {passportRemaining}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Related booking */}
+                  {document.booking_reference && (
+                    <div className="col-span-2 pt-3 mt-1 border-t border-[#0A1221]/10">
+                      <span className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Related Travel</span>
+                      <div className="flex items-center gap-2 text-sm text-foreground font-medium">
+                        <span className="font-mono">{document.booking_reference}</span>
+                        {document.booking_destination && (
+                          <span className="flex items-center gap-1 text-muted-foreground">
+                            <Plane className="w-3.5 h-3.5" />
+                            {document.booking_destination}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Workflow */}
             <DocumentApprovalFlow 
