@@ -79,15 +79,32 @@ export async function getExpenseAttachments(expenseId: string): Promise<ExpenseA
 
   if (error) throw new Error(`Failed to fetch attachments: ${error.message}`)
 
-  return (data || []).map((row: Record<string, unknown>) => {
+  return Promise.all((data || []).map(async (row: Record<string, unknown>) => {
     const profile = row.profiles as { first_name?: string; last_name?: string } | null
+    
+    // Attempt to get a signed URL for secure viewing if public URL fails or is private
+    let signedUrl = row.file_url as string
+    if (signedUrl) {
+      const urlParts = signedUrl.split('/expense-attachments/')
+      if (urlParts.length > 1) {
+        const { data: signed } = await supabase.storage
+          .from('expense-attachments')
+          .createSignedUrl(urlParts[1], 3600) // 1 hour expiration
+        
+        if (signed?.signedUrl) {
+          signedUrl = signed.signedUrl
+        }
+      }
+    }
+
     return {
       ...row,
+      file_url: signedUrl,
       uploaded_by_name: profile
         ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || null
         : null,
     } as ExpenseAttachment
-  })
+  }))
 }
 
 // ── Check for duplicate hash ──────────────────────────────────────────────────

@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/client'
 import type { MarketingDashboardStats, PlatformMetrics, ChartDataPoint } from '@/types/marketing'
+import { getTotalFollowers, getAllLatestMetrics } from './social-accounts'
 
 
 // ============================================================================
@@ -8,13 +9,16 @@ import type { MarketingDashboardStats, PlatformMetrics, ChartDataPoint } from '@
 
 export async function getDashboardStats(): Promise<MarketingDashboardStats> {
   const supabase = createClient()
-  // Total followers from all connected accounts
-  const { data: accounts } = await supabase
-    .from('social_accounts')
-    .select('followers_count, platform')
-    .eq('status', 'connected')
+  
+  // Total followers from all OAuth-connected accounts ONLY
+  const totalFollowers = await getTotalFollowers()
 
-  const totalFollowers = (accounts || []).reduce((sum, a) => sum + (a.followers_count || 0), 0)
+  // Get real metrics for platforms
+  const latestMetrics = await getAllLatestMetrics()
+  const platformEngagement: Record<string, number> = {}
+  Object.values(latestMetrics).forEach(m => {
+    platformEngagement[m.platform] = (platformEngagement[m.platform] || 0) + (m.engagements || 0)
+  })
 
   // Post metrics
   const { data: posts } = await supabase
@@ -74,13 +78,6 @@ export async function getDashboardStats(): Promise<MarketingDashboardStats> {
     .eq('status', 'pending_approval')
 
   // Best platform by engagement
-  const platformEngagement: Record<string, number> = {}
-  if (accounts && posts) {
-    // simplified: count posts per platform via accounts
-    for (const account of accounts) {
-      platformEngagement[account.platform] = (platformEngagement[account.platform] || 0) + account.followers_count
-    }
-  }
   const bestPlatform = Object.entries(platformEngagement).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A'
 
   // Best content
@@ -111,13 +108,16 @@ export async function getDashboardStats(): Promise<MarketingDashboardStats> {
 
 export async function getPlatformMetrics(): Promise<PlatformMetrics[]> {
   const supabase = createClient()
+  
+  // Only include OAuth-connected accounts for real metrics
   const { data: accounts } = await supabase
     .from('social_accounts')
-    .select('id, platform, followers_count')
-    .eq('status', 'connected')
+    .select('id, platform')
+    .eq('connection_status', 'oauth_connected')
 
   if (!accounts || accounts.length === 0) return []
 
+  const latestMetrics = await getAllLatestMetrics()
   const metrics: Record<string, PlatformMetrics> = {}
 
   for (const account of accounts) {
@@ -130,7 +130,13 @@ export async function getPlatformMetrics(): Promise<PlatformMetrics[]> {
         posts: 0,
       }
     }
-    metrics[account.platform].followers += account.followers_count || 0
+    
+    const accountMetrics = latestMetrics[account.id]
+    if (accountMetrics) {
+      metrics[account.platform].followers += accountMetrics.followers || 0
+      metrics[account.platform].engagement += accountMetrics.engagements || 0
+      metrics[account.platform].reach += accountMetrics.reach || 0
+    }
 
     // Get post counts for this account
     const { count } = await supabase
@@ -151,16 +157,26 @@ export async function getPlatformMetrics(): Promise<PlatformMetrics[]> {
 
 export async function getFollowersGrowth(): Promise<ChartDataPoint[]> {
   const supabase = createClient()
-  const { data } = await supabase
+  const { data: accounts } = await supabase
     .from('social_accounts')
-    .select('platform, followers_count')
-    .eq('status', 'connected')
+    .select('id, platform')
+    .eq('connection_status', 'oauth_connected')
 
-  if (!data) return []
+  if (!accounts || accounts.length === 0) return []
+  
+  const latestMetrics = await getAllLatestMetrics()
+  
+  const platformTotals: Record<string, number> = {}
+  accounts.forEach(a => {
+    const m = latestMetrics[a.id]
+    if (m && m.followers !== null) {
+      platformTotals[a.platform] = (platformTotals[a.platform] || 0) + m.followers
+    }
+  })
 
-  return data.map(a => ({
-    label: a.platform,
-    value: a.followers_count || 0,
+  return Object.entries(platformTotals).map(([platform, total]) => ({
+    label: platform,
+    value: total,
   }))
 }
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle, Clock, XCircle, AlertTriangle, ChevronDown, Download, Eye, Trash2, Paperclip, CreditCard, Tag, Building, Calendar, DollarSign, FileText, User } from 'lucide-react'
 import type { ExpenseWithRelations, ExpenseAttachment, ExpenseApproval } from '@/types/finance'
-import { fetchExpenseApprovals, fetchExpenseAttachments, submitExpenseApprovalAction, deleteExpenseAttachmentAction } from '@/app/actions/finance'
+import { fetchExpenseApprovals, fetchExpenseAttachments, submitExpenseApprovalAction, deleteExpenseAttachmentAction, directApproveExpenseAction, directRejectExpenseAction } from '@/app/actions/finance'
 
 const fmt = (n: number, currency = 'USD') =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(n)
@@ -35,6 +35,35 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
   const [comments, setComments] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [activeTab, setActiveTab] = useState<'details'|'attachments'|'approvals'>('details')
+
+  // Direct Finance Controls
+  const [isDirectRejectOpen, setIsDirectRejectOpen] = useState(false)
+  const [directRejectReason, setDirectRejectReason] = useState('')
+
+  const handleDirectApprove = async () => {
+    if (!expense) return
+    if (!confirm('Are you sure you want to approve this expense immediately?')) return
+    setSubmitting(true)
+    try {
+      await directApproveExpenseAction(expense.id)
+      onRefresh()
+      onClose()
+    } catch (e) { alert(`Failed: ${e instanceof Error ? e.message : 'Error'}`) }
+    finally { setSubmitting(false) }
+  }
+
+  const handleDirectReject = async () => {
+    if (!expense) return
+    if (!directRejectReason.trim()) return alert('Rejection reason is required.')
+    setSubmitting(true)
+    try {
+      await directRejectExpenseAction(expense.id, directRejectReason)
+      setIsDirectRejectOpen(false)
+      onRefresh()
+      onClose()
+    } catch (e) { alert(`Failed: ${e instanceof Error ? e.message : 'Error'}`) }
+    finally { setSubmitting(false) }
+  }
 
   useEffect(() => {
     if (!expense) return
@@ -128,6 +157,20 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
                       <AlertTriangle size={12}/> Exceeds policy limit — requires explicit approval
                     </div>
                   )}
+
+                  {/* Direct Finance Actions */}
+                  {expense.approval_status === 'pending' && (
+                    <div className="mt-5 flex items-center gap-3 pt-5 border-t border-omnia-gold/15">
+                      <button onClick={handleDirectApprove} disabled={submitting}
+                        className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-colors disabled:opacity-50">
+                        {submitting ? '...' : '✓ Approve Expense'}
+                      </button>
+                      <button onClick={() => setIsDirectRejectOpen(true)} disabled={submitting}
+                        className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-colors disabled:opacity-50">
+                        ✗ Reject Expense
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Info grid */}
@@ -162,8 +205,12 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
                   </div>
                 ) : attachments.map(att => (
                   <div key={att.id} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg border border-border">
-                    <div className="w-10 h-10 rounded bg-muted flex items-center justify-center text-lg flex-shrink-0">
-                      {att.file_type?.startsWith('image/') ? '🖼️' : '📄'}
+                    <div className="w-12 h-12 rounded bg-muted flex items-center justify-center text-lg flex-shrink-0 overflow-hidden">
+                      {att.file_type?.startsWith('image/') ? (
+                        <img src={att.file_url} alt={att.file_name} className="w-full h-full object-cover" />
+                      ) : (
+                        '📄'
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">{att.file_name}</p>
@@ -275,6 +322,31 @@ export function ExpenseDetailPanel({ expense, onClose, onRefresh }: ExpenseDetai
           </div>
         </motion.div>
       </div>
+
+      {/* Reject Dialog */}
+      <AnimatePresence>
+        {isDirectRejectOpen && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/40" onClick={() => !submitting && setIsDirectRejectOpen(false)} />
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-sm bg-card rounded-2xl shadow-2xl p-6 border border-border">
+              <h3 className="text-lg font-bold text-red-600 flex items-center gap-2 mb-2"><XCircle size={20}/> Reject Expense</h3>
+              <p className="text-sm text-muted-foreground mb-4">Please provide a reason for rejecting this expense. This will be sent to the employee.</p>
+              <textarea 
+                value={directRejectReason} onChange={(e) => setDirectRejectReason(e.target.value)}
+                placeholder="Rejection reason..." rows={4}
+                className="w-full px-3 py-2 border border-border rounded-xl bg-background text-sm resize-none focus:ring-2 focus:ring-red-500 outline-none mb-4"
+              />
+              <div className="flex gap-3">
+                <button onClick={() => setIsDirectRejectOpen(false)} disabled={submitting} className="flex-1 py-2 rounded-xl text-sm font-semibold border hover:bg-muted text-foreground">Cancel</button>
+                <button onClick={handleDirectReject} disabled={submitting || !directRejectReason.trim()} className="flex-1 py-2 rounded-xl text-sm font-semibold bg-red-600 hover:bg-red-700 text-white disabled:opacity-50">
+                  {submitting ? 'Rejecting...' : 'Reject'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </AnimatePresence>
   )
 }

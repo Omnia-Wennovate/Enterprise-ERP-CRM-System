@@ -70,7 +70,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
-          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -165,7 +164,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
-          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -218,6 +216,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         items: [
           { label: 'My Tasks', href: '/tasks', icon: 'CheckSquare', badge: 2 },
           { label: 'My Performance', href: '/performance', icon: 'TrendingUp' },
+          { label: 'Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {
@@ -251,6 +250,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Visa Tracker', href: '/bookings/visa', icon: 'BookOpen', badge: 5 },
           { label: 'Documents', href: '/bookings/documents', icon: 'FolderOpen', badge: 4 },
           { label: 'Suppliers', href: '/suppliers', icon: 'Building' },
+          { label: 'Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {
@@ -337,6 +337,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
       {
+        title: 'Expenses',
+        items: [
+          { label: 'HR Expenses', href: '/dept-expenses', icon: 'Receipt' },
+        ],
+      },
+      {
         title: 'Communication',
         items: [
           { label: 'Communication Center', href: '/communication', icon: 'MessageSquare', badge: 0 },
@@ -376,7 +382,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
-          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -390,6 +395,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Weekly Planner', href: '/marketing/weekly-planner', icon: 'ClipboardList' },
           { label: 'Team', href: '/marketing/team', icon: 'Users' },
           { label: 'Reports', href: '/marketing/reports', icon: 'BarChart2' },
+        ],
+      },
+      {
+        title: 'Expenses',
+        items: [
+          { label: 'Marketing Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
     ]
@@ -413,6 +424,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Tech Team', href: '/tech/team', icon: 'Users' },
           { label: 'Project Archive', href: '/tech/archive', icon: 'Archive' },
           { label: 'Credential Vault', href: '/tech/credentials', icon: 'KeyRound' },
+        ],
+      },
+      {
+        title: 'Expenses',
+        items: [
+          { label: 'IT Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {

@@ -231,9 +231,10 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
   }
 
   // ── Print/PDF ──
-
+  // Opens a dedicated bare-layout print page in a new tab.
+  // That page loads data independently and auto-triggers window.print().
   const handlePrint = () => {
-    window.print()
+    window.open(`/itinerary-print/${itineraryId}`, '_blank', 'noopener,noreferrer')
   }
 
   if (loading) {
@@ -409,6 +410,7 @@ export function ItineraryDetail({ itineraryId, onBack }: ItineraryDetailProps) {
       {activeTab === 'timeline' && (
         <ItineraryTimeline
           days={itinerary.days || []}
+          itineraryId={itineraryId}
           onAddDay={handleAddDay}
           onUpdateDay={handleUpdateDay}
           onDeleteDay={handleDeleteDay}

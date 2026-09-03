@@ -71,14 +71,20 @@ export interface Customer {
   id: string
   company_name: string
   contact_name: string
+  full_name?: string | null
   email: string
   phone: string
+  mobile?: string | null
   address: string
   city: string
   country: string
   customer_type: 'leisure' | 'corporate' | 'tour_operator' | 'travel_agency'
   annual_value: number
   is_active: boolean
+  status?: string | null
+  notes?: string | null
+  passport_number?: string | null
+  date_of_birth?: string | null
   created_at: string
   updated_at: string
   last_booking_date: string | null

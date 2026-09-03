@@ -9,6 +9,9 @@ import type {
   CreateExpenseFormData,
   AddExpenseFormData,
 } from '@/types/finance'
+import {
+  notifyExpenseSubmitted,
+} from '@/lib/services/expense-notifications'
 
 // ── Generate unique expense number ─────────────────────────────────────────────
 
@@ -87,7 +90,7 @@ export async function getExpensesWithRelations(params?: {
     .order('expense_date', { ascending: false })
 
   if (params?.category) query = query.ilike('category', `%${params.category}%`)
-  if (params?.department) query = query.eq('department', params.department)
+  if (params?.department) query = query.ilike('department', params.department)
   if (params?.status) query = query.eq('status', params.status)
   if (params?.approval_status) query = query.eq('approval_status', params.approval_status)
   if (params?.payment_method) query = query.eq('payment_method', params.payment_method)
@@ -168,12 +171,49 @@ export async function getExpenseById(id: string): Promise<ExpenseWithRelations |
 
 // ── Create expense (full enterprise form) ─────────────────────────────────────
 
-export async function createExpense(formData: CreateExpenseFormData): Promise<Expense> {
+export async function createExpense(formData: CreateExpenseFormData & {
+  submission_source?: 'finance' | 'department'
+  trip_reference?: string
+}): Promise<Expense> {
   const supabase = await createClient()
-  const userId = (await supabase.auth.getUser()).data.user?.id
+  const { data: authData } = await supabase.auth.getUser()
+  const userId = authData.user?.id
   const expenseNumber = await generateExpenseNumber()
 
-  const { splits, ...expenseData } = formData
+  const { splits, submission_source, trip_reference, ...expenseData } = formData as typeof formData & { submission_source?: string; trip_reference?: string }
+
+  // ── SERVER-SIDE ENFORCEMENT for Department Expenses ──
+  let finalDepartment = expenseData.department || null
+  let finalEmployeeId = expenseData.employee_id || userId || null
+
+  if (submission_source === 'department') {
+    const effectiveUserId = userId || expenseData.employee_id
+    
+    if (!effectiveUserId) {
+      console.warn("Demo Mode Fallback: No user ID provided. Trusting client data for demo.")
+      finalDepartment = expenseData.department || 'General'
+      finalEmployeeId = null
+    } else {
+      // Look up real department and identity from profiles
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('department')
+        .eq('id', effectiveUserId)
+        .single()
+        
+      if (profileError || !profile) {
+        console.warn("Demo Mode Fallback: Profile not found in database. Trusting client data for demo.")
+        finalDepartment = expenseData.department || 'General'
+        finalEmployeeId = effectiveUserId
+      } else {
+        if (!profile.department || profile.department.trim() === '') {
+          throw new Error("You do not have a department assigned in your profile. Please contact HR.")
+        }
+        finalDepartment = profile.department
+        finalEmployeeId = effectiveUserId
+      }
+    }
+  }
 
   const { data, error } = await supabase
     .from('expenses')
@@ -187,8 +227,8 @@ export async function createExpense(formData: CreateExpenseFormData): Promise<Ex
         expense_date: expenseData.expense_date,
         recorded_by: userId,
         vendor_id: expenseData.vendor_id || null,
-        employee_id: expenseData.employee_id || null,
-        department: expenseData.department || null,
+        employee_id: finalEmployeeId,
+        department: finalDepartment,
         project: expenseData.project || null,
         currency: expenseData.currency || 'USD',
         exchange_rate: expenseData.exchange_rate || 1,
@@ -202,6 +242,8 @@ export async function createExpense(formData: CreateExpenseFormData): Promise<Ex
         approval_status: expenseData.approval_status || 'pending',
         notes: expenseData.notes || null,
         policy_exceeded: expenseData.policy_exceeded || false,
+        submission_source: submission_source || 'finance',
+        trip_reference: trip_reference || null,
       },
     ])
     .select()
@@ -224,16 +266,67 @@ export async function createExpense(formData: CreateExpenseFormData): Promise<Ex
     if (splitError) throw new Error(`Failed to create splits: ${splitError.message}`)
   }
 
-  // Create approval chain
-  const { error: approvalError } = await supabase.from('expense_approvals').insert([
+  // ── Approval chain creation with threshold routing ─────────────────────────
+  // Below threshold → skip Dept Manager (step 1), start at Finance Officer (step 2)
+  // At/above threshold → full 4-step chain
+  let approvalSteps = [
     { expense_id: data.id, step: 1, approver_role: 'Department Manager', status: 'pending' },
     { expense_id: data.id, step: 2, approver_role: 'Finance Officer', status: 'pending' },
     { expense_id: data.id, step: 3, approver_role: 'Finance Manager', status: 'pending' },
     { expense_id: data.id, step: 4, approver_role: 'Director', status: 'pending' },
-  ])
+  ]
+
+  try {
+    const { data: settings } = await supabase
+      .from('finance_settings')
+      .select('approval_threshold_amount')
+      .limit(1)
+      .single()
+
+    const threshold = settings?.approval_threshold_amount ?? 5000
+
+    if ((expenseData.amount || 0) < threshold) {
+      // Below threshold: route directly to Finance Officer (skip Dept Manager)
+      // Mark step 1 as not_required so the chain still exists for audit visibility
+      approvalSteps = [
+        { expense_id: data.id, step: 1, approver_role: 'Department Manager', status: 'not_required' as any },
+        { expense_id: data.id, step: 2, approver_role: 'Finance Officer', status: 'pending' },
+        { expense_id: data.id, step: 3, approver_role: 'Finance Manager', status: 'pending' },
+        { expense_id: data.id, step: 4, approver_role: 'Director', status: 'pending' },
+      ]
+    }
+  } catch {
+    // finance_settings might not exist yet — use full chain
+  }
+
+  const { error: approvalError } = await supabase.from('expense_approvals').insert(approvalSteps)
   if (approvalError) {
-    // Non-fatal — expense still created
     console.warn('Failed to create approval chain:', approvalError.message)
+  }
+
+  // ── Notify Finance of new submission (non-fatal) ───────────────────────────
+  if (submission_source === 'department' || expenseData.department) {
+    try {
+      let submitterName = 'An employee'
+      if (userId) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('id', userId)
+          .single()
+        if (profile) {
+          submitterName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || submitterName
+        }
+      }
+      const deptLabel = expenseData.department ? ` from ${expenseData.department}` : ''
+      await notifyExpenseSubmitted(
+        expenseNumber,
+        data.id,
+        `${submitterName}${deptLabel}`
+      )
+    } catch {
+      // Non-fatal
+    }
   }
 
   return data

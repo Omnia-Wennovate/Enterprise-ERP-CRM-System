@@ -16,6 +16,11 @@ export type SocialPlatform =
 
 export type AccountStatus = 'connected' | 'disconnected' | 'suspended' | 'pending'
 export type ApiStatus = 'active' | 'rate_limited' | 'error' | 'expired'
+export type ConnectionStatus = 'oauth_connected' | 'disconnected' | 'expired' | 'error' | 'manual'
+export type SyncStatus = 'success' | 'failed' | 'partial' | 'syncing'
+export type SyncJobType = 'full_sync' | 'profile' | 'posts' | 'comments' | 'metrics' | 'token_refresh'
+export type AuditAction = 'connect' | 'disconnect' | 'reauthorize' | 'token_refresh' | 'sync_triggered' | 'data_deleted'
+export type DateRangePreset = 'today' | '7d' | '30d' | '90d' | 'year' | 'custom'
 
 export type PostStatus = 'draft' | 'pending_approval' | 'approved' | 'scheduled' | 'published' | 'archived' | 'rejected'
 export type ContentType = 'image' | 'video' | 'carousel' | 'reel' | 'story' | 'short' | 'live' | 'text'
@@ -102,14 +107,27 @@ export interface SocialAccount {
   id: string
   platform: SocialPlatform
   account_name: string
+  username: string | null          // @handle e.g. @omniatravel
   profile_url: string | null
+  avatar_url: string | null
   followers_count: number
   status: AccountStatus
+  // OAuth / connection fields
+  connection_status: ConnectionStatus
+  external_account_id: string | null  // platform's own user/page ID
+  token_expires_at: string | null
+  scopes: string[] | null
+  // Sync tracking
+  last_sync_at: string | null
+  last_sync_status: SyncStatus | null
+  last_sync_error: string | null
+  api_status: ApiStatus
+  // Audit
   account_manager_id: string | null
   account_manager_name?: string
-  last_sync_at: string | null
-  api_status: ApiStatus
+  created_by: string | null
   created_at: string
+  updated_at: string | null
 }
 
 export interface SocialPost {
@@ -125,6 +143,7 @@ export interface SocialPost {
   approved_by: string | null
   created_by: string | null
   is_top_performing: boolean
+  // Engagement metrics (manually entered OR synced from API)
   engagement_count: number
   reach_count: number
   impressions_count: number
@@ -132,11 +151,20 @@ export interface SocialPost {
   shares_count: number
   comments_count: number
   clicks_count: number
+  // Real API sync fields
+  external_post_id: string | null   // platform's own post ID — used for idempotent sync
+  post_url: string | null           // direct link to the live post
+  platform: string | null           // denormalized for fast filtering
+  thumbnail_url: string | null
+  views_count: number
+  video_views_count: number
+  last_synced_at: string | null
   created_at: string
   updated_at: string
   // Joined fields
   account_name?: string
   account_platform?: string
+  account_username?: string
   campaign_name?: string
   creator_name?: string
   approver_name?: string
@@ -395,7 +423,140 @@ export interface EmployeeContentStatus {
 }
 
 // ============================================================================
-// DASHBOARD / ANALYTICS TYPES
+// REAL API ANALYTICS TYPES
+// ============================================================================
+
+export interface SocialAccountMetric {
+  id: string
+  social_account_id: string
+  platform: string
+  metric_date: string           // ISO date string YYYY-MM-DD
+  followers: number | null
+  follower_growth: number | null
+  likes: number | null
+  comments: number | null
+  shares: number | null
+  views: number | null
+  reach: number | null
+  impressions: number | null
+  engagements: number | null
+  engagement_rate: number | null
+  profile_views: number | null
+  video_views: number | null
+  posts_published: number | null
+  created_at: string
+}
+
+export interface SyncJobLog {
+  id: string
+  social_account_id: string | null
+  job_type: SyncJobType
+  started_at: string
+  completed_at: string | null
+  status: SyncStatus | 'running'
+  records_synced: number
+  error_message: string | null
+  api_quota_info: Record<string, unknown> | null
+}
+
+export interface SocialOAuthState {
+  id: string
+  state: string
+  platform: string
+  user_id: string
+  created_at: string
+  used_at: string | null
+  expires_at: string
+}
+
+export interface SocialAuditLog {
+  id: string
+  action: AuditAction
+  social_account_id: string | null
+  platform: string | null
+  performed_by: string
+  performed_by_name: string | null
+  performed_at: string
+  details: Record<string, unknown> | null
+}
+
+/** Per-metric capability: true = supported, false = not supported, 'tier' = needs higher API tier */
+export type MetricSupport = true | false | 'tier'
+
+export interface PlatformCapabilities {
+  platform: SocialPlatform
+  followers: MetricSupport
+  follower_growth: MetricSupport
+  likes: MetricSupport
+  comments: MetricSupport
+  shares: MetricSupport
+  views: MetricSupport
+  reach: MetricSupport
+  impressions: MetricSupport
+  engagements: MetricSupport
+  engagement_rate: MetricSupport
+  profile_views: MetricSupport
+  video_views: MetricSupport
+  mentions: MetricSupport
+  post_metrics: MetricSupport
+  webhooks: MetricSupport
+}
+
+export interface DateRange {
+  from: Date
+  to: Date
+  preset: DateRangePreset
+}
+
+/** Real dashboard stats with growth calculated from historical data */
+export interface RealDashboardStats {
+  // Current period totals
+  totalFollowers: number
+  totalFollowerGrowth: number         // absolute change vs prior period
+  totalFollowerGrowthPct: number | null  // null if no prior data
+  totalReach: number
+  totalReachGrowthPct: number | null
+  totalImpressions: number
+  totalImpressionsGrowthPct: number | null
+  totalEngagements: number
+  totalEngagementsGrowthPct: number | null
+  avgEngagementRate: number
+  engagementRateGrowthPct: number | null
+  totalLikes: number
+  totalComments: number
+  totalShares: number
+  totalViews: number
+  totalVideoViews: number
+  // Post stats
+  postsPublished: number
+  scheduledPosts: number
+  pendingApproval: number
+  // Intelligence
+  bestPlatform: string
+  bestPlatformMetric: number
+  bestContent: string | null
+  bestContentEngagement: number | null
+  // Lead funnel (from existing social_leads table)
+  newLeads: number
+  conversionRate: number
+  campaignPerformance: number
+  topEmployee: string
+  // Alerts
+  alerts: EngagementAlert[]
+}
+
+export interface EngagementAlert {
+  type: 'spike' | 'decline' | 'milestone'
+  platform: string
+  accountName: string
+  metric: string
+  message: string
+  changePercent: number
+  detectedAt: string
+}
+
+// ============================================================================
+// DASHBOARD / ANALYTICS TYPES (legacy — kept for backward compat)
 // ============================================================================
 
 export interface MarketingDashboardStats {
@@ -421,6 +582,13 @@ export interface PlatformMetrics {
   engagement: number
   reach: number
   posts: number
+  // Extended with real data
+  impressions?: number
+  engagementRate?: number
+  followerGrowthPct?: number | null
+  accountId?: string
+  accountName?: string
+  username?: string
 }
 
 export interface ChartDataPoint {

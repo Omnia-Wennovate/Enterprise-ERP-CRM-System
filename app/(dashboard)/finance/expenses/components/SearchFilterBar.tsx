@@ -108,7 +108,41 @@ export function SearchFilterBar({ filters, onFiltersChange, onClear }: SearchFil
         )}
       </div>
 
-      {/* Advanced filters */}
+      {/* Quick-filter pills: Dept Requests */}
+      <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-muted/10">
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Quick:</span>
+        <button
+          onClick={() => onFiltersChange({ ...defaultFilters, approval_status: 'pending', submission_source: 'department' } as any)}
+          className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+            (filters as any).submission_source === 'department'
+              ? 'bg-omnia-gold text-[#0d3553] border-omnia-gold'
+              : 'bg-card border-border text-muted-foreground hover:border-omnia-gold/40 hover:text-foreground'
+          }`}
+          id="filter-dept-requests"
+        >
+          🏢 Dept Requests (Pending)
+        </button>
+        <button
+          onClick={() => onFiltersChange({ ...defaultFilters, approval_status: 'pending' })}
+          className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+            filters.approval_status === 'pending' && !(filters as any).submission_source
+              ? 'bg-amber-100 text-amber-700 border-amber-300'
+              : 'bg-card border-border text-muted-foreground hover:border-amber-300 hover:text-foreground'
+          }`}
+        >
+          ⏳ All Pending
+        </button>
+        <button
+          onClick={() => onFiltersChange({ ...defaultFilters, approval_status: 'approved' })}
+          className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+            filters.approval_status === 'approved'
+              ? 'bg-emerald-100 text-emerald-700 border-emerald-300'
+              : 'bg-card border-border text-muted-foreground hover:border-emerald-300 hover:text-foreground'
+          }`}
+        >
+          ✓ Approved
+        </button>
+      </div>
       {showAdvanced && (
         <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-3 bg-muted/20">
           {/* Category */}

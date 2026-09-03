@@ -254,3 +254,116 @@ html.colorblind-safe {
   --chart-4: #F0E442;
   --chart-5: #0072B2;
 }
+
+/* ============================================================================
+   PREMIUM ITINERARY PRINT STYLES
+   Controls browser Print → Save as PDF output
+   ============================================================================ */
+
+@media print {
+  /* ── Reset page ── */
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  /* ── Hide ALL application chrome ── */
+  /* Sidebar */
+  [data-sidebar],
+  aside,
+  nav,
+  header,
+  [class*="sidebar"],
+  [class*="Sidebar"],
+  [class*="SidebarNav"],
+  /* Top navbar / breadcrumbs */
+  [class*="navbar"],
+  [class*="Navbar"],
+  [class*="TopBar"],
+  [class*="topbar"],
+  /* Back buttons */
+  a[href],
+  /* Action bar with Edit / Save Template / Print buttons */
+  [class*="action-bar"],
+  /* Tab buttons */
+  [role="tablist"],
+  /* Comment panel, history panel */
+  [class*="comments"],
+  [class*="Comments"],
+  [class*="versions"],
+  [class*="Versions"],
+  /* Intelligence panel */
+  [class*="TravelIntelligence"],
+  /* AI floating chat */
+  [class*="AITravel"],
+  [class*="floating"],
+  /* Toast notifications */
+  [class*="toast"],
+  [class*="Toast"],
+  /* All motion.div wrapper chrome around the editor */
+  .space-y-6 > button,
+  /* Scroll areas, loading spinners */
+  [class*="scrollbar"] {
+    display: none !important;
+  }
+
+  /* ── Body ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #FAFAF7 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+  }
+
+  /* ── Show ONLY the print root ── */
+  body > * {
+    display: none !important;
+  }
+
+  #itinerary-print-root,
+  #itinerary-print-root * {
+    display: revert !important;
+  }
+
+  /* ── Activity cards — no page breaks inside ── */
+  .print-activity-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Day sections — keep header with first card ── */
+  [data-print-day] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Images — never break across pages ── */
+  #itinerary-print-root img {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    max-width: 100% !important;
+  }
+
+  /* ── Footer ── */
+  #print-footer {
+    break-before: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  /* ── Remove link underlines ── */
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  /* ── Remove box shadows (they don't print well) ── */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

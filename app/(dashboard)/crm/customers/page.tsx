@@ -5,10 +5,17 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { NewCustomerModal } from '@/components/crm/NewCustomerModal'
+import { CustomerFormModal } from '@/components/crm/CustomerFormModal'
+import type { Customer } from '@/types'
 
 export default function CustomersPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  const handleCreateSuccess = (_customer: Customer) => {
+    setIsCreateOpen(false)
+    setRefreshKey(k => k + 1)
+  }
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -19,9 +26,9 @@ export default function CustomersPage() {
           title="Customers"
           subtitle="View and manage all your customers"
           actions={
-            <Button 
+            <Button
               variant="gold"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsCreateOpen(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
               New Customer
@@ -31,16 +38,15 @@ export default function CustomersPage() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
-        <CustomersTable />
+      <div className="flex-1 overflow-hidden">
+        <CustomersTable refreshKey={refreshKey} />
       </div>
 
-      <NewCustomerModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSuccess={() => {
-          window.location.reload()
-        }}
+      {/* Create Modal */}
+      <CustomerFormModal
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        onSuccess={handleCreateSuccess}
       />
     </div>
   )

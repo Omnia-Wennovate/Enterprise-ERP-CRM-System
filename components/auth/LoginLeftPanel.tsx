@@ -72,7 +72,7 @@ export function LoginLeftPanel() {
               Business &<br />Leisure Travel
             </h1>
             <p className="text-[#8A94A5] text-lg max-w-sm mx-auto font-light italic">
-              Your journey. Our expertise.
+              Every thing omnia knows about one place
             </p>
           </motion.div>
         </motion.div>

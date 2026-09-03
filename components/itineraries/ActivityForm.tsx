@@ -5,17 +5,21 @@ import { X, Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { ItineraryItem, ActivityType } from '@/types/itinerary'
 import { ACTIVITY_TYPES } from '@/types/itinerary'
+import { ActivityImageUploader } from './ActivityImageUploader'
+import type { ActivityImage } from '@/lib/services/activity-images'
 
 interface ActivityFormProps {
   item?: ItineraryItem | null
   dayId: string
   sortOrder: number
+  itineraryId: string
   onSave: (data: Partial<ItineraryItem>) => Promise<void>
   onClose: () => void
 }
 
-export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: ActivityFormProps) {
+export function ActivityForm({ item, dayId, sortOrder, itineraryId, onSave, onClose }: ActivityFormProps) {
   const [saving, setSaving] = useState(false)
+  const [savedItemId, setSavedItemId] = useState<string | null>(item?.id || null)
   const [form, setForm] = useState({
     type: (item?.type || 'custom') as ActivityType,
     title: item?.title || '',
@@ -132,6 +136,10 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
         sort_order: sortOrder,
         metadata,
       })
+      // After save, parent component will have the new item id.
+      // For NEW items we can't get the id here without changing onSave signature.
+      // Existing items (edit) already have id in item.id.
+      if (item?.id) setSavedItemId(item.id)
     } finally {
       setSaving(false)
     }
@@ -319,6 +327,17 @@ export function ActivityForm({ item, dayId, sortOrder, onSave, onClose }: Activi
             <label className="text-xs font-semibold text-muted-foreground uppercase block mb-1">Notes</label>
             <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={2}
               className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 resize-none" />
+          </div>
+
+          {/* ── Activity Images ── */}
+          <div className="border-t border-border pt-5">
+            <ActivityImageUploader
+              itemId={savedItemId}
+              itineraryId={itineraryId}
+              onImagesChange={(_imgs: ActivityImage[]) => {
+                // Images are stored in their own table, nothing extra needed here
+              }}
+            />
           </div>
 
           {/* Submit */}

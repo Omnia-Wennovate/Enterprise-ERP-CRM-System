@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import type { ExpenseApproval } from '@/types/finance'
+import { notifyExpenseApproved, notifyExpenseRejected } from '@/lib/services/expense-notifications'
 
 const APPROVAL_WORKFLOW = [
   { step: 1, approver_role: 'Department Manager' },
@@ -84,6 +85,18 @@ export async function submitExpenseApproval(
       .from('expenses')
       .update({ approval_status: status })
       .eq('id', expenseId)
+
+    // Notify submitting employee
+    try {
+      const { data: exp } = await supabase
+        .from('expenses')
+        .select('expense_number, employee_id')
+        .eq('id', expenseId)
+        .single()
+      if (exp?.employee_id && exp.expense_number) {
+        await notifyExpenseRejected(exp.expense_number, expenseId, comments, exp.employee_id)
+      }
+    } catch { /* non-fatal */ }
   } else {
     // Check if all steps complete
     const { data: pending } = await supabase
@@ -97,18 +110,84 @@ export async function submitExpenseApproval(
         .from('expenses')
         .update({ approval_status: 'approved' })
         .eq('id', expenseId)
+
+      // Notify submitting employee of approval
+      try {
+        const { data: exp } = await supabase
+          .from('expenses')
+          .select('expense_number, employee_id')
+          .eq('id', expenseId)
+          .single()
+        const { data: approverProfile } = await supabase
+          .from('profiles')
+          .select('first_name, last_name')
+          .eq('id', userId || '')
+          .single()
+        const approverName = approverProfile
+          ? `${approverProfile.first_name || ''} ${approverProfile.last_name || ''}`.trim()
+          : 'Finance'
+        if (exp?.employee_id && exp.expense_number) {
+          await notifyExpenseApproved(exp.expense_number, expenseId, approverName, exp.employee_id)
+        }
+      } catch { /* non-fatal */ }
     }
   }
 }
 
-// ── Skip approval (Finance Admin override) ────────────────────────────────────
+// ── Direct Finance Controls ──────────────────────────────────────────────────
 
-export async function skipExpenseApproval(expenseId: string): Promise<void> {
+export async function directApproveExpense(expenseId: string): Promise<void> {
   const supabase = await createClient()
+  const userId = (await supabase.auth.getUser()).data.user?.id
+
   const { error } = await supabase
     .from('expenses')
     .update({ approval_status: 'approved' })
     .eq('id', expenseId)
 
-  if (error) throw new Error(`Failed to skip approval: ${error.message}`)
+  if (error) throw new Error(`Failed to approve: ${error.message}`)
+
+  // Mark pending steps as approved or skipped
+  await supabase
+    .from('expense_approvals')
+    .update({ status: 'approved', approver_id: userId, approved_at: new Date().toISOString(), comments: 'Approved directly by Finance' })
+    .eq('expense_id', expenseId)
+    .eq('status', 'pending')
+
+  // Notify
+  try {
+    const { data: exp } = await supabase.from('expenses').select('expense_number, employee_id').eq('id', expenseId).single()
+    const { data: profile } = await supabase.from('profiles').select('first_name, last_name').eq('id', userId || '').single()
+    const name = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : 'Finance'
+    if (exp?.employee_id && exp.expense_number) {
+      await notifyExpenseApproved(exp.expense_number, expenseId, name, exp.employee_id)
+    }
+  } catch { /* ignore */ }
+}
+
+export async function directRejectExpense(expenseId: string, reason: string): Promise<void> {
+  const supabase = await createClient()
+  const userId = (await supabase.auth.getUser()).data.user?.id
+
+  const { error } = await supabase
+    .from('expenses')
+    .update({ approval_status: 'rejected' })
+    .eq('id', expenseId)
+
+  if (error) throw new Error(`Failed to reject: ${error.message}`)
+
+  // Mark pending steps as rejected
+  await supabase
+    .from('expense_approvals')
+    .update({ status: 'rejected', approver_id: userId, approved_at: new Date().toISOString(), comments: reason })
+    .eq('expense_id', expenseId)
+    .eq('status', 'pending')
+
+  // Notify
+  try {
+    const { data: exp } = await supabase.from('expenses').select('expense_number, employee_id').eq('id', expenseId).single()
+    if (exp?.employee_id && exp.expense_number) {
+      await notifyExpenseRejected(exp.expense_number, expenseId, reason, exp.employee_id)
+    }
+  } catch { /* ignore */ }
 }

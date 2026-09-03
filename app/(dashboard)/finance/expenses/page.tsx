@@ -32,6 +32,7 @@ import { ExpenseReports } from './components/ExpenseReports'
 const TABS = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'expenses', label: 'Expenses' },
+  { id: 'dept-requests', label: '🏢 Dept Requests' },
   { id: 'vendors', label: 'Vendors' },
   { id: 'categories', label: 'Categories' },
   { id: 'budgets', label: 'Budgets' },
@@ -206,6 +207,38 @@ export default function ExpensesPage() {
                     onArchive={handleArchive}
                     onMarkPaid={handleMarkPaid}
                     onExportPDF={(e) => { /* handled inside ExpenseList for now via print */ }}
+                  />
+                </div>
+              )}
+
+              {activeTab === 'dept-requests' && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-omnia-gold/5 border border-omnia-gold/20 rounded-xl">
+                    <span className="text-2xl">🏢</span>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Department Expense Requests</p>
+                      <p className="text-xs text-muted-foreground">Expenses submitted by department employees awaiting Finance review. Same records — one system.</p>
+                    </div>
+                  </div>
+                  <SearchFilterBar
+                    filters={{ ...filters, approval_status: filters.approval_status || 'pending' }}
+                    onFiltersChange={handleFilterChange}
+                    onClear={() => handleFilterChange({ ...defaultFilters, approval_status: 'pending' })}
+                  />
+                  <ExpenseList
+                    expenses={expenses.filter(e => (e as any).submission_source === 'department' || e.department)}
+                    total={expenses.filter(e => (e as any).submission_source === 'department' || e.department).length}
+                    page={page}
+                    pageSize={pageSize}
+                    loading={loading}
+                    onPageChange={setPage}
+                    onView={setViewExpense}
+                    onEdit={(e) => { /* edit inline */ }}
+                    onDelete={handleDelete}
+                    onDuplicate={handleDuplicate}
+                    onArchive={handleArchive}
+                    onMarkPaid={handleMarkPaid}
+                    onExportPDF={() => {}}
                   />
                 </div>
               )}

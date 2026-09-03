@@ -109,7 +109,7 @@ export async function reorderAttachmentPagesAction(...args: Parameters<typeof at
 
 export async function fetchExpenseApprovals(...args: Parameters<typeof approvalSvc.getExpenseApprovals>) { return approvalSvc.getExpenseApprovals(...args) }
 export async function submitExpenseApprovalAction(...args: Parameters<typeof approvalSvc.submitExpenseApproval>) { return approvalSvc.submitExpenseApproval(...args) }
-export async function skipExpenseApprovalAction(...args: Parameters<typeof approvalSvc.skipExpenseApproval>) { return approvalSvc.skipExpenseApproval(...args) }
+
 
 export async function fetchExpenseBudgets(...args: Parameters<typeof budgetSvc.getExpenseBudgets>) { return budgetSvc.getExpenseBudgets(...args) }
 export async function createExpenseBudgetAction(...args: Parameters<typeof budgetSvc.createExpenseBudget>) { return budgetSvc.createExpenseBudget(...args) }
@@ -207,4 +207,54 @@ export async function updateRefundStatusAction(refundId: string, status: any): P
 
 export async function markRefundsPaidAction(refundIds: string[]): Promise<void> {
   return markRefundsAsPaid(refundIds)
+}
+
+// ── DEPARTMENT EXPENSE ACTIONS ─────────────────────────────────────────────────
+
+import * as deptInsightSvc from '@/lib/services/dept-expense-insight'
+
+export async function getDeptExpenseSummaryAction(department: string) {
+  return deptInsightSvc.getDeptExpenseSummary(department)
+}
+
+export async function getDeptSpendingInsightAction(department: string) {
+  return deptInsightSvc.getDeptSpendingInsight(department)
+}
+
+export async function getDeptBudgetIndicatorAction(department: string, category: string) {
+  return deptInsightSvc.getDeptBudgetIndicator(department, category)
+}
+
+/** Fetch expenses scoped to a specific department with optional filters */
+export async function fetchDeptExpensesAction(params: {
+  department: string
+  approval_status?: string
+  category?: string
+  date_from?: string
+  date_to?: string
+  search?: string
+  limit?: number
+  offset?: number
+}) {
+  return expenseSvc.getExpensesWithRelations(params)
+}
+
+/**
+ * Department employee submits an expense.
+ * Delegates to the existing createExpense() — same table, same record.
+ * Sets submission_source='department' so Finance can filter.
+ */
+export async function submitDeptExpenseAction(
+  ...args: Parameters<typeof expenseSvc.createExpense>
+) {
+  // createExpense handles approval chain creation and threshold routing
+  return expenseSvc.createExpense(...args)
+}
+
+export async function directApproveExpenseAction(expenseId: string) {
+  return await approvalSvc.directApproveExpense(expenseId)
+}
+
+export async function directRejectExpenseAction(expenseId: string, reason: string) {
+  return await approvalSvc.directRejectExpense(expenseId, reason)
 }

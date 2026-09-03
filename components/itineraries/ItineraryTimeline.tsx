@@ -9,6 +9,7 @@ import type { ItineraryDay, ItineraryItem } from '@/types/itinerary'
 
 interface ItineraryTimelineProps {
   days: ItineraryDay[]
+  itineraryId: string
   onAddDay: () => void
   onUpdateDay: (id: string, updates: Partial<ItineraryDay>) => void
   onDeleteDay: (id: string) => void
@@ -20,7 +21,7 @@ interface ItineraryTimelineProps {
 }
 
 export function ItineraryTimeline({
-  days, onAddDay, onUpdateDay, onDeleteDay,
+  days, itineraryId, onAddDay, onUpdateDay, onDeleteDay,
   onAddItem, onUpdateItem, onDeleteItem, onReorderItems,
   readOnly = false,
 }: ItineraryTimelineProps) {
@@ -264,6 +265,7 @@ export function ItineraryTimeline({
         <ActivityForm
           item={editingItem.item}
           dayId={editingItem.dayId}
+          itineraryId={itineraryId}
           sortOrder={
             editingItem.item
               ? editingItem.item.sort_order
