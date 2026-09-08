@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { DashboardWrapper } from '@/components/dashboard/DashboardWrapper'
 
 export const metadata = {
   title: 'Dashboard - Omnia Travel CRM',
@@ -6,5 +7,5 @@ export const metadata = {
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  return <>{children}</>
+  return <DashboardWrapper>{children}</DashboardWrapper>
 }

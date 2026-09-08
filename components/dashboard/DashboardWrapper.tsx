@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Topbar } from '@/components/layout/Topbar'
 import { OmniaLogo } from '@/components/ui/OmniaLogo'
+import { createClient } from '@/lib/supabase/client'
 import type { Profile } from '@/types'
+
+import { ProfileContext } from '@/lib/context/profile-context'
+import { resolveUserNames } from '@/lib/utils/user-name'
 
 interface DashboardWrapperProps {
   children: React.ReactNode
@@ -17,29 +21,58 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Get profile from localStorage (set during login)
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) {
-      setIsLoading(false)
-      // Use setTimeout to ensure router is initialized
-      setTimeout(() => {
+    const loadUser = async () => {
+      const supabase = createClient()
+
+      // Get authenticated user from Supabase session
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+      if (authError || !user) {
+        setIsLoading(false)
         router.push('/login')
-      }, 50)
-      return
+        return
+      }
+
+      // Fetch the user's profile row (role + department)
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+
+      if (profileError || !profileData) {
+        // Sign out to clear session — without this, middleware would redirect
+        // back to /dashboard immediately since the Supabase session is still valid
+        await supabase.auth.signOut()
+        setIsLoading(false)
+        router.push('/login')
+        return
+      }
+
+      // Build a safe profile with fallbacks for any missing columns
+      const safe = profileData as any
+      const resolved = resolveUserNames(
+        {
+          full_name: safe.full_name,
+          first_name: safe.first_name,
+          email: user.email,
+        },
+        user.email
+      )
+
+      const safeProfile: Profile = {
+        ...safe,
+        full_name: resolved.full_name,
+        first_name: resolved.first_name,
+        is_active: safe.is_active ?? true,
+        avatar_url: safe.avatar_url ?? null,
+        phone: safe.phone ?? null,
+      }
+      setProfile(safeProfile)
+      setIsLoading(false)
     }
 
-    try {
-      const user = JSON.parse(authUser)
-      setProfile(user)
-    } catch (err) {
-      setIsLoading(false)
-      // Use setTimeout to ensure router is initialized
-      setTimeout(() => {
-        router.push('/login')
-      }, 50)
-      return
-    }
-    setIsLoading(false)
+    loadUser()
   }, [router])
 
   if (isLoading) {
@@ -59,12 +92,14 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+    <ProfileContext.Provider value={profile}>
+      <div className="flex h-screen overflow-hidden bg-background">
+        <Sidebar profile={profile} />
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <Topbar profile={profile} />
+          <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        </div>
       </div>
-    </div>
+    </ProfileContext.Provider>
   )
 }

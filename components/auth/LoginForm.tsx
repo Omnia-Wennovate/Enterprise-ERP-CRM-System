@@ -3,70 +3,53 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, Loader2, AlertCircle } from 'lucide-react'
-import { authenticateUser, getAllDemoCredentials } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/client'
 import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import { motion } from 'framer-motion'
 
 export function LoginForm() {
   const router = useRouter()
+  const supabase = createClient()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [showDemoCredentials, setShowDemoCredentials] = useState(false)
-
-  const demoCredentials = getAllDemoCredentials()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
-    try {
-      const result = await authenticateUser(email, password)
+    const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
 
-      if (!result) {
-        setError('Invalid email or password. Please try again.')
-        setIsLoading(false)
-        return
-      }
-
-      // Store auth info in localStorage for demo
-      localStorage.setItem('auth_token', result.token)
-      localStorage.setItem('auth_user', JSON.stringify(result.user))
-
-      // Use setTimeout to ensure router is ready
-      setTimeout(() => {
-        router.push('/dashboard')
-      }, 100)
-    } catch (err) {
-      setError('An error occurred. Please try again.')
+    if (signInError || !authData.user) {
+      setError(signInError?.message ?? 'Invalid email or password. Please try again.')
       setIsLoading(false)
+      return
     }
-  }
 
-  const handleDemoLogin = async (demoEmail: string) => {
-    setEmail(demoEmail)
-    setIsLoading(true)
-    setError('')
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role, department')
+      .eq('id', authData.user.id)
+      .single()
 
-    const demoUser = demoCredentials.find((c) => c.email === demoEmail)
-    if (demoUser) {
-      const result = await authenticateUser(demoEmail, demoUser.password)
-      if (result) {
-        localStorage.setItem('auth_token', result.token)
-        localStorage.setItem('auth_user', JSON.stringify(result.user))
-        setTimeout(() => {
-          router.push('/dashboard')
-        }, 100)
-      }
+    if (profileError || !profile) {
+      setError('Signed in, but no profile record was found for this account.')
+      setIsLoading(false)
+      return
     }
-    setIsLoading(false)
+
+    router.push('/dashboard')
+    router.refresh()
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -149,7 +132,7 @@ export function LoginForm() {
               </div>
               <span className="text-xs font-medium text-[#5A6475] group-hover:text-[#0A1221] transition-colors">Remember me</span>
             </label>
-            
+
             <a href="/forgot-password" className="text-xs font-medium text-[#5A6475] hover:text-[#C8A951] transition-colors">
               Forgot Password?
             </a>
@@ -157,7 +140,7 @@ export function LoginForm() {
 
           {/* Error Message */}
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2.5"
@@ -190,46 +173,7 @@ export function LoginForm() {
             )}
           </motion.button>
         </form>
-
-        {/* Demo Credentials — collapsible */}
-        <div className="mt-8 border-t border-[#E5E2DC]/60 pt-5">
-          <button
-            type="button"
-            onClick={() => setShowDemoCredentials(!showDemoCredentials)}
-            className="text-xs text-[#8A94A5] hover:text-[#C8A951] font-medium transition-colors flex items-center justify-center gap-1.5 w-full"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={`transition-transform duration-200 ${showDemoCredentials ? 'rotate-90' : ''}`}>
-              <path d="M4 3L8 6L4 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Demo Credentials
-          </button>
-          
-          {showDemoCredentials && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              className="space-y-2 mt-4"
-            >
-              {demoCredentials.map((cred) => (
-                <button
-                  key={cred.email}
-                  onClick={() => handleDemoLogin(cred.email)}
-                  disabled={isLoading}
-                  className="w-full text-left px-4 py-2.5 text-xs bg-white/70 hover:bg-[#F5F3ED] border border-[#E5E2DC]/60 rounded-lg transition-all hover:border-[#C8A951]/30 disabled:opacity-50 text-[#0A1221] shadow-sm flex flex-col gap-1"
-                >
-                  <span className="font-bold text-[10px] uppercase tracking-widest text-[#C8A951]">
-                    {cred.role === 'marketing' 
-                      ? 'Social Media Team' 
-                      : cred.role.replace(/_/g, ' ')}
-                  </span>
-                  <div className="text-[#5A6475] truncate font-medium">{cred.email}</div>
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </div>
       </div>
     </motion.div>
   )
 }
-

@@ -36,14 +36,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Finance',
         items: [
-          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 0 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
           { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
-          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
@@ -70,6 +68,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
+          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -131,22 +130,13 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
       {
-        title: 'Suppliers',
-        items: [
-          { label: 'Supplier Database', href: '/suppliers', icon: 'Building' },
-        ],
-      },
-      {
         title: 'Finance',
         items: [
-          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 0 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
-          { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
-          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
@@ -170,6 +160,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
+          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -222,7 +213,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         items: [
           { label: 'My Tasks', href: '/tasks', icon: 'CheckSquare', badge: 2 },
           { label: 'My Performance', href: '/performance', icon: 'TrendingUp' },
-          { label: 'Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {
@@ -256,8 +246,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Visa Tracker', href: '/bookings/visa', icon: 'BookOpen', badge: 5 },
           { label: 'Documents', href: '/bookings/documents', icon: 'FolderOpen', badge: 4 },
           { label: 'Suppliers', href: '/suppliers', icon: 'Building' },
-          { label: 'Supplier Payments', href: '/bookings/supplier-payments', icon: 'Building2' },
-          { label: 'Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {
@@ -286,15 +274,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Finance',
         items: [
-          { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
           { label: 'Invoices', href: '/finance/invoices', icon: 'Receipt', badge: 3 },
           { label: 'Payments', href: '/finance/payments', icon: 'CreditCard' },
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
           { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
-          { label: 'Suppliers', href: '/suppliers', icon: 'Building' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
-          { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
       },
       {
@@ -345,12 +330,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
       {
-        title: 'Expenses',
-        items: [
-          { label: 'HR Expenses', href: '/dept-expenses', icon: 'Receipt' },
-        ],
-      },
-      {
         title: 'Communication',
         items: [
           { label: 'Communication Center', href: '/communication', icon: 'MessageSquare', badge: 0 },
@@ -376,7 +355,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
     ],
-    marketing: []
+    marketing: [],
   }
 
   // Marketing / Social Media Team demo account
@@ -391,6 +370,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
       {
         title: 'Social Media Team',
         items: [
+          { label: 'Marketing Dashboard', href: '/marketing/dashboard', icon: 'Megaphone' },
           { label: 'Social Accounts', href: '/marketing/accounts', icon: 'Share2' },
           { label: 'Content', href: '/marketing/content', icon: 'PenTool' },
           { label: 'Calendar', href: '/marketing/calendar', icon: 'CalendarDays' },
@@ -402,14 +382,9 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Media Library', href: '/marketing/media-library', icon: 'Image' },
           { label: 'Production', href: '/marketing/production-requests', icon: 'Video' },
           { label: 'Weekly Planner', href: '/marketing/weekly-planner', icon: 'ClipboardList' },
+          { label: 'Communication', href: '/marketing/communication', icon: 'MessageCircle' },
           { label: 'Team', href: '/marketing/team', icon: 'Users' },
           { label: 'Reports', href: '/marketing/reports', icon: 'BarChart2' },
-        ],
-      },
-      {
-        title: 'Expenses',
-        items: [
-          { label: 'Marketing Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
     ]
@@ -433,12 +408,6 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Tech Team', href: '/tech/team', icon: 'Users' },
           { label: 'Project Archive', href: '/tech/archive', icon: 'Archive' },
           { label: 'Credential Vault', href: '/tech/credentials', icon: 'KeyRound' },
-        ],
-      },
-      {
-        title: 'Expenses',
-        items: [
-          { label: 'IT Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
       {

@@ -26,6 +26,7 @@ function getRoleMessage(role: UserRole): string {
 export function WelcomeBanner({ firstName, role }: WelcomeBannerProps) {
   const greeting = getHourGreeting()
   const message = getRoleMessage(role)
+  const safeName = !firstName || firstName.trim().toLowerCase() === 'user' ? '' : firstName
 
   return (
     <div
@@ -38,7 +39,7 @@ export function WelcomeBanner({ firstName, role }: WelcomeBannerProps) {
       <div className="flex items-start justify-between relative z-10">
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-1.5">
-            {greeting}, {firstName}
+            {safeName ? `${greeting}, ${safeName}` : greeting}
           </h1>
           <p className="text-white/50 text-sm">{message}</p>
         </div>

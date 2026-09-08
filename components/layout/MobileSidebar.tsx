@@ -7,6 +7,7 @@ import * as LucideIcons from 'lucide-react'
 import { getNavForRole } from '@/lib/navigation'
 import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import type { Profile } from '@/types'
+import { resolveUserNames, getInitials } from '@/lib/utils/user-name'
 
 interface MobileSidebarProps {
   profile: Profile
@@ -83,21 +84,15 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
     return pathname?.startsWith(href)
   }
 
-  const handleSignOut = () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('auth_user')
+  const handleSignOut = async () => {
+    const supabase = (await import('@/lib/supabase/client')).createClient()
+    await supabase.auth.signOut()
     setIsOpen(false)
     router.push('/login')
+    router.refresh()
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2)
-  }
+  const displayName = resolveUserNames(profile).full_name
 
   return (
     <>
@@ -133,10 +128,10 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
             <div className="px-4 py-3.5 border-b border-sidebar-border">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 bg-omnia-gold/20 text-omnia-gold border border-omnia-gold/30">
-                  {getInitials(profile.full_name)}
+                  {getInitials(displayName)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sidebar-accent-foreground text-sm font-medium truncate">{profile.full_name}</p>
+                  <p className="text-sidebar-accent-foreground text-sm font-medium truncate">{displayName}</p>
                   <p className="text-[10px] px-2 py-0.5 rounded-full bg-omnia-gold/15 text-omnia-gold-light capitalize inline-block mt-0.5 font-medium">
                     {profile.role.replace(/_/g, ' ')}
                   </p>

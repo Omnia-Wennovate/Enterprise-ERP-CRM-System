@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { User, Settings, LogOut, ChevronDown, Palette } from 'lucide-react'
 import type { Profile } from '@/types'
 import { useEnhancedTheme } from './../theme-provider'
+import { resolveUserNames, getInitials } from '@/lib/utils/user-name'
 
 interface UserMenuProps {
   profile: Profile
@@ -26,20 +27,14 @@ export function UserMenu({ profile }: UserMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const handleSignOut = () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('auth_user')
+  const handleSignOut = async () => {
+    const supabase = (await import('@/lib/supabase/client')).createClient()
+    await supabase.auth.signOut()
     router.push('/login')
+    router.refresh()
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2)
-  }
+  const displayName = resolveUserNames(profile).full_name
 
   return (
     <div className="relative" ref={menuRef}>
@@ -48,10 +43,10 @@ export function UserMenu({ profile }: UserMenuProps) {
         className="flex items-center gap-2 px-3 py-2 hover:bg-background rounded-lg transition-colors text-sm"
       >
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold bg-omnia-gold/20 text-omnia-gold border border-omnia-gold/30">
-          {getInitials(profile.full_name)}
+          {getInitials(displayName)}
         </div>
         <div className="hidden sm:block text-left">
-          <p className="font-medium text-foreground text-xs">{profile.full_name}</p>
+          <p className="font-medium text-foreground text-xs">{displayName}</p>
           <p className="text-muted-foreground text-xs capitalize">{profile.role.replace(/_/g, ' ')}</p>
         </div>
         <ChevronDown size={16} className="text-muted-foreground" />
@@ -60,7 +55,7 @@ export function UserMenu({ profile }: UserMenuProps) {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg z-50">
           <div className="p-3 border-b border-border">
-            <p className="font-medium text-foreground text-sm">{profile.full_name}</p>
+            <p className="font-medium text-foreground text-sm">{displayName}</p>
             <p className="text-xs text-muted-foreground capitalize">{profile.role.replace(/_/g, ' ')}</p>
           </div>
 
