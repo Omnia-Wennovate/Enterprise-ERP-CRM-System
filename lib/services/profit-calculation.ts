@@ -1,7 +1,8 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import type { Booking, ProfitCalculation } from '@/types/finance'
+import type { ProfitCalculation } from '@/types/finance'
+import type { Booking } from '@/types'
 import { getTotalExpensesByBooking } from './expenses'
 import { getTotalSupplierPaymentsByBooking } from './supplier-payments'
 

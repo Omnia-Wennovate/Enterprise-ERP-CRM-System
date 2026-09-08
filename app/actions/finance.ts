@@ -14,6 +14,10 @@ import {
   getSupplierPaymentsByStatus,
   getOverdueSupplierPayments,
   getTotalSupplierPaymentsByBooking,
+  createSupplierPayment,
+  getSuppliers,
+  createSupplier,
+  deleteSupplier,
 } from '@/lib/services/supplier-payments'
 import {
   calculateTrueProfit,
@@ -52,6 +56,8 @@ import type {
   AddExpenseFormData,
   MarkSupplierPaymentFormData,
   ProcessRefundFormData,
+  Supplier,
+  CreateSupplierPaymentFormData,
 } from '@/types/finance'
 import type { Booking } from '@/types'
 
@@ -138,6 +144,51 @@ export async function markSupplierPaymentPaidAction(
 export async function fetchOverdueSupplierPayments(): Promise<SupplierPayment[]> {
   return getOverdueSupplierPayments()
 }
+
+// ── OPERATIONS: Supplier Payments ─────────────────────────────────────────────
+
+/**
+ * Load real suppliers from the suppliers table for the Operations payment form.
+ * Never returns fake/hardcoded data — authenticated via server session.
+ */
+export async function fetchSuppliersAction(): Promise<Supplier[]> {
+  return getSuppliers()
+}
+
+export async function createSupplierAction(payload: {
+  name: string
+  contact_person?: string
+  email?: string
+  phone?: string
+  address?: string
+  category?: string
+}): Promise<Supplier> {
+  return createSupplier(payload)
+}
+
+export async function deleteSupplierAction(id: string): Promise<void> {
+  return deleteSupplier(id)
+}
+
+/**
+ * Create ONE supplier payment record in the existing supplier_payments table.
+ * The authenticated user's ID is resolved server-side — never hardcoded.
+ * Status is set to 'pending' so Finance immediately sees it.
+ */
+export async function createSupplierPaymentAction(
+  formData: CreateSupplierPaymentFormData
+): Promise<SupplierPayment> {
+  return createSupplierPayment(formData)
+}
+
+/**
+ * Operations views the same supplier_payments table as Finance.
+ * One source of truth — no duplication.
+ */
+export async function fetchMySupplierPaymentsAction(): Promise<SupplierPayment[]> {
+  return getSupplierPayments()
+}
+
 
 // PROFIT CALCULATION
 export async function calculateTrueProfitAction(booking: Booking) {

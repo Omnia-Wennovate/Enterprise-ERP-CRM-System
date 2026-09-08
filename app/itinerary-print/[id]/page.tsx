@@ -137,7 +137,14 @@ export default function ItineraryPrintPage() {
             margin: 0 !important;
             padding: 0 !important;
           }
+          #itinerary-print-root {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+          }
         }
+
         @media screen {
           body {
             background: #e5e7eb;

@@ -472,6 +472,31 @@ export interface MarkSupplierPaymentFormData {
   reference_number?: string
 }
 
+// Supplier entity from the suppliers table
+export interface Supplier {
+  id: string
+  name: string
+  contact_person?: string
+  email?: string
+  phone?: string
+  address?: string
+  category?: string
+  currency?: string
+  created_at?: string
+}
+
+// Operations → Supplier Payments: form data for creating a new payment request
+export interface CreateSupplierPaymentFormData {
+  supplier_id: string
+  supplier_name: string   // denormalized for display without joins
+  amount: number
+  currency?: string
+  due_date?: string
+  reference_number?: string
+  booking_id?: string
+  description?: string    // maps to notes/description if column exists
+}
+
 export interface CreateCancellationFormData {
   booking_id: string
   reason: string

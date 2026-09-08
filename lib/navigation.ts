@@ -131,6 +131,12 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
       {
+        title: 'Suppliers',
+        items: [
+          { label: 'Supplier Database', href: '/suppliers', icon: 'Building' },
+        ],
+      },
+      {
         title: 'Finance',
         items: [
           { label: 'Finance Dashboard', href: '/finance', icon: 'BarChart2' },
@@ -250,6 +256,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Visa Tracker', href: '/bookings/visa', icon: 'BookOpen', badge: 5 },
           { label: 'Documents', href: '/bookings/documents', icon: 'FolderOpen', badge: 4 },
           { label: 'Suppliers', href: '/suppliers', icon: 'Building' },
+          { label: 'Supplier Payments', href: '/bookings/supplier-payments', icon: 'Building2' },
           { label: 'Expenses', href: '/dept-expenses', icon: 'Receipt' },
         ],
       },
@@ -285,6 +292,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Expenses', href: '/finance/expenses', icon: 'TrendingDown' },
           { label: 'Reports', href: '/finance/reports', icon: 'BarChart2' },
           { label: 'Supplier Payments', href: '/finance/supplier-payments', icon: 'Building2' },
+          { label: 'Suppliers', href: '/suppliers', icon: 'Building' },
           { label: 'Commissions', href: '/finance/commissions', icon: 'Award' },
           { label: 'Refunds', href: '/finance/refunds', icon: 'RefreshCw' },
         ],
@@ -368,6 +376,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
         ],
       },
     ],
+    marketing: []
   }
 
   // Marketing / Social Media Team demo account

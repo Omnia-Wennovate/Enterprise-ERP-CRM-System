@@ -22,6 +22,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/bookings/itineraries': 'Itineraries',
   '/bookings/visa': 'Visa Management',
   '/bookings/documents': 'Documents',
+  '/bookings/supplier-payments': 'Supplier Payments',
   '/suppliers': 'Suppliers',
   '/finance/invoices': 'Invoices',
   '/finance/payments': 'Payments',

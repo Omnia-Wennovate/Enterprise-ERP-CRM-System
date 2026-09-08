@@ -250,32 +250,71 @@ export function ItineraryPrintView({ itinerary }: { itinerary: ItineraryWithBook
       minHeight: '100vh',
     }}>
       {/* ═══════════════════════════════════════════════
-          HEADER / COVER
+          PRINT HEADER BANNER — single SVG, 100% print-safe
+      ═══════════════════════════════════════════════ */}
+      <svg
+        width="100%"
+        height="90"
+        viewBox="0 0 800 90"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ display: 'block', breakAfter: 'avoid', pageBreakAfter: 'avoid' }}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* White background */}
+        <rect width="800" height="90" fill="white" />
+
+        {/* ① Left yellow block */}
+        <rect x="0" y="0" width="54" height="90" fill="#E8C96A" />
+
+        {/* ② Omnia logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <image href="/omnia-logo.png" x="66" y="7" width="82" height="76" preserveAspectRatio="xMidYMid meet" />
+
+        {/* ③ Yellow pill — rounded left, slanted right cut */}
+        <path d="M 175 23 L 338 23 L 315 67 L 175 67 A 22 22 0 0 1 175 23 Z" fill="#E8C96A" />
+
+        {/* ④ Two grey diagonal slashes */}
+        <path d="M 354 23 L 370 23 L 362 67 L 346 67 Z" fill="#9CA3AF" />
+        <path d="M 377 23 L 393 23 L 385 67 L 369 67 Z" fill="#9CA3AF" />
+
+        {/* ⑤ Company name */}
+        <text
+          x="408" y="51"
+          fontFamily="Arial, Helvetica, sans-serif"
+          fontSize="17"
+          fontWeight="700"
+          fill="#6B7280"
+          dominantBaseline="middle"
+        >
+          Omnia Business and Leisure Travel
+        </text>
+
+        {/* ⑥ Right grey slash */}
+        <path d="M 746 0 L 764 0 L 752 90 L 734 90 Z" fill="#9CA3AF" />
+
+        {/* ⑦ Right yellow block — flush to right edge */}
+        <path d="M 770 0 L 800 0 L 800 90 L 758 90 Z" fill="#E8C96A" />
+      </svg>
+
+      {/* ═══════════════════════════════════════════════
+          TRIP TITLE / META COVER BLOCK
       ═══════════════════════════════════════════════ */}
       <div style={{
         background: NAVY,
-        padding: '40px 48px 36px',
+        padding: '28px 48px 24px',
         breakAfter: 'avoid',
         pageBreakAfter: 'avoid',
       }}>
-        {/* Logo */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/omnia-logo-light.png" alt="Omnia Destinations"
-          style={{ height: 48, objectFit: 'contain', objectPosition: 'left', display: 'block', marginBottom: 24 }} />
-
-        {/* Gold rule */}
-        <div style={{ height: 2, background: `linear-gradient(90deg, ${GOLD}, transparent)`, marginBottom: 24 }} />
-
         {/* Trip title */}
-        <h1 style={{ fontSize: 30, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.15, letterSpacing: '-0.02em' }}>
           {itinerary.title}
         </h1>
         {destination && (
-          <p style={{ fontSize: 15, color: GOLD, margin: '6px 0 0', fontStyle: 'italic' }}>{destination}</p>
+          <p style={{ fontSize: 14, color: GOLD, margin: '6px 0 0', fontStyle: 'italic' }}>{destination}</p>
         )}
 
         {/* Meta chips */}
-        <div style={{ display: 'flex', gap: 32, marginTop: 24, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 32, marginTop: 20, flexWrap: 'wrap' }}>
           {nights != null && (
             <HeaderMeta label="Duration" value={`${nights} Night${nights !== 1 ? 's' : ''} / ${nights + 1} Day${nights + 1 !== 1 ? 's' : ''}`} />
           )}
@@ -293,7 +332,7 @@ export function ItineraryPrintView({ itinerary }: { itinerary: ItineraryWithBook
           )}
         </div>
 
-        <div style={{ height: 1, background: `${GOLD}40`, marginTop: 28 }} />
+        <div style={{ height: 1, background: `${GOLD}40`, marginTop: 24 }} />
       </div>
 
       {/* ═══════════════════════════════════════════════
@@ -377,22 +416,15 @@ export function ItineraryPrintView({ itinerary }: { itinerary: ItineraryWithBook
       </div>
 
       {/* ═══════════════════════════════════════════════
-          FOOTER
+          PRINT FOOTER BANNER
       ═══════════════════════════════════════════════ */}
-      <div id="print-footer" style={{
-        background: NAVY, padding: '18px 48px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/omnia-logo-light.png" alt="Omnia" style={{ height: 28, objectFit: 'contain' }} />
-          <div style={{ width: 1, height: 28, background: `${GOLD}40` }} />
-          <p style={{ fontSize: 10, color: '#64748B', margin: 0, fontStyle: 'italic' }}>
-            Luxury Travel Experiences
-          </p>
-        </div>
-        <p style={{ fontSize: 10, color: '#475569', margin: 0 }}>Curated Just for You</p>
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        id="print-footer"
+        src="/print-footer.jpg"
+        alt="Omnia Destinations contact information"
+        style={{ display: 'block', width: '100%', height: 'auto', marginTop: 24 }}
+      />
     </div>
   )
 }
