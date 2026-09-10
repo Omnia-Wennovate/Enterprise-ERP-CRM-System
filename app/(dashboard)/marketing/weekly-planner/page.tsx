@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { WeeklyContentPlan } from '@/types/marketing'
 import { PLATFORM_COLORS, PLATFORM_LABELS } from '@/types/marketing'
 import { Loader2, ChevronLeft, ChevronRight, Plus, X, Calendar as CalendarIcon, CheckCircle, Clock } from 'lucide-react'
@@ -13,7 +11,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function WeeklyPlannerPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [plans, setPlans] = useState<WeeklyContentPlan[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -24,12 +22,8 @@ export default function WeeklyPlannerPage() {
   const [form, setForm] = useState({ content_theme: '', post_type: 'image', campaign_id: '', caption_draft: '', required_media: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile, weekStart])
+    loadData()
+  }, [weekStart])
 
   const loadData = async () => {
     try { setIsLoading(true); const [p, c] = await Promise.all([getWeeklyPlansByWeek(weekStart), getCampaigns()]); setPlans(p); setCampaigns(c) } catch (err) { console.error(err) } finally { setIsLoading(false) }
@@ -70,8 +64,6 @@ export default function WeeklyPlannerPage() {
     setSelectedDay(day); setSelectedPlatform(platform); setShowModal(true)
   }
 
-  if (!profile) return null
-
   const weekDates = getWeekDates(weekStart)
   const platforms = ['instagram', 'facebook', 'linkedin', 'tiktok', 'twitter'] as const
   const postTypes = ['image', 'video', 'carousel', 'reel', 'story', 'text'] as const
@@ -79,12 +71,8 @@ export default function WeeklyPlannerPage() {
   const getPlans = (day: number, platform: string) => plans.filter(p => p.day_of_week === day && p.platform === platform)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Weekly Content Planner</h1>
               <p className="text-sm text-muted-foreground mt-1">Plan and coordinate posts across all platforms by week</p>
@@ -191,8 +179,6 @@ export default function WeeklyPlannerPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

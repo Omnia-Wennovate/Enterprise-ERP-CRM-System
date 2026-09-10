@@ -2,16 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { SocialComment, SocialMessage } from '@/types/marketing'
 import { Loader2, MessageCircle, Mail, Clock, AlertTriangle, CheckCircle, Send, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
 import { getComments, replyToComment, getMessages, answerMessage, getEngagementStats } from '@/lib/services/engagement'
 
 export default function EngagementPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [comments, setComments] = useState<SocialComment[]>([])
   const [messages, setMessages] = useState<SocialMessage[]>([])
   const [stats, setStats] = useState<any>(null)
@@ -22,12 +20,8 @@ export default function EngagementPage() {
   const [commentFilter, setCommentFilter] = useState<'all' | 'unreplied' | 'replied'>('all')
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -56,8 +50,6 @@ export default function EngagementPage() {
     } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const sentimentIcon = (s: string | null) => {
     if (s === 'positive') return <ThumbsUp size={12} className="text-[#22C55E]" />
     if (s === 'negative') return <ThumbsDown size={12} className="text-destructive" />
@@ -69,12 +61,8 @@ export default function EngagementPage() {
     comments.filter(c => c.is_replied)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
+    <div className="space-y-6">
+      <div className="mb-6">
             <h1 className="text-2xl font-bold text-foreground">Customer Engagement</h1>
             <p className="text-sm text-muted-foreground mt-1">Monitor and respond to social media interactions</p>
           </div>
@@ -221,8 +209,6 @@ export default function EngagementPage() {
               ))}
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

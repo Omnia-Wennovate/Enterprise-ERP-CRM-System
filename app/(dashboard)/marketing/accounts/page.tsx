@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
+import { useProfile } from '@/lib/context/profile-context'
 import type { Profile } from '@/types'
 import type { SocialAccount } from '@/types/marketing'
 import { PLATFORM_COLORS, PLATFORM_LABELS } from '@/types/marketing'
@@ -78,7 +77,7 @@ const PLATFORM_ICONS: Record<string, string> = {
 function SocialAccountsContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [accountsData, setAccountsData] = useState<AccountWithMetrics[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null)
@@ -89,38 +88,10 @@ function SocialAccountsContent() {
   const [isAdding, setIsAdding] = useState(false)
   const [connectingPlatform, setConnectingPlatform] = useState<string | null>(null)
 
-  // Handle OAuth redirect result
-  useEffect(() => {
-    const connected = searchParams.get('connected')
-    const error = searchParams.get('error')
-    const platform = searchParams.get('platform')
-    const account = searchParams.get('account')
-
-    if (connected === 'true') {
-      const label = platform ? PLATFORM_LABELS[platform as keyof typeof PLATFORM_LABELS] ?? platform : 'Account'
-      showToast('success', `${label} — ${account ?? 'Account'} connected! Initial sync starting...`)
-      // Clean URL
-      router.replace('/marketing/accounts')
-    } else if (error) {
-      showToast('error', decodeURIComponent(error))
-      router.replace('/marketing/accounts')
-    }
-  }, [searchParams, router])
-
-  useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => {
-    if (profile) loadAccounts()
-  }, [profile])
-
-  const showToast = (type: 'success' | 'error' | 'info', message: string) => {
+  const showToast = useCallback((type: 'success' | 'error' | 'info', message: string) => {
     setToast({ type, message })
-    setTimeout(() => setToast(null), 5000)
-  }
+    setTimeout(() => setToast(null), 4000)
+  }, [])
 
   const loadAccounts = useCallback(async () => {
     setIsLoading(true)
@@ -146,7 +117,29 @@ function SocialAccountsContent() {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [showToast])
+
+  useEffect(() => {
+    loadAccounts()
+  }, [loadAccounts])
+
+  // Handle OAuth redirect result
+  useEffect(() => {
+    const connected = searchParams.get('connected')
+    const error = searchParams.get('error')
+    const platform = searchParams.get('platform')
+    const account = searchParams.get('account')
+
+    if (connected === 'true') {
+      const label = platform ? PLATFORM_LABELS[platform as keyof typeof PLATFORM_LABELS] ?? platform : 'Account'
+      showToast('success', `${label} — ${account ?? 'Account'} connected! Initial sync starting...`)
+      // Clean URL
+      router.replace('/marketing/accounts')
+    } else if (error) {
+      showToast('error', decodeURIComponent(error))
+      router.replace('/marketing/accounts')
+    }
+  }, [searchParams, router, showToast])
 
   // ─── OAuth Connect ─────────────────────────────────────────────────────────
 
@@ -268,17 +261,11 @@ function SocialAccountsContent() {
     }
   }
 
-  if (!profile) return null
-
   const oauthPlatforms = OAUTH_SUPPORTED_PLATFORMS
   const manualPlatforms = ['youtube', 'twitter', 'telegram', 'whatsapp'] as const
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
+    <div className="space-y-6">
 
           {/* ── Header ── */}
           <div className="flex items-center justify-between mb-6">
@@ -615,9 +602,6 @@ function SocialAccountsContent() {
             </div>
           </div>
 
-        </main>
-      </div>
-
       {/* ── Toast ── */}
       {toast && (
         <div className={`fixed bottom-6 right-6 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg text-sm font-medium z-50 max-w-sm ${
@@ -781,7 +765,7 @@ function SocialAccountsContent() {
 
 export default function SocialAccountsPage() {
   return (
-    <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="animate-spin text-primary" size={48} /></div>}>
+    <Suspense fallback={<div className="flex h-[50vh] items-center justify-center"><Loader2 className="animate-spin text-primary" size={48} /></div>}>
       <SocialAccountsContent />
     </Suspense>
   )

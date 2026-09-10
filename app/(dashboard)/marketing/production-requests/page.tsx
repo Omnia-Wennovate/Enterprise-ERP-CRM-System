@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { ContentProductionRequest, ProductionStatus } from '@/types/marketing'
 import { PRODUCTION_STATUS_LABELS, PRODUCTION_STATUS_COLORS } from '@/types/marketing'
 import { Loader2, Plus, X, ChevronRight } from 'lucide-react'
@@ -13,7 +11,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function ProductionRequestsPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [requests, setRequests] = useState<ContentProductionRequest[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -21,12 +19,8 @@ export default function ProductionRequestsPage() {
   const [form, setForm] = useState({ title: '', requesting_department: '', campaign_id: '', description: '', priority: 'medium', due_date: '', recording_date: '', recording_location: '', required_equipment: '', requires_travel: false })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try { setIsLoading(true); const [r, c] = await Promise.all([getProductionRequests(), getCampaigns()]); setRequests(r); setCampaigns(c) } catch (err) { console.error(err) } finally { setIsLoading(false) }
@@ -50,8 +44,6 @@ export default function ProductionRequestsPage() {
     try { await deleteProductionRequest(id); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const statuses: ProductionStatus[] = ['requested', 'planning', 'approved', 'recording', 'editing', 'review', 'scheduled', 'published', 'archived']
   const priorityColors: Record<string, string> = { low: '#6B7280', medium: '#3B82F6', high: '#F59E0B', urgent: '#EF4444' }
   const departments = ['Sales', 'Operations', 'HR', 'Finance', 'Management', 'Social Media', 'Marketing']
@@ -66,12 +58,8 @@ export default function ProductionRequestsPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Production Requests</h1>
               <p className="text-sm text-muted-foreground mt-1">Track content production from request to publication</p>
@@ -185,8 +173,6 @@ export default function ProductionRequestsPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

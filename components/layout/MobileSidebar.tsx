@@ -9,6 +9,8 @@ import { OmniaLogo } from '@/components/ui/OmniaLogo'
 import type { Profile } from '@/types'
 import { resolveUserNames, getInitials } from '@/lib/utils/user-name'
 
+import Link from 'next/link'
+
 interface MobileSidebarProps {
   profile: Profile
 }
@@ -81,7 +83,7 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
     if (href === '/dashboard') {
       return pathname === '/dashboard'
     }
-    return pathname?.startsWith(href)
+    return pathname === href || pathname?.startsWith(href + '/')
   }
 
   const handleSignOut = async () => {
@@ -151,22 +153,28 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
                       const Icon = getIconComponent(item.icon)
                       const active = isActive(item.href)
 
+                      if (item.locked) {
+                        return (
+                          <div
+                            key={item.label}
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium opacity-40 cursor-not-allowed text-sidebar-foreground"
+                          >
+                            <Icon size={16} className="flex-shrink-0" />
+                            <span className="flex-1 text-left truncate">{item.label}</span>
+                            <Lock size={12} className="flex-shrink-0 opacity-50" />
+                          </div>
+                        )
+                      }
+
                       return (
-                        <button
+                        <Link
                           key={item.label}
-                          onClick={() => {
-                            if (!item.locked) {
-                              router.push(item.href)
-                              setIsOpen(false)
-                            }
-                          }}
-                          disabled={item.locked}
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
                           className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 relative ${
-                            item.locked
-                              ? 'opacity-40 cursor-not-allowed text-sidebar-foreground'
-                              : active
-                                ? 'bg-sidebar-accent text-omnia-gold'
-                                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                            active
+                              ? 'bg-sidebar-accent text-omnia-gold font-semibold'
+                              : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                           }`}
                         >
                           {active && (
@@ -174,14 +182,12 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
                           )}
                           <Icon size={16} className="flex-shrink-0" />
                           <span className="flex-1 text-left truncate">{item.label}</span>
-                          {item.locked ? (
-                            <Lock size={12} className="flex-shrink-0 opacity-50" />
-                          ) : item.badge ? (
+                          {item.badge ? (
                             <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-omnia-gold/20 text-omnia-gold font-semibold flex-shrink-0">
                               {item.badge}
                             </span>
                           ) : null}
-                        </button>
+                        </Link>
                       )
                     })}
                   </div>
@@ -191,13 +197,17 @@ export function MobileSidebar({ profile }: MobileSidebarProps) {
 
             {/* Bottom Section */}
             <div className="border-t border-sidebar-border p-3 flex-shrink-0 space-y-0.5">
-              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150">
+              <Link
+                href="/settings"
+                onClick={() => setIsOpen(false)}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150"
+              >
                 <Settings size={16} />
                 <span>Settings</span>
-              </button>
+              </Link>
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-150 cursor-pointer"
               >
                 <LogOut size={16} />
                 <span>Sign Out</span>

@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { MediaLibraryItem } from '@/types/marketing'
 import { Loader2, Plus, X, Image as ImageIcon, Video, FileText, Grid, List, Search, Trash2 } from 'lucide-react'
 import { getMediaLibrary, createMediaItem, deleteMediaItem, getMediaCountsByType } from '@/lib/services/media-library'
@@ -12,7 +10,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function MediaLibraryPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [media, setMedia] = useState<MediaLibraryItem[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [typeCounts, setTypeCounts] = useState<Record<string, number>>({})
@@ -24,12 +22,8 @@ export default function MediaLibraryPage() {
   const [form, setForm] = useState({ file_name: '', file_url: '', file_type: 'image', file_size_kb: 0, campaign_id: '', category: '', platform: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try { setIsLoading(true); const [m, c, tc] = await Promise.all([getMediaLibrary(), getCampaigns(), getMediaCountsByType()]); setMedia(m); setCampaigns(c); setTypeCounts(tc) } catch (err) { console.error(err) } finally { setIsLoading(false) }
@@ -49,8 +43,6 @@ export default function MediaLibraryPage() {
     try { await deleteMediaItem(id); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const typeIcons: Record<string, any> = { image: ImageIcon, video: Video, document: FileText, logo: ImageIcon, template: FileText }
   const typeColors: Record<string, string> = { image: '#3B82F6', video: '#EF4444', document: '#F59E0B', logo: '#8B5CF6', template: '#10B981' }
   const fileTypes = ['image', 'video', 'logo', 'document', 'template'] as const
@@ -60,12 +52,8 @@ export default function MediaLibraryPage() {
   if (searchQuery) filtered = filtered.filter(m => m.file_name.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Media Library</h1>
               <p className="text-sm text-muted-foreground mt-1">Manage all marketing media assets</p>
@@ -182,8 +170,6 @@ export default function MediaLibraryPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

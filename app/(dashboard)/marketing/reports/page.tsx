@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import { Loader2, BarChart3, TrendingUp, Users, Target, DollarSign, Eye, MousePointerClick, ArrowUpRight } from 'lucide-react'
 import {
   getDashboardStats,
@@ -21,7 +19,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 export default function ReportsPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [isLoading, setIsLoading] = useState(true)
   const [stats, setStats] = useState<any>(null)
   const [platformMetrics, setPlatformMetrics] = useState<any[]>([])
@@ -32,12 +30,8 @@ export default function ReportsPage() {
   const [activePeriod, setActivePeriod] = useState<'7d' | '30d' | '90d'>('30d')
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -68,8 +62,6 @@ export default function ReportsPage() {
     }
   }
 
-  if (!profile) return null
-
   const PIE_COLORS = ['#C8A951', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#E2CC7E', '#22C55E']
   const totalBudget = budgetData.adBudget + budgetData.influencerSpend
   const totalSpend = budgetData.adSpend + budgetData.influencerSpend
@@ -86,13 +78,9 @@ export default function ReportsPage() {
   ]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Marketing Reports</h1>
               <p className="text-sm text-muted-foreground mt-1">Comprehensive analytics and performance insights</p>
@@ -296,8 +284,6 @@ export default function ReportsPage() {
               </div>
             </>
           )}
-        </main>
-      </div>
     </div>
   )
 }

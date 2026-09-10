@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { SocialPost } from '@/types/marketing'
 import { PLATFORM_COLORS } from '@/types/marketing'
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -12,19 +10,15 @@ import { getPostsByDateRange } from '@/lib/services/social-posts'
 
 export default function CalendarPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [isLoading, setIsLoading] = useState(true)
   const [currentDate, setCurrentDate] = useState(new Date())
   const [posts, setPosts] = useState<SocialPost[]>([])
   const [view, setView] = useState<'month' | 'week'>('month')
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadPosts() }, [profile, currentDate])
+    loadPosts()
+  }, [currentDate])
 
   const loadPosts = async () => {
     try {
@@ -44,8 +38,6 @@ export default function CalendarPage() {
     d.setMonth(d.getMonth() + dir)
     setCurrentDate(d)
   }
-
-  if (!profile) return null
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -75,12 +67,8 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Content Calendar</h1>
               <p className="text-sm text-muted-foreground mt-1">Visual overview of scheduled and published content</p>
@@ -167,8 +155,6 @@ export default function CalendarPage() {
               ))}
             </div>
           </div>
-        </main>
-      </div>
     </div>
   )
 }

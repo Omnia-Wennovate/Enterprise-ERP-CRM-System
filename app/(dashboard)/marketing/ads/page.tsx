@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { Advertisement } from '@/types/marketing'
 import { Loader2, Plus, X, DollarSign, MousePointerClick, Eye, TrendingUp } from 'lucide-react'
 import { getAdvertisements, createAdvertisement, updateAdvertisement, deleteAdvertisement, getTotalAdSpend, getTotalAdBudget } from '@/lib/services/advertisements'
@@ -12,7 +10,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function AdsPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [ads, setAds] = useState<Advertisement[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -23,12 +21,8 @@ export default function AdsPage() {
   const [form, setForm] = useState({ name: '', platform: 'meta', campaign_id: '', budget: 0, ad_type: 'sponsored', target_audience: '', start_date: '', end_date: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -57,8 +51,6 @@ export default function AdsPage() {
     try { await deleteAdvertisement(id); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const platformColors: Record<string, string> = { meta: '#1877F2', google: '#4285F4', tiktok: '#000000', linkedin: '#0A66C2' }
   const platformLabels: Record<string, string> = { meta: 'Meta Ads', google: 'Google Ads', tiktok: 'TikTok Ads', linkedin: 'LinkedIn Ads' }
   const statusColors: Record<string, string> = { draft: '#6B7280', active: '#22C55E', paused: '#F59E0B', completed: '#10B981', cancelled: '#EF4444' }
@@ -68,12 +60,8 @@ export default function AdsPage() {
   const budgetUsagePercent = totalBudget > 0 ? (totalSpend / totalBudget) * 100 : 0
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Advertisement Management</h1>
               <p className="text-sm text-muted-foreground mt-1">Manage paid advertising across all platforms</p>
@@ -186,8 +174,6 @@ export default function AdsPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

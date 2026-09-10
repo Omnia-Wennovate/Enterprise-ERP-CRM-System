@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, Loader2, AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -16,30 +16,33 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.cookie = 'demo_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      localStorage.removeItem('demo_role')
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
+    const cleanEmail = email.trim().toLowerCase()
+
+    if (cleanEmail.includes('@gamil.com')) {
+      setError('Did you mean @gmail.com? Please check your email spelling.')
+      setIsLoading(false)
+      return
+    }
+
     const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
-      email,
+      email: cleanEmail,
       password,
     })
 
     if (signInError || !authData.user) {
       setError(signInError?.message ?? 'Invalid email or password. Please try again.')
-      setIsLoading(false)
-      return
-    }
-
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('role, department')
-      .eq('id', authData.user.id)
-      .single()
-
-    if (profileError || !profile) {
-      setError('Signed in, but no profile record was found for this account.')
       setIsLoading(false)
       return
     }
@@ -156,7 +159,7 @@ export function LoginForm() {
             whileTap={{ scale: 0.99 }}
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-[#C8A951] via-[#D4B85C] to-[#C8A951] hover:from-[#B39540] hover:via-[#C8A951] hover:to-[#B39540] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-[0_4px_20px_rgba(200,169,81,0.3)] hover:shadow-[0_6px_30px_rgba(200,169,81,0.4)] mt-2"
+            className="w-full bg-gradient-to-r from-[#C8A951] via-[#D4B85C] to-[#C8A951] hover:from-[#B39540] hover:via-[#C8A951] hover:to-[#B39540] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-[0_4px_20px_rgba(200,169,81,0.3)] hover:shadow-[0_6px_30px_rgba(200,169,81,0.4)] mt-2 cursor-pointer"
           >
             {isLoading ? (
               <>

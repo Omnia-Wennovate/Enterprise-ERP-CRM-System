@@ -39,6 +39,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/tasks': 'My Tasks',
   '/performance': 'My Performance',
   '/settings': 'Settings',
+  '/marketing/dashboard': 'Marketing Dashboard',
   '/marketing/accounts': 'Social Accounts',
   '/marketing/content': 'Content Management',
   '/marketing/calendar': 'Content Calendar',

@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { Influencer } from '@/types/marketing'
 import { PLATFORM_COLORS, PLATFORM_LABELS } from '@/types/marketing'
 import { Loader2, Plus, X, Users, DollarSign, Star } from 'lucide-react'
@@ -13,7 +11,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function InfluencersPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [influencers, setInfluencers] = useState<Influencer[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -22,12 +20,8 @@ export default function InfluencersPage() {
   const [form, setForm] = useState({ name: '', platform: 'instagram', handle: '', followers_count: 0, category: '', country: '', campaign_id: '', payment_amount: 0, performance_notes: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try { setIsLoading(true); const [i, c] = await Promise.all([getInfluencers(), getCampaigns()]); setInfluencers(i); setCampaigns(c) } catch (err) { console.error(err) } finally { setIsLoading(false) }
@@ -55,18 +49,12 @@ export default function InfluencersPage() {
     try { await updateInfluencer(id, { payment_status: status } as any); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const platforms = ['facebook', 'instagram', 'tiktok', 'linkedin', 'youtube', 'twitter', 'telegram', 'whatsapp'] as const
   const paymentColors: Record<string, string> = { pending: '#F59E0B', paid: '#22C55E', cancelled: '#EF4444' }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Influencer Management</h1>
               <p className="text-sm text-muted-foreground mt-1">Manage influencer partnerships and performance</p>
@@ -162,8 +150,6 @@ export default function InfluencersPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

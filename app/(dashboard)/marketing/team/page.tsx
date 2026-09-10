@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
+import { useProfile } from '@/lib/context/profile-context'
 import type { Profile } from '@/types'
 import { Loader2, Mail, Briefcase, Clock, Activity, CheckCircle } from 'lucide-react'
 import { getSocialMediaTeam, getEmployeeContentStatuses, updateEmployeeContentStatus } from '@/lib/services/marketing-analytics'
@@ -11,19 +10,15 @@ import { getRequestsByAssignedTeamMember } from '@/lib/services/content-producti
 
 export default function TeamPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [team, setTeam] = useState<Profile[]>([])
   const [statuses, setStatuses] = useState<any[]>([])
   const [memberTasks, setMemberTasks] = useState<Record<string, any[]>>({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -50,18 +45,12 @@ export default function TeamPage() {
     } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
-  const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+  const getInitials = (name?: string) => (name || 'TM').trim().split(/\s+/).map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'TM'
   const statusColors: Record<string, string> = { active: '#22C55E', busy: '#EF4444', offline: '#9CA3AF', meeting: '#F59E0B' }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
+    <div className="space-y-6">
+      <div className="mb-6">
             <h1 className="text-2xl font-bold text-foreground">Marketing Team</h1>
             <p className="text-sm text-muted-foreground mt-1">Manage team members, tasks, and availability</p>
           </div>
@@ -86,7 +75,7 @@ export default function TeamPage() {
                         <div className="flex items-center gap-3">
                           <div className="relative">
                             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C8A951] to-[#E2CC7E] flex items-center justify-center text-primary-foreground font-bold">
-                              {getInitials(`${member.first_name} ${member.last_name}`)}
+                              {getInitials(`${member.first_name || ''} ${member.last_name || ''}`)}
                             </div>
                             <div className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white" style={{ backgroundColor: statusColors[currentStatus] || '#9CA3AF' }} />
                           </div>
@@ -95,7 +84,7 @@ export default function TeamPage() {
                             <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5"><Briefcase size={10} /> {member.position}</p>
                           </div>
                         </div>
-                        {profile.id === member.id && (
+                        {profile?.id === member.id && (
                           <select 
                             value={currentStatus} 
                             onChange={(e) => handleUpdateStatus(member.id, e.target.value)}
@@ -143,8 +132,6 @@ export default function TeamPage() {
               })}
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { SocialLead } from '@/types/marketing'
 import { PLATFORM_COLORS, PLATFORM_LABELS } from '@/types/marketing'
 import { Loader2, Plus, X, UserPlus, Mail, Phone, Filter } from 'lucide-react'
@@ -13,7 +11,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function LeadsPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [leads, setLeads] = useState<SocialLead[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -23,12 +21,8 @@ export default function LeadsPage() {
   const [form, setForm] = useState({ platform: 'facebook', campaign_id: '', contact_name: '', contact_email: '', contact_phone: '', source: '', notes: '', ad_reference: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -61,8 +55,6 @@ export default function LeadsPage() {
     try { await deleteSocialLead(id); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const statusColors: Record<string, string> = { new: '#3B82F6', contacted: '#F59E0B', qualified: '#8B5CF6', converted: '#22C55E', lost: '#EF4444' }
   const platforms = ['facebook', 'instagram', 'tiktok', 'linkedin', 'youtube', 'twitter', 'telegram', 'whatsapp'] as const
 
@@ -71,12 +63,8 @@ export default function LeadsPage() {
   if (filterPlatform !== 'all') filtered = filtered.filter(l => l.platform === filterPlatform)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Social Media Leads</h1>
               <p className="text-sm text-muted-foreground mt-1">Track and convert leads from social campaigns</p>
@@ -206,8 +194,6 @@ export default function LeadsPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

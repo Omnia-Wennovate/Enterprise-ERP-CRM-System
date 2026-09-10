@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { SocialPost, PostStatus } from '@/types/marketing'
 import { Loader2, Plus, Filter, Eye, Heart, Share2, MousePointerClick, X, Send, Check, Clock, Archive, AlertCircle } from 'lucide-react'
 import { getSocialPosts, createSocialPost, updateSocialPost, deleteSocialPost, submitForApproval, approvePost, publishPost, archivePost } from '@/lib/services/social-posts'
@@ -13,7 +11,7 @@ import { getCampaigns } from '@/lib/services/campaigns'
 
 export default function ContentPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [posts, setPosts] = useState<SocialPost[]>([])
   const [accounts, setAccounts] = useState<any[]>([])
   const [campaigns, setCampaigns] = useState<any[]>([])
@@ -23,12 +21,8 @@ export default function ContentPage() {
   const [form, setForm] = useState({ account_id: '', campaign_id: '', content_type: 'image', caption: '', scheduled_for: '' })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -72,8 +66,6 @@ export default function ContentPage() {
     } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const tabs: { key: PostStatus | 'all'; label: string; icon: any; color: string }[] = [
     { key: 'all', label: 'All', icon: Filter, color: '#0B1F33' },
     { key: 'draft', label: 'Drafts', icon: AlertCircle, color: '#6B7280' },
@@ -97,12 +89,8 @@ export default function ContentPage() {
   const contentTypes = ['image', 'video', 'carousel', 'reel', 'story', 'short', 'live', 'text'] as const
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Content Management</h1>
               <p className="text-sm text-muted-foreground mt-1">Create, manage, and track all social media content</p>
@@ -240,8 +228,6 @@ export default function ContentPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

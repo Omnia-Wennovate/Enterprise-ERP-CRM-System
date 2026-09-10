@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { Topbar } from '@/components/layout/Topbar'
-import type { Profile } from '@/types'
+import { useProfile } from '@/lib/context/profile-context'
 import type { SocialCampaign } from '@/types/marketing'
 import { CAMPAIGN_TYPE_LABELS } from '@/types/marketing'
 import { Loader2, Plus, X, Target, Calendar, Users, TrendingUp, DollarSign } from 'lucide-react'
@@ -12,7 +10,7 @@ import { getCampaigns, createCampaign, updateCampaign, deleteCampaign } from '@/
 
 export default function CampaignsPage() {
   const router = useRouter()
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const profile = useProfile()
   const [campaigns, setCampaigns] = useState<SocialCampaign[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -24,12 +22,8 @@ export default function CampaignsPage() {
   })
 
   useEffect(() => {
-    const authUser = localStorage.getItem('auth_user')
-    if (!authUser) { router.push('/login'); return }
-    try { setProfile(JSON.parse(authUser)) } catch { router.push('/login') }
-  }, [router])
-
-  useEffect(() => { if (profile) loadData() }, [profile])
+    loadData()
+  }, [])
 
   const loadData = async () => {
     try {
@@ -69,19 +63,13 @@ export default function CampaignsPage() {
     try { await deleteCampaign(id); await loadData() } catch (err) { console.error(err) }
   }
 
-  if (!profile) return null
-
   const filtered = filterStatus === 'all' ? campaigns : campaigns.filter(c => c.status === filterStatus)
   const statusColors: Record<string, string> = { planned: '#3B82F6', active: '#22C55E', paused: '#F59E0B', completed: '#10B981', cancelled: '#EF4444' }
   const campaignTypes = Object.keys(CAMPAIGN_TYPE_LABELS) as (keyof typeof CAMPAIGN_TYPE_LABELS)[]
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar profile={profile} />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Campaign Management</h1>
               <p className="text-sm text-muted-foreground mt-1">Plan, execute, and track marketing campaigns</p>
@@ -198,8 +186,6 @@ export default function CampaignsPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   )
 }

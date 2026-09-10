@@ -382,7 +382,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'Media Library', href: '/marketing/media-library', icon: 'Image' },
           { label: 'Production', href: '/marketing/production-requests', icon: 'Video' },
           { label: 'Weekly Planner', href: '/marketing/weekly-planner', icon: 'ClipboardList' },
-          { label: 'Communication', href: '/marketing/communication', icon: 'MessageCircle' },
+          { label: 'Communication', href: '/communication', icon: 'MessageCircle' },
           { label: 'Team', href: '/marketing/team', icon: 'Users' },
           { label: 'Reports', href: '/marketing/reports', icon: 'BarChart2' },
         ],
