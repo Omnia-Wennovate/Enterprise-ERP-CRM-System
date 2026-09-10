@@ -8,6 +8,7 @@ export type UserRole = 'super_admin' | 'admin' | 'sales_agent' | 'operations' | 
 
 export interface Profile {
   id: string
+  email?: string
 
   full_name: string
   first_name?: string
@@ -20,6 +21,7 @@ export interface Profile {
   position?: string
   employment_status?: string
   created_at: string
+  updated_at?: string
 }
 
 export interface NavItem {

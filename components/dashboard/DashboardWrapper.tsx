@@ -44,6 +44,8 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
       let safeProfile: Profile
       if (profileData) {
         const safe = profileData as any
+        // resolveUserNames checks KNOWN_USER_NAMES and email to produce a real name
+        // even when DB first_name is the generic placeholder 'User'
         const resolved = resolveUserNames(
           {
             full_name: safe.full_name,
@@ -56,8 +58,9 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
         safeProfile = {
           ...safe,
           id: user.id,
+          email: user.email || safe.email || '',
           role: safe.role || (user.email?.toLowerCase().includes('marketing') ? 'marketing' : 'super_admin'),
-          department: safe.department || (user.email?.toLowerCase().includes('marketing') ? 'social_media' : 'management'),
+          department: safe.department || 'Management',
           full_name: resolved.full_name,
           first_name: resolved.first_name,
           is_active: safe.is_active ?? true,
@@ -65,13 +68,15 @@ export function DashboardWrapper({ children }: DashboardWrapperProps) {
           phone: safe.phone ?? null,
         }
       } else {
-        const role = user.email?.toLowerCase().includes('marketing') ? 'marketing' : 'super_admin'
+        // No profile row yet — build minimal profile from auth user
         const resolved = resolveUserNames({ email: user.email }, user.email)
+        const emailLower = (user.email || '').toLowerCase()
+        const role = emailLower.includes('marketing') ? 'marketing' : 'super_admin'
         safeProfile = {
           id: user.id,
           email: user.email || '',
           role: role as any,
-          department: role === 'marketing' ? 'social_media' : 'management',
+          department: role === 'marketing' ? 'Social Media' : 'Administration',
           full_name: resolved.full_name,
           first_name: resolved.first_name,
           is_active: true,

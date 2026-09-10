@@ -53,6 +53,12 @@ const ROLE_ACTIONS: Record<UserRole, QuickActionProps[]> = {
     { icon: 'Receipt', label: 'My Invoices', href: '/customer/invoices' },
     { icon: 'User', label: 'My Profile', href: '/customer/profile' },
   ],
+  marketing: [
+    { icon: 'BarChart2', label: 'Dashboard', href: '/marketing' },
+    { icon: 'Users', label: 'Social Accounts', href: '/marketing/accounts' },
+    { icon: 'Calendar', label: 'Content Calendar', href: '/marketing/calendar' },
+    { icon: 'TrendingUp', label: 'Analytics', href: '/marketing/reports' },
+  ],
 }
 
 function getIconComponent(iconName: string) {

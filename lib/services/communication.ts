@@ -185,7 +185,7 @@ export async function getChannels(profileId: string) {
     .select(
       `
       *,
-      department_channel_members(profile_id) where profile_id = '${profileId}'
+      department_channel_members(profile_id)
       `
     )
 

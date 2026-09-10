@@ -50,7 +50,7 @@ export function CommandPalette({ profileId, userRole, isOpen, onClose }: Command
   const [selected, setSelected] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-  const debounceRef = useRef<NodeJS.Timeout>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   // Focus input on open
   useEffect(() => {

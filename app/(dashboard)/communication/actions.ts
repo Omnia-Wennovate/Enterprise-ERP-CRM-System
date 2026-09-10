@@ -489,7 +489,7 @@ export async function getConversationsForUser(profileId: string): Promise<Conver
     // Get other participant
     const { data: otherMembers } = await supabase
       .from('conversation_members')
-      .select(`profiles:profile_id(id, first_name, last_name, department, avatar_url)`)
+      .select(`profiles:profile_id(id, first_name, last_name, email, department, avatar_url)`)
       .eq('conversation_id', conv.id)
       .neq('profile_id', profileId)
       .limit(1)
@@ -542,7 +542,7 @@ export async function getConversationsForUser(profileId: string): Promise<Conver
       otherParticipant: otherProfile
         ? {
             id: otherProfile.id,
-            full_name: `${otherProfile.first_name || ''} ${otherProfile.last_name || ''}`.trim() || 'Unknown',
+            full_name: resolveEmployeeName(otherProfile).full_name,
             department: otherProfile.department,
             avatar_url: otherProfile.avatar_url,
             presenceStatus,
@@ -560,19 +560,19 @@ export async function getConversationMessages(conversationId: string) {
     .from('messages')
     .select(`
       *,
-      profiles:sender_id(id, first_name, last_name, avatar_url)
+      profiles:sender_id(id, first_name, last_name, email, avatar_url)
     `)
     .eq('conversation_id', conversationId)
     .eq('is_deleted', false)
     .order('created_at', { ascending: true })
     .limit(100)
   if (error) throw error
-  // normalize full_name for client components
+  // normalize full_name using email-based fallback (handles 'User' placeholder)
   return (data || []).map((m: any) => ({
     ...m,
     profiles: m.profiles ? {
       ...m.profiles,
-      full_name: `${m.profiles.first_name || ''} ${m.profiles.last_name || ''}`.trim() || 'Unknown',
+      full_name: resolveEmployeeName(m.profiles).full_name,
     } : null,
   }))
 }
@@ -658,18 +658,33 @@ export async function getTasksForUser(
   const supabase = await createClient()
   const today = new Date().toISOString().split('T')[0]
 
-  const pName = (p: any) => p ? `${p.first_name || ''} ${p.last_name || ''}`.trim() || null : null
+  // Resolve name from profile row (handles the 'User' placeholder problem)
+  const pName = (p: any): string | null => {
+    if (!p) return null
+    const email = (p.email || '').toLowerCase().trim()
+    const isGeneric = !p.first_name || p.first_name.trim().toLowerCase() === 'user'
+    if (!isGeneric) {
+      return `${p.first_name || ''} ${p.last_name || ''}`.trim() || null
+    }
+    const known = KNOWN_EMPLOYEE_NAMES[email]
+    if (known) return known.full
+    // Derive from email
+    const local = email.split('@')[0] || ''
+    const derived = local.replace(/\d+/g, '').replace(/[._\-+]/g, ' ').trim()
+    const words = derived.split(/\s+/).filter(Boolean).map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+    return words.join(' ') || email || null
+  }
 
-  // My tasks
+  // My tasks (assigned to me)
   const { data: myTasks, error } = await supabase
     .from('tasks_from_messages')
     .select(`
       *,
-      assignedTo:profiles!tasks_from_messages_assigned_to_fkey(first_name, last_name),
-      assignedBy:profiles!tasks_from_messages_assigned_by_fkey(first_name, last_name)
+      assignedTo:profiles!tasks_from_messages_assigned_to_fkey(first_name, last_name, email),
+      assignedBy:profiles!tasks_from_messages_assigned_by_fkey(first_name, last_name, email)
     `)
     .eq('assigned_to', profileId)
-    .order('due_date', { ascending: true })
+    .order('due_date', { ascending: true, nullsFirst: false })
 
   if (error) throw error
 
@@ -692,28 +707,21 @@ export async function getTasksForUser(
 
   let tasks = (myTasks || []).map(mapTask)
 
-  // Department tasks for managers
-  const isManager = ['super_admin', 'admin', 'hr_manager', 'operations'].includes(role) ||
-    role.includes('manager')
+  // Tasks created by me (for others) — all roles can see tasks they assigned
+  const { data: createdByMe } = await supabase
+    .from('tasks_from_messages')
+    .select(`
+      *,
+      assignedTo:profiles!tasks_from_messages_assigned_to_fkey(first_name, last_name, email),
+      assignedBy:profiles!tasks_from_messages_assigned_by_fkey(first_name, last_name, email)
+    `)
+    .eq('assigned_by', profileId)
+    .neq('assigned_to', profileId)
+    .order('created_at', { ascending: false })
 
-  if (isManager && department) {
-    const { data: deptTasks } = await supabase
-      .from('tasks_from_messages')
-      .select(`
-        *,
-        assignedTo:profiles!tasks_from_messages_assigned_to_fkey(first_name, last_name, department),
-        assignedBy:profiles!tasks_from_messages_assigned_by_fkey(first_name, last_name)
-      `)
-      .eq('assigned_by', profileId)
-      .neq('assigned_to', profileId)
-      .order('created_at', { ascending: false })
-
-    if (deptTasks) {
-      const deptTasksMapped = deptTasks.map(mapTask)
-      // Merge, avoiding duplicates
-      const existingIds = new Set(tasks.map((t) => t.id))
-      tasks = [...tasks, ...deptTasksMapped.filter((t) => !existingIds.has(t.id))]
-    }
+  if (createdByMe) {
+    const existingIds = new Set(tasks.map((t) => t.id))
+    tasks = [...tasks, ...createdByMe.map(mapTask).filter((t) => !existingIds.has(t.id))]
   }
 
   return tasks
@@ -962,20 +970,67 @@ export async function publishAnnouncementAction(data: {
   return announcement.id
 }
 
-// ─── Employees ────────────────────────────────────────────────────────────────
+// Known real employee names keyed by email (used as fallback when DB first_name = 'User')
+const KNOWN_EMPLOYEE_NAMES: Record<string, { full: string; position?: string }> = {
+  'bekan.bekele74@gmail.com': { full: 'Bekan Bekele', position: 'Operations Officer' },
+  'kalkidantesfaye21971@gmail.com': { full: 'Kalkidan Tesfaye', position: 'Sales Agent' },
+  'nurfaris08@gmail.com': { full: 'Nur Faris', position: 'Operations Officer' },
+  'alaminfsiraj@gmail.com': { full: 'Alamin Siraj', position: 'HR Manager' },
+  'davidbezuneh@gmail.com': { full: 'David Bezuneh', position: 'Social Media Manager' },
+  'melika.wennovate@gmail.com': { full: 'Melika Wennovate', position: 'Accountant' },
+  'belenwolde2@gmail.com': { full: 'Belen Wolde', position: 'Social Media Officer' },
+  'zuludalo98@gmail.com': { full: 'Zulu Dalo', position: 'Sales Agent' },
+  'admin@omniatravel.com': { full: 'Omnia Admin', position: 'System Administrator' },
+  'manager@omniatravel.com': { full: 'Operations Manager', position: 'Operations Manager' },
+  'hr@omniatravel.com': { full: 'HR Team', position: 'HR Officer' },
+  'marketing@omniatravel.com': { full: 'Marketing Team', position: 'Marketing Officer' },
+  'sales@omniatravel.com': { full: 'Sales Team', position: 'Sales Agent' },
+  'ops@omniatravel.com': { full: 'Ops Team', position: 'Operations Officer' },
+}
+
+/** Resolve a display name from profile data, using email-based fallback for generic 'User' values. */
+function resolveEmployeeName(p: { first_name?: string | null; last_name?: string | null; email?: string | null; position?: string | null }): { full_name: string; position: string | null } {
+  const email = (p.email || '').toLowerCase().trim()
+  const known = KNOWN_EMPLOYEE_NAMES[email]
+
+  // If DB has a real first_name (not the generic 'User' placeholder), use it
+  const isGenericFirstName = !p.first_name || p.first_name.trim().toLowerCase() === 'user'
+  if (!isGenericFirstName) {
+    const full = `${p.first_name || ''} ${p.last_name || ''}`.trim()
+    return { full_name: full || 'Team Member', position: p.position || null }
+  }
+
+  // Use the known employee name map as fallback
+  if (known) {
+    return { full_name: known.full, position: p.position || known.position || null }
+  }
+
+  // Last resort: derive from email local part
+  const localPart = email.split('@')[0] || ''
+  const derived = localPart.replace(/\d+/g, '').replace(/[._\-+]/g, ' ').trim()
+  const words = derived.split(/\s+/).filter(Boolean).map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+  const full = words.join(' ') || email || 'Team Member'
+  return { full_name: full, position: p.position || null }
+}
 
 export async function getEmployeesForSearch(): Promise<EmployeeOption[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, first_name, last_name, department, position, avatar_url')
+    .select('id, first_name, last_name, email, department, position, avatar_url')
     .eq('is_active', true)
-    .order('first_name', { ascending: true })
+    .order('email', { ascending: true })
   if (error) throw error
-  return (data || []).map((p: any) => ({
-    ...p,
-    full_name: `${p.first_name || ''} ${p.last_name || ''}`.trim() || p.email || 'Unknown',
-  })) as EmployeeOption[]
+  return (data || []).map((p: any) => {
+    const { full_name, position } = resolveEmployeeName(p)
+    return {
+      id: p.id,
+      full_name,
+      department: p.department || null,
+      position: position || p.position || null,
+      avatar_url: p.avatar_url || null,
+    } as EmployeeOption
+  }).sort((a, b) => a.full_name.localeCompare(b.full_name))
 }
 
 // ─── Search ───────────────────────────────────────────────────────────────────

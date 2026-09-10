@@ -33,7 +33,7 @@ export default function CommunicationSearchPage() {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
   const [profileId, setProfileId] = useState<string | null>(null)
-  const debounceRef = useRef<NodeJS.Timeout>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
 
