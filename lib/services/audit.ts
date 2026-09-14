@@ -354,7 +354,7 @@ export async function getAuditLogFilterOptions(): Promise<{
     supabase.from('audit_logs').select('department').limit(1000),
   ])
 
-  const unique = <T>(arr: T[] | null) =>
+  const unique = <T>(arr: T[] | null | undefined) =>
     [...new Set((arr ?? []).filter(Boolean))] as T[]
 
   return {

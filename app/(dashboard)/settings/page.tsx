@@ -44,7 +44,7 @@ function parseValue(v: unknown): string {
 function encodeValue(raw: string, current: unknown): unknown {
   // Preserve the type of the original value
   if (typeof current === 'boolean') {
-    return raw === 'true' || raw === true
+    return raw === 'true'
   }
   if (typeof current === 'number') {
     const n = Number(raw)

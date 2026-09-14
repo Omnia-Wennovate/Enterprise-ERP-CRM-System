@@ -30,10 +30,16 @@ export async function middleware(request: NextRequest) {
 
   const isAuthenticated = Boolean(user)
 
-  // Protect everything except the login page and static assets
+  // Protect everything except the login page, public auth endpoints, and static assets
   const isAuthPage = request.nextUrl.pathname.startsWith('/login')
+  const isPublicApi =
+    request.nextUrl.pathname.startsWith('/api/audit/log-event') ||
+    request.nextUrl.pathname.startsWith('/api/social/oauth/callback')
 
-  if (!isAuthenticated && !isAuthPage) {
+  if (!isAuthenticated && !isAuthPage && !isPublicApi) {
+    if (request.nextUrl.pathname.startsWith('/api')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
