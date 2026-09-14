@@ -10,11 +10,39 @@ import { resolveUserNames } from '@/lib/utils/user-name'
 import type { Profile } from '@/types'
 import { Loader2 } from 'lucide-react'
 
+interface DashboardStat {
+  icon: string
+  label: string
+  value: string
+  trend: number
+  accentColor: string
+}
+
+interface RecentActivityItem {
+  id: string
+  description: string
+  created_at: string
+}
+
+interface UpcomingBookingItem {
+  id: string
+  booking_reference: string
+  destination: string
+  trip_start_date: string
+  status: string
+}
+
 export default function DashboardPage() {
   const contextProfile = useProfile()
   const [profile, setProfile] = useState<Profile | null>(contextProfile)
   const [isLoading, setIsLoading] = useState(!contextProfile)
+  const [stats, setStats] = useState<DashboardStat[]>([])
+  const [statsLoading, setStatsLoading] = useState(true)
+  const [recentActivity, setRecentActivity] = useState<RecentActivityItem[]>([])
+  const [upcomingBookings, setUpcomingBookings] = useState<UpcomingBookingItem[]>([])
+  const [overviewStats, setOverviewStats] = useState({ revenue: 0, bookings: 0, leads: 0 })
 
+  // ── Load profile ──────────────────────────────────────────────────────────────
   useEffect(() => {
     if (contextProfile) {
       setProfile(contextProfile)
@@ -53,6 +81,230 @@ export default function DashboardPage() {
     loadProfile()
   }, [contextProfile])
 
+  // ── Load role-specific stats from real database ───────────────────────────────
+  useEffect(() => {
+    if (!profile) return
+
+    const loadStats = async () => {
+      setStatsLoading(true)
+      const supabase = createClient()
+
+      try {
+        switch (profile.role) {
+          case 'sales_agent': {
+            const { data: myBookings } = await supabase
+              .from('bookings')
+              .select('total_revenue, status')
+              .eq('assigned_to', profile.id)
+            const myRevenue = (myBookings || []).reduce((s, b) => s + (Number(b.total_revenue) || 0), 0)
+            const myBookingCount = (myBookings || []).length
+
+            const { count: myLeads } = await supabase
+              .from('leads')
+              .select('*', { count: 'exact', head: true })
+              .eq('assigned_to', profile.id)
+              .eq('status', 'active')
+
+            const { data: myComm } = await supabase
+              .from('commissions')
+              .select('commission_amount')
+              .eq('agent_id', profile.id)
+              .eq('status', 'pending')
+            const myCommTotal = (myComm || []).reduce((s, c) => s + (Number(c.commission_amount) || 0), 0)
+
+            setStats([
+              { icon: 'DollarSign', label: 'My Revenue', value: myRevenue > 0 ? `$${myRevenue.toLocaleString()}` : '—', trend: 0, accentColor: '#10B981' },
+              { icon: 'Plane', label: 'My Bookings', value: String(myBookingCount), trend: 0, accentColor: '#C8A951' },
+              { icon: 'Users', label: 'My Leads', value: String(myLeads ?? 0), trend: 0, accentColor: '#F59E0B' },
+              { icon: 'Award', label: 'Commission Pending', value: myCommTotal > 0 ? `$${myCommTotal.toLocaleString()}` : '—', trend: 0, accentColor: '#0EA5E9' },
+            ])
+            break
+          }
+
+          case 'operations': {
+            const { count: activeCount } = await supabase
+              .from('bookings')
+              .select('*', { count: 'exact', head: true })
+              .in('status', ['confirmed', 'in_progress'])
+
+            const { count: pendingCount } = await supabase
+              .from('bookings')
+              .select('*', { count: 'exact', head: true })
+              .eq('status', 'pending')
+
+            let visaCount: number | null = 0
+            try {
+              const { count } = await supabase
+                .from('visa_applications')
+                .select('*', { count: 'exact', head: true })
+                .in('status', ['not_started', 'in_progress', 'submitted'])
+              visaCount = count
+            } catch {
+              visaCount = 0
+            }
+
+            setStats([
+              { icon: 'Plane', label: 'Active Bookings', value: String(activeCount ?? 0), trend: 0, accentColor: '#C8A951' },
+              { icon: 'AlertCircle', label: 'Pending', value: String(pendingCount ?? 0), trend: 0, accentColor: '#EF4444' },
+              { icon: 'BookOpen', label: 'Visas In Progress', value: String(visaCount ?? 0), trend: 0, accentColor: '#F59E0B' },
+              { icon: 'FileText', label: 'Docs to Send', value: '—', trend: 0, accentColor: '#10B981' },
+            ])
+            break
+          }
+
+          case 'accountant': {
+            const { data: invoices } = await supabase.from('invoices').select('total_amount, status')
+            const totalRevenue = (invoices || [])
+              .filter(i => i.status === 'paid')
+              .reduce((s, i) => s + (Number(i.total_amount) || 0), 0)
+            const outstanding = (invoices || [])
+              .filter(i => ['sent', 'overdue', 'draft', 'partially_paid'].includes(i.status))
+              .reduce((s, i) => s + (Number(i.total_amount) || 0), 0)
+
+            const { data: expenses } = await supabase.from('expenses').select('amount')
+            const totalCosts = (expenses || []).reduce((s, e) => s + (Number(e.amount) || 0), 0)
+
+            setStats([
+              { icon: 'DollarSign', label: 'Revenue', value: totalRevenue > 0 ? `$${totalRevenue.toLocaleString()}` : '—', trend: 0, accentColor: '#10B981' },
+              { icon: 'TrendingDown', label: 'Costs', value: totalCosts > 0 ? `$${totalCosts.toLocaleString()}` : '—', trend: 0, accentColor: '#EF4444' },
+              { icon: 'BarChart2', label: 'Net Profit', value: (totalRevenue - totalCosts) > 0 ? `$${(totalRevenue - totalCosts).toLocaleString()}` : '—', trend: 0, accentColor: '#C8A951' },
+              { icon: 'AlertCircle', label: 'Outstanding', value: outstanding > 0 ? `$${outstanding.toLocaleString()}` : '—', trend: 0, accentColor: '#F59E0B' },
+            ])
+            break
+          }
+
+          case 'hr_manager': {
+            const { count: totalStaff } = await supabase
+              .from('profiles')
+              .select('*', { count: 'exact', head: true })
+              .eq('is_active', true)
+
+            const { count: leavePending } = await supabase
+              .from('leave_requests')
+              .select('*', { count: 'exact', head: true })
+              .eq('status', 'pending')
+
+            const { data: commDue } = await supabase
+              .from('commissions')
+              .select('commission_amount')
+              .eq('status', 'pending')
+            const commTotal = (commDue || []).reduce((s, c) => s + (Number(c.commission_amount) || 0), 0)
+
+            const now = new Date()
+            const { data: reviews } = await supabase
+              .from('performance_reviews')
+              .select('achievement_percent')
+              .eq('period_year', now.getFullYear())
+            const avgTarget = reviews && reviews.length > 0
+              ? Math.round(reviews.reduce((s, r) => s + (Number(r.achievement_percent) || 0), 0) / reviews.length)
+              : null
+
+            setStats([
+              { icon: 'Users', label: 'Active Staff', value: String(totalStaff ?? 0), trend: 0, accentColor: '#C8A951' },
+              { icon: 'Calendar', label: 'Leave Pending', value: String(leavePending ?? 0), trend: 0, accentColor: '#F59E0B' },
+              { icon: 'Target', label: 'Avg Achievement', value: avgTarget !== null ? `${avgTarget}%` : '—', trend: 0, accentColor: '#10B981' },
+              { icon: 'DollarSign', label: 'Commission Pending', value: commTotal > 0 ? `$${commTotal.toLocaleString()}` : '—', trend: 0, accentColor: '#0EA5E9' },
+            ])
+            break
+          }
+
+          case 'marketing': {
+            const { count: leads } = await supabase
+              .from('leads')
+              .select('*', { count: 'exact', head: true })
+              .eq('status', 'active')
+
+            setStats([
+              { icon: 'Users', label: 'Social Followers', value: '—', trend: 0, accentColor: '#C8A951' },
+              { icon: 'MessageCircle', label: 'Engagement Rate', value: '—', trend: 0, accentColor: '#10B981' },
+              { icon: 'Target', label: 'Active Campaigns', value: '—', trend: 0, accentColor: '#F59E0B' },
+              { icon: 'TrendingUp', label: 'Active Leads', value: String(leads ?? 0), trend: 0, accentColor: '#0EA5E9' },
+            ])
+            break
+          }
+
+          case 'admin':
+          case 'super_admin':
+          default: {
+            const { data: paidInvoices } = await supabase
+              .from('invoices')
+              .select('total_amount')
+              .eq('status', 'paid')
+            const totalRevenue = (paidInvoices || []).reduce((s, i) => s + (Number(i.total_amount) || 0), 0)
+
+            const { count: bookingCount } = await supabase
+              .from('bookings')
+              .select('*', { count: 'exact', head: true })
+
+            const { count: leadCount } = await supabase
+              .from('leads')
+              .select('*', { count: 'exact', head: true })
+              .eq('status', 'active')
+
+            const { data: openInvoices } = await supabase
+              .from('invoices')
+              .select('total_amount')
+              .in('status', ['sent', 'overdue', 'draft', 'partially_paid'])
+            const outstanding = (openInvoices || []).reduce((s, i) => s + (Number(i.total_amount) || 0), 0)
+
+            setStats([
+              { icon: 'DollarSign', label: 'Revenue', value: totalRevenue > 0 ? `$${totalRevenue.toLocaleString()}` : '—', trend: 0, accentColor: '#10B981' },
+              { icon: 'Plane', label: 'Bookings', value: String(bookingCount ?? 0), trend: 0, accentColor: '#C8A951' },
+              { icon: 'Users', label: 'Active Leads', value: String(leadCount ?? 0), trend: 0, accentColor: '#F59E0B' },
+              { icon: 'AlertCircle', label: 'Outstanding', value: outstanding > 0 ? `$${outstanding.toLocaleString()}` : '—', trend: 0, accentColor: '#EF4444' },
+            ])
+
+            setOverviewStats({
+              revenue: totalRevenue,
+              bookings: bookingCount ?? 0,
+              leads: leadCount ?? 0,
+            })
+            break
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load dashboard stats:', err)
+        setStats([])
+      } finally {
+        setStatsLoading(false)
+      }
+    }
+
+    loadStats()
+  }, [profile])
+
+  // ── Load recent activity + upcoming bookings (all roles) ──────────────────────
+  useEffect(() => {
+    if (!profile) return
+
+    const loadActivity = async () => {
+      const supabase = createClient()
+      try {
+        const { data: events } = await supabase
+          .from('booking_timeline_events')
+          .select('id, description, created_at')
+          .order('created_at', { ascending: false })
+          .limit(4)
+        setRecentActivity(events || [])
+
+        const today = new Date().toISOString().split('T')[0]
+        const in30 = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]
+        const { data: upcoming } = await supabase
+          .from('bookings')
+          .select('id, booking_reference, destination, trip_start_date, status')
+          .gte('trip_start_date', today)
+          .lte('trip_start_date', in30)
+          .order('trip_start_date', { ascending: true })
+          .limit(3)
+        setUpcomingBookings(upcoming || [])
+      } catch (err) {
+        console.error('Failed to load activity:', err)
+      }
+    }
+
+    loadActivity()
+  }, [profile])
+
   if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
@@ -65,177 +317,91 @@ export default function DashboardPage() {
 
   const firstName = resolveUserNames(profile).first_name
 
-  // Role-specific stats
-  const getStatsForRole = () => {
-    switch (profile.role) {
-      case 'sales_agent':
-        return [
-          { icon: 'DollarSign', label: 'My Revenue', value: '$12,400', trend: 12, accentColor: '#10B981' },
-          { icon: 'Plane', label: 'My Bookings', value: '8', trend: 5, accentColor: '#C8A951' },
-          { icon: 'Users', label: 'My Leads', value: '12', trend: -3, accentColor: '#F59E0B' },
-          { icon: 'Award', label: 'Commission', value: '$620', trend: 8, accentColor: '#0EA5E9' },
-        ]
-      case 'operations':
-        return [
-          { icon: 'Plane', label: 'Active Bookings', value: '24', trend: 4, accentColor: '#C8A951' },
-          { icon: 'AlertCircle', label: 'Incomplete', value: '3', trend: -2, accentColor: '#EF4444' },
-          { icon: 'BookOpen', label: 'Visas Pending', value: '5', trend: 1, accentColor: '#F59E0B' },
-          { icon: 'FileText', label: 'Docs to Send', value: '4', trend: -1, accentColor: '#10B981' },
-        ]
-      case 'accountant':
-        return [
-          { icon: 'DollarSign', label: 'Revenue', value: '$48,200', trend: 8, accentColor: '#10B981' },
-          { icon: 'TrendingDown', label: 'Costs', value: '$31,400', trend: 2, accentColor: '#EF4444' },
-          { icon: 'BarChart2', label: 'Profit', value: '$16,800', trend: 12, accentColor: '#C8A951' },
-          { icon: 'AlertCircle', label: 'Outstanding', value: '$8,400', trend: -5, accentColor: '#F59E0B' },
-        ]
-      case 'hr_manager':
-        return [
-          { icon: 'Users', label: 'Total Staff', value: '8', trend: 0, accentColor: '#C8A951' },
-          { icon: 'Calendar', label: 'Leave Pending', value: '3', trend: 1, accentColor: '#F59E0B' },
-          { icon: 'Target', label: 'Avg Target', value: '92%', trend: 3, accentColor: '#10B981' },
-          { icon: 'DollarSign', label: 'Commission Due', value: '$4,200', trend: 7, accentColor: '#0EA5E9' },
-        ]
-      case 'marketing':
-        return [
-          { icon: 'Users', label: 'Followers', value: '12.4K', trend: 8, accentColor: '#C8A951' },
-          { icon: 'MessageCircle', label: 'Engagement', value: '3.2%', trend: 5, accentColor: '#10B981' },
-          { icon: 'Target', label: 'Campaigns', value: '4', trend: 2, accentColor: '#F59E0B' },
-          { icon: 'TrendingUp', label: 'Reach', value: '48K', trend: 12, accentColor: '#0EA5E9' },
-        ]
-      case 'admin':
-      case 'super_admin':
-      default:
-        return [
-          { icon: 'DollarSign', label: 'Revenue', value: '$48,200', trend: 8, accentColor: '#10B981' },
-          { icon: 'Plane', label: 'Bookings', value: '124', trend: 12, accentColor: '#C8A951' },
-          { icon: 'Users', label: 'Leads', value: '18', trend: -3, accentColor: '#F59E0B' },
-          { icon: 'AlertCircle', label: 'Outstanding', value: '$8,400', trend: -5, accentColor: '#EF4444' },
-        ]
-    }
-  }
-
-  const stats = getStatsForRole()
-
   return (
     <div className="w-full">
       <WelcomeBanner firstName={firstName} role={profile.role} />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, i) => (
-          <StatsCard key={i} {...stat} />
-        ))}
+        {statsLoading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl border border-border shadow-sm p-6 animate-pulse">
+                <div className="h-4 w-24 bg-muted rounded mb-3" />
+                <div className="h-8 w-16 bg-muted rounded" />
+              </div>
+            ))
+          : stats.map((stat, i) => <StatsCard key={i} {...stat} />)
+        }
       </div>
 
       {/* Advanced Analytics Section - Super Admin Only */}
       {profile.role === 'super_admin' && (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            {/* Data Performance Company Chart */}
+            {/* Live Company Overview */}
             <div className="bg-card rounded-lg border border-border shadow-sm p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="font-semibold text-foreground">Data Performance Company</h3>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 bg-primary text-primary-foreground text-xs rounded font-medium">12 months</button>
-                  <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">30 days</button>
-                  <button className="px-3 py-1 border border-border text-muted-foreground text-xs rounded hover:border-primary">7 days</button>
-                </div>
-              </div>
-              <div className="relative h-64 mb-6">
-                <div className="ml-12 h-full border-l border-b border-[#E5E7EB] relative">
-                  <svg className="w-full h-full" style={{position: 'absolute', inset: 0}} preserveAspectRatio="none" viewBox="0 0 100 100">
-                    <polyline points="0,60 8,50 16,55 24,35 32,40 40,25 48,30 56,20 64,25 72,15 80,20 88,10 96,15" fill="none" stroke="#C8A951" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-                    <polygon points="0,60 8,50 16,55 24,35 32,40 40,25 48,30 56,20 64,25 72,15 80,20 88,10 96,15 96,100 0,100" fill="url(#blueGradient)" opacity="0.1" />
-                    <polyline points="0,75 8,70 16,72 24,65 32,68 40,60 48,62 56,55 64,58 72,50 80,52 88,45 96,48" fill="none" stroke="#EF4444" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-                    <defs>
-                      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style={{stopColor: '#C8A951', stopOpacity: 0.3}} />
-                        <stop offset="100%" style={{stopColor: '#C8A951', stopOpacity: 0}} />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-4 pt-4 border-t border-border">
-                <div>
-                  <p className="text-xs text-muted-foreground">Total Revenue</p>
-                  <p className="text-2xl font-bold text-foreground">$482,000</p>
-                  <p className="text-xs text-green-600 mt-1">↑ 8.2% vs last 12 months</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Total Bookings</p>
-                  <p className="text-2xl font-bold text-foreground">1,248</p>
-                  <p className="text-xs text-green-600 mt-1">↑ 12.4% vs last 12 months</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Company Growth Overview */}
-            <div className="bg-card rounded-lg border border-border shadow-sm p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-semibold text-foreground">Company Growth Overview</h3>
+                <h3 className="font-semibold text-foreground">Company Overview</h3>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-border">
-                <div className="text-center"><p className="text-2xl font-bold text-foreground">1,560</p><p className="text-xs text-muted-foreground mt-1">Total Leads</p></div>
-                <div className="text-center"><p className="text-2xl font-bold text-foreground">780</p><p className="text-xs text-muted-foreground mt-1">New Customers</p></div>
-                <div className="text-center"><p className="text-2xl font-bold text-foreground">1,248</p><p className="text-xs text-muted-foreground mt-1">Total Bookings</p></div>
-              </div>
-              <div className="h-48 flex items-end justify-center gap-2">
-                {[{blue: 45, pink: 35},{blue: 65, pink: 25},{blue: 40, pink: 40},{blue: 70, pink: 20},{blue: 50, pink: 30},{blue: 75, pink: 15}].map((bar, i) => (
-                  <div key={i} className="flex flex-col gap-0 flex-1">
-                    <div className="w-full bg-[#C8A951] rounded-t" style={{height: `${bar.blue * 1.2}px`}}></div>
-                    <div className="w-full bg-[#F5A3CE] rounded-b" style={{height: `${bar.pink * 1.2}px`}}></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Activity + Upcoming Departures */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div className="lg:col-span-2 bg-card rounded-lg border border-border shadow-sm p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-semibold text-foreground">Data Performance Overview</h3>
-              </div>
-              <div className="relative h-48">
-                <div className="absolute inset-0 flex items-end justify-between px-2">
-                  {[35, 42, 38, 48, 45, 52, 48, 55, 50, 58, 55, 60].map((h, i) => (
-                    <div key={i} className="flex-1 mx-1">
-                      <div className="w-full bg-[#C8A951] rounded" style={{height: `${h * 1.8}px`}}></div>
-                    </div>
-                  ))}
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-foreground">{overviewStats.leads.toLocaleString()}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Active Leads</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-foreground">{overviewStats.bookings.toLocaleString()}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Total Bookings</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-foreground">
+                    {overviewStats.revenue > 0 ? `$${overviewStats.revenue.toLocaleString()}` : '—'}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">Paid Revenue</p>
                 </div>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                <div><p className="text-xs text-muted-foreground">Total Revenue</p><p className="text-lg font-bold text-foreground">$482,000</p></div>
-                <div><p className="text-xs text-muted-foreground">Total Bookings</p><p className="text-lg font-bold text-foreground">1,248</p></div>
-                <div><p className="text-xs text-muted-foreground">Total Leads</p><p className="text-lg font-bold text-foreground">218</p></div>
-              </div>
+              <p className="text-xs text-muted-foreground">All values reflect current live database records.</p>
             </div>
 
+            {/* Live Recent Activity */}
             <div className="bg-card rounded-lg border border-border shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-foreground">Recent Activity</h3>
               </div>
               <div className="space-y-4">
-                {['New booking created – #BK-2025-1245', 'Payment received – John Doe', 'New lead assigned – Sarah J.', 'Quote approved – #QT-2025-089'].map((item, i) => (
-                  <div key={i} className="flex gap-3 pb-3 border-b border-border last:border-0">
-                    <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-2" />
-                    <p className="text-sm text-foreground">{item}</p>
-                  </div>
-                ))}
+                {recentActivity.length > 0
+                  ? recentActivity.map((item) => (
+                      <div key={item.id} className="flex gap-3 pb-3 border-b border-border last:border-0">
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-2" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-foreground truncate">{item.description}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(item.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  : (
+                      <p className="text-sm text-muted-foreground text-center py-6">No activity recorded yet.</p>
+                    )
+                }
               </div>
             </div>
           </div>
 
-          {/* Quick KPI cards */}
+          {/* Quick Actions */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-foreground mb-4">What would you like to do?</h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {[{icon:'➕',label:'New Lead',desc:'Add a new potential customer'},{icon:'📋',label:'New Quote',desc:'Create a new quotation'},{icon:'📊',label:'View Reports',desc:'Explore analytics & insights'},{icon:'👥',label:'Manage Staff',desc:'Add or manage team members'}].map((a,i) => (
+              {[
+                { icon: '➕', label: 'New Lead', desc: 'Add a new potential customer' },
+                { icon: '📋', label: 'New Quote', desc: 'Create a new quotation' },
+                { icon: '📊', label: 'View Reports', desc: 'Explore analytics & insights' },
+                { icon: '👥', label: 'Manage Staff', desc: 'Add or manage team members' },
+              ].map((a, i) => (
                 <button key={i} className="bg-card border border-border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all text-left">
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3"><span className="text-2xl">{a.icon}</span></div>
+                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg mb-3">
+                    <span className="text-2xl">{a.icon}</span>
+                  </div>
                   <h4 className="font-semibold text-foreground text-sm">{a.label}</h4>
                   <p className="text-xs text-muted-foreground mt-1">{a.desc}</p>
                 </button>
@@ -250,33 +416,59 @@ export default function DashboardPage() {
         <>
           <QuickActions role={profile.role} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            {/* Recent Activity */}
             <div className="bg-card rounded-xl border border-border shadow-sm p-6">
               <h3 className="font-semibold text-foreground mb-4">Recent Activity</h3>
               <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center gap-3 pb-4 border-b border-border last:border-0">
-                    <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-foreground font-medium truncate">Activity item {i}</p>
-                      <p className="text-xs text-muted-foreground">2 hours ago</p>
-                    </div>
-                  </div>
-                ))}
+                {recentActivity.length > 0
+                  ? recentActivity.map((item) => (
+                      <div key={item.id} className="flex items-center gap-3 pb-4 border-b border-border last:border-0">
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-foreground font-medium truncate">{item.description}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(item.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  : (
+                      <p className="text-sm text-muted-foreground text-center py-6">No recent activity yet.</p>
+                    )
+                }
               </div>
               <button className="w-full mt-4 py-2 text-sm text-primary font-medium">View all activity →</button>
             </div>
+
+            {/* Upcoming Departures */}
             <div className="bg-card rounded-xl border border-border shadow-sm p-6">
               <h3 className="font-semibold text-foreground mb-4">Upcoming Departures</h3>
               <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center justify-between pb-4 border-b border-border last:border-0">
-                    <div>
-                      <p className="text-sm text-foreground font-medium">Booking {i}</p>
-                      <p className="text-xs text-muted-foreground">In {i} days</p>
-                    </div>
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">Active</span>
-                  </div>
-                ))}
+                {upcomingBookings.length > 0
+                  ? upcomingBookings.map((booking) => {
+                      const daysUntil = Math.ceil(
+                        (new Date(booking.trip_start_date).getTime() - Date.now()) / 86400000
+                      )
+                      return (
+                        <div key={booking.id} className="flex items-center justify-between pb-4 border-b border-border last:border-0">
+                          <div>
+                            <p className="text-sm text-foreground font-medium">{booking.booking_reference}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {booking.destination} · In {daysUntil} day{daysUntil !== 1 ? 's' : ''}
+                            </p>
+                          </div>
+                          <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full capitalize">
+                            {booking.status}
+                          </span>
+                        </div>
+                      )
+                    })
+                  : (
+                      <p className="text-sm text-muted-foreground text-center py-6">
+                        No departures in the next 30 days.
+                      </p>
+                    )
+                }
               </div>
               <button className="w-full mt-4 py-2 text-sm text-primary font-medium">View all bookings →</button>
             </div>
