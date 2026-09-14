@@ -86,6 +86,28 @@ export function Sidebar({ profile }: SidebarProps) {
   }
 
   const handleSignOut = async () => {
+    // Record logout in audit log before ending the session
+    const authUser = typeof window !== 'undefined'
+      ? (() => { try { return JSON.parse(localStorage.getItem('auth_user') || '{}') } catch { return {} } })()
+      : {}
+
+    fetch('/api/audit/log-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId:      authUser.id || profile.id,
+        userEmail:   authUser.email || profile.email,
+        userName:    authUser.full_name || profile.full_name,
+        department:  authUser.department || profile.department,
+        role:        authUser.role || profile.role,
+        action:      'logout',
+        module:      'auth',
+        page:        window.location.pathname,
+        description: `User signed out`,
+        result:      'success',
+      }),
+    }).catch(() => {/* non-critical */})
+
     const supabase = (await import('@/lib/supabase/client')).createClient()
     await supabase.auth.signOut()
     router.push('/login')

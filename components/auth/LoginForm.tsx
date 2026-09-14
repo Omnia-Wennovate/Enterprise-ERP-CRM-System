@@ -44,8 +44,39 @@ export function LoginForm() {
     if (signInError || !authData.user) {
       setError(signInError?.message ?? 'Invalid email or password. Please try again.')
       setIsLoading(false)
+
+      // Record failed login in audit log (server-side — captures real IP)
+      fetch('/api/audit/log-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userEmail:   cleanEmail,
+          action:      'login_failed',
+          module:      'auth',
+          page:        '/login',
+          description: `Failed login attempt for ${cleanEmail}`,
+          result:      'failure',
+        }),
+      }).catch(() => {/* non-critical */})
+
       return
     }
+
+    // Record successful login in audit log (server-side — captures real IP)
+    const profile = authData.user
+    fetch('/api/audit/log-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId:      profile.id,
+        userEmail:   profile.email,
+        action:      'login_success',
+        module:      'auth',
+        page:        '/login',
+        description: `Successful login for ${profile.email}`,
+        result:      'success',
+      }),
+    }).catch(() => {/* non-critical */})
 
     router.push('/dashboard')
     router.refresh()
