@@ -12,7 +12,10 @@ export function getHourGreeting(): string {
   return 'Good evening'
 }
 
-export function formatCurrency(value: number): string {
+export function formatCurrency(value: number, currencyCode: string = 'USD'): string {
+  if (currencyCode === 'ETB') {
+    return `${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0 }).format(value)} ETB`
+  }
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

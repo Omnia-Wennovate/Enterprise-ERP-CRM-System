@@ -155,7 +155,7 @@ export function BookingsTable({ onSelectBooking }: BookingsTableProps) {
                     {new Date(booking.trip_end_date).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 font-medium text-foreground">
-                    {formatCurrency(booking.total_cost)}
+                    {formatCurrency(booking.total_cost, booking.currency)}
                   </td>
                   <td className="px-6 py-4">
                     <span

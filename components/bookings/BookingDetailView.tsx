@@ -61,6 +61,7 @@ export function BookingDetailView({ bookingId, onClose, onUpdate }: BookingDetai
       trip_start_date:  booking?.trip_start_date?.slice(0, 10),
       trip_end_date:    booking?.trip_end_date?.slice(0, 10),
       total_cost:       booking?.total_cost,
+      currency:         booking?.currency || 'USD',
       status:           booking?.status,
       special_requests: booking?.special_requests ?? undefined,
       notes:            booking?.notes ?? undefined,
@@ -181,12 +182,22 @@ export function BookingDetailView({ bookingId, onClose, onUpdate }: BookingDetai
                     </div>
                     <div>
                       <label className="text-xs font-medium text-muted-foreground uppercase">Total Cost</label>
-                      <input
-                        type="number"
-                        value={editForm.total_cost ?? ''}
-                        onChange={(e) => setEditForm({ ...editForm, total_cost: parseFloat(e.target.value) || 0 })}
-                        className="w-full mt-1 px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                      />
+                      <div className="flex mt-1 gap-2">
+                        <select
+                          value={editForm.currency || 'USD'}
+                          onChange={(e) => setEditForm({ ...editForm, currency: e.target.value })}
+                          className="w-1/3 px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        >
+                          <option value="USD">USD</option>
+                          <option value="ETB">ETB</option>
+                        </select>
+                        <input
+                          type="number"
+                          value={editForm.total_cost ?? ''}
+                          onChange={(e) => setEditForm({ ...editForm, total_cost: parseFloat(e.target.value) || 0 })}
+                          className="w-2/3 px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        />
+                      </div>
                     </div>
                     <div>
                       <label className="text-xs font-medium text-muted-foreground uppercase">Start Date</label>
@@ -258,7 +269,7 @@ export function BookingDetailView({ bookingId, onClose, onUpdate }: BookingDetai
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground uppercase">Total Cost</p>
-                      <p className="text-sm font-medium text-foreground">{formatCurrency(booking.total_cost)}</p>
+                      <p className="text-sm font-medium text-foreground">{formatCurrency(booking.total_cost, booking.currency)}</p>
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground uppercase">Start Date</p>

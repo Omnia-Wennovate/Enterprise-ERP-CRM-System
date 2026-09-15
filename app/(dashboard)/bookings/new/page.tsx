@@ -22,6 +22,7 @@ export default function NewBookingPage() {
     departure_date: '',
     return_date: '',
     total_cost: '',
+    currency: 'USD',
     total_revenue: '',
     travelers: [{ full_name: '', passport_number: '', is_primary: true }],
   })
@@ -101,6 +102,7 @@ export default function NewBookingPage() {
         trip_end_date: formData.return_date,
         status: 'draft',
         total_cost: parseFloat(formData.total_cost) || 0,
+        currency: formData.currency,
         total_revenue: parseFloat(formData.total_revenue) || 0,
       })
 
@@ -247,13 +249,23 @@ export default function NewBookingPage() {
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Total Cost *</label>
-                  <input
-                    type="number"
-                    value={formData.total_cost}
-                    onChange={(e) => handleInputChange('total_cost', e.target.value)}
-                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
-                    placeholder="0.00"
-                  />
+                  <div className="flex gap-2">
+                    <select
+                      value={formData.currency}
+                      onChange={(e) => handleInputChange('currency', e.target.value)}
+                      className="w-1/3 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
+                    >
+                      <option value="USD">USD</option>
+                      <option value="ETB">ETB</option>
+                    </select>
+                    <input
+                      type="number"
+                      value={formData.total_cost}
+                      onChange={(e) => handleInputChange('total_cost', e.target.value)}
+                      className="w-2/3 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-omnia-gold-500"
+                      placeholder="0.00"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">Total Revenue *</label>
