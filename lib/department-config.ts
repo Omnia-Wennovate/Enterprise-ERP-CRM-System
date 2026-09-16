@@ -150,9 +150,15 @@ export function getChannelDepartment(channelName: string): string {
     finance: 'finance',
     hr: 'hr',
     marketing: 'marketing',
+    'social-media': 'social_media',
+    'social-media-general': 'social_media',
+    social_media: 'social_media',
     management: 'management',
     announcements: 'general',
     support: 'general',
+    it: 'it',
+    'it-tech': 'it',
+    technology: 'it',
   }
   return map[channelName.toLowerCase()] || 'general'
 }

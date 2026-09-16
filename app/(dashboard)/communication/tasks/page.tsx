@@ -36,12 +36,14 @@ function StatusIcon({ status }: { status: string }) {
 // ─── Task Create Dialog ────────────────────────────────────────────────────────
 function CreateTaskDialog({
   profileId,
+  profileName,
   onCreated,
   onClose,
   prefillBookingId,
   prefillCustomerId,
 }: {
   profileId: string
+  profileName: string
   onCreated: () => void
   onClose: () => void
   prefillBookingId?: string
@@ -75,6 +77,7 @@ function CreateTaskDialog({
         description: form.description || undefined,
         assignedTo: form.assignedTo || undefined,
         assignedBy: profileId,
+        assignedByName: profileName,
         priority: form.priority,
         dueDate: form.dueDate || undefined,
         bookingId: form.bookingId || undefined,
@@ -248,6 +251,7 @@ export default function TasksPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [profileId, setProfileId] = useState<string | null>(null)
+  const [profileName, setProfileName] = useState<string>('')
   const [role, setRole] = useState('employee')
   const [department, setDepartment] = useState<string | null>(null)
   const [showCreate, setShowCreate] = useState(false)
@@ -261,6 +265,10 @@ export default function TasksPage() {
         setProfileId(user.id || null)
         setRole(user.role || 'employee')
         setDepartment(user.department || null)
+        const name = user.full_name || user.name || (
+          user.first_name ? `${user.first_name} ${user.last_name || ''}`.trim() : ''
+        )
+        setProfileName(name)
       }
     } catch {
       setError('Unable to load user profile.')
@@ -423,6 +431,7 @@ export default function TasksPage() {
       {showCreate && profileId && (
         <CreateTaskDialog
           profileId={profileId}
+          profileName={profileName}
           onCreated={loadTasks}
           onClose={() => setShowCreate(false)}
         />

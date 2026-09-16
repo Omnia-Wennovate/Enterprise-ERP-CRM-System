@@ -201,6 +201,7 @@ export default function ChannelsPage() {
   const [error, setError] = useState<string | null>(null)
   const [profileId, setProfileId] = useState<string | null>(null)
   const [userRole, setUserRole] = useState<string>('employee')
+  const [userDepartment, setUserDepartment] = useState<string | null>(null)
   const [showCreate, setShowCreate] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -211,6 +212,7 @@ export default function ChannelsPage() {
         const user = JSON.parse(stored)
         setProfileId(user.id || null)
         setUserRole(user.role || 'employee')
+        setUserDepartment(user.department || null)
       }
     } catch {
       setError('Unable to load user profile.')
@@ -221,13 +223,13 @@ export default function ChannelsPage() {
   const loadChannels = () => {
     if (!profileId) return
     setLoading(true)
-    getChannelsForUser(profileId)
+    getChannelsForUser(profileId, userDepartment)
       .then(setChannels)
       .catch(() => setError('Failed to load channels.'))
       .finally(() => setLoading(false))
   }
 
-  useEffect(() => { loadChannels() }, [profileId])
+  useEffect(() => { loadChannels() }, [profileId, userDepartment])
 
   const isAdmin = userRole === 'super_admin' || userRole === 'admin'
 

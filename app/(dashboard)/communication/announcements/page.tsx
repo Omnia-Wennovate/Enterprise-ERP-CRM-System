@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   Bell, Plus, AlertCircle, Loader2, CheckCircle, Flag, Calendar, Clock, X, ChevronDown, ChevronUp
 
@@ -32,8 +32,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 // ─── Publish Dialog ───────────────────────────────────────────────────────────
-function PublishDialog({ profileId, onPublished, onClose }: {
-  profileId: string; onPublished: () => void; onClose: () => void
+function PublishDialog({ profileId, profileName, onPublished, onClose }: {
+  profileId: string; profileName: string; onPublished: () => void; onClose: () => void
 }) {
   const [form, setForm] = useState({
     title: '', content: '', priority: 'normal', category: 'general',
@@ -41,6 +41,7 @@ function PublishDialog({ profileId, onPublished, onClose }: {
   })
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
 
   const set = (k: string, v: string | string[]) => setForm((f) => ({ ...f, [k]: v }))
 
@@ -56,18 +57,21 @@ function PublishDialog({ profileId, onPublished, onClose }: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.title.trim() || !form.content.trim()) return
-    setLoading(true); setErr(null)
+    setLoading(true); setErr(null); setSuccess(false)
     try {
       await publishAnnouncementAction({
         title: form.title, content: form.content,
         priority: form.priority, category: form.category,
         targetRoles: form.targetAudience === 'all' ? [] : form.targetRoles,
         publishedBy: profileId,
+        publishedByName: profileName,
         expiresAt: form.expiresAt || undefined,
       })
-      onPublished(); onClose()
+      setSuccess(true)
+      // Give brief success moment then close + reload
+      setTimeout(() => { onPublished(); onClose() }, 800)
     } catch (e: any) {
-      setErr(e.message || 'Failed to publish.')
+      setErr(e.message || 'Failed to publish. Please try again.')
     } finally { setLoading(false) }
   }
 
@@ -153,12 +157,13 @@ function PublishDialog({ profileId, onPublished, onClose }: {
               className="w-full px-3.5 py-2.5 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-omnia-gold/40 text-sm"
             />
           </div>
-          {err && <p className="text-sm text-red-600 flex items-center gap-2"><AlertCircle className="w-4 h-4" />{err}</p>}
+          {err && <p className="text-sm text-red-600 flex items-center gap-2"><AlertCircle className="w-4 h-4 flex-shrink-0" />{err}</p>}
+          {success && <p className="text-sm text-green-600 font-medium flex items-center gap-2"><CheckCircle className="w-4 h-4" />Published successfully!</p>}
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 border border-border rounded-xl text-sm font-medium hover:bg-muted/50 transition-colors">Cancel</button>
-            <button type="submit" disabled={loading || !form.title || !form.content}
+            <button type="submit" disabled={loading || success || !form.title || !form.content}
               className="flex-1 px-4 py-2.5 bg-omnia-gold text-primary-foreground rounded-xl text-sm font-medium hover:bg-omnia-gold-dark transition-colors disabled:opacity-50">
-              {loading ? 'Publishing…' : 'Publish Announcement'}
+              {loading ? 'Publishing…' : success ? 'Published!' : 'Publish Announcement'}
             </button>
           </div>
         </form>
@@ -251,36 +256,55 @@ export default function AnnouncementsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [profileId, setProfileId] = useState<string | null>(null)
+  const [profileName, setProfileName] = useState<string>('')
   const [role, setRole] = useState('employee')
   const [department, setDepartment] = useState<string | null>(null)
   const [showPublish, setShowPublish] = useState(false)
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
+  const [publishSuccess, setPublishSuccess] = useState(false)
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem('auth_user')
       if (stored) {
         const u = JSON.parse(stored)
-        setProfileId(u.id || null); setRole(u.role || 'employee'); setDepartment(u.department || null)
+        setProfileId(u.id || null)
+        setRole(u.role || 'employee')
+        setDepartment(u.department || null)
+        // Build display name from localStorage (used in notification message)
+        const name = u.full_name || u.name || (
+          u.first_name ? `${u.first_name} ${u.last_name || ''}`.trim() : ''
+        )
+        setProfileName(name)
       }
     } catch { setError('Unable to load profile.'); setLoading(false) }
   }, [])
 
-  const load = () => {
+  const load = useCallback(() => {
     if (!profileId) return
     setLoading(true)
     getAnnouncementsForUser(profileId, department, role)
       .then(setAnnouncements)
       .catch(() => setError('Failed to load announcements.'))
       .finally(() => setLoading(false))
-  }
+  }, [profileId, department, role])
 
-  useEffect(() => { load() }, [profileId, department, role])
+  useEffect(() => { load() }, [load])
 
-  const canPublish = ['super_admin', 'admin', 'hr_manager'].includes(role)
+  // Roles that can publish announcements
+  // Includes: super_admin, admin, hr_manager, manager, and any *_manager role
+  const canPublish = [
+    'super_admin', 'admin', 'hr_manager', 'manager',
+  ].includes(role) || role.endsWith('_manager') || role.includes('admin')
 
   const unreadCount = announcements.filter((a) => !a.isRead).length
   const displayed = filter === 'unread' ? announcements.filter((a) => !a.isRead) : announcements
+
+  const handlePublished = () => {
+    setPublishSuccess(true)
+    load()
+    setTimeout(() => setPublishSuccess(false), 4000)
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -298,6 +322,14 @@ export default function AnnouncementsPage() {
             </button>
           )}
         </div>
+
+        {/* Publish success banner */}
+        {publishSuccess && (
+          <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-5 py-3 mb-4">
+            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+            <p className="text-sm text-green-700 font-medium">Announcement published and sent to all eligible employees.</p>
+          </div>
+        )}
 
         {/* Filter */}
         <div className="flex gap-1 mb-6 border-b border-border">
@@ -359,7 +391,12 @@ export default function AnnouncementsPage() {
       </div>
 
       {showPublish && profileId && (
-        <PublishDialog profileId={profileId} onPublished={load} onClose={() => setShowPublish(false)} />
+        <PublishDialog
+          profileId={profileId}
+          profileName={profileName}
+          onPublished={handlePublished}
+          onClose={() => setShowPublish(false)}
+        />
       )}
     </div>
   )
