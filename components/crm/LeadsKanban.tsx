@@ -23,6 +23,7 @@ import {
   Upload,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { CreatorLabel } from '@/components/ui/CreatorLabel'
 import { getLeads, updateLeadStage, archiveLead, deleteLead, duplicateLead } from '@/lib/services/leads'
 import { logStageChanged, logArchived } from '@/lib/services/lead-activities'
 import { notifyStageChanged } from '@/lib/services/lead-notifications'
@@ -405,6 +406,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                             </span>
                           </div>
                         )}
+                        <CreatorLabel creatorName={lead.created_by_profile?.full_name} />
                       </div>
                     </div>
                   ))}

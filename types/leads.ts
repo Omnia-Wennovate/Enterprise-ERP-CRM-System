@@ -254,6 +254,11 @@ export interface LeadWithAgent extends LeadRow {
     full_name: string
     avatar_url: string | null
   } | null
+  /** Resolved profile for the `created_by` UUID. Null when no creator FK exists. */
+  created_by_profile?: {
+    id: string
+    full_name: string
+  } | null
 }
 
 export interface LeadActivity {

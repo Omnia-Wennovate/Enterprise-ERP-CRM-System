@@ -81,24 +81,33 @@ export async function getLeads(): Promise<LeadWithAgent[]> {
 
   // Fetch agent names separately for reliability
   const leads = (data || []) as LeadRow[]
-  const agentIds = [...new Set(leads.map((l) => l.assigned_to).filter(Boolean))] as string[]
-  
-  let agentsMap: Record<string, { id: string; full_name: string; avatar_url: string | null }> = {}
-  if (agentIds.length > 0) {
-    const { data: agents } = await supabase
+
+  // Collect unique profile IDs needed: assigned_to + created_by
+  const assignedIds = [...new Set(leads.map((l) => l.assigned_to).filter(Boolean))] as string[]
+  const creatorIds = [...new Set(leads.map((l) => l.created_by).filter(Boolean))] as string[]
+  const allProfileIds = [...new Set([...assignedIds, ...creatorIds])]
+
+  let profilesMap: Record<string, { id: string; full_name: string; avatar_url: string | null }> = {}
+  if (allProfileIds.length > 0) {
+    const { data: profiles } = await supabase
       .from('profiles')
       .select('id, full_name, avatar_url')
-      .in('id', agentIds)
-    if (agents) {
-      agentsMap = Object.fromEntries(agents.map((a) => [a.id, a]))
+      .in('id', allProfileIds)
+    if (profiles) {
+      profilesMap = Object.fromEntries(profiles.map((p) => [p.id, p]))
     }
   }
 
   return leads.map((lead) => ({
     ...lead,
-    assigned_agent: lead.assigned_to ? agentsMap[lead.assigned_to] || null : null,
+    assigned_agent: lead.assigned_to ? profilesMap[lead.assigned_to] || null : null,
+    created_by_profile: lead.created_by ? profilesMap[lead.created_by]
+      ? { id: profilesMap[lead.created_by].id, full_name: profilesMap[lead.created_by].full_name }
+      : null
+      : null,
   })) as LeadWithAgent[]
 }
+
 
 // ============================================================================
 // GET LEAD BY ID

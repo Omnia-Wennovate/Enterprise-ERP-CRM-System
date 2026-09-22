@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import {
   getExpenses,
   getExpensesByBooking,
@@ -299,7 +301,10 @@ export async function submitDeptExpenseAction(
   ...args: Parameters<typeof expenseSvc.createExpense>
 ) {
   // createExpense handles approval chain creation and threshold routing
-  return expenseSvc.createExpense(...args)
+  const expense = await expenseSvc.createExpense(...args)
+  revalidatePath('/dept-expenses')
+  revalidatePath('/finance/expenses')
+  return expense
 }
 
 export async function directApproveExpenseAction(expenseId: string) {

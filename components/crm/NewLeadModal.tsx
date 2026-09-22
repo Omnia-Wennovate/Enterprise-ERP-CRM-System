@@ -34,6 +34,7 @@ import { createLead, getSalesAgents } from '@/lib/services/leads'
 import { logLeadCreated } from '@/lib/services/lead-activities'
 import { notifyLeadCreated } from '@/lib/services/lead-notifications'
 import { uploadLeadDocument } from '@/lib/services/lead-documents'
+import { createClient } from '@/lib/supabase/client'
 import { createDirectConversation, sendMessage } from '@/lib/services/communication'
 import {
   leadFormSchema,
@@ -253,8 +254,18 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
     setErrorMessage('')
 
     try {
-      // 1. Create lead in Supabase
-      const lead = await createLead({ ...data, tags: selectedTags })
+      // 1. Resolve current authenticated user to store as creator
+      let createdByUserId: string | undefined
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        createdByUserId = user?.id
+      } catch {
+        // Non-fatal: if auth check fails, lead is still created without creator
+      }
+
+      // 2. Create lead in Supabase with the real authenticated creator
+      const lead = await createLead({ ...data, tags: selectedTags }, createdByUserId)
 
       // 2. Upload attachments
       for (const file of uploadFiles) {
