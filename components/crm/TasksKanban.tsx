@@ -37,8 +37,9 @@ const EMPTY_FORM = {
 }
 
 interface TasksKanbanProps {
-  /** Called by parent to open the "New Task" dialog (e.g. from a header button) */
-  onRequestOpen?: (open: () => void) => void
+  /** Controlled open state for the New Task dialog (owned by parent) */
+  isDialogOpen: boolean
+  onDialogOpenChange: (open: boolean) => void
 }
 
 /** Map a Supabase row to the local Task shape */
@@ -61,30 +62,18 @@ function rowToTask(row: Record<string, unknown>): Task {
   }
 }
 
-export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
+export function TasksKanban({ isDialogOpen, onDialogOpenChange }: TasksKanbanProps) {
   const [tasks, setTasks] = useState<Task[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   /** Map of profile UUID → resolved full_name for creator display */
   const [creatorsMap, setCreatorsMap] = useState<Record<string, string>>({})
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [defaultStatus, setDefaultStatus] = useState<TaskStatus>('to_do')
   const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
 
   const profile = useProfile()
-
-  // Expose the open function to the parent via callback
-  useEffect(() => {
-    if (onRequestOpen) {
-      onRequestOpen(() => {
-        setDefaultStatus('to_do')
-        setForm(EMPTY_FORM)
-        setIsDialogOpen(true)
-      })
-    }
-  }, [onRequestOpen])
 
   /** Load tasks from Supabase */
   const loadTasks = useCallback(async () => {
@@ -175,7 +164,7 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
   const openDialog = (status: TaskStatus) => {
     setDefaultStatus(status)
     setForm({ ...EMPTY_FORM, status })
-    setIsDialogOpen(true)
+    onDialogOpenChange(true)
   }
 
   const handleCreate = async () => {
@@ -208,7 +197,7 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
       if (data) {
         setTasks((prev) => [rowToTask(data), ...prev])
       }
-      setIsDialogOpen(false)
+      onDialogOpenChange(false)
       setForm(EMPTY_FORM)
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Failed to create task'
@@ -385,7 +374,7 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
       {/* New Task Dialog */}
       <ModalShell
         isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
+        onClose={() => onDialogOpenChange(false)}
         title="New Task"
         subtitle="Add a new task to your board"
         size="md"

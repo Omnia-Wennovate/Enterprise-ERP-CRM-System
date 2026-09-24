@@ -1,12 +1,12 @@
 'use client'
 
-import { useRef } from 'react'
+import { useState } from 'react'
 import { TasksKanban } from '@/components/crm/TasksKanban'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
 export default function TasksPage() {
-  const openNewTaskRef = useRef<(() => void) | null>(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <div className="flex flex-col h-full bg-background">
@@ -19,7 +19,7 @@ export default function TasksPage() {
           </div>
           <Button
             className="bg-omnia-gold hover:bg-omnia-gold-dark"
-            onClick={() => openNewTaskRef.current?.()}
+            onClick={() => setIsDialogOpen(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
             New Task
@@ -30,9 +30,8 @@ export default function TasksPage() {
       {/* Content */}
       <div className="flex-1 overflow-auto">
         <TasksKanban
-          onRequestOpen={(open) => {
-            openNewTaskRef.current = open
-          }}
+          isDialogOpen={isDialogOpen}
+          onDialogOpenChange={setIsDialogOpen}
         />
       </div>
     </div>
