@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { GripVertical, Plus, MoreVertical, Flag } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { GripVertical, Plus, MoreVertical, Flag, Loader2 } from 'lucide-react'
 import type { Task, TaskStatus, TaskPriority } from '@/types'
-import { storage } from '@/lib/storage'
 import { Button } from '@/components/ui/button'
 import { CreatorLabel } from '@/components/ui/CreatorLabel'
 import { ModalShell } from '@/components/ui/ModalShell'
@@ -42,9 +41,30 @@ interface TasksKanbanProps {
   onRequestOpen?: (open: () => void) => void
 }
 
+/** Map a Supabase row to the local Task shape */
+function rowToTask(row: Record<string, unknown>): Task {
+  return {
+    id: row.id as string,
+    title: row.title as string,
+    description: (row.description as string) ?? '',
+    status: row.status as TaskStatus,
+    priority: row.priority as TaskPriority,
+    assigned_to: (row.assigned_to as string) ?? '',
+    assigned_to_name: (row.assigned_to_name as string) ?? '',
+    due_date: row.due_date as string,
+    completed_at: (row.completed_at as string | null) ?? null,
+    related_to: (row.related_to as string | null) ?? null,
+    related_to_type: (row.related_to_type as Task['related_to_type']) ?? null,
+    created_at: row.created_at as string,
+    created_by: (row.created_by as string) ?? '',
+    is_reminder_set: (row.is_reminder_set as boolean) ?? false,
+  }
+}
+
 export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
   const [tasks, setTasks] = useState<Task[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   /** Map of profile UUID → resolved full_name for creator display */
   const [creatorsMap, setCreatorsMap] = useState<Record<string, string>>({})
 
@@ -66,12 +86,31 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
     }
   }, [onRequestOpen])
 
+  /** Load tasks from Supabase */
+  const loadTasks = useCallback(async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const supabase = createClient()
+      const { data, error: sbError } = await supabase
+        .from('tasks')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (sbError) throw sbError
+      setTasks((data ?? []).map(rowToTask))
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Failed to load tasks'
+      setError(msg)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
   // Load tasks once on mount
   useEffect(() => {
-    const loaded = storage.getTasks()
-    setTasks(loaded)
-    setIsLoading(false)
-  }, [])
+    loadTasks()
+  }, [loadTasks])
 
   // Re-resolve creator names whenever tasks or profile changes
   useEffect(() => {
@@ -105,7 +144,7 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
       try {
         const supabase = createClient()
         const { data } = await supabase.from('profiles').select('id, full_name').in('id', unknownIds)
-        
+
         const fetched: Record<string, string> = {}
         if (data) {
           for (const row of data) {
@@ -113,12 +152,12 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
           }
         }
         setCreatorsMap({ ...seedMap, ...fetched })
-      } catch (err) {
+      } catch {
         // Non-fatal — creator labels simply won't show if lookup fails
         setCreatorsMap(seedMap)
       }
     }
-    
+
     fetchCreators()
   }, [tasks, profile])
 
@@ -139,33 +178,44 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
     setIsDialogOpen(true)
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!form.title.trim()) return
     setSaving(true)
 
-    const newTask: Task = {
-      id: `task_${Date.now()}`,
-      title: form.title.trim(),
-      description: form.description.trim(),
-      status: form.status,
-      priority: form.priority,
-      due_date: form.due_date,
-      assigned_to: profile?.id ?? 'user_001',
-      assigned_to_name: profile?.full_name ?? 'Me',
-      completed_at: form.status === 'completed' ? new Date().toISOString() : null,
-      related_to: null,
-      related_to_type: null,
-      created_at: new Date().toISOString(),
-      created_by: profile?.id ?? 'user_001',
-      is_reminder_set: false,
-    }
+    try {
+      const supabase = createClient()
+      const { data, error: sbError } = await supabase
+        .from('tasks')
+        .insert({
+          title: form.title.trim(),
+          description: form.description.trim(),
+          status: form.status,
+          priority: form.priority,
+          due_date: form.due_date,
+          assigned_to: profile?.id ?? null,
+          assigned_to_name: profile?.full_name ?? '',
+          completed_at: form.status === 'completed' ? new Date().toISOString() : null,
+          related_to: null,
+          related_to_type: null,
+          created_by: profile?.id ?? null,
+          is_reminder_set: false,
+        })
+        .select()
+        .single()
 
-    const updated = [...tasks, newTask]
-    setTasks(updated)
-    storage.setTasks(updated)
-    setIsDialogOpen(false)
-    setForm(EMPTY_FORM)
-    setSaving(false)
+      if (sbError) throw sbError
+
+      if (data) {
+        setTasks((prev) => [rowToTask(data), ...prev])
+      }
+      setIsDialogOpen(false)
+      setForm(EMPTY_FORM)
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Failed to create task'
+      alert(`Error: ${msg}`)
+    } finally {
+      setSaving(false)
+    }
   }
 
   const tasksByStatus = STATUSES.reduce(
@@ -186,22 +236,32 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
     e.dataTransfer.dropEffect = 'move'
   }
 
-  const handleDrop = (e: React.DragEvent, status: TaskStatus) => {
+  const handleDrop = async (e: React.DragEvent, status: TaskStatus) => {
     e.preventDefault()
     const taskId = e.dataTransfer.getData('taskId')
     const task = tasks.find((t) => t.id === taskId)
-    if (task && task.status !== status) {
-      const updated = tasks.map((t) =>
-        t.id === taskId
-          ? {
-              ...t,
-              status,
-              completed_at: status === 'completed' ? new Date().toISOString() : null,
-            }
-          : t,
+    if (!task || task.status === status) return
+
+    // Optimistic update
+    const completed_at = status === 'completed' ? new Date().toISOString() : null
+    setTasks((prev) =>
+      prev.map((t) => (t.id === taskId ? { ...t, status, completed_at } : t))
+    )
+
+    // Persist to Supabase
+    try {
+      const supabase = createClient()
+      const { error: sbError } = await supabase
+        .from('tasks')
+        .update({ status, completed_at })
+        .eq('id', taskId)
+
+      if (sbError) throw sbError
+    } catch {
+      // Revert on failure
+      setTasks((prev) =>
+        prev.map((t) => (t.id === taskId ? task : t))
       )
-      setTasks(updated)
-      storage.setTasks(updated)
     }
   }
 
@@ -209,7 +269,23 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
     return new Date(dueDate) < new Date() && new Date().toDateString() !== new Date(dueDate).toDateString()
   }
 
-  if (isLoading) return <div className="p-4">Loading tasks...</div>
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64 gap-2 text-muted-foreground">
+        <Loader2 className="w-5 h-5 animate-spin" />
+        <span>Loading tasks...</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+        <p className="text-sm text-red-500">Failed to load tasks: {error}</p>
+        <Button variant="outline" size="sm" onClick={loadTasks}>Retry</Button>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -323,7 +399,11 @@ export function TasksKanban({ onRequestOpen }: TasksKanbanProps) {
               onClick={handleCreate}
               disabled={!form.title.trim() || saving}
             >
-              {saving ? 'Creating...' : 'Create Task'}
+              {saving ? (
+                <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Creating...</>
+              ) : (
+                'Create Task'
+              )}
             </Button>
           </>
         }
