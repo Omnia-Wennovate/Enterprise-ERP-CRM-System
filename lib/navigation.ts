@@ -206,6 +206,7 @@ export const getNavForRole = (role: UserRole): NavSection[] => {
           { label: 'My Customers', href: '/crm/customers', icon: 'Users' },
           { label: 'Quotations', href: '/crm/quotes', icon: 'FileText' },
           { label: 'Activities', href: '/crm/activities', icon: 'Activity' },
+          { label: 'Documents', href: '/bookings/documents', icon: 'FolderOpen' },
         ],
       },
       {
