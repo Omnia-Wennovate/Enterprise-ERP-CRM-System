@@ -250,9 +250,69 @@ export function ItineraryPrintView({ itinerary }: { itinerary: ItineraryWithBook
       minHeight: '100vh',
     }}>
       {/* ═══════════════════════════════════════════════
+          REPEATED PRINT HEADER — fixed at top of every printed page.
+          Hidden on screen; appears only in @media print.
+      ═══════════════════════════════════════════════ */}
+      <div id="print-page-header" style={{ display: 'none' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/print-header.jpg"
+          alt="Omnia Business and Leisure Travel"
+          style={{ display: 'block', width: '100%', height: 'auto' }}
+        />
+      </div>
+
+      {/* ═══════════════════════════════════════════════
+          REPEATED PRINT FOOTER BANNER — fixed at bottom of every printed page.
+          Hidden on screen; fills the blank space at the bottom of intermediate pages.
+      ═══════════════════════════════════════════════ */}
+      <div id="print-page-footer-banner" style={{ display: 'none' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/print-header.jpg"
+          alt="Omnia Business and Leisure Travel"
+          style={{ display: 'block', width: '100%', height: 'auto' }}
+        />
+      </div>
+
+      <style>{`
+        @media print {
+          #print-page-header {
+            display: block !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+          }
+          /* Banner strip fixed to the bottom of every printed page */
+          #print-page-footer-banner {
+            display: block !important;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+          }
+          /* Push ALL printed content down so nothing hides under the fixed header.
+             90px matches the header image height. */
+          #itinerary-print-root {
+            padding-top: 90px;
+            /* Reserve space at the bottom so content doesn't hide behind the fixed banner */
+            padding-bottom: 90px;
+          }
+          /* The first-page SVG banner already covers the header space visually,
+             so hide it on print (the fixed image above replaces it on every page). */
+          #itinerary-first-page-svg {
+            display: none !important;
+          }
+        }
+      `}</style>
+      {/* ═══════════════════════════════════════════════
           PRINT HEADER BANNER — single SVG, 100% print-safe
       ═══════════════════════════════════════════════ */}
       <svg
+        id="itinerary-first-page-svg"
         width="100%"
         height="90"
         viewBox="0 0 800 90"

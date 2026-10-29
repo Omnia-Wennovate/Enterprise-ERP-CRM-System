@@ -407,8 +407,47 @@ export interface WeeklyContentPlan {
   campaign_id: string | null
   created_by: string | null
   created_at: string
+  // Content calendar
+  host: string | null
+  is_featured: boolean
+  is_gap_day: boolean
+  cross_post_platforms: string[]
+  is_recorded: boolean
+  recording_date: string | null
   // Joined
   assignee_name?: string
+}
+
+export type ContentBacklogCategory = 'recorded' | 'to_record' | 'idea' | 'coming_up'
+
+export interface ContentBacklogItem {
+  id: string
+  title: string
+  category: ContentBacklogCategory
+  host: string | null
+  status: string | null
+  created_by: string | null
+  created_at: string
+}
+
+/** Content calendar extracted from an uploaded PDF, before it's saved */
+export interface ImportedCalendarEntry {
+  date: string
+  content: string
+  platform: 'tiktok' | 'instagram' | 'facebook'
+  cross_post_platforms: string[]
+  host: string | null
+  is_featured: boolean
+  is_gap_day: boolean
+  recording: 'recorded' | 'scheduled' | 'none'
+  recording_date: string | null
+}
+
+export interface ImportedCalendar {
+  cycle_start: string | null
+  entries: ImportedCalendarEntry[]
+  notes: string[]
+  backlog: { title: string; category: ContentBacklogCategory; host: string | null; status: string | null }[]
 }
 
 export interface EmployeeContentStatus {

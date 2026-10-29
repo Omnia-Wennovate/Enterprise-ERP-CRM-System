@@ -35,6 +35,7 @@ import {
 } from '@/lib/services/marketing-analytics'
 import { getCampaigns } from '@/lib/services/campaigns'
 import { getSocialPosts } from '@/lib/services/social-posts'
+import { getSocialAccounts } from '@/lib/services/social-accounts'
 import { PLATFORM_COLORS, PLATFORM_LABELS } from '@/types/marketing'
 import type { MarketingDashboardStats, PlatformMetrics, SocialCampaign, SocialPost } from '@/types/marketing'
 
@@ -44,6 +45,7 @@ export default function MarketingDashboardPage() {
   const [platforms, setPlatforms] = useState<PlatformMetrics[]>([])
   const [campaigns, setCampaigns] = useState<SocialCampaign[]>([])
   const [recentPosts, setRecentPosts] = useState<SocialPost[]>([])
+  const [accountCounts, setAccountCounts] = useState({ connected: 0, total: 0 })
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -53,16 +55,21 @@ export default function MarketingDashboardPage() {
   const loadData = async () => {
     try {
       setIsLoading(true)
-      const [s, pm, c, p] = await Promise.all([
+      const [s, pm, c, p, a] = await Promise.all([
         getDashboardStats().catch(() => null),
         getPlatformMetrics().catch(() => []),
         getCampaigns().catch(() => []),
         getSocialPosts().catch(() => []),
+        getSocialAccounts().catch(() => []),
       ])
       if (s) setStats(s)
       setPlatforms(pm || [])
       setCampaigns(c || [])
       setRecentPosts((p || []).slice(0, 5))
+      setAccountCounts({
+        connected: (a || []).filter((acc) => acc.connection_status === 'oauth_connected').length,
+        total: (a || []).length,
+      })
     } catch (err) {
       console.error('Failed to load marketing dashboard:', err)
     } finally {
@@ -74,7 +81,9 @@ export default function MarketingDashboardPage() {
     {
       label: 'Total Followers',
       value: stats?.totalFollowers ? stats.totalFollowers.toLocaleString() : '0',
-      change: 'OAuth connected accounts',
+      change: accountCounts.connected > 0
+        ? `${accountCounts.connected} connected account${accountCounts.connected === 1 ? '' : 's'}`
+        : 'No accounts connected yet',
       icon: Users,
       color: '#3B82F6',
     },
@@ -192,6 +201,75 @@ export default function MarketingDashboardPage() {
             </div>
           )
         })}
+      </div>
+
+      {/* Connected Platforms */}
+      <div className="bg-card rounded-2xl border border-border p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-base font-semibold text-foreground flex items-center gap-2">
+            <Share2 size={18} className="text-blue-500" />
+            Connected Platforms
+          </h2>
+          <Link
+            href="/marketing/accounts"
+            className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
+          >
+            {accountCounts.connected} of {accountCounts.total} connected <ArrowUpRight size={14} />
+          </Link>
+        </div>
+
+        {platforms.length === 0 ? (
+          <div className="py-8 text-center">
+            <p className="text-sm text-foreground font-medium">No accounts are connected via OAuth yet</p>
+            <p className="text-xs text-muted-foreground mt-1 max-w-md mx-auto">
+              Followers, reach and engagement only come from live platform data. Connect TikTok,
+              Instagram, Facebook or LinkedIn to start tracking growth here.
+            </p>
+            <Link
+              href="/marketing/accounts"
+              className="inline-flex items-center gap-1 text-xs font-medium text-primary mt-3 hover:underline"
+            >
+              <Plus size={12} /> Connect accounts
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {platforms.map((pm) => (
+              <div
+                key={pm.platform}
+                className="p-4 rounded-xl border border-border bg-background/50 border-t-4"
+                style={{ borderTopColor: PLATFORM_COLORS[pm.platform] }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold text-foreground">
+                    {PLATFORM_LABELS[pm.platform] ?? pm.platform}
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 font-medium flex items-center gap-1">
+                    <CheckCircle2 size={10} /> Live
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-y-2 text-[11px] text-muted-foreground">
+                  <div>
+                    <p>Followers</p>
+                    <p className="text-sm font-bold text-foreground">{pm.followers.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p>Reach</p>
+                    <p className="text-sm font-bold text-foreground">{pm.reach.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p>Engagement</p>
+                    <p className="text-sm font-bold text-foreground">{pm.engagement.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p>Posts</p>
+                    <p className="text-sm font-bold text-foreground">{pm.posts.toLocaleString()}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Quick Access Modules */}

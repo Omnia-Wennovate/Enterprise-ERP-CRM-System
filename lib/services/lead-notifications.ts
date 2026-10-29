@@ -92,6 +92,63 @@ export async function markAllNotificationsRead(recipientId?: string): Promise<vo
 }
 
 // ============================================================================
+// RESOLVE NOTIFICATION LINK
+// ============================================================================
+
+const NOTIFICATION_ROUTES: Record<string, string> = {
+  direct_message: '/communication/dm',
+  channel_message: '/communication/channels',
+  announcement: '/communication/announcements',
+  task: '/communication/tasks',
+  meeting: '/communication/meetings',
+  production_request: '/marketing/production-requests',
+  lead: '/crm/leads',
+  expense: '/finance/expenses',
+  budget: '/finance/expenses',
+  document: '/bookings/documents',
+  integration: '/integrations',
+  profile: '/audit-log',
+  auth_event: '/audit-log',
+  system_setting: '/settings',
+}
+
+/**
+ * Returns the page a notification should open, or null if it has no target.
+ * DM and channel notifications store the message id, so the parent
+ * conversation / channel is looked up to deep-link into the thread.
+ */
+export async function getNotificationHref(
+  notification: AppNotification
+): Promise<string | null> {
+  const { related_to_type: type, related_to_id: id } = notification
+  if (!type) return null
+
+  if (id && type === 'direct_message') {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('messages')
+      .select('conversation_id')
+      .eq('id', id)
+      .maybeSingle()
+    if (data?.conversation_id) return `/communication/dm/${data.conversation_id}`
+  }
+
+  if (id && type === 'channel_message') {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('channel_messages')
+      .select('channel_id')
+      .eq('id', id)
+      .maybeSingle()
+    if (data?.channel_id) return `/communication/channels/${data.channel_id}`
+  }
+
+  if (id && type === 'integration') return `/integrations/${id}`
+
+  return NOTIFICATION_ROUTES[type] ?? null
+}
+
+// ============================================================================
 // NOTIFY LEAD CREATED
 // ============================================================================
 

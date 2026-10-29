@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { Bell, X } from 'lucide-react'
 import {
   getNotifications,
+  getNotificationHref,
   markNotificationRead,
   markAllNotificationsRead,
 } from '@/lib/services/lead-notifications'
@@ -24,19 +26,20 @@ function timeAgo(dateStr: string): string {
   return date.toLocaleDateString()
 }
 
-export function NotificationBell() {
+export function NotificationBell({ profileId }: { profileId?: string }) {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [notifications, setNotifications] = useState<AppNotification[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchNotifications = useCallback(async () => {
     try {
-      const data = await getNotifications()
+      const data = await getNotifications(profileId)
       setNotifications(data)
     } catch {
       // Silently fail — notifications are non-critical
     }
-  }, [])
+  }, [profileId])
 
   // Initial load
   useEffect(() => {
@@ -70,11 +73,20 @@ export function NotificationBell() {
     }
   }
 
+  const handleNotificationClick = async (notification: AppNotification) => {
+    if (!notification.is_read) handleMarkAsRead(notification.id)
+    const href = await getNotificationHref(notification).catch(() => null)
+    if (href) {
+      setIsOpen(false)
+      router.push(href)
+    }
+  }
+
   const handleMarkAllRead = async () => {
     // Optimistic update
     setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })))
     try {
-      await markAllNotificationsRead()
+      await markAllNotificationsRead(profileId)
     } catch {
       fetchNotifications()
     }
@@ -124,7 +136,7 @@ export function NotificationBell() {
                     className={`px-4 py-3 hover:bg-background transition-colors cursor-pointer ${
                       !notification.is_read ? 'bg-omnia-gold/5' : ''
                     }`}
-                    onClick={() => handleMarkAsRead(notification.id)}
+                    onClick={() => handleNotificationClick(notification)}
                   >
                     <div className="flex gap-3">
                       <div

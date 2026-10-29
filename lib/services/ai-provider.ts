@@ -8,10 +8,21 @@ import type { AIProviderName, AIProviderConfig } from '@/types/ai-itinerary'
 
 // ── Provider Interface ───────────────────────────────────────────────────────
 
+export interface AIAttachment {
+  mimeType: 'application/pdf'
+  base64: string
+}
+
+export interface AIGenerateOptions {
+  /** A document the model should read alongside the prompt */
+  attachment?: AIAttachment
+  temperature?: number
+}
+
 export interface AIProvider {
   name: AIProviderName
   model: string
-  generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal): Promise<unknown>
+  generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal, options?: AIGenerateOptions): Promise<unknown>
 }
 
 // Helper to robustly extract JSON from messy AI responses
@@ -59,23 +70,27 @@ class GeminiProvider implements AIProvider {
     this.apiKey = config.apiKey
   }
 
-  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal): Promise<unknown> {
+  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal, options?: AIGenerateOptions): Promise<unknown> {
     const { GoogleGenerativeAI } = await import('@google/generative-ai')
     const genAI = new GoogleGenerativeAI(this.apiKey)
-    
+
     const model = genAI.getGenerativeModel({
       model: this.model,
       generationConfig: {
         responseMimeType: 'application/json',
-        temperature: 0.7,
+        temperature: options?.temperature ?? 0.7,
         maxOutputTokens: 8192,
       },
     })
 
+    const parts: ({ text: string } | { inlineData: { mimeType: string; data: string } })[] = []
+    if (options?.attachment) {
+      parts.push({ inlineData: { mimeType: options.attachment.mimeType, data: options.attachment.base64 } })
+    }
+    parts.push({ text: systemPrompt + '\n\n' + userPrompt })
+
     const result = await model.generateContent({
-      contents: [
-        { role: 'user', parts: [{ text: systemPrompt + '\n\n' + userPrompt }] },
-      ],
+      contents: [{ role: 'user', parts }],
     })
 
     // Check for abort
@@ -102,7 +117,11 @@ class OpenAIProvider implements AIProvider {
     this.baseUrl = config.baseUrl || 'https://api.openai.com/v1'
   }
 
-  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal): Promise<unknown> {
+  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal, options?: AIGenerateOptions): Promise<unknown> {
+    if (options?.attachment) {
+      throw new Error('OpenAI provider does not support document attachments')
+    }
+
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
@@ -146,7 +165,18 @@ class ClaudeProvider implements AIProvider {
     this.apiKey = config.apiKey
   }
 
-  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal): Promise<unknown> {
+  async generateJSON(systemPrompt: string, userPrompt: string, signal?: AbortSignal, options?: AIGenerateOptions): Promise<unknown> {
+    const promptText = userPrompt + '\n\nRespond ONLY with the JSON object, no other text.'
+    const content = options?.attachment
+      ? [
+          {
+            type: 'document',
+            source: { type: 'base64', media_type: options.attachment.mimeType, data: options.attachment.base64 },
+          },
+          { type: 'text', text: promptText },
+        ]
+      : promptText
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -157,10 +187,9 @@ class ClaudeProvider implements AIProvider {
       body: JSON.stringify({
         model: this.model,
         max_tokens: 8192,
+        ...(options?.temperature !== undefined ? { temperature: options.temperature } : {}),
         system: systemPrompt,
-        messages: [
-          { role: 'user', content: userPrompt + '\n\nRespond ONLY with the JSON object, no other text.' },
-        ],
+        messages: [{ role: 'user', content }],
       }),
       signal,
     })
@@ -240,7 +269,8 @@ export function getAIProvider(): AIProvider {
 export async function generateWithFallback(
   systemPrompt: string,
   userPrompt: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  options?: AIGenerateOptions
 ): Promise<{ result: unknown; provider: string; model: string }> {
   const primaryName = (process.env.AI_PROVIDER || 'gemini') as AIProviderName
   const primaryModel = process.env.AI_MODEL
@@ -267,7 +297,7 @@ export async function generateWithFallback(
 
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const result = await provider.generateJSON(systemPrompt, userPrompt, signal)
+        const result = await provider.generateJSON(systemPrompt, userPrompt, signal, options)
         return { result, provider: provider.name, model: provider.model }
       } catch (err) {
         lastErr = err

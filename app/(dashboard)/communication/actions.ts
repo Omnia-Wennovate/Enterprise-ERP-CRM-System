@@ -135,6 +135,9 @@ export interface AnnouncementWithMeta {
   expires_at: string | null
   publishedByName: string | null
   isRead: boolean
+  // Production Request assignment fields (populated when category = 'production_request')
+  productionRequestId: string | null
+  assigneeNames: string[]
 }
 
 export interface SearchResult {
@@ -1236,7 +1239,7 @@ export async function getAnnouncementsForUser(
     .from('announcements')
     .select(`
       *,
-      publisher:profiles!announcements_published_by_fkey(first_name, last_name),
+      publisher:profiles!announcements_published_by_fkey(first_name, last_name, email),
       announcement_reads!left(profile_id, acknowledged_at)
     `)
     .eq('is_draft', false)
@@ -1251,13 +1254,30 @@ export async function getAnnouncementsForUser(
     const isCompanyWide = targetRoles.length === 0 || targetRoles.includes('all')
     const isDeptMatch = department && targetRoles.includes(department)
     const isRoleMatch = targetRoles.includes(role)
+    // Production request assignees always see the announcement regardless of dept
+    const assigneeNames: string[] = a.assignee_names || []
+    const isAssignee = !!(a.production_request_id && profileId)
 
-    if (!isCompanyWide && !isDeptMatch && !isRoleMatch && role !== 'super_admin' && role !== 'admin') {
+    if (!isCompanyWide && !isDeptMatch && !isRoleMatch && !isAssignee && role !== 'super_admin' && role !== 'admin') {
       return null
     }
 
     const reads: any[] = a.announcement_reads || []
     const isRead = reads.some((r: any) => r.profile_id === profileId)
+
+    const publisher = a.publisher
+    let publishedByName: string | null = null
+    if (publisher) {
+      const isGeneric = !publisher.first_name || publisher.first_name.trim().toLowerCase() === 'user'
+      if (!isGeneric) {
+        publishedByName = `${publisher.first_name || ''} ${publisher.last_name || ''}`.trim() || null
+      } else {
+        // Email-based fallback (matches KNOWN_EMPLOYEE_NAMES)
+        const email = (publisher.email || '').toLowerCase()
+        const known = KNOWN_EMPLOYEE_NAMES[email]
+        publishedByName = known ? known.full : (`${publisher.first_name || ''} ${publisher.last_name || ''}`.trim() || null)
+      }
+    }
 
     return {
       id: a.id,
@@ -1268,8 +1288,10 @@ export async function getAnnouncementsForUser(
       target_roles: targetRoles,
       published_at: a.published_at,
       expires_at: a.expires_at,
-      publishedByName: a.publisher ? `${a.publisher.first_name || ''} ${a.publisher.last_name || ''}`.trim() || null : null,
+      publishedByName,
       isRead,
+      productionRequestId: a.production_request_id || null,
+      assigneeNames,
     } as AnnouncementWithMeta
   }).filter(Boolean) as AnnouncementWithMeta[]
 }
@@ -1336,6 +1358,106 @@ export async function publishAnnouncementAction(data: {
     data.targetRoles,
     data.publishedByName || ''
   ).catch((e) => console.error('[notifyAnnouncement] error:', e))
+
+  return announcement.id
+}
+
+/**
+ * Publish an announcement specifically for a Social Media Production Request.
+ * Embeds assignee names and links to the production request.
+ * Respects the existing target_roles audience system.
+ *
+ * Called when a production request is assigned/published.
+ *
+ * @param requestId       UUID of the content_production_request
+ * @param requestTitle    Title of the production request
+ * @param assigneeIds     Profile UUIDs of assigned employees
+ * @param assigneeNames   Resolved display names for the assignees
+ * @param publishedBy     Profile UUID of the creator (validated as real UUID)
+ * @param publishedByName Display name of the creator
+ * @param targetRoles     Audience roles ([] = company-wide)
+ */
+export async function publishProductionRequestAnnouncement(data: {
+  requestId: string
+  requestTitle: string
+  assigneeIds: string[]
+  assigneeNames: string[]
+  publishedBy: string
+  publishedByName: string
+  targetRoles?: string[]
+}): Promise<string> {
+  const supabase = await createClient()
+
+  // Validate publishedBy UUID
+  let publishedBy: string | null = null
+  if (data.publishedBy && isValidUUID(data.publishedBy)) {
+    const { count } = await supabase
+      .from('profiles')
+      .select('id', { count: 'exact', head: true })
+      .eq('id', data.publishedBy)
+    publishedBy = (count && count > 0) ? data.publishedBy : null
+  }
+
+  const assigneeList = data.assigneeNames.length > 0
+    ? data.assigneeNames.join(', ')
+    : 'No specific assignees'
+
+  const content = [
+    `A new production request has been created and assigned to the team.`,
+    ``,
+    `📋 Request: ${data.requestTitle}`,
+    `👥 Assigned To: ${assigneeList}`,
+    `👤 Created By: ${data.publishedByName || 'Team Member'}`,
+  ].join('\n')
+
+  const { data: announcement, error } = await supabase
+    .from('announcements')
+    .insert({
+      title: `New Production Request: ${data.requestTitle}`,
+      content,
+      priority: 'normal',
+      category: 'production_request',
+      target_roles: data.targetRoles || ['marketing', 'social_media'],
+      published_by: publishedBy,
+      published_at: new Date().toISOString(),
+      is_draft: false,
+      production_request_id: data.requestId,
+      assignee_names: data.assigneeNames,
+    })
+    .select('id')
+    .single()
+
+  if (error) {
+    // If production_request_id/assignee_names columns don't exist yet (migration not run),
+    // fall back to inserting without those columns
+    if (error.message?.includes('production_request_id') || error.message?.includes('assignee_names')) {
+      const { data: fallback, error: fbErr } = await supabase
+        .from('announcements')
+        .insert({
+          title: `New Production Request: ${data.requestTitle}`,
+          content,
+          priority: 'normal',
+          category: 'general',
+          target_roles: data.targetRoles || ['marketing', 'social_media'],
+          published_by: publishedBy,
+          published_at: new Date().toISOString(),
+          is_draft: false,
+        })
+        .select('id')
+        .single()
+      if (fbErr) throw new Error(`Failed to publish announcement: ${fbErr.message}`)
+      return fallback.id
+    }
+    throw new Error(`Failed to publish announcement: ${error.message}`)
+  }
+
+  // Notify eligible employees about the announcement
+  notifyAnnouncement(
+    announcement.id,
+    `New Production Request: ${data.requestTitle}`,
+    data.targetRoles || ['marketing', 'social_media'],
+    data.publishedByName
+  ).catch((e) => console.error('[notifyAnnouncement/productionRequest]', e))
 
   return announcement.id
 }

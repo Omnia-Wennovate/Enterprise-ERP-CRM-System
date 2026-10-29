@@ -29,6 +29,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   training: 'Training',
   visa_regulation: 'Visa',
   emergency: 'Emergency',
+  production_request: 'Production Request',
 }
 
 // ─── Publish Dialog ───────────────────────────────────────────────────────────
@@ -226,8 +227,36 @@ function AnnouncementCard({ announcement, profileId, onRead }: {
               {expanded ? <><ChevronUp className="w-3 h-3" />Show less</> : <><ChevronDown className="w-3 h-3" />Read more</>}
             </button>
           )}
+
+          {/* Production Request announcement — show structured assignment info */}
+          {announcement.productionRequestId && (
+            <div className="mt-3 p-3 bg-muted/40 rounded-lg border border-border space-y-2">
+              {announcement.assigneeNames && announcement.assigneeNames.length > 0 && (
+                <div className="flex items-start gap-2">
+                  <span className="text-xs font-semibold text-foreground whitespace-nowrap pt-0.5">Assigned To:</span>
+                  <div className="flex flex-wrap gap-1">
+                    {announcement.assigneeNames.map((name: string, i: number) => (
+                      <span key={i} className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {announcement.publishedByName && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-foreground">Created By:</span>
+                  <span className="text-xs text-muted-foreground">{announcement.publishedByName}</span>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="flex items-center gap-3 mt-3 text-xs text-muted-foreground flex-wrap">
-            {announcement.publishedByName && <span>By <strong>{announcement.publishedByName}</strong></span>}
+            {/* For non-production-request announcements, show the standard "By" line */}
+            {announcement.publishedByName && !announcement.productionRequestId && (
+              <span>By <strong>{announcement.publishedByName}</strong></span>
+            )}
             {announcement.published_at && (
               <span className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />

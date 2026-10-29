@@ -89,7 +89,7 @@ export function Topbar({ profile }: TopbarProps) {
         <ThemeToggle />
 
         {/* Notification Bell */}
-        <NotificationBell />
+        <NotificationBell profileId={profile.id} />
 
         {/* User Menu */}
         <UserMenu profile={profile} />
