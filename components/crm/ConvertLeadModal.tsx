@@ -6,6 +6,8 @@ import { X, UserCheck, BookOpen, FileText, Loader2, CheckCircle2 } from 'lucide-
 import { Button } from '@/components/ui/button'
 import { logConverted } from '@/lib/services/lead-activities'
 import { createClient } from '@/lib/supabase/client'
+import { useProfile } from '@/lib/context/profile-context'
+import { requestBookingFromLead, bookingRequestMessage } from '@/lib/services/booking-requests'
 import type { LeadWithAgent } from '@/types/leads'
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 }
 
 export function ConvertLeadModal({ isOpen, lead, onClose, onConverted }: Props) {
+  const profile = useProfile()
   const [converting, setConverting] = useState<'customer' | 'booking' | 'quotation' | null>(null)
   const [done, setDone] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -53,20 +56,14 @@ export function ConvertLeadModal({ isOpen, lead, onClose, onConverted }: Props) 
     setConverting('booking')
     setError('')
     try {
-      await logConverted(lead.id, lead.lead_name, 'booking').catch(() => {})
-      // Navigate to new booking page with lead data pre-filled via URL params
-      const params = new URLSearchParams({
-        from_lead: lead.id,
-        lead_name: lead.lead_name,
-        destination: lead.destination || '',
-        departure_date: lead.travel_date || '',
-        return_date: lead.return_date || '',
-        total_cost: String(lead.estimated_value || 0),
-      })
-      window.location.href = `/bookings/new?${params.toString()}`
+      // Sales doesn't create bookings — hand the lead to Operations
+      const result = await requestBookingFromLead(lead, profile)
+      if (result.status === 'no_operations_staff') setError(bookingRequestMessage(result, lead.lead_name))
+      else setDone(bookingRequestMessage(result, lead.lead_name))
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to create booking'
+      const msg = err instanceof Error ? err.message : 'Failed to send booking request'
       setError(msg)
+    } finally {
       setConverting(null)
     }
   }
@@ -180,7 +177,7 @@ export function ConvertLeadModal({ isOpen, lead, onClose, onConverted }: Props) 
                     </div>
                     <div>
                       <p className="font-semibold text-foreground">Convert to Booking</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">Open the new booking form pre-filled with this lead&apos;s travel details</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">Send this lead to the Operations team to create the booking</p>
                     </div>
                   </button>
 

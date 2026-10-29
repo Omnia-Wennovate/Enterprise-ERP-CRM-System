@@ -145,6 +145,9 @@ export async function getNotificationHref(
 
   if (id && type === 'integration') return `/integrations/${id}`
 
+  // Sales → Operations hand-off: open the booking form pre-filled from the lead
+  if (id && type === 'booking_request') return `/bookings/new?from_lead=${id}`
+
   return NOTIFICATION_ROUTES[type] ?? null
 }
 

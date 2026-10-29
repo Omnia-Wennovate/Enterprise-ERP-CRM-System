@@ -6,9 +6,12 @@ import { ArrowLeft, Plus, Trash2, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { storage } from '@/lib/storage'
+import { useProfile } from '@/lib/context/profile-context'
+import { getLeadById } from '@/lib/services/leads'
 
 export default function NewBookingPage() {
   const router = useRouter()
+  const profile = useProfile()
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [customers, setCustomers] = useState<any[]>([])
@@ -26,6 +29,40 @@ export default function NewBookingPage() {
     total_revenue: '',
     travelers: [{ full_name: '', passport_number: '', is_primary: true }],
   })
+
+  // Pre-fill from a lead ("Convert to Booking" in CRM)
+  const [leadPrefill, setLeadPrefill] = useState<{ leadName: string; company: string } | null>(null)
+
+  // Opened from an Operations "Booking Request" notification: /bookings/new?from_lead=<lead id>
+  useEffect(() => {
+    const leadId = new URLSearchParams(window.location.search).get('from_lead')
+    if (!leadId) return
+    getLeadById(leadId)
+      .then(lead => {
+        if (!lead) return
+        setLeadPrefill({ leadName: lead.lead_name, company: lead.company || '' })
+        setFormData(prev => ({
+          ...prev,
+          destination: lead.destination || prev.destination,
+          departure_date: lead.travel_date?.slice(0, 10) || prev.departure_date,
+          return_date: lead.return_date?.slice(0, 10) || prev.return_date,
+          total_cost: Number(lead.estimated_value) > 0 ? String(lead.estimated_value) : prev.total_cost,
+          currency: lead.currency || prev.currency,
+          travelers: [{ full_name: lead.lead_name, passport_number: '', is_primary: true }],
+        }))
+      })
+      .catch(err => console.error('Failed to load lead for booking:', err))
+  }, [])
+
+  // Select the lead's customer once the customer list has loaded, if one matches by name
+  useEffect(() => {
+    if (!leadPrefill || customers.length === 0) return
+    const names = [leadPrefill.company, leadPrefill.leadName].map(n => n.trim().toLowerCase()).filter(Boolean)
+    const match = customers.find(c => names.includes(String(c.company_name || '').trim().toLowerCase()))
+    if (match) {
+      setFormData(prev => prev.customer_id ? prev : { ...prev, customer_id: match.id, customer_name: match.company_name })
+    }
+  }, [leadPrefill, customers])
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -138,6 +175,24 @@ export default function NewBookingPage() {
     }
   }
 
+  // Sales hands converted leads to Operations ("Convert to Booking"); only Operations creates bookings
+  if (profile?.role === 'sales_agent') {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="max-w-xl mx-auto px-6 py-16 text-center">
+          <h1 className="text-2xl font-bold text-foreground">Bookings are created by Operations</h1>
+          <p className="text-muted-foreground mt-3">
+            Use <span className="font-medium text-foreground">Convert to Booking</span> on a lead. The Operations team is
+            notified and creates the booking from the lead&apos;s details.
+          </p>
+          <Link href="/crm/leads" className="inline-flex items-center gap-2 mt-6 text-omnia-gold hover:text-omnia-gold-dark font-medium">
+            <ArrowLeft className="w-4 h-4" /> Back to My Leads
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-6 py-8">
@@ -168,6 +223,17 @@ export default function NewBookingPage() {
           {step === 1 && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-foreground">Booking Details</h2>
+
+              {leadPrefill && (
+                <div className="text-sm px-4 py-3 rounded-lg bg-omnia-gold/10 border border-omnia-gold/30 text-foreground">
+                  Converting lead <span className="font-semibold">{leadPrefill.leadName}</span> — travel details are filled in from the lead.
+                  {!formData.customer_id && (
+                    <span className="block text-xs text-muted-foreground mt-1">
+                      No matching customer was found. Choose one below, or use "Convert to Customer" on the lead first.
+                    </span>
+                  )}
+                </div>
+              )}
 
               <div className="grid grid-cols-2 gap-6">
                 <div>

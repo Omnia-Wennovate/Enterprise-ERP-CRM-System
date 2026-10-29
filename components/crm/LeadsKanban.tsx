@@ -25,7 +25,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { CreatorLabel } from '@/components/ui/CreatorLabel'
 import { getLeads, updateLeadStage, archiveLead, deleteLead, duplicateLead } from '@/lib/services/leads'
+import { useProfile } from '@/lib/context/profile-context'
 import { logStageChanged, logArchived } from '@/lib/services/lead-activities'
+import { requestBookingFromLead, bookingRequestMessage } from '@/lib/services/booking-requests'
 import { notifyStageChanged } from '@/lib/services/lead-notifications'
 import { createClient } from '@/lib/supabase/client'
 import type { LeadWithAgent } from '@/types/leads'
@@ -69,6 +71,14 @@ interface ContextMenuState {
 }
 
 export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_props, ref) {
+  const profile = useProfile()
+  const [notice, setNotice] = useState<{ type: 'success' | 'info' | 'error'; message: string } | null>(null)
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const showNotice = (type: 'success' | 'info' | 'error', message: string) => {
+    if (noticeTimer.current) clearTimeout(noticeTimer.current)
+    setNotice({ type, message })
+    noticeTimer.current = setTimeout(() => setNotice(null), 5000)
+  }
   const [leads, setLeads] = useState<LeadWithAgent[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null)
@@ -209,8 +219,16 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
         setMenuLead(lead)
         setShowMoveStage(true)
         break
-      case 'convert':
       case 'booking':
+        try {
+          const result = await requestBookingFromLead(lead, profile)
+          showNotice(result.status === 'sent' ? 'success' : 'info', bookingRequestMessage(result, lead.lead_name))
+        } catch (err) {
+          console.error('Booking request failed:', err)
+          showNotice('error', 'Could not send the booking request. Please try again.')
+        }
+        break
+      case 'convert':
       case 'quotation':
         setMenuLead(lead)
         setShowConvert(true)
@@ -491,6 +509,16 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
             onClose={() => { setShowConvert(false); setMenuLead(null) }}
           />
         </>
+      )}
+
+      {notice && (
+        <div
+          className={`fixed bottom-6 right-6 z-50 max-w-sm px-4 py-3 rounded-xl shadow-lg text-sm font-medium text-white ${
+            notice.type === 'success' ? 'bg-emerald-600' : notice.type === 'error' ? 'bg-red-600' : 'bg-slate-700'
+          }`}
+        >
+          {notice.message}
+        </div>
       )}
     </>
   )
