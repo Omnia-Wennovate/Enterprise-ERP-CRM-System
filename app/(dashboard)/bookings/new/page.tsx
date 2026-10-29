@@ -31,7 +31,7 @@ export default function NewBookingPage() {
   })
 
   // Pre-fill from a lead ("Convert to Booking" in CRM)
-  const [leadPrefill, setLeadPrefill] = useState<{ leadName: string; company: string } | null>(null)
+  const [leadPrefill, setLeadPrefill] = useState<{ leadId: string; leadName: string; company: string } | null>(null)
 
   // Opened from an Operations "Booking Request" notification: /bookings/new?from_lead=<lead id>
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function NewBookingPage() {
     getLeadById(leadId)
       .then(lead => {
         if (!lead) return
-        setLeadPrefill({ leadName: lead.lead_name, company: lead.company || '' })
+        setLeadPrefill({ leadId: lead.id, leadName: lead.lead_name, company: lead.company || '' })
         setFormData(prev => ({
           ...prev,
           destination: lead.destination || prev.destination,
@@ -226,7 +226,10 @@ export default function NewBookingPage() {
 
               {leadPrefill && (
                 <div className="text-sm px-4 py-3 rounded-lg bg-omnia-gold/10 border border-omnia-gold/30 text-foreground">
-                  Converting lead <span className="font-semibold">{leadPrefill.leadName}</span> — travel details are filled in from the lead.
+                  Converting lead <span className="font-semibold">{leadPrefill.leadName}</span> — travel details are filled in from the lead.{' '}
+                  <Link href={`/bookings/requests/${leadPrefill.leadId}`} className="text-omnia-gold hover:underline font-medium">
+                    View lead details
+                  </Link>
                   {!formData.customer_id && (
                     <span className="block text-xs text-muted-foreground mt-1">
                       No matching customer was found. Choose one below, or use "Convert to Customer" on the lead first.
