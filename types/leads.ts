@@ -237,6 +237,7 @@ export interface LeadRow {
   children: number
   infants: number
   budget: number | null
+  amount_paid: number | null
   preferred_airline: string | null
   preferred_hotel: string | null
   visa_required: boolean
@@ -376,6 +377,7 @@ export const leadFormSchema = z.object({
   children: z.coerce.number().min(0).default(0),
   infants: z.coerce.number().min(0).default(0),
   budget: z.coerce.number().min(0).optional(),
+  amount_paid: z.coerce.number().min(0).optional(),
   preferred_airline: z.string().max(200).optional().default(''),
   preferred_hotel: z.string().max(200).optional().default(''),
   visa_required: z.boolean().default(false),

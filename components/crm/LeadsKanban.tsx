@@ -42,6 +42,7 @@ import { LeadEditModal } from './LeadEditModal'
 import { MoveStageModal } from './MoveStageModal'
 import { AssignAgentModal } from './AssignAgentModal'
 import { ConvertLeadModal } from './ConvertLeadModal'
+import { BudgetProgress } from './BudgetProgress'
 
 export interface LeadsKanbanRef {
   refreshLeads: () => Promise<void>
@@ -384,6 +385,7 @@ export const LeadsKanban = forwardRef<LeadsKanbanRef>(function LeadsKanban(_prop
                             {new Date(lead.expected_close_date).toLocaleDateString()}
                           </span>
                         </div>
+                        <BudgetProgress budget={lead.budget} paid={lead.amount_paid} currency={lead.currency} compact />
                         <div className="flex gap-1 flex-wrap">
                           <span className={`text-xs px-2 py-0.5 rounded ${config.bg} ${config.text}`}>
                             {PIPELINE_STAGE_LABELS[stage]}

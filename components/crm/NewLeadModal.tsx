@@ -35,6 +35,7 @@ import { logLeadCreated } from '@/lib/services/lead-activities'
 import { notifyLeadCreated } from '@/lib/services/lead-notifications'
 import { uploadLeadDocument } from '@/lib/services/lead-documents'
 import { createClient } from '@/lib/supabase/client'
+import { BudgetProgress } from './BudgetProgress'
 import { createDirectConversation, sendMessage } from '@/lib/services/communication'
 import {
   leadFormSchema,
@@ -506,9 +507,15 @@ export function NewLeadModal({ isOpen, onClose, onSuccess }: NewLeadModalProps) 
                           </FormField>
                         </div>
 
-                        <FormField label="Budget" icon={DollarSign}>
-                          <input {...register('budget')} type="number" min={0} placeholder="0.00" className={inputClass} />
-                        </FormField>
+                        <div className="grid grid-cols-2 gap-3">
+                          <FormField label="Budget" icon={DollarSign}>
+                            <input {...register('budget')} type="number" min={0} placeholder="0.00" className={inputClass} />
+                          </FormField>
+                          <FormField label="Amount Paid" icon={DollarSign}>
+                            <input {...register('amount_paid')} type="number" min={0} placeholder="0.00" className={inputClass} />
+                          </FormField>
+                        </div>
+                        <BudgetProgress budget={watch('budget')} paid={watch('amount_paid')} currency={watch('currency')} />
 
                         <div className="grid grid-cols-2 gap-3">
                           <FormField label="Preferred Airline" icon={Plane}>

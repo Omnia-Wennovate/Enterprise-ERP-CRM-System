@@ -42,6 +42,7 @@ import { LeadEditModal } from './LeadEditModal'
 import { MoveStageModal } from './MoveStageModal'
 import { AssignAgentModal } from './AssignAgentModal'
 import { ConvertLeadModal } from './ConvertLeadModal'
+import { BudgetProgress } from './BudgetProgress'
 import type { LeadWithAgent, SalesAgent } from '@/types/leads'
 import {
   PIPELINE_STAGE_LABELS,
@@ -379,6 +380,9 @@ export function LeadDetailPanel({ leadId, onClose, onLeadUpdated, onLeadArchived
                               <InfoRow label="Hotel"         value={lead.preferred_hotel}   icon={Hotel} />
                               <InfoRow label="Visa Required" value={lead.visa_required}     icon={Shield} />
                               <InfoRow label="Special Req."  value={lead.special_requests} />
+                            </div>
+                            <div className="mt-3">
+                              <BudgetProgress budget={lead.budget} paid={lead.amount_paid} currency={lead.currency} />
                             </div>
                           </section>
 

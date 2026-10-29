@@ -27,6 +27,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { updateLead, getSalesAgents } from '@/lib/services/leads'
 import { logLeadEdited } from '@/lib/services/lead-activities'
+import { BudgetProgress } from './BudgetProgress'
 import {
   leadFormSchema,
   type LeadFormData,
@@ -84,12 +85,14 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
   const [agents, setAgents] = useState<SalesAgent[]>([])
   const [isSaving, setIsSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [saveError, setSaveError] = useState('Failed to save')
   const [selectedTags, setSelectedTags] = useState<string[]>(lead.tags || [])
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
@@ -124,6 +127,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
       children: lead.children || 0,
       infants: lead.infants || 0,
       budget: lead.budget || undefined,
+      amount_paid: lead.amount_paid || undefined,
       preferred_airline: lead.preferred_airline || '',
       preferred_hotel: lead.preferred_hotel || '',
       visa_required: lead.visa_required || false,
@@ -169,6 +173,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
         children: lead.children || 0,
         infants: lead.infants || 0,
         budget: lead.budget || undefined,
+        amount_paid: lead.amount_paid || undefined,
         preferred_airline: lead.preferred_airline || '',
         preferred_hotel: lead.preferred_hotel || '',
         visa_required: lead.visa_required || false,
@@ -189,7 +194,10 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
     setIsSaving(true)
     setSaveStatus('idle')
     try {
-      const updated = await updateLead(lead.id, { ...data, tags: selectedTags })
+      const payload: Partial<LeadFormData> = { ...data, amount_paid: data.amount_paid || 0, tags: selectedTags }
+      // Leave amount_paid out when nothing was ever paid, so saving works before the amount_paid migration runs
+      if (!payload.amount_paid && lead.amount_paid == null) delete payload.amount_paid
+      const updated = await updateLead(lead.id, payload)
       const changedFields = Object.keys(data).filter((k) => {
         const key = k as keyof LeadFormData
         return String(data[key]) !== String((lead as Record<string, unknown>)[key])
@@ -206,6 +214,12 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
       setTimeout(onClose, 800)
     } catch (err) {
       console.error('Failed to save lead:', err)
+      const message = (err as { message?: string })?.message ?? ''
+      setSaveError(
+        message.includes("'amount_paid' column")
+          ? 'Amount Paid needs a database update — run leads-amount-paid-migration.sql in Supabase.'
+          : message || 'Failed to save'
+      )
       setSaveStatus('error')
     } finally {
       setIsSaving(false)
@@ -393,6 +407,13 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                       <input {...register('budget')} type="number" min={0} className={inputClass} placeholder="Budget amount" />
                     </div>
                     <div>
+                      <FieldLabel label="Amount Paid" icon={DollarSign} />
+                      <input {...register('amount_paid')} type="number" min={0} className={inputClass} placeholder="Paid so far" />
+                    </div>
+                    <div className="col-span-2">
+                      <BudgetProgress budget={watch('budget')} paid={watch('amount_paid')} currency={watch('currency')} />
+                    </div>
+                    <div>
                       <FieldLabel label="Preferred Airline" icon={Plane} />
                       <input {...register('preferred_airline')} className={inputClass} placeholder="Airline preference" />
                     </div>
@@ -450,7 +471,7 @@ export function LeadEditModal({ isOpen, lead, onClose, onSaved }: Props) {
                 )}
                 {saveStatus === 'error' && (
                   <span className="flex items-center gap-1.5 text-sm text-red-600">
-                    <AlertCircle className="w-4 h-4" /> Failed to save
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" /> {saveError}
                   </span>
                 )}
               </div>

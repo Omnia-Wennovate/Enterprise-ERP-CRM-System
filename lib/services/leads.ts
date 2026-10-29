@@ -45,6 +45,8 @@ export async function createLead(data: LeadFormData, createdBy?: string): Promis
     children: data.children,
     infants: data.infants,
     budget: data.budget || null,
+    // Only sent when set, so creating leads keeps working before the amount_paid migration runs
+    ...(data.amount_paid ? { amount_paid: data.amount_paid } : {}),
     preferred_airline: data.preferred_airline || null,
     preferred_hotel: data.preferred_hotel || null,
     visa_required: data.visa_required,
@@ -149,10 +151,22 @@ export async function updateLead(
 ): Promise<LeadRow> {
   const supabase = createClient()
 
+  // create_discussion is a form-only option (used on create), not a leads column
+  const { create_discussion: _createDiscussion, ...columns } = data
+
+  // Same rules as createLead: blank fields are stored as NULL (Postgres rejects '' for date/uuid
+  // columns), and demo agents ('user_sales', …) aren't real profile UUIDs
+  const row: Record<string, unknown> = Object.fromEntries(
+    Object.entries(columns).map(([key, value]) => [key, value === '' ? null : value])
+  )
+  if (typeof row.assigned_to === 'string' && row.assigned_to.startsWith('user_')) {
+    row.assigned_to = null
+  }
+
   const { data: lead, error } = await supabase
     .from('leads')
     .update({
-      ...data,
+      ...row,
       updated_at: new Date().toISOString(),
     })
     .eq('id', id)
